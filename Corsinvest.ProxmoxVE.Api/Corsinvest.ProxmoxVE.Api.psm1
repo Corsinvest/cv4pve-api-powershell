@@ -312,7 +312,7 @@ Output file
 
     process {
         $progress = 0
-        $commands = (Get-Command -module 'cv4pve-api-pwsh' -CommandType Function) | Sort-Object #| Select-Object -first 10
+        $commands = (Get-Command -module 'Corsinvest.ProxmoxVE.Api' -CommandType Function) | Sort-Object #| Select-Object -first 10
         $totProgress = $commands.Length
         $data = [System.Collections.ArrayList]::new()
         foreach ($item in $commands) {
@@ -350,7 +350,7 @@ Output file
         $totProgress = $data.Count
 
         #template
-        $content = (($TemplateFile -as [System.URI]).Scheme -match '[http|https]') ?
+        $content = (($TemplateFile -as [System.Uri]).Scheme -match '[http|https]') ?
                     (Invoke-WebRequest $TemplateFile).Content :
                     (Get-Content $TemplateFile -Raw -Force)
 
