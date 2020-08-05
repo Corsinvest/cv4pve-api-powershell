@@ -297,6 +297,8 @@ Function Build-PveDocumentation {
     <#
 .DESCRIPTION
 Build documentation
+.PARAMETER TemplateFile
+Template file for generation documentation
 .PARAMETER OutputFile
 Output file
 #>

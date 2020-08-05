@@ -233,3 +233,10 @@ vmstate name                         parent                       description   
       0 autowin10service200222183019 autowin10service200221183059 cv4pve-autosnap 1582392621
         current                      autowin10service200224183012 You are here!
 ```
+
+## Build documentation
+
+For build documentation use command **Build-PveDocumentation**
+
+This command accept **TemplateFile** parameter is a template for generate documentation.
+The default [file](https://raw.githubusercontent.com/corsinvest/cv4pve-api-pwsh/master/cv4pve-api-pwsh-help-out-html.ps1).
