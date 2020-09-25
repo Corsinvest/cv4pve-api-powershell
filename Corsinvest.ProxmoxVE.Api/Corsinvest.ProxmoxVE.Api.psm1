@@ -2947,6 +2947,8 @@ Only run if executed on this node.
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
 Backup all known guest systems included in the specified pool.
+.PARAMETER PruneBackups
+Use these retention options instead of those from the storage configuration.
 .PARAMETER Quiet
 Be quiet.
 .PARAMETER Remove
@@ -3035,6 +3037,9 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Quiet,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -3090,6 +3095,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
         if($PSBoundParameters['Script']) { $parameters['script'] = $Script }
@@ -3206,6 +3212,8 @@ Only run if executed on this node.
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
 Backup all known guest systems included in the specified pool.
+.PARAMETER PruneBackups
+Use these retention options instead of those from the storage configuration.
 .PARAMETER Quiet
 Be quiet.
 .PARAMETER Remove
@@ -3300,6 +3308,9 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Quiet,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -3356,6 +3367,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
         if($PSBoundParameters['Script']) { $parameters['script'] = $Script }
@@ -3370,6 +3382,77 @@ PveResponse. Return response.
         if($PSBoundParameters['Zstd']) { $parameters['zstd'] = $Zstd }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/backup/$Id" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterBackupIncludedVolumes
+{
+<#
+.DESCRIPTION
+Returns included guests and the backup status of their disks. Optimized to be used in ExtJS tree views.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Id
+The job ID.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Id
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/backup/$Id/included_volumes"
+    }
+}
+
+function Get-PveClusterBackupinfo
+{
+<#
+.DESCRIPTION
+Stub, waits for future use.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/backupinfo"
+    }
+}
+
+function Get-PveClusterBackupinfoNotBackedUp
+{
+<#
+.DESCRIPTION
+Shows all guests which are not covered by any backup job.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/backupinfo/not_backed_up"
     }
 }
 
@@ -4042,7 +4125,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('acmedns','acmeproxy','active24','ad','ali','autodns','aws','azure','cf','clouddns','cloudns','cn','conoha','constellix','cx','cyon','da','ddnss','desec','dgon','dnsimple','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','euserv','exoscale','freedns','gandi_livedns','gcloud','gd','gdnsdk','he','hexonet','hostingde','infoblox','internetbs','inwx','ispconfig','jd','kas','kinghost','knot','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','namecheap','namecom','namesilo','nederhost','neodigit','netcup','nic','nsd','nsone','nsupdate','nw','one','online','openprovider','opnsense','ovh','pdns','pleskxml','pointhq','rackspace','rcode0','regru','schlundtech','selectel','servercow','tele3','ultra','unoeuro','variomedia','vscale','vultr','yandex','zilore','zone','zonomi')]
+        [ValidateSet('acmedns','acmeproxy','active24','ad','ali','autodns','aws','azure','cf','clouddns','cloudns','cn','conoha','constellix','cx','cyon','da','ddnss','desec','df','dgon','dnsimple','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','euserv','exoscale','freedns','gandi_livedns','gcloud','gd','gdnsdk','he','hexonet','hostingde','infoblox','internetbs','inwx','ispconfig','jd','kas','kinghost','knot','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','namecheap','namecom','namesilo','nederhost','neodigit','netcup','nic','nsd','nsone','nsupdate','nw','one','online','openprovider','opnsense','ovh','pdns','pleskxml','pointhq','rackspace','rcode0','regru','schlundtech','selectel','servercow','tele3','ultra','unoeuro','variomedia','vscale','vultr','yandex','zilore','zone','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -4166,7 +4249,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('acmedns','acmeproxy','active24','ad','ali','autodns','aws','azure','cf','clouddns','cloudns','cn','conoha','constellix','cx','cyon','da','ddnss','desec','dgon','dnsimple','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','euserv','exoscale','freedns','gandi_livedns','gcloud','gd','gdnsdk','he','hexonet','hostingde','infoblox','internetbs','inwx','ispconfig','jd','kas','kinghost','knot','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','namecheap','namecom','namesilo','nederhost','neodigit','netcup','nic','nsd','nsone','nsupdate','nw','one','online','openprovider','opnsense','ovh','pdns','pleskxml','pointhq','rackspace','rcode0','regru','schlundtech','selectel','servercow','tele3','ultra','unoeuro','variomedia','vscale','vultr','yandex','zilore','zone','zonomi')]
+        [ValidateSet('acmedns','acmeproxy','active24','ad','ali','autodns','aws','azure','cf','clouddns','cloudns','cn','conoha','constellix','cx','cyon','da','ddnss','desec','df','dgon','dnsimple','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','euserv','exoscale','freedns','gandi_livedns','gcloud','gd','gdnsdk','he','hexonet','hostingde','infoblox','internetbs','inwx','ispconfig','jd','kas','kinghost','knot','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','namecheap','namecom','namesilo','nederhost','neodigit','netcup','nic','nsd','nsone','nsupdate','nw','one','online','openprovider','opnsense','ovh','pdns','pleskxml','pointhq','rackspace','rcode0','regru','schlundtech','selectel','servercow','tele3','ultra','unoeuro','variomedia','vscale','vultr','yandex','zilore','zone','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -4413,6 +4496,28 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/directories"
+    }
+}
+
+function Get-PveClusterAcmeChallengeSchema
+{
+<#
+.DESCRIPTION
+Get schema of ACME challenge types.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/challenge-schema"
     }
 }
 
@@ -4752,6 +4857,8 @@ Anycast router mac address
 vlan or vxlan id
 .PARAMETER Type
 Type
+.PARAMETER Vlanaware
+Allow vm VLANs to pass through this vnet.
 .PARAMETER Vnet
 The SDN vnet object identifier.
 .PARAMETER Zone
@@ -4777,12 +4884,15 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Mac,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('vnet')]
         [string]$Type,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Vlanaware,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Vnet,
@@ -4799,6 +4909,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
         if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters['Vlanaware']) { $parameters['vlanaware'] = $Vlanaware }
         if($PSBoundParameters['Vnet']) { $parameters['vnet'] = $Vnet }
         if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
 
@@ -4881,6 +4992,8 @@ Anycast router ipv6 address.
 Anycast router mac address
 .PARAMETER Tag
 vlan or vxlan id
+.PARAMETER Vlanaware
+Allow vm VLANs to pass through this vnet.
 .PARAMETER Vnet
 The SDN vnet object identifier.
 .PARAMETER Zone
@@ -4915,6 +5028,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Vlanaware,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Vnet,
 
@@ -4931,6 +5047,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Ipv6']) { $parameters['ipv6'] = $Ipv6 }
         if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
+        if($PSBoundParameters['Vlanaware']) { $parameters['vlanaware'] = $Vlanaware }
         if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters
@@ -4956,7 +5073,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('evpn','faucet','qinq','vlan','vxlan')]
+        [ValidateSet('evpn','faucet','qinq','simple','vlan','vxlan')]
         [string]$Type
     )
 
@@ -4982,15 +5099,17 @@ Frr router name
 .PARAMETER DpId
 Faucet dataplane id
 .PARAMETER Mtu
-mtu
+MTU
 .PARAMETER Nodes
 List of cluster node names.
 .PARAMETER Peers
 peers address list.
 .PARAMETER Tag
-vlan tag
+Service-VLAN Tag
 .PARAMETER Type
 Plugin type.
+.PARAMETER VlanProtocol
+--
 .PARAMETER VrfVxlan
 l3vni.
 .PARAMETER Zone
@@ -5026,8 +5145,12 @@ PveResponse. Return response.
         [int]$Tag,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('evpn','faucet','qinq','vlan','vxlan')]
+        [ValidateNotNullOrEmpty()][ValidateSet('evpn','faucet','qinq','simple','vlan','vxlan')]
         [string]$Type,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('802.1q','802.1ad')]
+        [string]$VlanProtocol,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$VrfVxlan,
@@ -5046,6 +5169,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Peers']) { $parameters['peers'] = $Peers }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
         if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters['VlanProtocol']) { $parameters['vlan-protocol'] = $VlanProtocol }
         if($PSBoundParameters['VrfVxlan']) { $parameters['vrf-vxlan'] = $VrfVxlan }
         if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
 
@@ -5125,13 +5249,15 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 .PARAMETER DpId
 Faucet dataplane id
 .PARAMETER Mtu
-mtu
+MTU
 .PARAMETER Nodes
 List of cluster node names.
 .PARAMETER Peers
 peers address list.
 .PARAMETER Tag
-vlan tag
+Service-VLAN Tag
+.PARAMETER VlanProtocol
+--
 .PARAMETER VrfVxlan
 l3vni.
 .PARAMETER Zone
@@ -5173,6 +5299,10 @@ PveResponse. Return response.
         [int]$Tag,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('802.1q','802.1ad')]
+        [string]$VlanProtocol,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$VrfVxlan,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -5190,6 +5320,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Nodes']) { $parameters['nodes'] = $Nodes }
         if($PSBoundParameters['Peers']) { $parameters['peers'] = $Peers }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
+        if($PSBoundParameters['VlanProtocol']) { $parameters['vlan-protocol'] = $VlanProtocol }
         if($PSBoundParameters['VrfVxlan']) { $parameters['vrf-vxlan'] = $VrfVxlan }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters
@@ -9790,6 +9921,8 @@ function New-PveNodesQemuVncproxy
 Creates a TCP VNC proxy connections.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER GeneratePassword
+Generates a random password to be used as ticket instead of the API ticket.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Vmid
@@ -9805,6 +9938,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$GeneratePassword,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
 
@@ -9817,6 +9953,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['GeneratePassword']) { $parameters['generate-password'] = $GeneratePassword }
         if($PSBoundParameters['Websocket']) { $parameters['websocket'] = $Websocket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/vncproxy" -Parameters $parameters
@@ -11205,6 +11342,33 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesCpu
+{
+<#
+.DESCRIPTION
+List all custom and default CPU models.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/cpu"
+    }
+}
+
 function Get-PveNodesLxc
 {
 <#
@@ -11253,6 +11417,8 @@ The number of cores assigned to the container. A container can use all available
 Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
 CPU weight for a VM. Argument is used in the kernel fair scheduler. The larger the number is, the more CPU time this VM gets. Number is relative to the weights of all the other running VMs.NOTE':' You can disable fair-scheduler configuration by setting this to 0.
+.PARAMETER Debug
+Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Description
 Container description. Only used on the configuration web interface.
 .PARAMETER Features
@@ -11309,6 +11475,8 @@ Amount of SWAP for the VM in MB.
 Tags of the Container. This is only meta information.
 .PARAMETER Template
 Enable/disable Template.
+.PARAMETER Timezone
+Time zone to use in the container. If option isn't set, then nothing will be done. Can be set to 'host' to match the host time zone, or an arbitrary time zone option from /usr/share/zoneinfo/zone.tab
 .PARAMETER Tty
 Specify the number of tty available to the container
 .PARAMETER Unique
@@ -11350,6 +11518,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Debug,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Description,
@@ -11438,6 +11609,9 @@ PveResponse. Return response.
         [switch]$Template,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Timezone,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Tty,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -11462,6 +11636,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Cores']) { $parameters['cores'] = $Cores }
         if($PSBoundParameters['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
         if($PSBoundParameters['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters['Debug']) { $parameters['debug'] = $Debug }
         if($PSBoundParameters['Description']) { $parameters['description'] = $Description }
         if($PSBoundParameters['Features']) { $parameters['features'] = $Features }
         if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
@@ -11487,6 +11662,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Swap']) { $parameters['swap'] = $Swap }
         if($PSBoundParameters['Tags']) { $parameters['tags'] = $Tags }
         if($PSBoundParameters['Template']) { $parameters['template'] = $Template }
+        if($PSBoundParameters['Timezone']) { $parameters['timezone'] = $Timezone }
         if($PSBoundParameters['Tty']) { $parameters['tty'] = $Tty }
         if($PSBoundParameters['Unique']) { $parameters['unique'] = $Unique }
         if($PSBoundParameters['Unprivileged']) { $parameters['unprivileged'] = $Unprivileged }
@@ -11643,6 +11819,8 @@ The number of cores assigned to the container. A container can use all available
 Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
 CPU weight for a VM. Argument is used in the kernel fair scheduler. The larger the number is, the more CPU time this VM gets. Number is relative to the weights of all the other running VMs.NOTE':' You can disable fair-scheduler configuration by setting this to 0.
+.PARAMETER Debug
+Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Description
@@ -11687,6 +11865,8 @@ Amount of SWAP for the VM in MB.
 Tags of the Container. This is only meta information.
 .PARAMETER Template
 Enable/disable Template.
+.PARAMETER Timezone
+Time zone to use in the container. If option isn't set, then nothing will be done. Can be set to 'host' to match the host time zone, or an arbitrary time zone option from /usr/share/zoneinfo/zone.tab
 .PARAMETER Tty
 Specify the number of tty available to the container
 .PARAMETER Unprivileged
@@ -11723,6 +11903,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Debug,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Delete,
@@ -11793,6 +11976,9 @@ PveResponse. Return response.
         [switch]$Template,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Timezone,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Tty,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -11813,6 +11999,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Cores']) { $parameters['cores'] = $Cores }
         if($PSBoundParameters['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
         if($PSBoundParameters['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters['Debug']) { $parameters['debug'] = $Debug }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Description']) { $parameters['description'] = $Description }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
@@ -11832,6 +12019,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Swap']) { $parameters['swap'] = $Swap }
         if($PSBoundParameters['Tags']) { $parameters['tags'] = $Tags }
         if($PSBoundParameters['Template']) { $parameters['template'] = $Template }
+        if($PSBoundParameters['Timezone']) { $parameters['timezone'] = $Timezone }
         if($PSBoundParameters['Tty']) { $parameters['tty'] = $Tty }
         if($PSBoundParameters['Unprivileged']) { $parameters['unprivileged'] = $Unprivileged }
 
@@ -11914,6 +12102,8 @@ function New-PveNodesLxcStatusStart
 Start the container.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Debug
+If set, enables very verbose debug log-level on start.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Skiplock
@@ -11929,6 +12119,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Debug,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
 
@@ -11941,6 +12134,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['Debug']) { $parameters['debug'] = $Debug }
         if($PSBoundParameters['Skiplock']) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/start" -Parameters $parameters
@@ -14366,6 +14560,8 @@ function New-PveNodesCephOsd
 Create OSD
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER CrushDeviceClass
+Set the device class of the OSD in crush.
 .PARAMETER DbDev
 Block device name for block.db.
 .PARAMETER DbSize
@@ -14388,6 +14584,9 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CrushDeviceClass,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$DbDev,
@@ -14413,6 +14612,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['CrushDeviceClass']) { $parameters['crush-device-class'] = $CrushDeviceClass }
         if($PSBoundParameters['DbDev']) { $parameters['db_dev'] = $DbDev }
         if($PSBoundParameters['DbSize']) { $parameters['db_size'] = $DbSize }
         if($PSBoundParameters['Dev']) { $parameters['dev'] = $Dev }
@@ -15587,6 +15787,8 @@ Only run if executed on this node.
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
 Backup all known guest systems included in the specified pool.
+.PARAMETER PruneBackups
+Use these retention options instead of those from the storage configuration.
 .PARAMETER Quiet
 Be quiet.
 .PARAMETER Remove
@@ -15669,6 +15871,9 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Quiet,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -15721,6 +15926,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
         if($PSBoundParameters['Script']) { $parameters['script'] = $Script }
@@ -15936,7 +16142,7 @@ function New-PveNodesServicesRestart
 {
 <#
 .DESCRIPTION
-Restart service.
+Hard restart service. Use reload if you want to reduce interruptions.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -15969,7 +16175,7 @@ function New-PveNodesServicesReload
 {
 <#
 .DESCRIPTION
-Reload service.
+Reload service. Falls back to restart if service cannot be reloaded.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -15995,6 +16201,33 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/reload"
+    }
+}
+
+function Remove-PveNodesSubscription
+{
+<#
+.DESCRIPTION
+Delete subscription key of this node.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/subscription"
     }
 }
 
@@ -17377,6 +17610,112 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage"
+    }
+}
+
+function Remove-PveNodesStoragePrunebackups
+{
+<#
+.DESCRIPTION
+Prune backups. Only those using the standard naming scheme are considered.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER PruneBackups
+Use these retention options instead of those from the storage configuration.
+.PARAMETER Storage
+The storage identifier.
+.PARAMETER Type
+Either 'qemu' or 'lxc'. Only consider backups for guests of this type.
+.PARAMETER Vmid
+Only prune backups for this VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Storage,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('qemu','lxc')]
+        [string]$Type,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters['Vmid']) { $parameters['vmid'] = $Vmid }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/prunebackups" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesStoragePrunebackups
+{
+<#
+.DESCRIPTION
+Get prune information for backups. NOTE':' this is only a preview and might not be exactly what a subsequent prune call does, if the hour changes or if backups are removed/added in the meantime.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER PruneBackups
+Use these retention options instead of those from the storage configuration.
+.PARAMETER Storage
+The storage identifier.
+.PARAMETER Type
+Either 'qemu' or 'lxc'. Only consider backups for guests of this type.
+.PARAMETER Vmid
+Only consider backups for this guest.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Storage,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('qemu','lxc')]
+        [string]$Type,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters['Vmid']) { $parameters['vmid'] = $Vmid }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/prunebackups" -Parameters $parameters
     }
 }
 
@@ -20136,7 +20475,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('login','ceph_install','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -20190,7 +20529,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('login','ceph_install','upgrade')]
         [string]$Cmd,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -20275,7 +20614,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('login','ceph_install','upgrade')]
         [string]$Cmd,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -20790,6 +21129,8 @@ Proxmox backup server datastore name.
 Flag to disable the storage.
 .PARAMETER Domain
 CIFS domain.
+.PARAMETER EncryptionKey
+Encryption key. Use 'autogen' to generate one automatically without passphrase.
 .PARAMETER Export
 NFS export path.
 .PARAMETER Fingerprint
@@ -20821,13 +21162,15 @@ disable write caching on the target
 .PARAMETER Options
 NFS mount options (see 'man nfs')
 .PARAMETER Password
-Password for CIFS share.
+Password for accessing the share/datastore.
 .PARAMETER Path
 File system path.
 .PARAMETER Pool
 Pool.
 .PARAMETER Portal
 iSCSI portal (IP or DNS name with optional port).
+.PARAMETER PruneBackups
+The retention options with shorter intervals are processed first with --keep-last being the very first one. Each option covers a specific period of time. We say that backups within this period are covered by this option. The next option does not take care of already covered backups and only considers older backups.
 .PARAMETER Redundancy
 The redundancy count specifies the number of nodes to which the resource should be deployed. It must be at least 1 and at most the number of nodes in the cluster.
 .PARAMETER Saferemove
@@ -20906,6 +21249,9 @@ PveResponse. Return response.
         [string]$Domain,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$EncryptionKey,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Export,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -20961,6 +21307,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Portal,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Redundancy,
@@ -21035,6 +21384,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Datastore']) { $parameters['datastore'] = $Datastore }
         if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
         if($PSBoundParameters['Domain']) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters['EncryptionKey']) { $parameters['encryption-key'] = $EncryptionKey }
         if($PSBoundParameters['Export']) { $parameters['export'] = $Export }
         if($PSBoundParameters['Fingerprint']) { $parameters['fingerprint'] = $Fingerprint }
         if($PSBoundParameters['Format']) { $parameters['format'] = $Format }
@@ -21054,6 +21404,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Path']) { $parameters['path'] = $Path }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
         if($PSBoundParameters['Portal']) { $parameters['portal'] = $Portal }
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Redundancy']) { $parameters['redundancy'] = $Redundancy }
         if($PSBoundParameters['Saferemove']) { $parameters['saferemove'] = $Saferemove }
         if($PSBoundParameters['SaferemoveThroughput']) { $parameters['saferemove_throughput'] = $SaferemoveThroughput }
@@ -21157,6 +21508,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Flag to disable the storage.
 .PARAMETER Domain
 CIFS domain.
+.PARAMETER EncryptionKey
+Encryption key. Use 'autogen' to generate one automatically without passphrase.
 .PARAMETER Fingerprint
 Certificate SHA 256 fingerprint.
 .PARAMETER Format
@@ -21184,9 +21537,11 @@ disable write caching on the target
 .PARAMETER Options
 NFS mount options (see 'man nfs')
 .PARAMETER Password
-Password for CIFS share.
+Password for accessing the share/datastore.
 .PARAMETER Pool
 Pool.
+.PARAMETER PruneBackups
+The retention options with shorter intervals are processed first with --keep-last being the very first one. Each option covers a specific period of time. We say that backups within this period are covered by this option. The next option does not take care of already covered backups and only considers older backups.
 .PARAMETER Redundancy
 The redundancy count specifies the number of nodes to which the resource should be deployed. It must be at least 1 and at most the number of nodes in the cluster.
 .PARAMETER Saferemove
@@ -21250,6 +21605,9 @@ PveResponse. Return response.
         [string]$Domain,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$EncryptionKey,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Fingerprint,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -21293,6 +21651,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Pool,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$PruneBackups,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Redundancy,
@@ -21347,6 +21708,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
         if($PSBoundParameters['Domain']) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters['EncryptionKey']) { $parameters['encryption-key'] = $EncryptionKey }
         if($PSBoundParameters['Fingerprint']) { $parameters['fingerprint'] = $Fingerprint }
         if($PSBoundParameters['Format']) { $parameters['format'] = $Format }
         if($PSBoundParameters['Fuse']) { $parameters['fuse'] = $Fuse }
@@ -21362,6 +21724,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Options']) { $parameters['options'] = $Options }
         if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Redundancy']) { $parameters['redundancy'] = $Redundancy }
         if($PSBoundParameters['Saferemove']) { $parameters['saferemove'] = $Saferemove }
         if($PSBoundParameters['SaferemoveThroughput']) { $parameters['saferemove_throughput'] = $SaferemoveThroughput }
