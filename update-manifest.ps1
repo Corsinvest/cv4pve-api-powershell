@@ -9,6 +9,6 @@
 # Copyright (C) 2020 Corsinvest Srl	GPLv3 and CEL
 
 $functions = Get-Command -Module Corsinvest.ProxmoxVE.Api -Type Function | Select-Object -ExpandProperty Name
-$functions += 'Build-PveDocumentation', 'Connect-PveCluster', 'ConvertFrom-PveUnixTime', 'ConvertTo-PveUnixTime', 'Find-PveVM'
+$functions += 'Build-PveDocumentation', 'Connect-PveCluster', 'ConvertFrom-PveUnixTime', 'ConvertTo-PveUnixTime', 'Find-PveVM' , 'Enter-PveSpice'
 $alias = Get-Command -Module Corsinvest.ProxmoxVE.Api -Type Alias | Select-Object -ExpandProperty Name
 Update-ModuleManifest -Path .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psd1 -FunctionsToExport $functions -AliasesToExport $alias

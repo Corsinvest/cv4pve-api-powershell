@@ -199,6 +199,9 @@ Return object request
         [ValidateSet('Json', 'Png')]
         [string]$ResponseType = 'Json',
 
+        [ValidateNotNullOrEmpty()]
+        [string]$ApiBase = '/api2/json',
+
         [hashtable]$Parameters
     )
 
@@ -250,7 +253,7 @@ Return object request
         if($PveTicket.ApiToken -ne '') { $headers.Authorization = 'PVEAPIToken ' + $PveTicket.ApiToken }
 
         $params = @{
-            Uri                  = "https://$($PveTicket.HostName):$($PveTicket.Port)/api2/json$Resource$query"
+            Uri                  = "https://$($PveTicket.HostName):$($PveTicket.Port)$ApiBase$Resource$query"
             Method               = $restMethod
             WebSession           = $session
             SkipCertificateCheck = $PveTicket.SkipCertificateCheck
@@ -404,6 +407,61 @@ DateTime. Return DateTime from Unix Time.
     return (New-Object -Type DateTime -ArgumentList 1970, 1, 1, 0, 0, 0, 0).ToLocalTime().AddSeconds($Time)
 }
 #endregion
+
+Function Enter-PveSpice {
+    <#
+.DESCRIPTION
+Enter Spice VM.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER VmIdOrName
+The (unique) ID or Name of the VM.
+.PARAMETER Proxy
+Proxy host.
+.PARAMETER RemoteViewer
+Path of Spice remove viewer.
+* Linux /usr/bin/remote-viewer
+* Windows C:\Program Files\VirtViewer v?.?-???\bin\remote-viewer.exe
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNull]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$VmIdOrName,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$RemoteViewer
+    )
+
+    process {
+        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        if ($vm.type -eq 'qemu') {
+            $node = $vm.node
+            $vmid = $vm.vmid
+
+            $parameters = @{ proxy = $null -eq $PveTicket ? $PveTicketLast.HostName : $PveTicket.HostName }
+
+            $ret = Invoke-PveRestApi -PveTicket $PveTicket -Method Create -ApiBase "/api2" -Resource "/spiceconfig/nodes/$node/qemu/$vmid/spiceproxy" -Parameters $parameters
+
+            Write-Debug "======================================="
+            Write-Debug "SPICE Proxy Configuration"
+            Write-Debug "======================================="
+            Write-Debug $ret
+            Write-Debug "======================================="
+
+            $tmp = New-TemporaryFile
+            $ret.Response | Out-File $tmp.FullName
+
+            Start-Process -FilePath $RemoteViewer -Args $tmp.FullName
+        }
+    }
+}
 
 #region Task
 function Wait-PveTaskIsFinish {
