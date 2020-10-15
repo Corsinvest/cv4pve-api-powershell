@@ -168,6 +168,8 @@ Resource Request
 Method request
 .PARAMETER ResponseType
 Type request
+.PARAMETER ApiBase
+Base Api
 .PARAMETER Parameters
 Parameters request
 .EXAMPLE
@@ -196,11 +198,11 @@ Return object request
         [string]$Method = 'Get',
 
         [Parameter()]
-        [ValidateSet('Json', 'Png')]
-        [string]$ResponseType = 'Json',
+        [ValidateSet('json', 'png')]
+        [string]$ResponseType = 'json',
 
         [ValidateNotNullOrEmpty()]
-        [string]$ApiBase = '/api2/json',
+        [string]$ApiBase = "/api2/$ResponseType",
 
         [hashtable]$Parameters
     )
@@ -436,7 +438,7 @@ PveResponse. Return response.
         [string]$VmIdOrName,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [string]$RemoteViewer
+        [string]$Viewer
     )
 
     process {
@@ -458,7 +460,7 @@ PveResponse. Return response.
             $tmp = New-TemporaryFile
             $ret.Response | Out-File $tmp.FullName
 
-            Start-Process -FilePath $RemoteViewer -Args $tmp.FullName
+            Start-Process -FilePath $Viewer -Args $tmp.FullName
         }
     }
 }
