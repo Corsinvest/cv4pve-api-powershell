@@ -121,8 +121,16 @@ function FixString ([string]$string) {
     <nav class='navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow'>
         <a class='navbar-brand col-md-3 col-lg-2 mr-0 px-3' href='#'>Documentation cv4pve-api-pwsh</a>
         <ul class='navbar-nav px-1'> </ul>
-        <input class='form-control form-control-dark w-100' type='text' id='navSearch' placeholder='Search'
-            aria-label='Search'>
+        <div class='input-group'>
+            <div class='input-group-prepend'>
+                <div class='input-group-text'>
+                  <input id='searchAll' type='checkbox' aria-label='Checkbox for following text input'>&nbsp;Full text
+                </div>
+            </div>
+
+            <input class='form-control form-control-dark w-1001' type='text' id='navSearch' placeholder='Search'
+                aria-label='Search'>
+        </div>
         <ul class='navbar-nav px-1'> </ul>
     </nav>
 
@@ -165,7 +173,7 @@ function FixString ([string]$string) {
             $synopsis = FixString($_.synopsis)
             if(!($synopsis).StartsWith($(FixString($_.Name)))){
                 "<p>$synopsis</p>
-                <p>$(FixString(($_.Description | Out-String).Trim()) $true)</p>"
+                <p class='searchable'>$(FixString(($_.Description | Out-String).Trim()) $true)</p>"
             }
 @'
             </div>
@@ -179,7 +187,7 @@ function FixString ([string]$string) {
                 <div class='panel-body'>
                     <ul>
 '@
-                    $_.alias | ForEach-Object { "<li>$($_.Name)</li>" }
+                    $_.alias | ForEach-Object { "<li class='searchable'>$($_.Name)</li>" }
 @'
                     </ul>
                 </div>
@@ -194,9 +202,7 @@ function FixString ([string]$string) {
                 </div>
                 <div class='panel panel-default'>
                     <div class='panel-body'>
-                        <pre>
-                            <code class='powershell'>$syntax</code>
-                        </pre>
+                        <code class='powershell'>$syntax</code>
                     </div>
                 </div>"
             }
@@ -220,9 +226,9 @@ function FixString ([string]$string) {
 '@
                 $_.parameters.parameter | ForEach-Object {
                         "<tr>
-                            <td><nobr>-$(FixString($_.Name))</nobr></td>
-                            <td class='visible-lg visible-md'>$(FixString($_.Aliases))</td>
-                            <td>$(FixString(($_.Description  | out-string).Trim()) $true)</td>
+                            <td class='searchable'><nobr>-$(FixString($_.Name))</nobr></td>
+                            <td class='visible-lg visible-md searchable'>$(FixString($_.Aliases))</td>
+                            <td class='searchable'>$(FixString(($_.Description  | out-string).Trim()) $true)</td>
                             <td class='visible-lg visible-md'>$(FixString($_.Required))</td>
                             <td class='visible-lg'>$(FixString($_.PipelineInput))</td>
                             <td class='visible-lg'>$(FixString($_.DefaultValue))</td>
@@ -273,9 +279,7 @@ function FixString ([string]$string) {
 '@
                 $_.examples.example | ForEach-Object {
                     "<strong>$(FixString($_.title.Trim(('-',' '))))</strong>
-                        <pre>
-                            <code class='powershell'>$(FixString($_.code | Out-String).Trim())</code>
-                        </pre>
+                        <code class='powershell'>$(FixString($_.code | Out-String).Trim())</code>
                         <div>$(FixString($_.remarks | Out-String).Trim())</div>"
                 }
 @'
@@ -311,6 +315,9 @@ function FixString ([string]$string) {
         <div class='fixed-bottom text-white bg-dark'>
                 <a href='https://github.com/Corsinvest/cv4pve-api-pwsh' target='_blank'>cv4pve-api-pwsh</a> - Proxmox VE Client API PowerShell Module by Corsinvest Srl <br>
                 This is a part of suite <a href='https://www.cv4pve-tools.com' target='_blank'>cv4pve-tools</a>
+'@
+                " - Version $((Get-Module Corsinvest.ProxmoxVE.Api).Version.ToString())"
+@'
         </div>
     </div>
 
@@ -328,14 +335,13 @@ function FixString ([string]$string) {
 
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
-            document.querySelectorAll('pre code').forEach((block) => {
-                $('.toggle_container').hide();
-                $('#GettingStarted').toggle('fast');
-
+            document.querySelectorAll('code').forEach((block) => {
                 hljs.highlightBlock(block);
-
-                $('#main-data').removeClass('main-data-hidden');
             });
+
+            $('.toggle_container').hide();
+            $('#GettingStarted').toggle('fast');
+            $('#main-data').removeClass('main-data-hidden');
         });
 
         $(document).ready(function () {
@@ -344,6 +350,15 @@ function FixString ([string]$string) {
                 $('#lstNav li').filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
+
+                if ($('#searchAll:checked').val() == 'on') {
+                    $('.searchable').filter(function () {
+                        if ($(this).text().toLowerCase().indexOf(value) > -1) {
+                            var id = $(this).parents().closest(".toggle_container")[0].id;
+                            $($($('a[href="#' + id + '"]')[0]).parent()[0]).toggle(true)
+                        }
+                    });
+                }
             });
 
             $('.nav-item a').click(function () {

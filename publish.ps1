@@ -8,7 +8,7 @@
 #
 # Copyright (C) 2020 Corsinvest Srl	GPLv3 and CEL
 
-# $p = [Environment]::GetEnvironmentVariable("PSModulePath")
+#$p = [Environment]::GetEnvironmentVariable("PSModulePath")
 # $path = ";.\Corsinvest.ProxmoxVE.Api";
 # if (-not $p.EndsWith($path))
 # {
@@ -19,13 +19,13 @@
 .\setKey.ps1
 
 $publishModuleSplat = @{
-    #Path              = ".\Corsinvest.ProxmoxVE.Api"
-    Name              = "Corsinvest.ProxmoxVE.Api"
+    Path              = ".\Corsinvest.ProxmoxVE.Api"
+    #Name              = "Corsinvest.ProxmoxVE.Api"
     NuGetApiKey       = $ENV:nugetapikey
     Verbose           = $true
     Debug             = $true
     Force             = $true
-    #Repository        = "PSGallery"
+    Repository        = "PSGallery"
     ErrorAction       = 'Stop'
     SkipAutomaticTags = $true
 }

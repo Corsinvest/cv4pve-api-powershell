@@ -73,13 +73,6 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 * Form Proxmox VE 6.2 support Api Token for user
 * Enter-PveSpice enter Spice VM
 
-## Api token
-
-From version 6.2 of Proxmox VE is possible to use [Api token](https://pve.proxmox.com/pve-docs/pveum-plain.html).
-This feature permit execute Api without using user and password.
-If using **Privilege Separation** when create api token remember specify in permission.
-Format USER@REALM!TOKENID=UUID
-
 ## Installation
 
 Install [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell) in your system.
@@ -100,6 +93,13 @@ Download folder Corsinvest.ProxmoxVE.Api and copy in path module
 # show path module
 PS /home/frank> [Environment]::GetEnvironmentVariable("PSModulePath")
 ```
+
+## Api token
+
+From version 6.2 of Proxmox VE is possible to use [Api token](https://pve.proxmox.com/pve-docs/pveum-plain.html).
+This feature permit execute Api without using user and password.
+If using **Privilege Separation** when create api token remember specify in permission.
+Format USER@REALM!TOKENID=UUID
 
 ## Connect to cluster
 
@@ -139,7 +139,7 @@ class PveResponse {
     [string] $ResponseType
 
     [bool] ResponseInError() { return $null -ne $this.Response.error }
-    [PSCustomObject] ToTable() { return $this.Response.data | Format-Table }
+    [PSCustomObject] ToTable() { return $this.Response.data | Format-Table -Property * }
     [PSCustomObject] GetData() { return $this.Response.data }
     [void] ToCsv([string] $filename) { $this.Response.data | Export-Csv $filename }
 }

@@ -9,21 +9,17 @@
 # Copyright (C) 2020 Corsinvest Srl	GPLv3 and CEL
 
 class PveValidVmId : System.Management.Automation.IValidateSetValuesGenerator {
-    [string[]] GetValidValues() {
-        return (Get-PveClusterResources -Type vm).Response.data | Select-Object -ExpandProperty vmid
-    }
+    [string[]] GetValidValues() { return Get-PveVM | Select-Object -ExpandProperty vmid }
 }
 
 class PveValidVmName : System.Management.Automation.IValidateSetValuesGenerator {
     [string[]] GetValidValues() {
-        return (Get-PveClusterResources -Type vm).Response.data | Where-Object {$_.status -ne 'unknown' } | Select-Object -ExpandProperty name
+        return Get-PveVM | Where-Object {$_.status -ne 'unknown' } | Select-Object -ExpandProperty name
     }
 }
 
 class PveValidNode : System.Management.Automation.IValidateSetValuesGenerator {
-    [string[]] GetValidValues() {
-        return (Get-PveClusterResources -Type node).Response.data | Select-Object -ExpandProperty node
-    }
+    [string[]] GetValidValues() { return Get-PveNodes | Select-Object -ExpandProperty node }
 }
 
 class PveTicket {
@@ -46,11 +42,8 @@ class PveResponse {
     [string] $ResponseType
 
     [bool] ResponseInError() { return $null -ne $this.Response.error }
-
-    [PSCustomObject] ToTable() { return $this.Response.data | Format-Table }
-
+    [PSCustomObject] ToTable() { return $this.Response.data | Format-Table -Property * }
     [PSCustomObject] GetData() { return $this.Response.data }
-
     [void] ToCsv([string] $filename) { $this.Response.data | Export-Csv $filename }
 }
 
@@ -71,6 +64,8 @@ Format 10.1.1.90:8006,10.1.1.91:8006,10.1.1.92:8006.
 Skips certificate validation checks.
 .PARAMETER Credentials
 Username and password, username formatted as user@pam, user@pve, user@yourdomain or user (default domain pam).
+.PARAMETER ApiToken
+Api Token format USER@REALM!TOKENID=UUID
 .PARAMETER SkipRefreshPveTicketLast
 Skip refresh PveTicket Last global variable
 .EXAMPLE
@@ -168,13 +163,11 @@ Resource Request
 Method request
 .PARAMETER ResponseType
 Type request
-.PARAMETER ApiBase
-Base Api
 .PARAMETER Parameters
 Parameters request
 .EXAMPLE
 $PveTicket = Connect-PveCluster -HostsAndPorts '192.168.128.115' -Credentials (Get-Credential -Username 'root').
-(Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource '/version').data
+(Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource '/version').Resonse.data
 
 data
 ----
@@ -198,11 +191,8 @@ Return object request
         [string]$Method = 'Get',
 
         [Parameter()]
-        [ValidateSet('json', 'png')]
+        [ValidateSet('json', 'png', '')]
         [string]$ResponseType = 'json',
-
-        [ValidateNotNullOrEmpty()]
-        [string]$ApiBase = "/api2/$ResponseType",
 
         [hashtable]$Parameters
     )
@@ -254,8 +244,12 @@ Return object request
         $headers = @{ CSRFPreventionToken = $PveTicket.CSRFPreventionToken  }
         if($PveTicket.ApiToken -ne '') { $headers.Authorization = 'PVEAPIToken ' + $PveTicket.ApiToken }
 
+        $url = "https://$($PveTicket.HostName):$($PveTicket.Port)/api2"
+        if($ResponseType -ne '') { $url += "/$ResponseType" }
+        $url += "$Resource$query"
+
         $params = @{
-            Uri                  = "https://$($PveTicket.HostName):$($PveTicket.Port)$ApiBase$Resource$query"
+            Uri                  = $url
             Method               = $restMethod
             WebSession           = $session
             SkipCertificateCheck = $PveTicket.SkipCertificateCheck
@@ -435,21 +429,23 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$Viewer
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName | Select-Object -First 1
         if ($vm.type -eq 'qemu') {
             $node = $vm.node
             $vmid = $vm.vmid
 
             $parameters = @{ proxy = $null -eq $PveTicket ? $PveTicketLast.HostName : $PveTicket.HostName }
 
-            $ret = Invoke-PveRestApi -PveTicket $PveTicket -Method Create -ApiBase "/api2" -Resource "/spiceconfig/nodes/$node/qemu/$vmid/spiceproxy" -Parameters $parameters
+            $ret = Invoke-PveRestApi -PveTicket $PveTicket -Method Create -ResponseType '' -Resource "/spiceconfig/nodes/$node/qemu/$vmid/spiceproxy" -Parameters $parameters
 
             Write-Debug "======================================="
             Write-Debug "SPICE Proxy Configuration"
@@ -546,14 +542,46 @@ Bool. Return tas is running.
 }
 #endregion
 
-function Find-PveVM {
+# function Get-PveStorage {
+#     <#
+# .DESCRIPTION
+# Get nodes
+# .PARAMETER PveTicket
+# Ticket data connection.
+# .PARAMETER Storage
+# The Name of the storage.
+# .OUTPUTS
+# PSCustomObject. Return Vm Data.
+# #>
+#     [OutputType([PSCustomObject])]
+#     [CmdletBinding()]
+#     Param(
+#         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+#         [ValidateNotNull]
+#         [PveTicket]$PveTicket,
+
+#         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+#         [string]$Storage
+#     )
+
+#     process {
+#         return $null -eq $Storage
+
+#         $data = (Get-PveClusterResources -PveTicket $PveTicket -Type storage).Response.data
+#         return $null -eq $Storage ?
+#                 $data :
+#                 $data | Where-Object { $_.storage -like $Storage }
+#     }
+# }
+
+function Get-PveNode {
     <#
 .DESCRIPTION
-Find VM/CT from id or name.
+Get nodes
 .PARAMETER PveTicket
 Ticket data connection.
-.PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+.PARAMETER Node
+The Name of the node.
 .OUTPUTS
 PSCustomObject. Return Vm Data.
 #>
@@ -564,14 +592,104 @@ PSCustomObject. Return Vm Data.
         [ValidateNotNull]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        $data = (Get-PveClusterResources -PveTicket $PveTicket -Type node).Response.data
+        if($PSBoundParameters['Node'])
+        {
+            return $data | Where-Object { $_.node -like $Node }
+        }
+        else
+        {
+            return $data
+        }
+    }
+}
+
+function Get-PveVM {
+    <#
+.DESCRIPTION
+Get VMs/CTs from id or name.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER VmIdOrName
+The id or name VM/CT comma separated (eg. 100,101,102,TestDebian)
+range 100:107,-105,200:204
+'all-???' for all VM/CT in specific host (e.g. all-pve1, all-\$(hostname)),
+'all' or '*' for all VM/CT in cluster
+.OUTPUTS
+PSCustomObject. Return Vm Data.
+#>
+    [OutputType([PSCustomObject])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNull]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$VmIdOrName
     )
 
     process {
-        return (Get-PveClusterResources -PveTicket $PveTicket -Type vm).Response.data |
-        Where-Object { $_.vmid -eq $VmIdOrName -or $_.name -eq $VmIdOrName }
+        $data = (Get-PveClusterResources -PveTicket $PveTicket -Type vm).Response.data
+        if ($PSBoundParameters['VmIdOrName'])
+        {
+            return $data | Where-Object { VmCheckIdOrName -Vm $_ -VmIdOrName $VmIdOrName }
+        }
+        else
+        {
+            return $data
+        }
     }
+}
+
+function IsNumeric([string]$x) {
+    try {
+        0 + $x | Out-Null
+        return $true
+    } catch {
+        return $false
+    }
+}
+
+function VmCheckIdOrName
+{
+    [OutputType([bool])]
+    Param(
+        [PSCustomObject]$Vm,
+
+        [ValidateNotNullOrEmpty()]
+        [string]$VmIdOrName
+    )
+
+    if($VmIdOrName -eq 'all') { return $true }
+
+    foreach ($item in $VmIdOrName.Split(",")) {
+        If($item -like '*:*')
+        {
+            #range number
+            $range = $item.Split(":");
+            if(($range.Length -eq 2) -and (IsNumeric($range[0])) -and (IsNumeric($range[1])))
+            {
+                if (($vm.vmid -ge $range[0]) -and ($vm.vmid -le $range[1])) {
+                    return $true
+                }
+            }
+        }
+        ElseIf((IsNumeric($item))) {
+            if($vm.vmid -eq $item) { return $true }
+        }
+        #all vm in node
+        Elseif($item.IndexOf("all-") -eq 0 -and $item.Substring(4) -eq $vm.node) { return $true }
+        #name
+        ElseIf($vm.name -like $item) { return $true}
+    }
+
+    return $false
 }
 
 function Unlock-PveVM {
@@ -593,11 +711,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Set-PveNodesQemuConfig -PveTicket $PveTicket -Delete 'lock' -Skiplock }
         ElseIf (vm.type -eq 'lxc') { return $vm | Set-PveNodesLxcConfig -PveTicket $PveTicket -Delete 'lock' }
     }
@@ -623,11 +742,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
         ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
     }
@@ -652,11 +772,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket }
         ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
     }
@@ -681,11 +802,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket }
         ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
     }
@@ -710,11 +832,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket }
         ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
     }
@@ -739,11 +862,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket }
         ElseIf (vm.type -eq 'lxc') { throw "Lxc not implement reset!" }
     }
@@ -770,11 +894,12 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Get-PveNodesQemuSnapshot -PveTicket $PveTicket }
         ElseIf (vm.type -eq 'lxc') { return $vm | Get-PveNodesLxcSnapshot -PveTicket $PveTicket }
     }
@@ -792,6 +917,8 @@ The (unique) ID or Name of the VM.
 The name of the snapshot.
 .PARAMETER Description
 A textual description or comment.
+.PARAMETER Vmstate
+Save the vmstate
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -803,19 +930,31 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$Description,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [string]$Snapname
+        [ValidateNotNullOrEmpty()]
+        [string]$Snapname,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Vmstate
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description }
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        if ($vm.type -eq 'qemu')
+        {
+            return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description -Vmstate $Vmstate
+        }
+        ElseIf (vm.type -eq 'lxc')
+        {
+            return $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description
+        }
     }
 }
 
@@ -840,14 +979,16 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$Snapname
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname }
         ElseIf (vm.type -eq 'lxc') { return $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
     }
@@ -874,20 +1015,20 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$VmIdOrName,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
         [string]$Snapname
     )
 
     process {
-        $vm = Find-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
         ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
     }
 }
-
-
 #endregion
 #endregion
 
@@ -895,44 +1036,37 @@ PveResponse. Return response.
 ## ALIAS ##
 ###########
 
-Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus
+Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus -PassThru
 
 #QEMU
-Set-Alias -Name Start-PveQemu -Value New-PveNodesQemuStatusStart
-Set-Alias -Name Stop-PveQemu -Value New-PveNodesQemuStatusStop
-Set-Alias -Name Suspend-PveQemu -Value New-PveNodesQemuStatusSuspend
-Set-Alias -Name Resume-PveQemu -Value New-PveNodesQemuStatusResume
-Set-Alias -Name Reset-PveQemu -Value New-PveNodesQemuStatusReset
+Set-Alias -Name Start-PveQemu -Value New-PveNodesQemuStatusStart -PassThru
+Set-Alias -Name Stop-PveQemu -Value New-PveNodesQeumStatusStop -PassThru
+Set-Alias -Name Suspend-PveQemu -Value New-PveNodesQemuStatusSuspend -PassThru
+Set-Alias -Name Resume-PveQemu -Value New-PveNodesQemuStatusResume -PassThru
+Set-Alias -Name Reset-PveQemu -Value New-PveNodesQemuStatusReset -PassThru
 #Set-Alias -Name Reboot-PveQemu -Value New-PveNodesQemuStatusReboot
 #Set-Alias -Name Shutdown-PveQemu -Value New-PveNodesQemuStatusShutdown
-Set-Alias -Name Move-PveQemu -Value New-PveNodesQemuMigrate
-Set-Alias -Name New-PveQemu -Value New-PveNodesQemu
-Set-Alias -Name Copy-PveQemu -Value New-PveNodesQemuClone
+Set-Alias -Name Move-PveQemu -Value New-PveNodesQemuMigrate -PassThru
+Set-Alias -Name New-PveQemu -Value New-PveNodesQemu -PassThru
+Set-Alias -Name Copy-PveQemu -Value New-PveNodesQemuClone -PassThru
 
 #LXC
-Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusStart
-Set-Alias -Name Stop-PveLxc -Value New-PveNodesLxcStatusStop
-Set-Alias -Name Suspend-PveLxc -Value New-PveNodesLxcStatusSuspend
-Set-Alias -Name Resume-PveLxc -Value New-PveNodesLxcStatusResume
+Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusStart -PassThru
+Set-Alias -Name Stop-PveLxc -Value New-PveNodesLxcStatusStop -PassThru
+Set-Alias -Name Suspend-PveLxc -Value New-PveNodesLxcStatusSuspend -PassThru
+Set-Alias -Name Resume-PveLxc -Value New-PveNodesLxcStatusResume -PassThru
 #Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusReboot
 #Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusShutdown
-Set-Alias -Name Move-PveLxc -Value New-PveNodesLxcMigrate
-Set-Alias -Name Copy-PveLxc -Value New-PveNodesLxcClone
-
-
+Set-Alias -Name Move-PveLxc -Value New-PveNodesLxcMigrate -PassThru
+Set-Alias -Name Copy-PveLxc -Value New-PveNodesLxcClone -PassThru
 
 #NODE
-Set-Alias -Name Update-PveNode -Value New-PveNodesAptUpdate
-Set-Alias -Name Backup-PveVzdump -Value New-PveNodesVzdump
-
-#MISC
-Set-Alias -Name Get-PveTop -Value Get-PveClusterResources
-
+Set-Alias -Name Update-PveNode -Value New-PveNodesAptUpdate -PassThru
+Set-Alias -Name Backup-PveVzdump -Value New-PveNodesVzdump -PassThru
 
 #########
 ## API ##
 #########
-
 
 function Get-PveCluster
 {
@@ -994,7 +1128,7 @@ Replication Job ID. The ID is composed of a Guest ID and a job number, separated
 .PARAMETER Rate
 Rate limit in mbps (megabytes per second) as floating point number.
 .PARAMETER RemoveJob
-Mark the replication job for removal. The job will remove all local replication snapshots. When set to 'full', it also tries to remove replicated volumes on the target. The job then removes itself from the configuration file.
+Mark the replication job for removal. The job will remove all local replication snapshots. When set to 'full', it also tries to remove replicated volumes on the target. The job then removes itself from the configuration file. Enum: local,full
 .PARAMETER Schedule
 Storage replication schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Source
@@ -1002,7 +1136,7 @@ Source of the replication.
 .PARAMETER Target
 Target node.
 .PARAMETER Type
-Section type.
+Section type. Enum: local
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -1146,7 +1280,7 @@ Replication Job ID. The ID is composed of a Guest ID and a job number, separated
 .PARAMETER Rate
 Rate limit in mbps (megabytes per second) as floating point number.
 .PARAMETER RemoveJob
-Mark the replication job for removal. The job will remove all local replication snapshots. When set to 'full', it also tries to remove replicated volumes on the target. The job then removes itself from the configuration file.
+Mark the replication job for removal. The job will remove all local replication snapshots. When set to 'full', it also tries to remove replicated volumes on the target. The job then removes itself from the configuration file. Enum: local,full
 .PARAMETER Schedule
 Storage replication schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Source
@@ -1723,7 +1857,7 @@ Security Group name.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Pos
@@ -1735,7 +1869,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -1912,7 +2046,7 @@ Security Group name.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Moveto
@@ -1926,7 +2060,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -2056,7 +2190,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Pos
@@ -2068,7 +2202,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -2230,7 +2364,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Moveto
@@ -2244,7 +2378,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -2841,9 +2975,9 @@ Enable or disable the firewall cluster wide.
 .PARAMETER LogRatelimit
 Log ratelimiting settings
 .PARAMETER PolicyIn
-Input policy.
+Input policy. Enum: ACCEPT,REJECT,DROP
 .PARAMETER PolicyOut
-Output policy.
+Output policy. Enum: ACCEPT,REJECT,DROP
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -2921,7 +3055,7 @@ Lists possible IPSet/Alias reference which are allowed in source/dest properties
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
-Only list references of specified type.
+Only list references of specified type. Enum: alias,ipset
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -2978,7 +3112,7 @@ Backup all known guest systems on this host.
 .PARAMETER Bwlimit
 Limit I/O bandwidth (KBytes per second).
 .PARAMETER Compress
-Compress dump file.
+Compress dump file. Enum: 0,1,gzip,lzo,zstd
 .PARAMETER Dow
 Day of week selection.
 .PARAMETER Dumpdir
@@ -2994,13 +3128,13 @@ Set CFQ ionice priority.
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Specify when to send an email
+Specify when to send an email Enum: always,failure
 .PARAMETER Mailto
 Comma-separated list of email addresses that should receive email notifications.
 .PARAMETER Maxfiles
 Maximal number of backup files per guest system.
 .PARAMETER Mode
-Backup mode.
+Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
 .PARAMETER Pigz
@@ -3239,7 +3373,7 @@ Backup all known guest systems on this host.
 .PARAMETER Bwlimit
 Limit I/O bandwidth (KBytes per second).
 .PARAMETER Compress
-Compress dump file.
+Compress dump file. Enum: 0,1,gzip,lzo,zstd
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Dow
@@ -3259,13 +3393,13 @@ Set CFQ ionice priority.
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Specify when to send an email
+Specify when to send an email Enum: always,failure
 .PARAMETER Mailto
 Comma-separated list of email addresses that should receive email notifications.
 .PARAMETER Maxfiles
 Maximal number of backup files per guest system.
 .PARAMETER Mode
-Backup mode.
+Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
 .PARAMETER Pigz
@@ -3546,7 +3680,7 @@ List HA resources.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
-Only list resources of specific type
+Only list resources of specific type Enum: ct,vm
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3587,9 +3721,9 @@ Maximal number of tries to restart the service on a node after its start failed.
 .PARAMETER Sid
 HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
 .PARAMETER State
-Requested resource state.
+Requested resource state. Enum: started,stopped,enabled,disabled,ignored
 .PARAMETER Type
-Resource type.
+Resource type. Enum: ct,vm
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3713,7 +3847,7 @@ Maximal number of tries to restart the service on a node after its start failed.
 .PARAMETER Sid
 HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
 .PARAMETER State
-Requested resource state.
+Requested resource state. Enum: started,stopped,enabled,disabled,ignored
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3873,7 +4007,7 @@ The CRM tries to run services on the node with the highest priority. If a node w
 .PARAMETER Restricted
 Resources bound to restricted groups may only run on nodes defined by the group.
 .PARAMETER Type
-Group type.
+Group type. Enum: group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -4131,7 +4265,7 @@ ACME plugin index.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
-Only list ACME plugins of a specific type
+Only list ACME plugins of a specific type Enum: dns,standalone
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -4162,7 +4296,7 @@ Add ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name
+API plugin name Enum: acmedns,acmeproxy,active24,ad,ali,autodns,aws,azure,cf,clouddns,cloudns,cn,conoha,constellix,cx,cyon,da,ddnss,desec,df,dgon,dnsimple,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,euserv,exoscale,freedns,gandi_livedns,gcloud,gd,gdnsdk,he,hexonet,hostingde,infoblox,internetbs,inwx,ispconfig,jd,kas,kinghost,knot,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,namecheap,namecom,namesilo,nederhost,neodigit,netcup,nic,nsd,nsone,nsupdate,nw,one,online,openprovider,opnsense,ovh,pdns,pleskxml,pointhq,rackspace,rcode0,regru,schlundtech,selectel,servercow,tele3,ultra,unoeuro,variomedia,vscale,vultr,yandex,zilore,zone,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Disable
@@ -4172,7 +4306,7 @@ ACME Plugin ID name
 .PARAMETER Nodes
 List of cluster node names.
 .PARAMETER Type
-ACME challenge type.
+ACME challenge type. Enum: dns,standalone
 .PARAMETER ValidationDelay
 Extra delay in seconds to wait before requesting validation. Allows to cope with a long TTL of DNS records.
 .OUTPUTS
@@ -4284,7 +4418,7 @@ Update ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name
+API plugin name Enum: acmedns,acmeproxy,active24,ad,ali,autodns,aws,azure,cf,clouddns,cloudns,cn,conoha,constellix,cx,cyon,da,ddnss,desec,df,dgon,dnsimple,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,euserv,exoscale,freedns,gandi_livedns,gcloud,gd,gdnsdk,he,hexonet,hostingde,infoblox,internetbs,inwx,ispconfig,jd,kas,kinghost,knot,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,namecheap,namecom,namesilo,nederhost,neodigit,netcup,nic,nsd,nsone,nsupdate,nw,one,online,openprovider,opnsense,ovh,pdns,pleskxml,pointhq,rackspace,rcode0,regru,schlundtech,selectel,servercow,tele3,ultra,unoeuro,variomedia,vscale,vultr,yandex,zilore,zone,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Delete
@@ -4611,7 +4745,7 @@ Get ceph metadata.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Scope
---
+-- Enum: all,versions
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -4776,7 +4910,7 @@ Get the status of a specific ceph flag.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Flag
-The name of the flag name to get.
+The name of the flag name to get. Enum: nobackfill,nodeep-scrub,nodown,noin,noout,norebalance,norecover,noscrub,notieragent,noup,pause
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -4804,7 +4938,7 @@ Set or clear (unset) a specific ceph flag
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Flag
-The ceph flag to update
+The ceph flag to update Enum: nobackfill,nodeep-scrub,nodown,noin,noout,norebalance,norecover,noscrub,notieragent,noup,pause
 .PARAMETER Value
 The new value of the flag
 .OUTPUTS
@@ -4916,7 +5050,7 @@ Anycast router mac address
 .PARAMETER Tag
 vlan or vxlan id
 .PARAMETER Type
-Type
+Type Enum: vnet
 .PARAMETER Vlanaware
 Allow vm VLANs to pass through this vnet.
 .PARAMETER Vnet
@@ -5122,7 +5256,7 @@ SDN zones index.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
-Only list sdn zones of specific type
+Only list sdn zones of specific type Enum: evpn,faucet,qinq,simple,vlan,vxlan
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -5167,9 +5301,9 @@ peers address list.
 .PARAMETER Tag
 Service-VLAN Tag
 .PARAMETER Type
-Plugin type.
+Plugin type. Enum: evpn,faucet,qinq,simple,vlan,vxlan
 .PARAMETER VlanProtocol
---
+-- Enum: 802.1q,802.1ad
 .PARAMETER VrfVxlan
 l3vni.
 .PARAMETER Zone
@@ -5317,7 +5451,7 @@ peers address list.
 .PARAMETER Tag
 Service-VLAN Tag
 .PARAMETER VlanProtocol
---
+-- Enum: 802.1q,802.1ad
 .PARAMETER VrfVxlan
 l3vni.
 .PARAMETER Zone
@@ -5395,7 +5529,7 @@ SDN controllers index.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
-Only list sdn controllers of specific type
+Only list sdn controllers of specific type Enum: evpn,faucet
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -5436,7 +5570,7 @@ List of cluster node names.
 .PARAMETER Peers
 peers address list.
 .PARAMETER Type
-Plugin type.
+Plugin type. Enum: evpn,faucet
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -5636,7 +5770,7 @@ Resources index (cluster wide).
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
---
+-- Enum: vm,storage,node,sdn
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -5713,21 +5847,21 @@ Ticket data connection.
 .PARAMETER Bwlimit
 Set bandwidth/io limits various operations.
 .PARAMETER Console
-Select the default Console viewer. You can either use the builtin java applet (VNC; deprecated and maps to html5), an external virt-viewer comtatible application (SPICE), an HTML5 based vnc viewer (noVNC), or an HTML5 based console client (xtermjs). If the selected viewer is not available (e.g. SPICE not activated for the VM), the fallback is noVNC.
+Select the default Console viewer. You can either use the builtin java applet (VNC; deprecated and maps to html5), an external virt-viewer comtatible application (SPICE), an HTML5 based vnc viewer (noVNC), or an HTML5 based console client (xtermjs). If the selected viewer is not available (e.g. SPICE not activated for the VM), the fallback is noVNC. Enum: applet,vv,html5,xtermjs
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER EmailFrom
 Specify email address to send notification from (default is root@$hostname)
 .PARAMETER Fencing
-Set the fencing mode of the HA cluster. Hardware mode needs a valid configuration of fence devices in /etc/pve/ha/fence.cfg. With both all two modes are used.WARNING':' 'hardware' and 'both' are EXPERIMENTAL & WIP
+Set the fencing mode of the HA cluster. Hardware mode needs a valid configuration of fence devices in /etc/pve/ha/fence.cfg. With both all two modes are used.WARNING':' 'hardware' and 'both' are EXPERIMENTAL & WIP Enum: watchdog,hardware,both
 .PARAMETER Ha
 Cluster wide HA settings.
 .PARAMETER HttpProxy
 Specify external http proxy which is used for downloads (example':' 'http':'//username':'password@host':'port/')
 .PARAMETER Keyboard
-Default keybord layout for vnc server.
+Default keybord layout for vnc server. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Language
-Default GUI language.
+Default GUI language. Enum: ca,da,de,en,es,eu,fa,fr,he,it,ja,nb,nn,pl,pt_BR,ru,sl,sv,tr,zh_CN,zh_TW
 .PARAMETER MacPrefix
 Prefix for autogenerated MAC addresses.
 .PARAMETER MaxWorkers
@@ -5963,7 +6097,7 @@ Enable/disable ACPI.
 .PARAMETER Agent
 Enable/disable Qemu GuestAgent and its properties.
 .PARAMETER Arch
-Virtual processor architecture. Defaults to the host.
+Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Archive
 The backup archive. Either the file system path to a .tar or .vma file (use '-' to pipe data from stdin) or a proxmox storage backup volume identifier.
 .PARAMETER Args_
@@ -5975,7 +6109,7 @@ Automatic restart after crash (currently ignored).
 .PARAMETER Balloon
 Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
 .PARAMETER Bios
-Select BIOS implementation.
+Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
 Boot on floppy (a), hard disk (c), CD-ROM (d), or network (n).
 .PARAMETER Bootdisk
@@ -5989,7 +6123,7 @@ cloud-init':' Specify custom files to replace the automatically generated ones a
 .PARAMETER Cipassword
 cloud-init':' Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
 .PARAMETER Citype
-Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows.
+Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows. Enum: configdrive2,nocloud
 .PARAMETER Ciuser
 cloud-init':' User name to change ssh keys and password for instead of the image's configured default user.
 .PARAMETER Cores
@@ -6015,7 +6149,7 @@ Map host PCI devices into guest.
 .PARAMETER Hotplug
 Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory' and 'usb'. Use '0' to disable hotplug completely. Value '1' is an alias for the default 'network,disk,usb'.
 .PARAMETER Hugepages
-Enable/disable hugepages memory.
+Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3).
 .PARAMETER IpconfigN
@@ -6023,13 +6157,13 @@ cloud-init':' Specify IP addresses and gateways for the corresponding interface.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keyboard
-Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it.
+Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
 Enable/disable KVM hardware virtualization.
 .PARAMETER Localtime
 Set the real time clock to local time. This is enabled by default if ostype indicates a Microsoft OS.
 .PARAMETER Lock
-Lock/unlock the VM.
+Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot-delete,suspending,suspended
 .PARAMETER Machine
 Specifies the Qemu machine type.
 .PARAMETER Memory
@@ -6053,7 +6187,7 @@ NUMA topology.
 .PARAMETER Onboot
 Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostype
-Specify guest operating system.
+Specify guest operating system. Enum: other,wxp,w2k,w2k3,w2k8,wvista,win7,win8,win10,l24,l26,solaris
 .PARAMETER ParallelN
 Map host parallel devices (n is 0 to 2).
 .PARAMETER Pool
@@ -6069,7 +6203,7 @@ Use volume as SATA hard disk or CD-ROM (n is 0 to 5).
 .PARAMETER ScsiN
 Use volume as SCSI hard disk or CD-ROM (n is 0 to 30).
 .PARAMETER Scsihw
-SCSI controller model
+SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
 cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
@@ -6639,7 +6773,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Node
@@ -6653,7 +6787,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -6843,7 +6977,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Moveto
@@ -6859,7 +6993,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -7604,9 +7738,9 @@ Enable/disable firewall rules.
 .PARAMETER Ipfilter
 Enable default IP filters. This is equivalent to adding an empty ipfilter-net<id> ipset for every interface. Such ipsets implicitly contain sane default restrictions such as restricting IPv6 link local addresses to the one derived from the interface's MAC address. For containers the configured IP addresses will be implicitly added.
 .PARAMETER LogLevelIn
-Log level for incoming traffic.
+Log level for incoming traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER LogLevelOut
-Log level for outgoing traffic.
+Log level for outgoing traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macfilter
 Enable/disable MAC address filter.
 .PARAMETER Ndp
@@ -7614,9 +7748,9 @@ Enable NDP (Neighbor Discovery Protocol).
 .PARAMETER Node
 The cluster node name.
 .PARAMETER PolicyIn
-Input policy.
+Input policy. Enum: ACCEPT,REJECT,DROP
 .PARAMETER PolicyOut
-Output policy.
+Output policy. Enum: ACCEPT,REJECT,DROP
 .PARAMETER Radv
 Allow sending Router Advertisement.
 .PARAMETER Vmid
@@ -7752,7 +7886,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Type
-Only list references of specified type.
+Only list references of specified type. Enum: alias,ipset
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -7823,7 +7957,7 @@ Execute Qemu Guest Agent commands.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Command
-The QGA command.
+The QGA command. Enum: fsfreeze-freeze,fsfreeze-status,fsfreeze-thaw,fstrim,get-fsinfo,get-host-name,get-memory-block-info,get-memory-blocks,get-osinfo,get-time,get-timezone,get-users,get-vcpus,info,network-get-interfaces,ping,shutdown,suspend-disk,suspend-hybrid,suspend-ram
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Vmid
@@ -8728,13 +8862,13 @@ Read VM RRD statistics (returns PNG)
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Ds
 The list of datasources you want to display.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -8782,11 +8916,11 @@ Read VM RRD statistics
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -8880,7 +9014,7 @@ Enable/disable ACPI.
 .PARAMETER Agent
 Enable/disable Qemu GuestAgent and its properties.
 .PARAMETER Arch
-Virtual processor architecture. Defaults to the host.
+Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Args_
 Arbitrary arguments passed to kvm.
 .PARAMETER Audio0
@@ -8892,7 +9026,7 @@ Time to wait for the task to finish. We return 'null' if the task finish within 
 .PARAMETER Balloon
 Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
 .PARAMETER Bios
-Select BIOS implementation.
+Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
 Boot on floppy (a), hard disk (c), CD-ROM (d), or network (n).
 .PARAMETER Bootdisk
@@ -8904,7 +9038,7 @@ cloud-init':' Specify custom files to replace the automatically generated ones a
 .PARAMETER Cipassword
 cloud-init':' Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
 .PARAMETER Citype
-Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows.
+Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows. Enum: configdrive2,nocloud
 .PARAMETER Ciuser
 cloud-init':' User name to change ssh keys and password for instead of the image's configured default user.
 .PARAMETER Cores
@@ -8934,7 +9068,7 @@ Map host PCI devices into guest.
 .PARAMETER Hotplug
 Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory' and 'usb'. Use '0' to disable hotplug completely. Value '1' is an alias for the default 'network,disk,usb'.
 .PARAMETER Hugepages
-Enable/disable hugepages memory.
+Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3).
 .PARAMETER IpconfigN
@@ -8942,13 +9076,13 @@ cloud-init':' Specify IP addresses and gateways for the corresponding interface.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keyboard
-Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it.
+Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
 Enable/disable KVM hardware virtualization.
 .PARAMETER Localtime
 Set the real time clock to local time. This is enabled by default if ostype indicates a Microsoft OS.
 .PARAMETER Lock
-Lock/unlock the VM.
+Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot-delete,suspending,suspended
 .PARAMETER Machine
 Specifies the Qemu machine type.
 .PARAMETER Memory
@@ -8972,7 +9106,7 @@ NUMA topology.
 .PARAMETER Onboot
 Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostype
-Specify guest operating system.
+Specify guest operating system. Enum: other,wxp,w2k,w2k3,w2k8,wvista,win7,win8,win10,l24,l26,solaris
 .PARAMETER ParallelN
 Map host parallel devices (n is 0 to 2).
 .PARAMETER Protection
@@ -8988,7 +9122,7 @@ Use volume as SATA hard disk or CD-ROM (n is 0 to 5).
 .PARAMETER ScsiN
 Use volume as SCSI hard disk or CD-ROM (n is 0 to 30).
 .PARAMETER Scsihw
-SCSI controller model
+SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
 cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
@@ -9397,7 +9531,7 @@ Enable/disable ACPI.
 .PARAMETER Agent
 Enable/disable Qemu GuestAgent and its properties.
 .PARAMETER Arch
-Virtual processor architecture. Defaults to the host.
+Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Args_
 Arbitrary arguments passed to kvm.
 .PARAMETER Audio0
@@ -9407,7 +9541,7 @@ Automatic restart after crash (currently ignored).
 .PARAMETER Balloon
 Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
 .PARAMETER Bios
-Select BIOS implementation.
+Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
 Boot on floppy (a), hard disk (c), CD-ROM (d), or network (n).
 .PARAMETER Bootdisk
@@ -9419,7 +9553,7 @@ cloud-init':' Specify custom files to replace the automatically generated ones a
 .PARAMETER Cipassword
 cloud-init':' Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
 .PARAMETER Citype
-Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows.
+Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows. Enum: configdrive2,nocloud
 .PARAMETER Ciuser
 cloud-init':' User name to change ssh keys and password for instead of the image's configured default user.
 .PARAMETER Cores
@@ -9449,7 +9583,7 @@ Map host PCI devices into guest.
 .PARAMETER Hotplug
 Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory' and 'usb'. Use '0' to disable hotplug completely. Value '1' is an alias for the default 'network,disk,usb'.
 .PARAMETER Hugepages
-Enable/disable hugepages memory.
+Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3).
 .PARAMETER IpconfigN
@@ -9457,13 +9591,13 @@ cloud-init':' Specify IP addresses and gateways for the corresponding interface.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keyboard
-Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it.
+Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
 Enable/disable KVM hardware virtualization.
 .PARAMETER Localtime
 Set the real time clock to local time. This is enabled by default if ostype indicates a Microsoft OS.
 .PARAMETER Lock
-Lock/unlock the VM.
+Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot-delete,suspending,suspended
 .PARAMETER Machine
 Specifies the Qemu machine type.
 .PARAMETER Memory
@@ -9487,7 +9621,7 @@ NUMA topology.
 .PARAMETER Onboot
 Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostype
-Specify guest operating system.
+Specify guest operating system. Enum: other,wxp,w2k,w2k3,w2k8,wvista,win7,win8,win10,l24,l26,solaris
 .PARAMETER ParallelN
 Map host parallel devices (n is 0 to 2).
 .PARAMETER Protection
@@ -9503,7 +9637,7 @@ Use volume as SATA hard disk or CD-ROM (n is 0 to 5).
 .PARAMETER ScsiN
 Use volume as SCSI hard disk or CD-ROM (n is 0 to 30).
 .PARAMETER Scsihw
-SCSI controller model
+SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
 cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
@@ -10030,7 +10164,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Serial
-opens a serial terminal (defaults to display)
+opens a serial terminal (defaults to display) Enum: serial0,serial1,serial2,serial3
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -10227,7 +10361,7 @@ The cluster node name.
 .PARAMETER MigrationNetwork
 CIDR of the (sub) network that is used for migration.
 .PARAMETER MigrationType
-Migration traffic is encrypted using an SSH tunnel by default. On secure, completely private networks this can be disabled to increase performance.
+Migration traffic is encrypted using an SSH tunnel by default. On secure, completely private networks this can be disabled to increase performance. Enum: secure,insecure
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Skiplock
@@ -10648,7 +10782,7 @@ Check if feature for virtual machine is available.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Feature
-Feature to check.
+Feature to check. Enum: snapshot,clone,copy
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Snapname
@@ -10699,7 +10833,7 @@ Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Description
 Description for the new VM.
 .PARAMETER Format
-Target format for file storage. Only valid for full clone.
+Target format for file storage. Only valid for full clone. Enum: raw,qcow2,vmdk
 .PARAMETER Full
 Create a full copy of all disks. This is always done when you clone a normal VM. For VM templates, we try to create a linked clone by default.
 .PARAMETER Name
@@ -10796,9 +10930,9 @@ Delete the original disk after successful copy. By default the original disk is 
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disk
-The disk you want to move.
+The disk you want to move. Enum: ide0,ide1,ide2,ide3,scsi0,scsi1,scsi2,scsi3,scsi4,scsi5,scsi6,scsi7,scsi8,scsi9,scsi10,scsi11,scsi12,scsi13,scsi14,scsi15,scsi16,scsi17,scsi18,scsi19,scsi20,scsi21,scsi22,scsi23,scsi24,scsi25,scsi26,scsi27,scsi28,scsi29,scsi30,virtio0,virtio1,virtio2,virtio3,virtio4,virtio5,virtio6,virtio7,virtio8,virtio9,virtio10,virtio11,virtio12,virtio13,virtio14,virtio15,sata0,sata1,sata2,sata3,sata4,sata5,efidisk0
 .PARAMETER Format
-Target Format.
+Target Format. Enum: raw,qcow2,vmdk
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Storage
@@ -10908,7 +11042,7 @@ Allow to migrate VMs which use local devices. Only root may use this option.
 .PARAMETER MigrationNetwork
 CIDR of the (sub) network that is used for migration.
 .PARAMETER MigrationType
-Migration traffic is encrypted using an SSH tunnel by default. On secure, completely private networks this can be disabled to increase performance.
+Migration traffic is encrypted using an SSH tunnel by default. On secure, completely private networks this can be disabled to increase performance. Enum: secure,insecure
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Online
@@ -11027,7 +11161,7 @@ Ticket data connection.
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disk
-The disk you want to resize.
+The disk you want to resize. Enum: ide0,ide1,ide2,ide3,scsi0,scsi1,scsi2,scsi3,scsi4,scsi5,scsi6,scsi7,scsi8,scsi9,scsi10,scsi11,scsi12,scsi13,scsi14,scsi15,scsi16,scsi17,scsi18,scsi19,scsi20,scsi21,scsi22,scsi23,scsi24,scsi25,scsi26,scsi27,scsi28,scsi29,scsi30,virtio0,virtio1,virtio2,virtio3,virtio4,virtio5,virtio6,virtio7,virtio8,virtio9,virtio10,virtio11,virtio12,virtio13,virtio14,virtio15,sata0,sata1,sata2,sata3,sata4,sata5,efidisk0
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Size
@@ -11369,7 +11503,7 @@ Create a Template.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Disk
-If you want to convert only 1 disk to base image.
+If you want to convert only 1 disk to base image. Enum: ide0,ide1,ide2,ide3,scsi0,scsi1,scsi2,scsi3,scsi4,scsi5,scsi6,scsi7,scsi8,scsi9,scsi10,scsi11,scsi12,scsi13,scsi14,scsi15,scsi16,scsi17,scsi18,scsi19,scsi20,scsi21,scsi22,scsi23,scsi24,scsi25,scsi26,scsi27,scsi28,scsi29,scsi30,virtio0,virtio1,virtio2,virtio3,virtio4,virtio5,virtio6,virtio7,virtio8,virtio9,virtio10,virtio11,virtio12,virtio13,virtio14,virtio15,sata0,sata1,sata2,sata3,sata4,sata5,efidisk0
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Vmid
@@ -11464,11 +11598,11 @@ Create or restore a container.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Arch
-OS architecture type.
+OS architecture type. Enum: amd64,i386,arm64,armhf
 .PARAMETER Bwlimit
 Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Cmode
-Console mode. By default, the console command tries to open a connection to one of the available tty devices. By setting cmode to 'console' it tries to attach to /dev/console instead. If you set cmode to 'shell', it simply invokes a shell inside the container (no login).
+Console mode. By default, the console command tries to open a connection to one of the available tty devices. By setting cmode to 'console' it tries to attach to /dev/console instead. If you set cmode to 'shell', it simply invokes a shell inside the container (no login). Enum: shell,console,tty
 .PARAMETER Console
 Attach a console device (/dev/console) to the container.
 .PARAMETER Cores
@@ -11477,7 +11611,7 @@ The number of cores assigned to the container. A container can use all available
 Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
 CPU weight for a VM. Argument is used in the kernel fair scheduler. The larger the number is, the more CPU time this VM gets. Number is relative to the weights of all the other running VMs.NOTE':' You can disable fair-scheduler configuration by setting this to 0.
-.PARAMETER Debug
+.PARAMETER Debug_
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Description
 Container description. Only used on the configuration web interface.
@@ -11492,7 +11626,7 @@ Set a host name for the container.
 .PARAMETER IgnoreUnpackErrors
 Ignore errors when extracting the template.
 .PARAMETER Lock
-Lock/unlock the VM.
+Lock/unlock the VM. Enum: backup,create,destroyed,disk,fstrim,migrate,mounted,rollback,snapshot,snapshot-delete
 .PARAMETER Memory
 Amount of RAM for the VM in MB.
 .PARAMETER MpN
@@ -11508,7 +11642,7 @@ Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostemplate
 The OS template or backup file.
 .PARAMETER Ostype
-OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup.
+OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,unmanaged
 .PARAMETER Password
 Sets root password inside container.
 .PARAMETER Pool
@@ -11580,7 +11714,7 @@ PveResponse. Return response.
         [int]$Cpuunits,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [switch]$Debug,
+        [switch]$Debug_,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Description,
@@ -11696,7 +11830,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Cores']) { $parameters['cores'] = $Cores }
         if($PSBoundParameters['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
         if($PSBoundParameters['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters['Debug']) { $parameters['debug'] = $Debug }
+        if($PSBoundParameters['Debug_']) { $parameters['debug'] = $Debug_ }
         if($PSBoundParameters['Description']) { $parameters['description'] = $Description }
         if($PSBoundParameters['Features']) { $parameters['features'] = $Features }
         if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
@@ -11868,9 +12002,9 @@ Set container options.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Arch
-OS architecture type.
+OS architecture type. Enum: amd64,i386,arm64,armhf
 .PARAMETER Cmode
-Console mode. By default, the console command tries to open a connection to one of the available tty devices. By setting cmode to 'console' it tries to attach to /dev/console instead. If you set cmode to 'shell', it simply invokes a shell inside the container (no login).
+Console mode. By default, the console command tries to open a connection to one of the available tty devices. By setting cmode to 'console' it tries to attach to /dev/console instead. If you set cmode to 'shell', it simply invokes a shell inside the container (no login). Enum: shell,console,tty
 .PARAMETER Console
 Attach a console device (/dev/console) to the container.
 .PARAMETER Cores
@@ -11879,7 +12013,7 @@ The number of cores assigned to the container. A container can use all available
 Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
 CPU weight for a VM. Argument is used in the kernel fair scheduler. The larger the number is, the more CPU time this VM gets. Number is relative to the weights of all the other running VMs.NOTE':' You can disable fair-scheduler configuration by setting this to 0.
-.PARAMETER Debug
+.PARAMETER Debug_
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Delete
 A list of settings you want to delete.
@@ -11894,7 +12028,7 @@ Script that will be exectued during various steps in the containers lifetime.
 .PARAMETER Hostname
 Set a host name for the container.
 .PARAMETER Lock
-Lock/unlock the VM.
+Lock/unlock the VM. Enum: backup,create,destroyed,disk,fstrim,migrate,mounted,rollback,snapshot,snapshot-delete
 .PARAMETER Memory
 Amount of RAM for the VM in MB.
 .PARAMETER MpN
@@ -11908,7 +12042,7 @@ The cluster node name.
 .PARAMETER Onboot
 Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostype
-OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup.
+OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,unmanaged
 .PARAMETER Protection
 Sets the protection flag of the container. This will prevent the CT or CT's disk remove/update operation.
 .PARAMETER Revert
@@ -11965,7 +12099,7 @@ PveResponse. Return response.
         [int]$Cpuunits,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [switch]$Debug,
+        [switch]$Debug_,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Delete,
@@ -12059,7 +12193,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Cores']) { $parameters['cores'] = $Cores }
         if($PSBoundParameters['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
         if($PSBoundParameters['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters['Debug']) { $parameters['debug'] = $Debug }
+        if($PSBoundParameters['Debug_']) { $parameters['debug'] = $Debug_ }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Description']) { $parameters['description'] = $Description }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
@@ -12162,7 +12296,7 @@ function New-PveNodesLxcStatusStart
 Start the container.
 .PARAMETER PveTicket
 Ticket data connection.
-.PARAMETER Debug
+.PARAMETER Debug_
 If set, enables very verbose debug log-level on start.
 .PARAMETER Node
 The cluster node name.
@@ -12180,7 +12314,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [switch]$Debug,
+        [switch]$Debug_,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -12194,7 +12328,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters['Debug']) { $parameters['debug'] = $Debug }
+        if($PSBoundParameters['Debug_']) { $parameters['debug'] = $Debug_ }
         if($PSBoundParameters['Skiplock']) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/start" -Parameters $parameters
@@ -12756,7 +12890,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Node
@@ -12770,7 +12904,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -12960,7 +13094,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Moveto
@@ -12976,7 +13110,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -13721,9 +13855,9 @@ Enable/disable firewall rules.
 .PARAMETER Ipfilter
 Enable default IP filters. This is equivalent to adding an empty ipfilter-net<id> ipset for every interface. Such ipsets implicitly contain sane default restrictions such as restricting IPv6 link local addresses to the one derived from the interface's MAC address. For containers the configured IP addresses will be implicitly added.
 .PARAMETER LogLevelIn
-Log level for incoming traffic.
+Log level for incoming traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER LogLevelOut
-Log level for outgoing traffic.
+Log level for outgoing traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macfilter
 Enable/disable MAC address filter.
 .PARAMETER Ndp
@@ -13731,9 +13865,9 @@ Enable NDP (Neighbor Discovery Protocol).
 .PARAMETER Node
 The cluster node name.
 .PARAMETER PolicyIn
-Input policy.
+Input policy. Enum: ACCEPT,REJECT,DROP
 .PARAMETER PolicyOut
-Output policy.
+Output policy. Enum: ACCEPT,REJECT,DROP
 .PARAMETER Radv
 Allow sending Router Advertisement.
 .PARAMETER Vmid
@@ -13869,7 +14003,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Type
-Only list references of specified type.
+Only list references of specified type. Enum: alias,ipset
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -13908,13 +14042,13 @@ Read VM RRD statistics (returns PNG)
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Ds
 The list of datasources you want to display.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -13962,11 +14096,11 @@ Read VM RRD statistics
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -14250,7 +14384,7 @@ Check if feature for virtual machine is available.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Feature
-Feature to check.
+Feature to check. Enum: snapshot,clone,copy
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Snapname
@@ -14419,7 +14553,7 @@ Ticket data connection.
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disk
-The disk you want to resize.
+The disk you want to resize. Enum: rootfs,mp0,mp1,mp2,mp3,mp4,mp5,mp6,mp7,mp8,mp9,mp10,mp11,mp12,mp13,mp14,mp15,mp16,mp17,mp18,mp19,mp20,mp21,mp22,mp23,mp24,mp25,mp26,mp27,mp28,mp29,mp30,mp31,mp32,mp33,mp34,mp35,mp36,mp37,mp38,mp39,mp40,mp41,mp42,mp43,mp44,mp45,mp46,mp47,mp48,mp49,mp50,mp51,mp52,mp53,mp54,mp55,mp56,mp57,mp58,mp59,mp60,mp61,mp62,mp63,mp64,mp65,mp66,mp67,mp68,mp69,mp70,mp71,mp72,mp73,mp74,mp75,mp76,mp77,mp78,mp79,mp80,mp81,mp82,mp83,mp84,mp85,mp86,mp87,mp88,mp89,mp90,mp91,mp92,mp93,mp94,mp95,mp96,mp97,mp98,mp99,mp100,mp101,mp102,mp103,mp104,mp105,mp106,mp107,mp108,mp109,mp110,mp111,mp112,mp113,mp114,mp115,mp116,mp117,mp118,mp119,mp120,mp121,mp122,mp123,mp124,mp125,mp126,mp127,mp128,mp129,mp130,mp131,mp132,mp133,mp134,mp135,mp136,mp137,mp138,mp139,mp140,mp141,mp142,mp143,mp144,mp145,mp146,mp147,mp148,mp149,mp150,mp151,mp152,mp153,mp154,mp155,mp156,mp157,mp158,mp159,mp160,mp161,mp162,mp163,mp164,mp165,mp166,mp167,mp168,mp169,mp170,mp171,mp172,mp173,mp174,mp175,mp176,mp177,mp178,mp179,mp180,mp181,mp182,mp183,mp184,mp185,mp186,mp187,mp188,mp189,mp190,mp191,mp192,mp193,mp194,mp195,mp196,mp197,mp198,mp199,mp200,mp201,mp202,mp203,mp204,mp205,mp206,mp207,mp208,mp209,mp210,mp211,mp212,mp213,mp214,mp215,mp216,mp217,mp218,mp219,mp220,mp221,mp222,mp223,mp224,mp225,mp226,mp227,mp228,mp229,mp230,mp231,mp232,mp233,mp234,mp235,mp236,mp237,mp238,mp239,mp240,mp241,mp242,mp243,mp244,mp245,mp246,mp247,mp248,mp249,mp250,mp251,mp252,mp253,mp254,mp255
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Size
@@ -14482,7 +14616,7 @@ Target Storage.
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .PARAMETER Volume
-Volume which will be moved.
+Volume which will be moved. Enum: rootfs,mp0,mp1,mp2,mp3,mp4,mp5,mp6,mp7,mp8,mp9,mp10,mp11,mp12,mp13,mp14,mp15,mp16,mp17,mp18,mp19,mp20,mp21,mp22,mp23,mp24,mp25,mp26,mp27,mp28,mp29,mp30,mp31,mp32,mp33,mp34,mp35,mp36,mp37,mp38,mp39,mp40,mp41,mp42,mp43,mp44,mp45,mp46,mp47,mp48,mp49,mp50,mp51,mp52,mp53,mp54,mp55,mp56,mp57,mp58,mp59,mp60,mp61,mp62,mp63,mp64,mp65,mp66,mp67,mp68,mp69,mp70,mp71,mp72,mp73,mp74,mp75,mp76,mp77,mp78,mp79,mp80,mp81,mp82,mp83,mp84,mp85,mp86,mp87,mp88,mp89,mp90,mp91,mp92,mp93,mp94,mp95,mp96,mp97,mp98,mp99,mp100,mp101,mp102,mp103,mp104,mp105,mp106,mp107,mp108,mp109,mp110,mp111,mp112,mp113,mp114,mp115,mp116,mp117,mp118,mp119,mp120,mp121,mp122,mp123,mp124,mp125,mp126,mp127,mp128,mp129,mp130,mp131,mp132,mp133,mp134,mp135,mp136,mp137,mp138,mp139,mp140,mp141,mp142,mp143,mp144,mp145,mp146,mp147,mp148,mp149,mp150,mp151,mp152,mp153,mp154,mp155,mp156,mp157,mp158,mp159,mp160,mp161,mp162,mp163,mp164,mp165,mp166,mp167,mp168,mp169,mp170,mp171,mp172,mp173,mp174,mp175,mp176,mp177,mp178,mp179,mp180,mp181,mp182,mp183,mp184,mp185,mp186,mp187,mp188,mp189,mp190,mp191,mp192,mp193,mp194,mp195,mp196,mp197,mp198,mp199,mp200,mp201,mp202,mp203,mp204,mp205,mp206,mp207,mp208,mp209,mp210,mp211,mp212,mp213,mp214,mp215,mp216,mp217,mp218,mp219,mp220,mp221,mp222,mp223,mp224,mp225,mp226,mp227,mp228,mp229,mp230,mp231,mp232,mp233,mp234,mp235,mp236,mp237,mp238,mp239,mp240,mp241,mp242,mp243,mp244,mp245,mp246,mp247,mp248,mp249,mp250,mp251,mp252,mp253,mp254,mp255
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -15200,7 +15334,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Type
-Only list specific types of disks.
+Only list specific types of disks. Enum: unused,journal_disks
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -15514,7 +15648,7 @@ Ticket data connection.
 .PARAMETER AddStorages
 Configure VM and CT storage using the new pool.
 .PARAMETER Application
-The application of the pool, 'rbd' by default.
+The application of the pool, 'rbd' by default. Enum: rbd,cephfs,rgw
 .PARAMETER CrushRule
 The rule to use for mapping object placement in the cluster.
 .PARAMETER MinSize
@@ -15657,7 +15791,7 @@ Unset a ceph flag
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Flag
-The ceph flag to unset
+The ceph flag to unset Enum: nobackfill,nodeep-scrub,nodown,noin,noout,norebalance,norecover,noscrub,notieragent,noup,pause
 .PARAMETER Node
 The cluster node name.
 .OUTPUTS
@@ -15690,7 +15824,7 @@ Set a specific ceph flag
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Flag
-The ceph flag to set
+The ceph flag to set Enum: nobackfill,nodeep-scrub,nodown,noin,noout,norebalance,norecover,noscrub,notieragent,noup,pause
 .PARAMETER Node
 The cluster node name.
 .OUTPUTS
@@ -15822,7 +15956,7 @@ Backup all known guest systems on this host.
 .PARAMETER Bwlimit
 Limit I/O bandwidth (KBytes per second).
 .PARAMETER Compress
-Compress dump file.
+Compress dump file. Enum: 0,1,gzip,lzo,zstd
 .PARAMETER Dumpdir
 Store resulting files to specified directory.
 .PARAMETER Exclude
@@ -15834,13 +15968,13 @@ Set CFQ ionice priority.
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Specify when to send an email
+Specify when to send an email Enum: always,failure
 .PARAMETER Mailto
 Comma-separated list of email addresses that should receive email notifications.
 .PARAMETER Maxfiles
 Maximal number of backup files per guest system.
 .PARAMETER Mode
-Backup mode.
+Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
 .PARAMETER Pigz
@@ -16076,7 +16210,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Service
-Service ID
+Service ID Enum: pveproxy,pvedaemon,spiceproxy,pvestatd,pve-cluster,corosync,pve-firewall,pvefw-logger,pve-ha-crm,pve-ha-lrm,sshd,syslog,cron,postfix,ksmtuned,systemd-timesyncd
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16109,7 +16243,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Service
-Service ID
+Service ID Enum: pveproxy,pvedaemon,spiceproxy,pvestatd,pve-cluster,corosync,pve-firewall,pvefw-logger,pve-ha-crm,pve-ha-lrm,sshd,syslog,cron,postfix,ksmtuned,systemd-timesyncd
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16142,7 +16276,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Service
-Service ID
+Service ID Enum: pveproxy,pvedaemon,spiceproxy,pvestatd,pve-cluster,corosync,pve-firewall,pvefw-logger,pve-ha-crm,pve-ha-lrm,sshd,syslog,cron,postfix,ksmtuned,systemd-timesyncd
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16175,7 +16309,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Service
-Service ID
+Service ID Enum: pveproxy,pvedaemon,spiceproxy,pvestatd,pve-cluster,corosync,pve-firewall,pvefw-logger,pve-ha-crm,pve-ha-lrm,sshd,syslog,cron,postfix,ksmtuned,systemd-timesyncd
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16208,7 +16342,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Service
-Service ID
+Service ID Enum: pveproxy,pvedaemon,spiceproxy,pvestatd,pve-cluster,corosync,pve-firewall,pvefw-logger,pve-ha-crm,pve-ha-lrm,sshd,syslog,cron,postfix,ksmtuned,systemd-timesyncd
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16241,7 +16375,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Service
-Service ID
+Service ID Enum: pveproxy,pvedaemon,spiceproxy,pvestatd,pve-cluster,corosync,pve-firewall,pvefw-logger,pve-ha-crm,pve-ha-lrm,sshd,syslog,cron,postfix,ksmtuned,systemd-timesyncd
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16425,7 +16559,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Type
-Only list specific interface types.
+Only list specific interface types. Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,any_bridge
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -16467,9 +16601,9 @@ Automatically start interface on boot.
 .PARAMETER BondPrimary
 Specify the primary interface for active-backup bond.
 .PARAMETER BondMode
-Bonding mode.
+Bonding mode. Enum: balance-rr,active-backup,balance-xor,broadcast,802.3ad,balance-tlb,balance-alb,balance-slb,lacp-balance-slb,lacp-balance-tcp
 .PARAMETER BondXmitHashPolicy
-Selects the transmit hash policy to use for slave selection in balance-xor and 802.3ad modes.
+Selects the transmit hash policy to use for slave selection in balance-xor and 802.3ad modes. Enum: layer2,layer2+3,layer3+4
 .PARAMETER BridgePorts
 Specify the interfaces you want to add to your bridge.
 .PARAMETER BridgeVlanAware
@@ -16509,7 +16643,7 @@ Specify a VLan tag (used by OVSPort, OVSIntPort, OVSBond)
 .PARAMETER Slaves
 Specify the interfaces used by the bonding device.
 .PARAMETER Type
-Network interface type
+Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,unknown
 .PARAMETER VlanId
 vlan-id for a custom named vlan interface (ifupdown2 only).
 .PARAMETER VlanRawDevice
@@ -16752,9 +16886,9 @@ Automatically start interface on boot.
 .PARAMETER BondPrimary
 Specify the primary interface for active-backup bond.
 .PARAMETER BondMode
-Bonding mode.
+Bonding mode. Enum: balance-rr,active-backup,balance-xor,broadcast,802.3ad,balance-tlb,balance-alb,balance-slb,lacp-balance-slb,lacp-balance-tcp
 .PARAMETER BondXmitHashPolicy
-Selects the transmit hash policy to use for slave selection in balance-xor and 802.3ad modes.
+Selects the transmit hash policy to use for slave selection in balance-xor and 802.3ad modes. Enum: layer2,layer2+3,layer3+4
 .PARAMETER BridgePorts
 Specify the interfaces you want to add to your bridge.
 .PARAMETER BridgeVlanAware
@@ -16796,7 +16930,7 @@ Specify a VLan tag (used by OVSPort, OVSIntPort, OVSBond)
 .PARAMETER Slaves
 Specify the interfaces used by the bonding device.
 .PARAMETER Type
-Network interface type
+Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,unknown
 .PARAMETER VlanId
 vlan-id for a custom named vlan interface (ifupdown2 only).
 .PARAMETER VlanRawDevice
@@ -16949,7 +17083,7 @@ Only list this amount of tasks.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Source
-List archived, active or all tasks.
+List archived, active or all tasks. Enum: archive,active,all
 .PARAMETER Start
 List tasks beginning from this offset.
 .PARAMETER Typefilter
@@ -17687,7 +17821,7 @@ Use these retention options instead of those from the storage configuration.
 .PARAMETER Storage
 The storage identifier.
 .PARAMETER Type
-Either 'qemu' or 'lxc'. Only consider backups for guests of this type.
+Either 'qemu' or 'lxc'. Only consider backups for guests of this type. Enum: qemu,lxc
 .PARAMETER Vmid
 Only prune backups for this VM.
 .OUTPUTS
@@ -17740,7 +17874,7 @@ Use these retention options instead of those from the storage configuration.
 .PARAMETER Storage
 The storage identifier.
 .PARAMETER Type
-Either 'qemu' or 'lxc'. Only consider backups for guests of this type.
+Either 'qemu' or 'lxc'. Only consider backups for guests of this type. Enum: qemu,lxc
 .PARAMETER Vmid
 Only consider backups for this guest.
 .OUTPUTS
@@ -17835,7 +17969,7 @@ Ticket data connection.
 .PARAMETER Filename
 The name of the file to create.
 .PARAMETER Format
---
+-- Enum: raw,qcow2,subvol
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Size
@@ -18057,7 +18191,7 @@ Read storage RRD statistics (returns PNG).
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Ds
 The list of datasources you want to display.
 .PARAMETER Node
@@ -18065,7 +18199,7 @@ The cluster node name.
 .PARAMETER Storage
 The storage identifier.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -18111,13 +18245,13 @@ Read storage RRD statistics.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Storage
 The storage identifier.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -18417,7 +18551,7 @@ Configure storage using the directory.
 .PARAMETER Device
 The block device you want to create the filesystem on.
 .PARAMETER Filesystem
-The desired filesystem.
+The desired filesystem. Enum: ext4,xfs
 .PARAMETER Name
 The storage identifier.
 .PARAMETER Node
@@ -18498,7 +18632,7 @@ Configure storage using the zpool.
 .PARAMETER Ashift
 Pool sector size exponent.
 .PARAMETER Compression
-The compression algorithm to use.
+The compression algorithm to use. Enum: on,off,gzip,lz4,lzjb,zle
 .PARAMETER Devices
 The block devices you want to create the zpool on.
 .PARAMETER Name
@@ -18506,7 +18640,7 @@ The storage identifier.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Raidlevel
-The RAID level to use.
+The RAID level to use. Enum: single,mirror,raid10,raidz,raidz2,raidz3
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -18597,7 +18731,7 @@ The cluster node name.
 .PARAMETER Skipsmart
 Skip smart checks.
 .PARAMETER Type
-Only list specific types of disks.
+Only list specific types of disks. Enum: unused,journal_disks
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -18948,7 +19082,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Node
@@ -18962,7 +19096,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -19137,7 +19271,7 @@ Flag to enable/disable a rule.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
-Log level for firewall rule.
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Macro
 Use predefined standard macro.
 .PARAMETER Moveto
@@ -19153,7 +19287,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type.
+Rule type. Enum: in,out,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -19280,9 +19414,9 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 .PARAMETER Enable
 Enable host firewall rules.
 .PARAMETER LogLevelIn
-Log level for incoming traffic.
+Log level for incoming traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER LogLevelOut
-Log level for outgoing traffic.
+Log level for outgoing traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER LogNfConntrack
 Enable logging of conntrack information.
 .PARAMETER Ndp
@@ -19306,9 +19440,9 @@ Synflood protection rate burst by ip src.
 .PARAMETER ProtectionSynfloodRate
 Synflood protection rate syn/sec by ip src.
 .PARAMETER SmurfLogLevel
-Log level for SMURFS filter.
+Log level for SMURFS filter. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER TcpFlagsLogLevel
-Log level for illegal tcp flags filter.
+Log level for illegal tcp flags filter. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER Tcpflags
 Filter illegal combinations of TCP flags.
 .OUTPUTS
@@ -19901,7 +20035,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Property
-Return only a specific property from the node configuration.
+Return only a specific property from the node configuration. Enum: acme,acmedomain0,acmedomain1,acmedomain2,acmedomain3,acmedomain4,acmedomain5,description,startall-onboot-delay,wakeonlan
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -20179,7 +20313,7 @@ Reboot or shutdown a node.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Command
-Specify the command.
+Specify the command. Enum: reboot,shutdown
 .PARAMETER Node
 The cluster node name.
 .OUTPUTS
@@ -20304,13 +20438,13 @@ Read node RRD statistics (returns PNG)
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Ds
 The list of datasources you want to display.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -20353,11 +20487,11 @@ Read node RRD statistics
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cf
-The RRD consolidation function
+The RRD consolidation function Enum: AVERAGE,MAX
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Timeframe
-Specify the time frame you are interested in.
+Specify the time frame you are interested in. Enum: hour,day,week,month,year
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -20514,7 +20648,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login.
+Run specific command or default to login. Enum: login,ceph_install,upgrade
 .PARAMETER Height
 sets the height of the console in pixels.
 .PARAMETER Node
@@ -20574,7 +20708,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login.
+Run specific command or default to login. Enum: login,ceph_install,upgrade
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Upgrade
@@ -20657,7 +20791,7 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login.
+Run specific command or default to login. Enum: login,ceph_install,upgrade
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Proxy
@@ -21139,7 +21273,7 @@ Storage index.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
-Only list storage of specific type
+Only list storage of specific type Enum: cephfs,cifs,dir,drbd,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -21246,7 +21380,7 @@ CIFS share.
 .PARAMETER Shared
 Mark storage as shared.
 .PARAMETER Smbversion
-SMB protocol version
+SMB protocol version Enum: 2.0,2.1,3.0
 .PARAMETER Sparse
 use sparse volumes
 .PARAMETER Storage
@@ -21260,9 +21394,9 @@ iSCSI target.
 .PARAMETER Thinpool
 LVM thin pool LV name.
 .PARAMETER Transport
-Gluster transport':' tcp or rdma
+Gluster transport':' tcp or rdma Enum: tcp,rdma,unix
 .PARAMETER Type
-Storage type.
+Storage type. Enum: cephfs,cifs,dir,drbd,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool
 .PARAMETER Username
 RBD Id.
 .PARAMETER Vgname
@@ -21615,7 +21749,7 @@ Backup volfile server IP or DNS name.
 .PARAMETER Shared
 Mark storage as shared.
 .PARAMETER Smbversion
-SMB protocol version
+SMB protocol version Enum: 2.0,2.1,3.0
 .PARAMETER Sparse
 use sparse volumes
 .PARAMETER Storage
@@ -21625,7 +21759,7 @@ Subdir to mount.
 .PARAMETER TaggedOnly
 Only use logical volumes tagged with 'pve-vm-ID'.
 .PARAMETER Transport
-Gluster transport':' tcp or rdma
+Gluster transport':' tcp or rdma Enum: tcp,rdma,unix
 .PARAMETER Username
 RBD Id.
 .OUTPUTS
@@ -22747,7 +22881,7 @@ LDAP filter for group sync.
 .PARAMETER GroupNameAttr
 LDAP attribute representing a groups name. If not set or found, the first value of the DN will be used as name.
 .PARAMETER Mode
-LDAP protocol mode.
+LDAP protocol mode. Enum: ldap,ldaps,ldap+starttls
 .PARAMETER Password
 LDAP bind password. Will be stored in '/etc/pve/priv/realm/<REALM>.pw'.
 .PARAMETER Port
@@ -22761,7 +22895,7 @@ Server IP address (or DNS name)
 .PARAMETER Server2
 Fallback Server IP address (or DNS name)
 .PARAMETER Sslversion
-LDAPS TLS/SSL version. It's not recommended to use version older than 1.2!
+LDAPS TLS/SSL version. It's not recommended to use version older than 1.2! Enum: tlsv1,tlsv1_1,tlsv1_2,tlsv1_3
 .PARAMETER SyncDefaultsOptions
 The default options for behavior of synchronizations.
 .PARAMETER SyncAttributes
@@ -22769,7 +22903,7 @@ Comma separated list of key=value pairs for specifying which LDAP attributes map
 .PARAMETER Tfa
 Use Two-factor authentication.
 .PARAMETER Type
-Realm type.
+Realm type. Enum: ad,ldap,pam,pve
 .PARAMETER UserAttr
 LDAP user attribute name
 .PARAMETER UserClasses
@@ -23000,7 +23134,7 @@ LDAP filter for group sync.
 .PARAMETER GroupNameAttr
 LDAP attribute representing a groups name. If not set or found, the first value of the DN will be used as name.
 .PARAMETER Mode
-LDAP protocol mode.
+LDAP protocol mode. Enum: ldap,ldaps,ldap+starttls
 .PARAMETER Password
 LDAP bind password. Will be stored in '/etc/pve/priv/realm/<REALM>.pw'.
 .PARAMETER Port
@@ -23014,7 +23148,7 @@ Server IP address (or DNS name)
 .PARAMETER Server2
 Fallback Server IP address (or DNS name)
 .PARAMETER Sslversion
-LDAPS TLS/SSL version. It's not recommended to use version older than 1.2!
+LDAPS TLS/SSL version. It's not recommended to use version older than 1.2! Enum: tlsv1,tlsv1_1,tlsv1_2,tlsv1_3
 .PARAMETER SyncDefaultsOptions
 The default options for behavior of synchronizations.
 .PARAMETER SyncAttributes
@@ -23179,7 +23313,7 @@ Remove ACLs for users or groups which were removed from the config during a sync
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER Scope
-Select what to sync.
+Select what to sync. Enum: users,groups,both
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -23377,7 +23511,7 @@ Change user u2f authentication.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Action
-The action to perform
+The action to perform Enum: delete,new,confirm
 .PARAMETER Config
 A TFA configuration. This must currently be of type TOTP of not set at all.
 .PARAMETER Key
