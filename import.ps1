@@ -9,4 +9,4 @@
 # Copyright (C) 2020 Corsinvest Srl	GPLv3 and CEL
 
 remove-Module Corsinvest.ProxmoxVE.Api -Force
-Import-Module .\Corsinvest.ProxmoxVE.Api -Verbose
+Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psm1 -Verbose

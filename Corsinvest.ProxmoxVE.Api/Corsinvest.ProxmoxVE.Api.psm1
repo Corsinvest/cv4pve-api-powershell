@@ -1068,6 +1068,7 @@ Set-Alias -Name Backup-PveVzdump -Value New-PveNodesVzdump -PassThru
 ## API ##
 #########
 
+
 function Get-PveCluster
 {
 <#
@@ -1335,6 +1336,267 @@ PveResponse. Return response.
         if($PSBoundParameters['Source']) { $parameters['source'] = $Source }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/replication/$Id" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterMetrics
+{
+<#
+.DESCRIPTION
+Metrics index.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/metrics"
+    }
+}
+
+function Get-PveClusterMetricsServer
+{
+<#
+.DESCRIPTION
+List configured metric servers.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/metrics/server"
+    }
+}
+
+function Remove-PveClusterMetricsServer
+{
+<#
+.DESCRIPTION
+Remove Metric server.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Id
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Id
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/metrics/server/$Id"
+    }
+}
+
+function Get-PveClusterMetricsServerIdx
+{
+<#
+.DESCRIPTION
+Read metric server configuration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Id
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Id
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/metrics/server/$Id"
+    }
+}
+
+function New-PveClusterMetricsServer
+{
+<#
+.DESCRIPTION
+Create a new external metric server config
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Disable
+Flag to disable the plugin.
+.PARAMETER Id
+The ID of the entry.
+.PARAMETER Mtu
+MTU for metrics transmission over UDP
+.PARAMETER Path
+root graphite path (ex':' proxmox.mycluster.mykey)
+.PARAMETER Port
+server network port
+.PARAMETER Proto
+Protocol to send graphite data. TCP or UDP (default) Enum: udp,tcp
+.PARAMETER Server
+server dns name or IP address
+.PARAMETER Timeout
+graphite TCP socket timeout (default=1)
+.PARAMETER Type
+Plugin type. Enum: graphite,influxdb
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Id,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Mtu,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Path,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Port,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('udp','tcp')]
+        [string]$Proto,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Server,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Timeout,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('graphite','influxdb')]
+        [string]$Type
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['Mtu']) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters['Path']) { $parameters['path'] = $Path }
+        if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
+        if($PSBoundParameters['Proto']) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
+    }
+}
+
+function Set-PveClusterMetricsServer
+{
+<#
+.DESCRIPTION
+Update metric server configuration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+.PARAMETER Disable
+Flag to disable the plugin.
+.PARAMETER Id
+The ID of the entry.
+.PARAMETER Mtu
+MTU for metrics transmission over UDP
+.PARAMETER Path
+root graphite path (ex':' proxmox.mycluster.mykey)
+.PARAMETER Port
+server network port
+.PARAMETER Proto
+Protocol to send graphite data. TCP or UDP (default) Enum: udp,tcp
+.PARAMETER Server
+server dns name or IP address
+.PARAMETER Timeout
+graphite TCP socket timeout (default=1)
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Delete,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Id,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Mtu,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Path,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Port,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('udp','tcp')]
+        [string]$Proto,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Server,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Timeout
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['Mtu']) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters['Path']) { $parameters['path'] = $Path }
+        if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
+        if($PSBoundParameters['Proto']) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters['Timeout']) { $parameters['timeout'] = $Timeout }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
     }
 }
 
@@ -1854,6 +2116,8 @@ Restrict TCP/UDP destination port. You can use service names or simple numbers (
 Flag to enable/disable a rule.
 .PARAMETER Group
 Security Group name.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -1901,6 +2165,9 @@ PveResponse. Return response.
         [string]$Group,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -1935,6 +2202,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -2043,6 +2311,8 @@ Restrict TCP/UDP destination port. You can use service names or simple numbers (
 Flag to enable/disable a rule.
 .PARAMETER Group
 Security Group name.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -2095,6 +2365,9 @@ PveResponse. Return response.
         [string]$Group,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -2133,6 +2406,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -2187,6 +2461,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -2231,6 +2507,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -2265,6 +2544,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -2361,6 +2641,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -2410,6 +2692,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -2448,6 +2733,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -6111,9 +6397,9 @@ Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
 .PARAMETER Bios
 Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
-Boot on floppy (a), hard disk (c), CD-ROM (d), or network (n).
+Specify guest boot order. Use with 'order=', usage with no key or 'legacy=' is deprecated.
 .PARAMETER Bootdisk
-Enable booting from specified disk.
+Enable booting from specified disk. Deprecated':' Use 'boot':' order=foo;bar' instead.
 .PARAMETER Bwlimit
 Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Cdrom
@@ -6153,9 +6439,11 @@ Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3).
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to using dhcp on IPv4.
+cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
+.PARAMETER Keephugepages
+Use together with hugepages. If enabled, hugepages will not not be deleted after VM shutdown and can be used for subsequent starts.
 .PARAMETER Keyboard
 Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
@@ -6175,7 +6463,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init':' Sets DNS server IP address for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -6205,7 +6493,7 @@ Use volume as SCSI hard disk or CD-ROM (n is 0 to 30).
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init':' Sets DNS search domains for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -6223,7 +6511,7 @@ cloud-init':' Setup public SSH keys (one key per line, OpenSSH format).
 .PARAMETER Start
 Start VM after it was created successfully.
 .PARAMETER Startdate
-Set the initial date of the real time clock. Valid format for date are':' 'now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
+Set the initial date of the real time clock. Valid format for date are':''now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Storage
@@ -6364,6 +6652,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Ivshmem,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Keephugepages,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
@@ -6551,6 +6842,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Hotplug']) { $parameters['hotplug'] = $Hotplug }
         if($PSBoundParameters['Hugepages']) { $parameters['hugepages'] = $Hugepages }
         if($PSBoundParameters['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
+        if($PSBoundParameters['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
         if($PSBoundParameters['Keyboard']) { $parameters['keyboard'] = $Keyboard }
         if($PSBoundParameters['Kvm']) { $parameters['kvm'] = $Kvm }
         if($PSBoundParameters['Localtime']) { $parameters['localtime'] = $Localtime }
@@ -6770,6 +7062,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -6818,6 +7112,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -6858,6 +7155,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -6974,6 +7272,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -7027,6 +7327,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -7071,6 +7374,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -9028,9 +9332,9 @@ Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
 .PARAMETER Bios
 Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
-Boot on floppy (a), hard disk (c), CD-ROM (d), or network (n).
+Specify guest boot order. Use with 'order=', usage with no key or 'legacy=' is deprecated.
 .PARAMETER Bootdisk
-Enable booting from specified disk.
+Enable booting from specified disk. Deprecated':' Use 'boot':' order=foo;bar' instead.
 .PARAMETER Cdrom
 This is an alias for option -ide2
 .PARAMETER Cicustom
@@ -9072,9 +9376,11 @@ Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3).
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to using dhcp on IPv4.
+cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
+.PARAMETER Keephugepages
+Use together with hugepages. If enabled, hugepages will not not be deleted after VM shutdown and can be used for subsequent starts.
 .PARAMETER Keyboard
 Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
@@ -9094,7 +9400,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init':' Sets DNS server IP address for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -9124,7 +9430,7 @@ Use volume as SCSI hard disk or CD-ROM (n is 0 to 30).
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init':' Sets DNS search domains for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -9142,7 +9448,7 @@ Configure additional enhancements for SPICE.
 .PARAMETER Sshkeys
 cloud-init':' Setup public SSH keys (one key per line, OpenSSH format).
 .PARAMETER Startdate
-Set the initial date of the real time clock. Valid format for date are':' 'now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
+Set the initial date of the real time clock. Valid format for date are':''now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Tablet
@@ -9282,6 +9588,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Ivshmem,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Keephugepages,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
@@ -9464,6 +9773,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Hotplug']) { $parameters['hotplug'] = $Hotplug }
         if($PSBoundParameters['Hugepages']) { $parameters['hugepages'] = $Hugepages }
         if($PSBoundParameters['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
+        if($PSBoundParameters['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
         if($PSBoundParameters['Keyboard']) { $parameters['keyboard'] = $Keyboard }
         if($PSBoundParameters['Kvm']) { $parameters['kvm'] = $Kvm }
         if($PSBoundParameters['Localtime']) { $parameters['localtime'] = $Localtime }
@@ -9543,9 +9853,9 @@ Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
 .PARAMETER Bios
 Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
-Boot on floppy (a), hard disk (c), CD-ROM (d), or network (n).
+Specify guest boot order. Use with 'order=', usage with no key or 'legacy=' is deprecated.
 .PARAMETER Bootdisk
-Enable booting from specified disk.
+Enable booting from specified disk. Deprecated':' Use 'boot':' order=foo;bar' instead.
 .PARAMETER Cdrom
 This is an alias for option -ide2
 .PARAMETER Cicustom
@@ -9587,9 +9897,11 @@ Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3).
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to using dhcp on IPv4.
+cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
+.PARAMETER Keephugepages
+Use together with hugepages. If enabled, hugepages will not not be deleted after VM shutdown and can be used for subsequent starts.
 .PARAMETER Keyboard
 Keybord layout for vnc server. Default is read from the '/etc/pve/datacenter.cfg' configuration file.It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
@@ -9609,7 +9921,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init':' Sets DNS server IP address for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -9639,7 +9951,7 @@ Use volume as SCSI hard disk or CD-ROM (n is 0 to 30).
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init':' Sets DNS search domains for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -9657,7 +9969,7 @@ Configure additional enhancements for SPICE.
 .PARAMETER Sshkeys
 cloud-init':' Setup public SSH keys (one key per line, OpenSSH format).
 .PARAMETER Startdate
-Set the initial date of the real time clock. Valid format for date are':' 'now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
+Set the initial date of the real time clock. Valid format for date are':''now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Tablet
@@ -9794,6 +10106,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Ivshmem,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Keephugepages,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
@@ -9975,6 +10290,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Hotplug']) { $parameters['hotplug'] = $Hotplug }
         if($PSBoundParameters['Hugepages']) { $parameters['hugepages'] = $Hugepages }
         if($PSBoundParameters['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
+        if($PSBoundParameters['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
         if($PSBoundParameters['Keyboard']) { $parameters['keyboard'] = $Keyboard }
         if($PSBoundParameters['Kvm']) { $parameters['kvm'] = $Kvm }
         if($PSBoundParameters['Localtime']) { $parameters['localtime'] = $Localtime }
@@ -12887,6 +13203,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -12935,6 +13253,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -12975,6 +13296,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -13091,6 +13413,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -13144,6 +13468,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -13188,6 +13515,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -15648,7 +15976,7 @@ Ticket data connection.
 .PARAMETER AddStorages
 Configure VM and CT storage using the new pool.
 .PARAMETER Application
-The application of the pool, 'rbd' by default. Enum: rbd,cephfs,rgw
+The application of the pool. Enum: rbd,cephfs,rgw
 .PARAMETER CrushRule
 The rule to use for mapping object placement in the cluster.
 .PARAMETER MinSize
@@ -15657,6 +15985,8 @@ Minimum number of replicas per object
 The name of the pool. It must be unique.
 .PARAMETER Node
 The cluster node name.
+.PARAMETER PgAutoscaleMode
+The automatic PG scaling mode of the pool. Enum: on,off,warn
 .PARAMETER PgNum
 Number of placement groups.
 .PARAMETER Size
@@ -15690,6 +16020,10 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('on','off','warn')]
+        [string]$PgAutoscaleMode,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$PgNum,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -15703,6 +16037,7 @@ PveResponse. Return response.
         if($PSBoundParameters['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
         if($PSBoundParameters['MinSize']) { $parameters['min_size'] = $MinSize }
         if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
         if($PSBoundParameters['PgNum']) { $parameters['pg_num'] = $PgNum }
         if($PSBoundParameters['Size']) { $parameters['size'] = $Size }
 
@@ -15753,6 +16088,78 @@ PveResponse. Return response.
         if($PSBoundParameters['RemoveStorages']) { $parameters['remove_storages'] = $RemoveStorages }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/pools/$Name" -Parameters $parameters
+    }
+}
+
+function Set-PveNodesCephPools
+{
+<#
+.DESCRIPTION
+Change POOL settings
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Application
+The application of the pool. Enum: rbd,cephfs,rgw
+.PARAMETER CrushRule
+The rule to use for mapping object placement in the cluster.
+.PARAMETER MinSize
+Minimum number of replicas per object
+.PARAMETER Name
+The name of the pool. It must be unique.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER PgAutoscaleMode
+The automatic PG scaling mode of the pool. Enum: on,off,warn
+.PARAMETER PgNum
+Number of placement groups.
+.PARAMETER Size
+Number of replicas per object
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('rbd','cephfs','rgw')]
+        [string]$Application,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CrushRule,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$MinSize,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('on','off','warn')]
+        [string]$PgAutoscaleMode,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$PgNum,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Size
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Application']) { $parameters['application'] = $Application }
+        if($PSBoundParameters['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
+        if($PSBoundParameters['MinSize']) { $parameters['min_size'] = $MinSize }
+        if($PSBoundParameters['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
+        if($PSBoundParameters['PgNum']) { $parameters['pg_num'] = $PgNum }
+        if($PSBoundParameters['Size']) { $parameters['size'] = $Size }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/ceph/pools/$Name" -Parameters $parameters
     }
 }
 
@@ -17864,7 +18271,7 @@ function Get-PveNodesStoragePrunebackups
 {
 <#
 .DESCRIPTION
-Get prune information for backups. NOTE':' this is only a preview and might not be exactly what a subsequent prune call does, if the hour changes or if backups are removed/added in the meantime.
+Get prune information for backups. NOTE':' this is only a preview and might not be what a subsequent prune call does if backups are removed/added in the meantime.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -18148,6 +18555,51 @@ PveResponse. Return response.
         if($PSBoundParameters['TargetNode']) { $parameters['target_node'] = $TargetNode }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
+    }
+}
+
+function Set-PveNodesStorageContent
+{
+<#
+.DESCRIPTION
+Update volume attributes
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Notes
+The new notes.
+.PARAMETER Storage
+The storage identifier.
+.PARAMETER Volume
+Volume identifier
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Notes,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Storage,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Volume
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Notes']) { $parameters['notes'] = $Notes }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
     }
 }
 
@@ -19079,6 +19531,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -19125,6 +19579,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -19162,6 +19619,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -19268,6 +19726,8 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp'.
 .PARAMETER Iface
 Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
 .PARAMETER Log
@@ -19319,6 +19779,9 @@ PveResponse. Return response.
         [int]$Enable,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -19360,6 +19823,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
         if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
         if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
         if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
@@ -20648,7 +21112,9 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: login,ceph_install,upgrade
+Run specific command or default to login. Enum: login,upgrade,ceph_install
+.PARAMETER CmdOpts
+Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Height
 sets the height of the console in pixels.
 .PARAMETER Node
@@ -20669,8 +21135,11 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('login','ceph_install','upgrade')]
+        [ValidateSet('login','upgrade','ceph_install')]
         [string]$Cmd,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CmdOpts,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Height,
@@ -20691,6 +21160,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Cmd']) { $parameters['cmd'] = $Cmd }
+        if($PSBoundParameters['CmdOpts']) { $parameters['cmd-opts'] = $CmdOpts }
         if($PSBoundParameters['Height']) { $parameters['height'] = $Height }
         if($PSBoundParameters['Upgrade']) { $parameters['upgrade'] = $Upgrade }
         if($PSBoundParameters['Websocket']) { $parameters['websocket'] = $Websocket }
@@ -20708,7 +21178,9 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: login,ceph_install,upgrade
+Run specific command or default to login. Enum: login,upgrade,ceph_install
+.PARAMETER CmdOpts
+Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Upgrade
@@ -20723,8 +21195,11 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('login','ceph_install','upgrade')]
+        [ValidateSet('login','upgrade','ceph_install')]
         [string]$Cmd,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CmdOpts,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -20736,6 +21211,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Cmd']) { $parameters['cmd'] = $Cmd }
+        if($PSBoundParameters['CmdOpts']) { $parameters['cmd-opts'] = $CmdOpts }
         if($PSBoundParameters['Upgrade']) { $parameters['upgrade'] = $Upgrade }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/termproxy" -Parameters $parameters
@@ -20791,7 +21267,9 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: login,ceph_install,upgrade
+Run specific command or default to login. Enum: login,upgrade,ceph_install
+.PARAMETER CmdOpts
+Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Proxy
@@ -20808,8 +21286,11 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('login','ceph_install','upgrade')]
+        [ValidateSet('login','upgrade','ceph_install')]
         [string]$Cmd,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CmdOpts,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -20824,6 +21305,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Cmd']) { $parameters['cmd'] = $Cmd }
+        if($PSBoundParameters['CmdOpts']) { $parameters['cmd-opts'] = $CmdOpts }
         if($PSBoundParameters['Proxy']) { $parameters['proxy'] = $Proxy }
         if($PSBoundParameters['Upgrade']) { $parameters['upgrade'] = $Upgrade }
 
@@ -21318,7 +21800,7 @@ target group for comstar views
 .PARAMETER Content
 Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
 .PARAMETER Datastore
-Proxmox backup server datastore name.
+Proxmox Backup Server datastore name.
 .PARAMETER Disable
 Flag to disable the storage.
 .PARAMETER Domain
@@ -21361,6 +21843,8 @@ Password for accessing the share/datastore.
 File system path.
 .PARAMETER Pool
 Pool.
+.PARAMETER Port
+For non default port.
 .PARAMETER Portal
 iSCSI portal (IP or DNS name with optional port).
 .PARAMETER PruneBackups
@@ -21500,6 +21984,9 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Port,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Portal,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -21597,6 +22084,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters['Path']) { $parameters['path'] = $Path }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
         if($PSBoundParameters['Portal']) { $parameters['portal'] = $Portal }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Redundancy']) { $parameters['redundancy'] = $Redundancy }
@@ -21734,6 +22222,8 @@ NFS mount options (see 'man nfs')
 Password for accessing the share/datastore.
 .PARAMETER Pool
 Pool.
+.PARAMETER Port
+For non default port.
 .PARAMETER PruneBackups
 The retention options with shorter intervals are processed first with --keep-last being the very first one. Each option covers a specific period of time. We say that backups within this period are covered by this option. The next option does not take care of already covered backups and only considers older backups.
 .PARAMETER Redundancy
@@ -21847,6 +22337,9 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Port,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -21918,6 +22411,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Options']) { $parameters['options'] = $Options }
         if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Redundancy']) { $parameters['redundancy'] = $Redundancy }
         if($PSBoundParameters['Saferemove']) { $parameters['saferemove'] = $Saferemove }
@@ -22860,6 +23354,8 @@ LDAP base domain name
 LDAP bind domain name
 .PARAMETER Capath
 Path to the CA certificate store
+.PARAMETER CaseSensitive
+username is case-sensitive
 .PARAMETER Cert
 Path to the client certificate
 .PARAMETER Certkey
@@ -22927,6 +23423,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Capath,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$CaseSensitive,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Cert,
@@ -23012,6 +23511,7 @@ PveResponse. Return response.
         if($PSBoundParameters['BaseDn']) { $parameters['base_dn'] = $BaseDn }
         if($PSBoundParameters['BindDn']) { $parameters['bind_dn'] = $BindDn }
         if($PSBoundParameters['Capath']) { $parameters['capath'] = $Capath }
+        if($PSBoundParameters['CaseSensitive']) { $parameters['case-sensitive'] = $CaseSensitive }
         if($PSBoundParameters['Cert']) { $parameters['cert'] = $Cert }
         if($PSBoundParameters['Certkey']) { $parameters['certkey'] = $Certkey }
         if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
@@ -23109,6 +23609,8 @@ LDAP base domain name
 LDAP bind domain name
 .PARAMETER Capath
 Path to the CA certificate store
+.PARAMETER CaseSensitive
+username is case-sensitive
 .PARAMETER Cert
 Path to the client certificate
 .PARAMETER Certkey
@@ -23178,6 +23680,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Capath,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$CaseSensitive,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Cert,
@@ -23265,6 +23770,7 @@ PveResponse. Return response.
         if($PSBoundParameters['BaseDn']) { $parameters['base_dn'] = $BaseDn }
         if($PSBoundParameters['BindDn']) { $parameters['bind_dn'] = $BindDn }
         if($PSBoundParameters['Capath']) { $parameters['capath'] = $Capath }
+        if($PSBoundParameters['CaseSensitive']) { $parameters['case-sensitive'] = $CaseSensitive }
         if($PSBoundParameters['Cert']) { $parameters['cert'] = $Cert }
         if($PSBoundParameters['Certkey']) { $parameters['certkey'] = $Certkey }
         if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
