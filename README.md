@@ -32,7 +32,7 @@ This software is part of a suite of tools called cv4pve-tools. If you want comme
 
 PowerShell for Proxmox VE.
 
-![PowerShell for Proxmox VE](images/powershell.png)
+![PowerShell for Proxmox VE](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-pwsh/master/images/powershell.png)
 
 this is a CmdLet for PowerShell to manage Proxmox VE.
 
