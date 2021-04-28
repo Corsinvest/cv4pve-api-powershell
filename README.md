@@ -142,6 +142,7 @@ class PveResponse {
     [PSCustomObject] ToTable() { return $this.Response.data | Format-Table -Property * }
     [PSCustomObject] GetData() { return $this.Response.data }
     [void] ToCsv([string] $filename) { $this.Response.data | Export-Csv $filename }
+    [void] ToGridView() { $this.Response.data | Out-GridView -Title "View Result Data" }
 }
 ```
 
