@@ -1,10 +1,12 @@
 # cv4pve-api-pwsh
 
 [![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-pwsh.svg)](LICENSE.md)
-![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/cv4pve-api-pwsh)
-![download](https://img.shields.io/powershellgallery/dt/cv4pve-api-pwsh)
+![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api)
+![download](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api)
 
 [ProxmoxVE Api](https://pve.proxmox.com/pve-docs/api-viewer/)
+
+[PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
 
 ```text
     ______                _                      __
