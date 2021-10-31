@@ -296,7 +296,7 @@ Return object request
 Function Build-PveDocumentation {
     <#
 .DESCRIPTION
-Build documentation
+Build documentation for Power Shell command For Proxmox VE
 .PARAMETER TemplateFile
 Template file for generation documentation
 .PARAMETER OutputFile
@@ -1158,7 +1158,7 @@ PveResponse. Return response.
         [string]$Id,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Rate,
+        [float]$Rate,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('local','full')]
@@ -1312,7 +1312,7 @@ PveResponse. Return response.
         [string]$Id,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Rate,
+        [float]$Rate,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('local','full')]
@@ -7478,7 +7478,7 @@ PveResponse. Return response.
         [string]$Cpu,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Cpulimit,
+        [float]$Cpulimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
@@ -7544,7 +7544,7 @@ PveResponse. Return response.
         [int]$Memory,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$MigrateDowntime,
+        [float]$MigrateDowntime,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$MigrateSpeed,
@@ -10418,7 +10418,7 @@ PveResponse. Return response.
         [string]$Cpu,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Cpulimit,
+        [float]$Cpulimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
@@ -10487,7 +10487,7 @@ PveResponse. Return response.
         [int]$Memory,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$MigrateDowntime,
+        [float]$MigrateDowntime,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$MigrateSpeed,
@@ -10936,7 +10936,7 @@ PveResponse. Return response.
         [string]$Cpu,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Cpulimit,
+        [float]$Cpulimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
@@ -11005,7 +11005,7 @@ PveResponse. Return response.
         [int]$Memory,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$MigrateDowntime,
+        [float]$MigrateDowntime,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$MigrateSpeed,
@@ -12858,7 +12858,7 @@ PveResponse. Return response.
         [string]$Arch,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Bwlimit,
+        [float]$Bwlimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('shell','console','tty')]
@@ -12871,7 +12871,7 @@ PveResponse. Return response.
         [int]$Cores,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Cpulimit,
+        [float]$Cpulimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
@@ -13262,7 +13262,7 @@ PveResponse. Return response.
         [int]$Cores,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Cpulimit,
+        [float]$Cpulimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
@@ -15518,7 +15518,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Bwlimit,
+        [float]$Bwlimit,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -15669,7 +15669,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Bwlimit,
+        [float]$Bwlimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Description,
@@ -15802,7 +15802,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Bwlimit,
+        [float]$Bwlimit,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Delete,
@@ -15961,7 +15961,7 @@ PveResponse. Return response.
         [string]$DbDev,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$DbDevSize,
+        [float]$DbDevSize,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Dev,
@@ -15976,7 +15976,7 @@ PveResponse. Return response.
         [string]$WalDev,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$WalDevSize
+        [float]$WalDevSize
     )
 
     process {
@@ -16602,7 +16602,7 @@ PveResponse. Return response.
         [string]$TargetSize,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$TargetSizeRatio
+        [float]$TargetSizeRatio
     )
 
     process {
@@ -16780,7 +16780,7 @@ PveResponse. Return response.
         [string]$TargetSize,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$TargetSizeRatio
+        [float]$TargetSizeRatio
     )
 
     process {
