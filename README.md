@@ -75,11 +75,15 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 * Form Proxmox VE 6.2 support Api Token for user
 * Enter-PveSpice enter Spice VM
 
+## Tutorial
+
+[Tutorial interactive in VSCode notebook](vscode://ms-dotnettools.dotnet-interactive-vscode/openNotebook?url=tutorial.dib)
+
 ## Installation
 
 Install [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell) in your system.
 
-**From PowerShell Gallery (this moment not working)**
+**From PowerShell Gallery**
 
 Open PowerShell and install module form [gallery](https://www.powershellgallery.com/)
 

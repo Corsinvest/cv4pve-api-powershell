@@ -1,0 +1,133 @@
+#!markdown
+
+# Hello World
+
+## What do you do with this notebook?
+
+This notebook is intended to help you learn use the PowerShell for Proxmox VE. You can:
+
+- Work through these notebooks on your own.
+- Use these notebooks as prompts to write your own code
+
+## What is PowerShell?
+
+[PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/overview) is a cross-platform task automation solution made up of a command-line shell, a scripting language, and a configuration management framework. PowerShell runs on Windows, Linux, and macOS.
+
+## Operation
+
+Proxmox VE provides [Web Api](https://pve.proxmox.com/wiki/Proxmox_VE_API), in order to automate processes. 
+
+The use of Api requires access, and is possible through:
+- login with user and password and generate a token
+- using api-token
+
+#!markdown
+
+## Installing the module From PowerShell Gallery
+
+#!pwsh
+
+Install-Module -Name Corsinvest.ProxmoxVE.Api
+
+# Update module
+# Update-Module -Name Corsinvest.ProxmoxVE.Api
+
+# Show Version
+
+Get-Module -list -Name Corsinvest.ProxmoxVE.Api
+
+#!markdown
+
+# Documentation
+
+For build documentation use command **Build-PveDocumentation**
+
+#!pwsh
+
+#Generate documentation
+Build-PveDocumentation -OutputFile cv4pve-api-pwh-documentation.html
+
+#Open documentation
+Invoke-Expression  .\cv4pve-api-pwh-documentation.html
+
+#!markdown
+
+## Connection Cluster
+
+#!pwsh
+
+# Connection with username and password 
+# Remeber to change ip address and user. On prompt insert password and press enter
+Connect-PveCluster -HostsAndPorts 10.92.90.101 -SkipCertificateCheck -Credentials (Get-Credential -UserName root) 
+
+#!pwsh
+
+# Alternative mode to connect 
+# Connection with ApiToken
+Connect-PveCluster -HostsAndPorts 10.92.90.101 -SkipCertificateCheck -ApiToken root@pam!qqqqqq=8a8c1cd4-d373-43f1-b366-05ce4cb8061f
+
+#!markdown
+
+The values of the response (Ticket, CSRFPreventionToken, ApiToken), are saved in the global variable **$PveTicketLast**
+
+#!markdown
+
+## Execute command
+
+Get version of node
+
+#!pwsh
+
+Get-PveVersion
+
+#!markdown
+
+The response contain:
+- **StatusCode**  Status code of response [Http](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+- **Response**    Contain real response of Proxmox VE, is converted in object Json response
+
+#!pwsh
+
+$ret = Get-PveVersion
+
+#!markdown
+
+Print data
+
+#!pwsh
+
+$ret.Response.data
+
+#!markdown
+
+Print data tabulated
+
+#!pwsh
+
+$ret.ToTable()
+
+#!markdown
+
+Export data to Cvs
+
+#!pwsh
+
+$ret.ToCsv("pippo.cvs")
+
+#!markdown
+
+Show nodes
+
+#!pwsh
+
+(Get-PveNodes).ToTable()
+Get-PveNode
+
+#!markdown
+
+Get snapshot of VM/CT with number 100
+
+#!pwsh
+
+#Change number vm
+(Get-PveVMSnapshots -VmIdOrName 100).ToTable()

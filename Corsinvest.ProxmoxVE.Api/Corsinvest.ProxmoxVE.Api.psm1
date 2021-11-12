@@ -32,6 +32,8 @@ class PveTicket {
 }
 
 class PveResponse {
+    #Contain real response of Proxmox VE
+    #Is converted in object Json response
     [PSCustomObject] $Response
     [int] $StatusCode = 200
     [string] $ReasonPhrase
