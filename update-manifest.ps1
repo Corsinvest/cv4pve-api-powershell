@@ -1,4 +1,4 @@
-# This file is part of the cv4pve-api-pwsh https://github.com/Corsinvest/cv4pve-api-pwsh,
+# This file is part of the cv4pve-api-powershell https://github.com/Corsinvest/cv4pve-api-powershell,
 #
 # This source file is available under two different licenses:
 # - GNU General Public License version 3 (GPLv3)

@@ -12,7 +12,7 @@ The default license, without a valid Corsinvest Enterprise License (CEL) agreeme
 ## GNU General Public License version 3 (GPLv3)
 
 If you decide to choose the GPLv3 license, you must comply with the following terms:
-[GPLv3] https://raw.githubusercontent.com/Corsinvest/cv4pve-api-pwsh/master/gpl-3.0.txt
+[GPLv3] https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/gpl-3.0.txt
 
 ## Corsinvest Enterprise License (CEL)
 
@@ -20,6 +20,6 @@ Alternatively, commercial and supported versions of the program - also known as 
 
 Please see also (files in this directory):
 
-[GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 - gpl-3.0.txt](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-pwsh/master/gpl-3.0.txt)
+[GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007 - gpl-3.0.txt](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/gpl-3.0.txt)
 
-[Libraries used including their own licenses - 3rd-party-licenses.md](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-pwsh/master/3rd-party-licenses.md)
+[Libraries used including their own licenses - 3rd-party-licenses.md](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/3rd-party-licenses.md)

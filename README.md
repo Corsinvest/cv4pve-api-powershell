@@ -1,6 +1,6 @@
-# cv4pve-api-pwsh
+# cv4pve-api-powershell
 
-[![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-pwsh.svg)](LICENSE.md)
+[![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell.svg)](LICENSE.md)
 ![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api)
 ![download](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api)
 
@@ -17,7 +17,7 @@
 
 powerShell for Proxmox VE         (Made in Italy)
 
-cv4pve-api-pwsh is a part of suite cv4pve-tools.
+cv4pve-api-powershell is a part of suite cv4pve-tools.
 For more information visit https://www.cv4pve-tools.com
 ```
 
@@ -34,7 +34,7 @@ This software is part of a suite of tools called cv4pve-tools. If you want comme
 
 PowerShell for Proxmox VE.
 
-![PowerShell for Proxmox VE](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-pwsh/master/images/powershell.png)
+![PowerShell for Proxmox VE](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/images/powershell.png)
 
 this is a CmdLet for PowerShell to manage Proxmox VE.
 
@@ -77,7 +77,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 ## Tutorial
 
-[Tutorial interactive in VSCode notebook](https://tinyurl.com/cv4pve-api-pwsh-learn)
+[Tutorial interactive in VSCode notebook](https://tinyurl.com/cv4pve-api-powershell-learn)
 
 ## Installation
 
@@ -247,4 +247,4 @@ vmstate name                         parent                       description   
 For build documentation use command **Build-PveDocumentation**
 
 This command accept **TemplateFile** parameter is a template for generate documentation.
-The default [file](https://raw.githubusercontent.com/corsinvest/cv4pve-api-pwsh/master/cv4pve-api-pwsh-help-out-html.ps1).
+The default [file](https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/cv4pve-api-powershell-help-out-html.ps1).

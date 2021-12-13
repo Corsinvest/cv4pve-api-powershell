@@ -364,7 +364,7 @@ PrivateData = @{
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        ProjectUri = 'https://github.com/Corsinvest/cv4pve-api-pwsh'
+        ProjectUri = 'https://github.com/Corsinvest/cv4pve-api-powershell'
 
         # A URL to an icon representing this module.
         # IconUri = ''

@@ -1,4 +1,4 @@
-# This file is part of the cv4pve-api-pwsh https://github.com/Corsinvest/cv4pve-api-pwsh,
+# This file is part of the cv4pve-api-powershell https://github.com/Corsinvest/cv4pve-api-powershell,
 #
 # This source file is available under two different licenses:
 # - GNU General Public License version 3 (GPLv3)
@@ -308,7 +308,7 @@ Output file
     [OutputType([void])]
     param (
         [Parameter()]
-        [string] $TemplateFile = 'https://raw.githubusercontent.com/corsinvest/cv4pve-api-pwsh/master/cv4pve-api-pwsh-help-out-html.ps1',
+        [string] $TemplateFile = 'https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/cv4pve-api-powershell-help-out-html.ps1',
 
         [Parameter(Mandatory)]
         [string] $OutputFile

@@ -1,4 +1,4 @@
-# This file is part of the cv4pve-api-pwsh https://github.com/Corsinvest/cv4pve-api-pwsh,
+# This file is part of the cv4pve-api-powershell https://github.com/Corsinvest/cv4pve-api-powershell,
 #
 # This source file is available under two different licenses:
 # - GNU General Public License version 3 (GPLv3)
@@ -20,7 +20,7 @@ function FixString ([string]$string) {
 
 @'
 <!--
- This file is part of the cv4pve-api-pwsh https://github.com/Corsinvest/cv4pve-api-pwsh,
+ This file is part of the cv4pve-api-powershell https://github.com/Corsinvest/cv4pve-api-powershell,
 
  This source file is available under two different licenses:
  - GNU General Public License version 3 (GPLv3)
@@ -42,8 +42,8 @@ function FixString ([string]$string) {
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css" />
 
-    <title>cv4pve-api-pwsh PowerShell for Proxmox VE</title>
-    <meta name='generator' content='cv4pve-api-pwsh - Build-PveDocumentation'>
+    <title>cv4pve-api-powershell PowerShell for Proxmox VE</title>
+    <meta name='generator' content='cv4pve-api-powershell - Build-PveDocumentation'>
     <style>
         body { font-size: .875rem; }
 
@@ -119,7 +119,7 @@ function FixString ([string]$string) {
 
 <body>
     <nav class='navbar navbar-dark sticky-top bg-primary flex-md-nowrap p-0 shadow'>
-        <a class='navbar-brand col-md-3 col-lg-2 mr-0 px-3' href='#'>Documentation cv4pve-api-pwsh</a>
+        <a class='navbar-brand col-md-3 col-lg-2 mr-0 px-3' href='#'>Documentation cv4pve-api-powershell</a>
         <ul class='navbar-nav px-1'> </ul>
         <div class='input-group'>
             <div class='input-group-prepend'>
@@ -157,7 +157,7 @@ function FixString ([string]$string) {
             <div class="page-header">
             </div>
 '@
-            (ConvertFrom-Markdown -InputObject (Invoke-WebRequest "https://raw.githubusercontent.com/Corsinvest/cv4pve-api-pwsh/master/README.md").Content ).Html
+            (ConvertFrom-Markdown -InputObject (Invoke-WebRequest "https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/README.md").Content ).Html
 @'
         </div>
 '@
@@ -313,7 +313,7 @@ function FixString ([string]$string) {
         </div>
 
         <div class='fixed-bottom text-white bg-dark'>
-                <a href='https://github.com/Corsinvest/cv4pve-api-pwsh' target='_blank'>cv4pve-api-pwsh</a> - Proxmox VE Client API PowerShell Module by Corsinvest Srl <br>
+                <a href='https://github.com/Corsinvest/cv4pve-api-powershell' target='_blank'>cv4pve-api-powershell</a> - Proxmox VE Client API PowerShell Module by Corsinvest Srl <br>
                 This is a part of suite <a href='https://www.cv4pve-tools.com' target='_blank'>cv4pve-tools</a>
 '@
                 " - Version $((Get-Module Corsinvest.ProxmoxVE.Api).Version.ToString())"
