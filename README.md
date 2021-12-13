@@ -1,7 +1,7 @@
 # cv4pve-api-powershell
 
 [![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell.svg)](LICENSE.md)
-![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api)
+[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
 ![download](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api)
 
 [ProxmoxVE Api](https://pve.proxmox.com/pve-docs/api-viewer/)
@@ -83,7 +83,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 Install [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell) in your system.
 
-**From PowerShell Gallery**
+### From PowerShell Gallery
 
 Open PowerShell and install module form [gallery](https://www.powershellgallery.com/)
 
@@ -91,7 +91,7 @@ Open PowerShell and install module form [gallery](https://www.powershellgallery.
 PS /home/frank> Install-Module -Name Corsinvest.ProxmoxVE.Api
 ```
 
-**Manual**
+### Manual
 
 Download folder Corsinvest.ProxmoxVE.Api and copy in path module
 
