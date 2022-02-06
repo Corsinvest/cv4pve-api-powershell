@@ -194,7 +194,7 @@ Return object request
         [string]$Method = 'Get',
 
         [Parameter()]
-        [ValidateSet('json', 'png', '')]
+        [ValidateSet('json', 'png', 'extjs','')]
         [string]$ResponseType = 'json',
 
         [hashtable]$Parameters
@@ -752,7 +752,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
     }
 }
 
@@ -11389,7 +11389,7 @@ PveResponse. Return response.
         if($PSBoundParameters['UsbN']) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
         if($PSBoundParameters['VirtioN']) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters -ResponseType 'extjs'
     }
 }
 
@@ -11759,7 +11759,7 @@ PveResponse. Return response.
         [string]$MigrationNetwork,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('secure','insecure')]
+        [ValidateSet('secure','insecure','')]
         [string]$MigrationType,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -12578,7 +12578,10 @@ PveResponse. Return response.
         [switch]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Vmid
+        [int]$Vmid,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$RespType
     )
 
     process {
@@ -12588,7 +12591,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Size']) { $parameters['size'] = $Size }
         if($PSBoundParameters['Skiplock']) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters -ResponseType 'extjs'
     }
 }
 
