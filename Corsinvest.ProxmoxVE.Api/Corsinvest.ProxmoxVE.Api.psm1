@@ -11759,7 +11759,7 @@ PveResponse. Return response.
         [string]$MigrationNetwork,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('secure','insecure']
+        [ValidateSet('secure','insecure')]
         [string]$MigrationType,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
