@@ -11389,7 +11389,7 @@ PveResponse. Return response.
         if($PSBoundParameters['UsbN']) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
         if($PSBoundParameters['VirtioN']) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters -ResponseType 'json'
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
     }
 }
 
@@ -12591,7 +12591,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Size']) { $parameters['size'] = $Size }
         if($PSBoundParameters['Skiplock']) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters -ResponseType 'json'
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters
     }
 }
 
