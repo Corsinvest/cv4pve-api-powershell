@@ -12578,10 +12578,7 @@ PveResponse. Return response.
         [switch]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Vmid,
-
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [string]$RespType
+        [int]$Vmid
     )
 
     process {
