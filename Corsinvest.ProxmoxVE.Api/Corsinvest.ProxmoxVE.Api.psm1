@@ -752,7 +752,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
     }
 }
 
