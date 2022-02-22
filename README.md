@@ -41,7 +41,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 ## Main features
 
 * Easy to learn
-* Set ResponseType json, png
+* Set ResponseType json, png, extjs, html, text
 * Full class and method generated from documentation (about client)
 * Comment any method and parameters
 * Parameters indexed eg [n] is structured in array index and value
@@ -146,7 +146,7 @@ class PveResponse {
 
     [bool] ResponseInError() { return $null -ne $this.Response.error }
     [PSCustomObject] ToTable() { return $this.Response.data | Format-Table -Property * }
-    [PSCustomObject] GetData() { return $this.Response.data }
+    [PSCustomObject] ToData() { return $this.Response.data }
     [void] ToCsv([string] $filename) { $this.Response.data | Export-Csv $filename }
     [void] ToGridView() { $this.Response.data | Out-GridView -Title "View Result Data" }
 }

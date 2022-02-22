@@ -45,7 +45,7 @@ class PveResponse {
 
     [bool] ResponseInError() { return $null -ne $this.Response.error }
     [PSCustomObject] ToTable() { return $this.Response.data | Format-Table -Property * }
-    [PSCustomObject] GetData() { return $this.Response.data }
+    [PSCustomObject] ToData() { return $this.Response.data }
     [void] ToCsv([string] $filename) { $this.Response.data | Export-Csv $filename }
     [void] ToGridView() { $this.Response.data | Out-GridView -Title "View Result Data" }
 }
@@ -194,7 +194,7 @@ Return object request
         [string]$Method = 'Get',
 
         [Parameter()]
-        [ValidateSet('json', 'png', '')]
+        [ValidateSet('json', 'extjs', 'html', 'text', 'png','')]
         [string]$ResponseType = 'json',
 
         [hashtable]$Parameters
@@ -721,7 +721,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Set-PveNodesQemuConfig -PveTicket $PveTicket -Delete 'lock' -Skiplock }
-        ElseIf (vm.type -eq 'lxc') { return $vm | Set-PveNodesLxcConfig -PveTicket $PveTicket -Delete 'lock' }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | Set-PveNodesLxcConfig -PveTicket $PveTicket -Delete 'lock' }
     }
 }
 
@@ -782,7 +782,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
     }
 }
 
@@ -812,7 +812,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
     }
 }
 
@@ -842,7 +842,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
     }
 }
 
@@ -872,7 +872,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { throw "Lxc not implement reset!" }
+        ElseIf ($vm.type -eq 'lxc') { throw "Lxc not implement reset!" }
     }
 }
 #endregion
@@ -904,7 +904,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Get-PveNodesQemuSnapshot -PveTicket $PveTicket }
-        ElseIf (vm.type -eq 'lxc') { return $vm | Get-PveNodesLxcSnapshot -PveTicket $PveTicket }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | Get-PveNodesLxcSnapshot -PveTicket $PveTicket }
     }
 }
 
@@ -945,16 +945,22 @@ PveResponse. Return response.
         [string]$Snapname,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [switch]$Vmstate
+        [switch]$Vmstate = $false
     )
 
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu')
         {
-            return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description -Vmstate $Vmstate
+            if ($Vmstate) {
+                return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description -Vmstate
+            }
+            else
+            {
+                return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description
+            }
         }
-        ElseIf (vm.type -eq 'lxc')
+        ElseIf ($vm.type -eq 'lxc')
         {
             return $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description
         }
@@ -993,7 +999,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname }
-        ElseIf (vm.type -eq 'lxc') { return $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
     }
 }
 
@@ -1029,7 +1035,7 @@ PveResponse. Return response.
     process {
         $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
-        ElseIf (vm.type -eq 'lxc') { return $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
+        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
     }
 }
 #endregion
