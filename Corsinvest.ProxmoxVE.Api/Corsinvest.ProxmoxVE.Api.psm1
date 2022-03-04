@@ -540,7 +540,7 @@ Bool. Return tas is running.
     )
 
     process {
-        return (Get-PveNodesTasks -PveTicket $PveTicket -Node $Upid.Split(':')[1] -Upid $Upid).Response.data -eq 'running'
+        return (Get-PveNodesTasksStatus -PveTicket $PveTicket -Node $Upid.Split(':')[1] -Upid $Upid).Response.data.status -eq 'running'
     }
 }
 #endregion

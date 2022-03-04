@@ -12,7 +12,7 @@
 RootModule = 'Corsinvest.ProxmoxVE.Api.psm1'
 
 # Version number of this module.
-ModuleVersion = '7.1.1.0'
+ModuleVersion = '7.1.2.0'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
