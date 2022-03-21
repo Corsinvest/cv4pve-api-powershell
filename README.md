@@ -77,7 +77,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 ## Tutorial
 
-[Tutorial interactive in VSCode notebook](tinyurl.com/cv4pve-api-pwsh-learn)
+[Tutorial interactive in VSCode notebook](https://tinyurl.com/cv4pve-api-pwsh-learn)
 
 ## Installation
 
