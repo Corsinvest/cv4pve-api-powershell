@@ -77,7 +77,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 ## Tutorial
 
-[Tutorial interactive in VSCode notebook]("shorturl.at/gzIQ4")
+[Tutorial interactive in VSCode notebook]("https://shorturl.at/gzIQ4")
 
 ## Installation
 
