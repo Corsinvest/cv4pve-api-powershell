@@ -302,7 +302,7 @@ Output file
     [OutputType([void])]
     param (
         [Parameter()]
-        [string] $TemplateFile = 'https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/cv4pve-api-powershell-help-out-html.ps1',
+        [string] $TemplateFile = 'https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/cv4pve-api-pwsh-help-out-html.ps1',
 
         [Parameter(Mandatory)]
         [string] $OutputFile
@@ -409,12 +409,10 @@ Enter Spice VM.
 Ticket data connection.
 .PARAMETER VmIdOrName
 The (unique) ID or Name of the VM.
-.PARAMETER Proxy
-Proxy host.
-.PARAMETER RemoteViewer
+.PARAMETER Viewer
 Path of Spice remove viewer.
-* Linux /usr/bin/remote-viewer
-* Windows C:\Program Files\VirtViewer v?.?-???\bin\remote-viewer.exe
+- Linux /usr/bin/remote-viewer
+- Windows C:\Program Files\VirtViewer v?.?-???\bin\remote-viewer.exe
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -680,8 +678,13 @@ function VmCheckIdOrName
         ElseIf((IsNumeric($item))) {
             if($vm.vmid -eq $item) { return $true }
         }
+
         #all vm in node
         Elseif($item.IndexOf("all-") -eq 0 -and $item.Substring(4) -eq $vm.node) { return $true }
+
+        #all vm in node
+        Elseif($item.IndexOf("@all-") -eq 0 -and $item.Substring(5) -eq $vm.node) { return $true }
+
         #name
         ElseIf($vm.name -like $item) { return $true}
     }
