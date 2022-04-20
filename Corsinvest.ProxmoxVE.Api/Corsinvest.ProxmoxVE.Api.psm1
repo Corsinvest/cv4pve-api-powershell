@@ -217,7 +217,7 @@ Return object request
         $session.cookies.add($cookie)
 
         $query = ''
-        if ($Parameters -and $Parameters.Count -gt 0) {
+        if ($Parameters -and $Parameters.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -eq 0) {
             Write-Debug 'Parameters:'
             $Parameters.keys | ForEach-Object { Write-Debug "$_ => $($Parameters[$_])" }
 
@@ -258,10 +258,12 @@ Return object request
         #body parameters
         if ($Parameters -and $Parameters.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -ge 0) {
             $params['body'] = $Parameters
+            Write-Debug "Body: $($params.body | Format-Table | Out-String)"
         }
 
         try {
-            Write-Debug "PveRestApi Method: $($params.Method) - Uri: $($params.Uri)"
+            Write-Debug "Params: $($params | Format-Table | Out-String)"
+
             $response.Response = Invoke-RestMethod @params
         }
         catch {
@@ -1042,6 +1044,7 @@ PveResponse. Return response.
 ## ALIAS ##
 ###########
 
+Set-Alias -Name Show-PveSpice -Value Enter-PveSpice -PassThru
 Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus -PassThru
 
 #QEMU
