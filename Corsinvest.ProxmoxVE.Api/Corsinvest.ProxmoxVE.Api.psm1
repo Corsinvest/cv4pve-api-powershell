@@ -3521,10 +3521,14 @@ Deprecated':' use 'prune-backups' instead. Maximal number of backup files per gu
 Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
+.PARAMETER NotesTemplate
+Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future.
 .PARAMETER Pigz
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
 Backup all known guest systems included in the specified pool.
+.PARAMETER Protected
+If true, mark backup(s) as protected.
 .PARAMETER PruneBackups
 Use these retention options instead of those from the storage configuration.
 .PARAMETER Quiet
@@ -3615,10 +3619,16 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$NotesTemplate,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Pool,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Protected,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
@@ -3679,8 +3689,10 @@ PveResponse. Return response.
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
+        if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['Protected']) { $parameters['protected'] = $Protected }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
@@ -3796,10 +3808,14 @@ Deprecated':' use 'prune-backups' instead. Maximal number of backup files per gu
 Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
+.PARAMETER NotesTemplate
+Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future.
 .PARAMETER Pigz
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
 Backup all known guest systems included in the specified pool.
+.PARAMETER Protected
+If true, mark backup(s) as protected.
 .PARAMETER PruneBackups
 Use these retention options instead of those from the storage configuration.
 .PARAMETER Quiet
@@ -3893,10 +3909,16 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$NotesTemplate,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Pool,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Protected,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
@@ -3957,8 +3979,10 @@ PveResponse. Return response.
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
+        if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['Protected']) { $parameters['protected'] = $Protected }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
@@ -5999,6 +6023,8 @@ Ticket data connection.
 Advertise evpn subnets if you have silent hosts
 .PARAMETER Bridge
 --
+.PARAMETER BridgeDisableMacLearning
+Disable auto mac learning.
 .PARAMETER Controller
 Frr router name
 .PARAMETER DisableArpNdSuppression
@@ -6013,6 +6039,8 @@ Faucet dataplane id
 List of cluster node names.
 .PARAMETER ExitnodesLocalRouting
 Allow exitnodes to connect to evpn guests
+.PARAMETER ExitnodesPrimary
+Force traffic to this exitnode first.
 .PARAMETER Ipam
 use a specific ipam
 .PARAMETER Mac
@@ -6025,6 +6053,8 @@ List of cluster node names.
 peers address list.
 .PARAMETER Reversedns
 reverse dns api server
+.PARAMETER RtImport
+Route-Target import
 .PARAMETER Tag
 Service-VLAN Tag
 .PARAMETER Type
@@ -6051,6 +6081,9 @@ PveResponse. Return response.
         [string]$Bridge,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$BridgeDisableMacLearning,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -6072,6 +6105,9 @@ PveResponse. Return response.
         [switch]$ExitnodesLocalRouting,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ExitnodesPrimary,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -6088,6 +6124,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Reversedns,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$RtImport,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Tag,
@@ -6111,6 +6150,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters['AdvertiseSubnets']) { $parameters['advertise-subnets'] = $AdvertiseSubnets }
         if($PSBoundParameters['Bridge']) { $parameters['bridge'] = $Bridge }
+        if($PSBoundParameters['BridgeDisableMacLearning']) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
         if($PSBoundParameters['Controller']) { $parameters['controller'] = $Controller }
         if($PSBoundParameters['DisableArpNdSuppression']) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
         if($PSBoundParameters['Dns']) { $parameters['dns'] = $Dns }
@@ -6118,12 +6158,14 @@ PveResponse. Return response.
         if($PSBoundParameters['DpId']) { $parameters['dp-id'] = $DpId }
         if($PSBoundParameters['Exitnodes']) { $parameters['exitnodes'] = $Exitnodes }
         if($PSBoundParameters['ExitnodesLocalRouting']) { $parameters['exitnodes-local-routing'] = $ExitnodesLocalRouting }
+        if($PSBoundParameters['ExitnodesPrimary']) { $parameters['exitnodes-primary'] = $ExitnodesPrimary }
         if($PSBoundParameters['Ipam']) { $parameters['ipam'] = $Ipam }
         if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
         if($PSBoundParameters['Mtu']) { $parameters['mtu'] = $Mtu }
         if($PSBoundParameters['Nodes']) { $parameters['nodes'] = $Nodes }
         if($PSBoundParameters['Peers']) { $parameters['peers'] = $Peers }
         if($PSBoundParameters['Reversedns']) { $parameters['reversedns'] = $Reversedns }
+        if($PSBoundParameters['RtImport']) { $parameters['rt-import'] = $RtImport }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
         if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
         if($PSBoundParameters['VlanProtocol']) { $parameters['vlan-protocol'] = $VlanProtocol }
@@ -6213,6 +6255,8 @@ Ticket data connection.
 Advertise evpn subnets if you have silent hosts
 .PARAMETER Bridge
 --
+.PARAMETER BridgeDisableMacLearning
+Disable auto mac learning.
 .PARAMETER Controller
 Frr router name
 .PARAMETER Delete
@@ -6231,6 +6275,8 @@ Faucet dataplane id
 List of cluster node names.
 .PARAMETER ExitnodesLocalRouting
 Allow exitnodes to connect to evpn guests
+.PARAMETER ExitnodesPrimary
+Force traffic to this exitnode first.
 .PARAMETER Ipam
 use a specific ipam
 .PARAMETER Mac
@@ -6243,6 +6289,8 @@ List of cluster node names.
 peers address list.
 .PARAMETER Reversedns
 reverse dns api server
+.PARAMETER RtImport
+Route-Target import
 .PARAMETER Tag
 Service-VLAN Tag
 .PARAMETER VlanProtocol
@@ -6265,6 +6313,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Bridge,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$BridgeDisableMacLearning,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Controller,
@@ -6294,6 +6345,9 @@ PveResponse. Return response.
         [switch]$ExitnodesLocalRouting,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ExitnodesPrimary,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -6310,6 +6364,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Reversedns,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$RtImport,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Tag,
@@ -6329,6 +6386,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters['AdvertiseSubnets']) { $parameters['advertise-subnets'] = $AdvertiseSubnets }
         if($PSBoundParameters['Bridge']) { $parameters['bridge'] = $Bridge }
+        if($PSBoundParameters['BridgeDisableMacLearning']) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
         if($PSBoundParameters['Controller']) { $parameters['controller'] = $Controller }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
@@ -6338,12 +6396,14 @@ PveResponse. Return response.
         if($PSBoundParameters['DpId']) { $parameters['dp-id'] = $DpId }
         if($PSBoundParameters['Exitnodes']) { $parameters['exitnodes'] = $Exitnodes }
         if($PSBoundParameters['ExitnodesLocalRouting']) { $parameters['exitnodes-local-routing'] = $ExitnodesLocalRouting }
+        if($PSBoundParameters['ExitnodesPrimary']) { $parameters['exitnodes-primary'] = $ExitnodesPrimary }
         if($PSBoundParameters['Ipam']) { $parameters['ipam'] = $Ipam }
         if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
         if($PSBoundParameters['Mtu']) { $parameters['mtu'] = $Mtu }
         if($PSBoundParameters['Nodes']) { $parameters['nodes'] = $Nodes }
         if($PSBoundParameters['Peers']) { $parameters['peers'] = $Peers }
         if($PSBoundParameters['Reversedns']) { $parameters['reversedns'] = $Reversedns }
+        if($PSBoundParameters['RtImport']) { $parameters['rt-import'] = $RtImport }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
         if($PSBoundParameters['VlanProtocol']) { $parameters['vlan-protocol'] = $VlanProtocol }
         if($PSBoundParameters['VrfVxlan']) { $parameters['vrf-vxlan'] = $VrfVxlan }
@@ -6404,6 +6464,8 @@ Create a new sdn controller object.
 Ticket data connection.
 .PARAMETER Asn
 autonomous system number
+.PARAMETER BgpMultipathAsPathRelax
+--
 .PARAMETER Controller
 The SDN controller object identifier.
 .PARAMETER Ebgp
@@ -6429,6 +6491,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Asn,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$BgpMultipathAsPathRelax,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Controller,
@@ -6456,6 +6521,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Asn']) { $parameters['asn'] = $Asn }
+        if($PSBoundParameters['BgpMultipathAsPathRelax']) { $parameters['bgp-multipath-as-path-relax'] = $BgpMultipathAsPathRelax }
         if($PSBoundParameters['Controller']) { $parameters['controller'] = $Controller }
         if($PSBoundParameters['Ebgp']) { $parameters['ebgp'] = $Ebgp }
         if($PSBoundParameters['EbgpMultihop']) { $parameters['ebgp-multihop'] = $EbgpMultihop }
@@ -6545,6 +6611,8 @@ Update sdn controller object configuration.
 Ticket data connection.
 .PARAMETER Asn
 autonomous system number
+.PARAMETER BgpMultipathAsPathRelax
+--
 .PARAMETER Controller
 The SDN controller object identifier.
 .PARAMETER Delete
@@ -6572,6 +6640,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Asn,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$BgpMultipathAsPathRelax,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Controller,
@@ -6601,6 +6672,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Asn']) { $parameters['asn'] = $Asn }
+        if($PSBoundParameters['BgpMultipathAsPathRelax']) { $parameters['bgp-multipath-as-path-relax'] = $BgpMultipathAsPathRelax }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Ebgp']) { $parameters['ebgp'] = $Ebgp }
@@ -7169,6 +7241,8 @@ Defines how many workers (per node) are maximal started  on actions like 'stopal
 For cluster wide migration settings.
 .PARAMETER MigrationUnsecure
 Migration is secure using SSH tunnel by default. For secure private networks you can disable it to speed up migration. Deprecated, use the 'migration' property instead!
+.PARAMETER NextId
+Control the range for the free VMID auto-selection pool.
 .PARAMETER U2f
 u2f
 .PARAMETER Webauthn
@@ -7229,6 +7303,9 @@ PveResponse. Return response.
         [switch]$MigrationUnsecure,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$NextId,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$U2f,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -7251,6 +7328,7 @@ PveResponse. Return response.
         if($PSBoundParameters['MaxWorkers']) { $parameters['max_workers'] = $MaxWorkers }
         if($PSBoundParameters['Migration']) { $parameters['migration'] = $Migration }
         if($PSBoundParameters['MigrationUnsecure']) { $parameters['migration_unsecure'] = $MigrationUnsecure }
+        if($PSBoundParameters['NextId']) { $parameters['next-id'] = $NextId }
         if($PSBoundParameters['U2f']) { $parameters['u2f'] = $U2f }
         if($PSBoundParameters['Webauthn']) { $parameters['webauthn'] = $Webauthn }
 
@@ -7284,7 +7362,7 @@ function Get-PveClusterNextid
 {
 <#
 .DESCRIPTION
-Get next free VMID. If you pass an VMID it will raise an error if the ID is already used.
+Get next free VMID. Pass a VMID to assert that its free (at time of check).
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Vmid
@@ -7446,7 +7524,7 @@ CPU weight for a VM, will be clamped to \[1, 10000] in cgroup v2.
 .PARAMETER Description
 Description for the VM. Shown in the web-interface VM's summary. This is saved as comment inside the configuration file.
 .PARAMETER Efidisk0
-Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead.
+Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Allow to overwrite existing VM.
 .PARAMETER Freeze
@@ -7460,7 +7538,7 @@ Selectively enable hotplug features. This is a comma separated list of hotplug f
 .PARAMETER Hugepages
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
-Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER IpconfigN
 cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
@@ -7468,7 +7546,7 @@ Inter-VM shared memory. Useful for direct communication between VMs, or to the h
 .PARAMETER Keephugepages
 Use together with hugepages. If enabled, hugepages will not not be deleted after VM shutdown and can be used for subsequent starts.
 .PARAMETER Keyboard
-Keyboard layout for VNC server. The default is read from the'/etc/pve/datacenter.cfg' configuration file. It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
+Keyboard layout for VNC server. This option is generally not required and is often better handled from within the guest OS. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
 Enable/disable KVM hardware virtualization.
 .PARAMETER LiveRestore
@@ -7512,9 +7590,9 @@ Allow reboot. If set to '0' the VM exit on reboot.
 .PARAMETER Rng0
 Configure a VirtIO-based Random Number Generator.
 .PARAMETER SataN
-Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ScsiN
-Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
@@ -7550,7 +7628,7 @@ Enable/disable time drift fix.
 .PARAMETER Template
 Enable/disable Template.
 .PARAMETER Tpmstate0
-Configure a Disk for storing TPM state. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default size of 4 MiB will always be used instead. The format is also fixed to 'raw'.
+Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Unique
 Assign a unique random ethernet address.
 .PARAMETER UnusedN
@@ -7562,7 +7640,7 @@ Number of hotplugged vcpus.
 .PARAMETER Vga
 Configure the VGA hardware.
 .PARAMETER VirtioN
-Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Vmgenid
 Set VM Generation ID. Use '1' to autogenerate on create or update, pass '0' to disable explicitly.
 .PARAMETER Vmid
@@ -10162,6 +10240,8 @@ Writes the given file via guest agent.
 Ticket data connection.
 .PARAMETER Content
 The content to write into the file.
+.PARAMETER Encode
+If set, the content will be encoded as base64 (required by QEMU).Otherwise the content needs to be encoded beforehand - defaults to true.
 .PARAMETER File
 The path to the file.
 .PARAMETER Node
@@ -10180,6 +10260,9 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Content,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Encode,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$File,
 
@@ -10193,6 +10276,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Content']) { $parameters['content'] = $Content }
+        if($PSBoundParameters['Encode']) { $parameters['encode'] = $Encode }
         if($PSBoundParameters['File']) { $parameters['file'] = $File }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/file-write" -Parameters $parameters
@@ -10401,7 +10485,7 @@ Description for the VM. Shown in the web-interface VM's summary. This is saved a
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Efidisk0
-Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead.
+Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
 .PARAMETER Freeze
@@ -10415,7 +10499,7 @@ Selectively enable hotplug features. This is a comma separated list of hotplug f
 .PARAMETER Hugepages
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
-Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER IpconfigN
 cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
@@ -10423,7 +10507,7 @@ Inter-VM shared memory. Useful for direct communication between VMs, or to the h
 .PARAMETER Keephugepages
 Use together with hugepages. If enabled, hugepages will not not be deleted after VM shutdown and can be used for subsequent starts.
 .PARAMETER Keyboard
-Keyboard layout for VNC server. The default is read from the'/etc/pve/datacenter.cfg' configuration file. It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
+Keyboard layout for VNC server. This option is generally not required and is often better handled from within the guest OS. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
 Enable/disable KVM hardware virtualization.
 .PARAMETER Localtime
@@ -10465,9 +10549,9 @@ Revert a pending change.
 .PARAMETER Rng0
 Configure a VirtIO-based Random Number Generator.
 .PARAMETER SataN
-Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ScsiN
-Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
@@ -10501,7 +10585,7 @@ Enable/disable time drift fix.
 .PARAMETER Template
 Enable/disable Template.
 .PARAMETER Tpmstate0
-Configure a Disk for storing TPM state. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default size of 4 MiB will always be used instead. The format is also fixed to 'raw'.
+Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
@@ -10511,7 +10595,7 @@ Number of hotplugged vcpus.
 .PARAMETER Vga
 Configure the VGA hardware.
 .PARAMETER VirtioN
-Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Vmgenid
 Set VM Generation ID. Use '1' to autogenerate on create or update, pass '0' to disable explicitly.
 .PARAMETER Vmid
@@ -10928,7 +11012,7 @@ Description for the VM. Shown in the web-interface VM's summary. This is saved a
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Efidisk0
-Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead.
+Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
 .PARAMETER Freeze
@@ -10942,7 +11026,7 @@ Selectively enable hotplug features. This is a comma separated list of hotplug f
 .PARAMETER Hugepages
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
-Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER IpconfigN
 cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
@@ -10950,7 +11034,7 @@ Inter-VM shared memory. Useful for direct communication between VMs, or to the h
 .PARAMETER Keephugepages
 Use together with hugepages. If enabled, hugepages will not not be deleted after VM shutdown and can be used for subsequent starts.
 .PARAMETER Keyboard
-Keyboard layout for VNC server. The default is read from the'/etc/pve/datacenter.cfg' configuration file. It should not be necessary to set it. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
+Keyboard layout for VNC server. This option is generally not required and is often better handled from within the guest OS. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Kvm
 Enable/disable KVM hardware virtualization.
 .PARAMETER Localtime
@@ -10992,9 +11076,9 @@ Revert a pending change.
 .PARAMETER Rng0
 Configure a VirtIO-based Random Number Generator.
 .PARAMETER SataN
-Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ScsiN
-Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
@@ -11028,7 +11112,7 @@ Enable/disable time drift fix.
 .PARAMETER Template
 Enable/disable Template.
 .PARAMETER Tpmstate0
-Configure a Disk for storing TPM state. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default size of 4 MiB will always be used instead. The format is also fixed to 'raw'.
+Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
@@ -11038,7 +11122,7 @@ Number of hotplugged vcpus.
 .PARAMETER Vga
 Configure the VGA hardware.
 .PARAMETER VirtioN
-Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Vmgenid
 Set VM Generation ID. Use '1' to autogenerate on create or update, pass '0' to disable explicitly.
 .PARAMETER Vmid
@@ -13003,7 +13087,7 @@ Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostemplate
 The OS template or backup file.
 .PARAMETER Ostype
-OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,devuan,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,unmanaged
+OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,devuan,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,nixos,unmanaged
 .PARAMETER Password
 Sets root password inside container.
 .PARAMETER Pool
@@ -13121,7 +13205,7 @@ PveResponse. Return response.
         [string]$Ostemplate,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','unmanaged')]
+        [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','nixos','unmanaged')]
         [string]$Ostype,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -13409,7 +13493,7 @@ The cluster node name.
 .PARAMETER Onboot
 Specifies whether a VM will be started during system bootup.
 .PARAMETER Ostype
-OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,devuan,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,unmanaged
+OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,devuan,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,nixos,unmanaged
 .PARAMETER Protection
 Sets the protection flag of the container. This will prevent the CT or CT's disk remove/update operation.
 .PARAMETER Revert
@@ -13509,7 +13593,7 @@ PveResponse. Return response.
         [switch]$Onboot,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','unmanaged')]
+        [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','nixos','unmanaged')]
         [string]$Ostype,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -15702,6 +15786,8 @@ Use online/live migration.
 Use restart migration
 .PARAMETER Target
 Target node.
+.PARAMETER TargetStorage
+Mapping from source to target storages. Providing only a single storage ID maps all source storages to that storage. Providing the special value '1' will map each source storage to itself.
 .PARAMETER Timeout
 Timeout in seconds for shutdown for restart migration
 .PARAMETER Vmid
@@ -15731,6 +15817,9 @@ PveResponse. Return response.
         [string]$Target,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetStorage,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -15743,6 +15832,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Online']) { $parameters['online'] = $Online }
         if($PSBoundParameters['Restart']) { $parameters['restart'] = $Restart }
         if($PSBoundParameters['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters['TargetStorage']) { $parameters['target-storage'] = $TargetStorage }
         if($PSBoundParameters['Timeout']) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/migrate" -Parameters $parameters
@@ -16747,7 +16837,7 @@ function New-PveNodesCephPools
 {
 <#
 .DESCRIPTION
-Create POOL
+Create Ceph pool
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER AddStorages
@@ -16756,6 +16846,8 @@ Configure VM and CT storage using the new pool.
 The application of the pool. Enum: rbd,cephfs,rgw
 .PARAMETER CrushRule
 The rule to use for mapping object placement in the cluster.
+.PARAMETER ErasureCoding
+Create an erasure coded pool for RBD with an accompaning replicated pool for metadata storage. With EC, the common ceph options 'size', 'min_size' and 'crush_rule' parameters will be applied to the metadata pool.
 .PARAMETER MinSize
 Minimum number of replicas per object
 .PARAMETER Name
@@ -16794,6 +16886,9 @@ PveResponse. Return response.
         [string]$CrushRule,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ErasureCoding,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$MinSize,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -16827,6 +16922,7 @@ PveResponse. Return response.
         if($PSBoundParameters['AddStorages']) { $parameters['add_storages'] = $AddStorages }
         if($PSBoundParameters['Application']) { $parameters['application'] = $Application }
         if($PSBoundParameters['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
+        if($PSBoundParameters['ErasureCoding']) { $parameters['erasure-coding'] = $ErasureCoding }
         if($PSBoundParameters['MinSize']) { $parameters['min_size'] = $MinSize }
         if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
         if($PSBoundParameters['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
@@ -16853,6 +16949,8 @@ If true, destroys pool even if in use
 The name of the pool. It must be unique.
 .PARAMETER Node
 The cluster node name.
+.PARAMETER RemoveEcprofile
+Remove the erasure code profile. Defaults to true, if applicable.
 .PARAMETER RemoveStorages
 Remove all pveceph-managed storages configured for this pool
 .OUTPUTS
@@ -16874,12 +16972,16 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$RemoveEcprofile,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$RemoveStorages
     )
 
     process {
         $parameters = @{}
         if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters['RemoveEcprofile']) { $parameters['remove_ecprofile'] = $RemoveEcprofile }
         if($PSBoundParameters['RemoveStorages']) { $parameters['remove_storages'] = $RemoveStorages }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/pools/$Name" -Parameters $parameters
@@ -17395,10 +17497,14 @@ Deprecated':' use 'prune-backups' instead. Maximal number of backup files per gu
 Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
+.PARAMETER NotesTemplate
+Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future.
 .PARAMETER Pigz
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
 Backup all known guest systems included in the specified pool.
+.PARAMETER Protected
+If true, mark backup(s) as protected.
 .PARAMETER PruneBackups
 Use these retention options instead of those from the storage configuration.
 .PARAMETER Quiet
@@ -17475,10 +17581,16 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$NotesTemplate,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Pool,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Protected,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
@@ -17531,8 +17643,10 @@ PveResponse. Return response.
         if($PSBoundParameters['Mailto']) { $parameters['mailto'] = $Mailto }
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters['Protected']) { $parameters['protected'] = $Protected }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
@@ -23491,6 +23605,8 @@ host group for comstar views
 target group for comstar views
 .PARAMETER Content
 Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
+.PARAMETER DataPool
+Data Pool (for erasure coding only)
 .PARAMETER Datastore
 Proxmox Backup Server datastore name.
 .PARAMETER Disable
@@ -23521,6 +23637,8 @@ Always access rbd through krbd kernel module.
 target portal group for Linux LIO targets
 .PARAMETER MasterPubkey
 Base64-encoded, PEM-formatted public RSA key. Used to encrypt a copy of the encryption-key which will be added to each encrypted backup.
+.PARAMETER MaxProtectedBackups
+Maximal number of protected backups per guest. Use '-1' for unlimited.
 .PARAMETER Maxfiles
 Deprecated':' use 'prune-backups' instead. Maximal number of backup files per VM. Use '0' for unlimited.
 .PARAMETER Mkdir
@@ -23620,6 +23738,9 @@ PveResponse. Return response.
         [string]$Content,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$DataPool,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Datastore,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -23663,6 +23784,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$MasterPubkey,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$MaxProtectedBackups,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
@@ -23780,6 +23904,7 @@ PveResponse. Return response.
         if($PSBoundParameters['ComstarHg']) { $parameters['comstar_hg'] = $ComstarHg }
         if($PSBoundParameters['ComstarTg']) { $parameters['comstar_tg'] = $ComstarTg }
         if($PSBoundParameters['Content']) { $parameters['content'] = $Content }
+        if($PSBoundParameters['DataPool']) { $parameters['data-pool'] = $DataPool }
         if($PSBoundParameters['Datastore']) { $parameters['datastore'] = $Datastore }
         if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
         if($PSBoundParameters['Domain']) { $parameters['domain'] = $Domain }
@@ -23795,6 +23920,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Krbd']) { $parameters['krbd'] = $Krbd }
         if($PSBoundParameters['LioTpg']) { $parameters['lio_tpg'] = $LioTpg }
         if($PSBoundParameters['MasterPubkey']) { $parameters['master-pubkey'] = $MasterPubkey }
+        if($PSBoundParameters['MaxProtectedBackups']) { $parameters['max-protected-backups'] = $MaxProtectedBackups }
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mkdir']) { $parameters['mkdir'] = $Mkdir }
         if($PSBoundParameters['Monhost']) { $parameters['monhost'] = $Monhost }
@@ -23905,6 +24031,8 @@ host group for comstar views
 target group for comstar views
 .PARAMETER Content
 Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
+.PARAMETER DataPool
+Data Pool (for erasure coding only)
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
@@ -23933,6 +24061,8 @@ Always access rbd through krbd kernel module.
 target portal group for Linux LIO targets
 .PARAMETER MasterPubkey
 Base64-encoded, PEM-formatted public RSA key. Used to encrypt a copy of the encryption-key which will be added to each encrypted backup.
+.PARAMETER MaxProtectedBackups
+Maximal number of protected backups per guest. Use '-1' for unlimited.
 .PARAMETER Maxfiles
 Deprecated':' use 'prune-backups' instead. Maximal number of backup files per VM. Use '0' for unlimited.
 .PARAMETER Mkdir
@@ -24010,6 +24140,9 @@ PveResponse. Return response.
         [string]$Content,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$DataPool,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -24050,6 +24183,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$MasterPubkey,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$MaxProtectedBackups,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
@@ -24140,6 +24276,7 @@ PveResponse. Return response.
         if($PSBoundParameters['ComstarHg']) { $parameters['comstar_hg'] = $ComstarHg }
         if($PSBoundParameters['ComstarTg']) { $parameters['comstar_tg'] = $ComstarTg }
         if($PSBoundParameters['Content']) { $parameters['content'] = $Content }
+        if($PSBoundParameters['DataPool']) { $parameters['data-pool'] = $DataPool }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
@@ -24154,6 +24291,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Krbd']) { $parameters['krbd'] = $Krbd }
         if($PSBoundParameters['LioTpg']) { $parameters['lio_tpg'] = $LioTpg }
         if($PSBoundParameters['MasterPubkey']) { $parameters['master-pubkey'] = $MasterPubkey }
+        if($PSBoundParameters['MaxProtectedBackups']) { $parameters['max-protected-backups'] = $MaxProtectedBackups }
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mkdir']) { $parameters['mkdir'] = $Mkdir }
         if($PSBoundParameters['Monhost']) { $parameters['monhost'] = $Monhost }
@@ -25110,6 +25248,8 @@ function New-PveAccessDomains
 Add an authentication server.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER AcrValues
+Specifies the Authentication Context Class Reference values that theAuthorization Server is being requested to use for the Auth Request.
 .PARAMETER Autocreate
 Automatically create users if they do not exist.
 .PARAMETER BaseDn
@@ -25152,8 +25292,12 @@ LDAP protocol mode. Enum: ldap,ldaps,ldap+starttls
 LDAP bind password. Will be stored in '/etc/pve/priv/realm/<REALM>.pw'.
 .PARAMETER Port
 Server port.
+.PARAMETER Prompt
+Specifies whether the Authorization Server prompts the End-User for reauthentication and consent.
 .PARAMETER Realm
 Authentication domain ID
+.PARAMETER Scopes
+Specifies the scopes (user details) that should be authorized and returned, for example 'email' or 'profile'.
 .PARAMETER Secure
 Use secure LDAPS protocol. DEPRECATED':' use 'mode' instead.
 .PARAMETER Server1
@@ -25175,7 +25319,7 @@ LDAP user attribute name
 .PARAMETER UserClasses
 The objectclasses for users.
 .PARAMETER UsernameClaim
-OpenID claim used to generate the unique username. Enum: subject,username,email
+OpenID claim used to generate the unique username.
 .PARAMETER Verify
 Verify the server's SSL certificate
 .OUTPUTS
@@ -25186,6 +25330,9 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$AcrValues,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Autocreate,
@@ -25251,8 +25398,14 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Port,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Prompt,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Realm,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Scopes,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Secure,
@@ -25287,7 +25440,6 @@ PveResponse. Return response.
         [string]$UserClasses,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('subject','username','email')]
         [string]$UsernameClaim,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -25296,6 +25448,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['AcrValues']) { $parameters['acr-values'] = $AcrValues }
         if($PSBoundParameters['Autocreate']) { $parameters['autocreate'] = $Autocreate }
         if($PSBoundParameters['BaseDn']) { $parameters['base_dn'] = $BaseDn }
         if($PSBoundParameters['BindDn']) { $parameters['bind_dn'] = $BindDn }
@@ -25317,7 +25470,9 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
+        if($PSBoundParameters['Prompt']) { $parameters['prompt'] = $Prompt }
         if($PSBoundParameters['Realm']) { $parameters['realm'] = $Realm }
+        if($PSBoundParameters['Scopes']) { $parameters['scopes'] = $Scopes }
         if($PSBoundParameters['Secure']) { $parameters['secure'] = $Secure }
         if($PSBoundParameters['Server1']) { $parameters['server1'] = $Server1 }
         if($PSBoundParameters['Server2']) { $parameters['server2'] = $Server2 }
@@ -25396,6 +25551,8 @@ function Set-PveAccessDomains
 Update authentication server settings.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER AcrValues
+Specifies the Authentication Context Class Reference values that theAuthorization Server is being requested to use for the Auth Request.
 .PARAMETER Autocreate
 Automatically create users if they do not exist.
 .PARAMETER BaseDn
@@ -25442,8 +25599,12 @@ LDAP protocol mode. Enum: ldap,ldaps,ldap+starttls
 LDAP bind password. Will be stored in '/etc/pve/priv/realm/<REALM>.pw'.
 .PARAMETER Port
 Server port.
+.PARAMETER Prompt
+Specifies whether the Authorization Server prompts the End-User for reauthentication and consent.
 .PARAMETER Realm
 Authentication domain ID
+.PARAMETER Scopes
+Specifies the scopes (user details) that should be authorized and returned, for example 'email' or 'profile'.
 .PARAMETER Secure
 Use secure LDAPS protocol. DEPRECATED':' use 'mode' instead.
 .PARAMETER Server1
@@ -25472,6 +25633,9 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$AcrValues,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Autocreate,
@@ -25543,8 +25707,14 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Port,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Prompt,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Realm,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Scopes,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Secure,
@@ -25580,6 +25750,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['AcrValues']) { $parameters['acr-values'] = $AcrValues }
         if($PSBoundParameters['Autocreate']) { $parameters['autocreate'] = $Autocreate }
         if($PSBoundParameters['BaseDn']) { $parameters['base_dn'] = $BaseDn }
         if($PSBoundParameters['BindDn']) { $parameters['bind_dn'] = $BindDn }
@@ -25603,6 +25774,8 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
+        if($PSBoundParameters['Prompt']) { $parameters['prompt'] = $Prompt }
+        if($PSBoundParameters['Scopes']) { $parameters['scopes'] = $Scopes }
         if($PSBoundParameters['Secure']) { $parameters['secure'] = $Secure }
         if($PSBoundParameters['Server1']) { $parameters['server1'] = $Server1 }
         if($PSBoundParameters['Server2']) { $parameters['server2'] = $Server2 }
@@ -25630,11 +25803,13 @@ If set, does not write anything.
 .PARAMETER EnableNew
 Enable newly synced users immediately.
 .PARAMETER Full
-If set, uses the LDAP Directory as source of truth, deleting users or groups not returned from the sync. Otherwise only syncs information which is not already present, and does not deletes or modifies anything else.
+DEPRECATED':' use 'remove-vanished' instead. If set, uses the LDAP Directory as source of truth, deleting users or groups not returned from the sync and removing all locally modified properties of synced users. If not set, only syncs information which is present in the synced data, and does not delete or modify anything else.
 .PARAMETER Purge
-Remove ACLs for users or groups which were removed from the config during a sync.
+DEPRECATED':' use 'remove-vanished' instead. Remove ACLs for users or groups which were removed from the config during a sync.
 .PARAMETER Realm
 Authentication domain ID
+.PARAMETER RemoveVanished
+A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync.
 .PARAMETER Scope
 Select what to sync. Enum: users,groups,both
 .OUTPUTS
@@ -25662,6 +25837,9 @@ PveResponse. Return response.
         [string]$Realm,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$RemoveVanished,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('users','groups','both')]
         [string]$Scope
     )
@@ -25672,6 +25850,7 @@ PveResponse. Return response.
         if($PSBoundParameters['EnableNew']) { $parameters['enable-new'] = $EnableNew }
         if($PSBoundParameters['Full']) { $parameters['full'] = $Full }
         if($PSBoundParameters['Purge']) { $parameters['purge'] = $Purge }
+        if($PSBoundParameters['RemoveVanished']) { $parameters['remove-vanished'] = $RemoveVanished }
         if($PSBoundParameters['Scope']) { $parameters['scope'] = $Scope }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains/$Realm/sync" -Parameters $parameters
@@ -26307,6 +26486,8 @@ Get pool configuration.
 Ticket data connection.
 .PARAMETER Poolid
 --
+.PARAMETER Type
+-- Enum: qemu,lxc,storage
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26317,11 +26498,18 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [string]$Poolid
+        [string]$Poolid,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('qemu','lxc','storage')]
+        [string]$Type
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/pools/$Poolid"
+        $parameters = @{}
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/pools/$Poolid" -Parameters $parameters
     }
 }
 
