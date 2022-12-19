@@ -358,7 +358,7 @@ Output file
     }
 }
 
-#region COnvert Time Windows/Unix
+#region Convert Time Windows/Unix
 function ConvertTo-PveUnixTime {
 <#
 .SYNOPSIS
@@ -664,7 +664,8 @@ function VmCheckIdOrName
 
     if($VmIdOrName -eq 'all') { return $true }
 
-    foreach ($item in $VmIdOrName.Split(",")) {
+    foreach ($item in $VmIdOrName.Split(","))
+    {
         If($item -like '*:*')
         {
             #range number
@@ -676,18 +677,32 @@ function VmCheckIdOrName
                 }
             }
         }
-        ElseIf((IsNumeric($item))) {
+        ElseIf((IsNumeric($item)))
+        {
             if($vm.vmid -eq $item) { return $true }
         }
-
-        #all vm in node
-        Elseif($item.IndexOf("all-") -eq 0 -and $item.Substring(4) -eq $vm.node) { return $true }
-
-        #all vm in node
-        Elseif($item.IndexOf("@all-") -eq 0 -and $item.Substring(5) -eq $vm.node) { return $true }
-
-        #name
-        ElseIf($vm.name -like $item) { return $true}
+        Elseif($item.IndexOf("all-") -eq 0 -and $item.Substring(4) -eq $vm.node)
+        {
+            #all vm in node
+            return $true
+        }
+        Elseif($item.IndexOf("@all-") -eq 0 -and $item.Substring(5) -eq $vm.node)
+        {
+            #all vm in node
+            return $true
+        }
+        Elseif($item.IndexOf("@tags-") -eq 0)
+        {
+            #tags
+            if(($vm.tags + "").Split(",").Contains($item.Substring(6)))
+            {
+                return $true
+            }
+        }
+        ElseIf($vm.name -like $item) {
+            #name
+            return $true
+        }
     }
 
     return $false
@@ -2917,6 +2932,8 @@ function Remove-PveClusterFirewallIpset
 Delete IPSet
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Force
+Delete all members of the IPSet, if there are any.
 .PARAMETER Name
 IP set name.
 .OUTPUTS
@@ -2928,12 +2945,18 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Force,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name"
+        $parameters = @{}
+        if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters
     }
 }
 
@@ -3521,7 +3544,9 @@ Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
 .PARAMETER NotesTemplate
-Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future.
+Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future. Needs to be a single line, newline and backslash need to be escaped as '\n' and '\\' respectively.
+.PARAMETER Performance
+Other performance-related settings.
 .PARAMETER Pigz
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
@@ -3534,6 +3559,8 @@ Use these retention options instead of those from the storage configuration.
 Be quiet.
 .PARAMETER Remove
 Prune older backups according to 'prune-backups'.
+.PARAMETER RepeatMissed
+If true, the job will be run as soon as possible if it was missed while the scheduler was not running.
 .PARAMETER Schedule
 Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Script
@@ -3621,6 +3648,9 @@ PveResponse. Return response.
         [string]$NotesTemplate,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Performance,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -3637,6 +3667,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Remove,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$RepeatMissed,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Schedule,
@@ -3689,12 +3722,14 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
         if($PSBoundParameters['Protected']) { $parameters['protected'] = $Protected }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
+        if($PSBoundParameters['RepeatMissed']) { $parameters['repeat-missed'] = $RepeatMissed }
         if($PSBoundParameters['Schedule']) { $parameters['schedule'] = $Schedule }
         if($PSBoundParameters['Script']) { $parameters['script'] = $Script }
         if($PSBoundParameters['Starttime']) { $parameters['starttime'] = $Starttime }
@@ -3808,7 +3843,9 @@ Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
 .PARAMETER NotesTemplate
-Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future.
+Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future. Needs to be a single line, newline and backslash need to be escaped as '\n' and '\\' respectively.
+.PARAMETER Performance
+Other performance-related settings.
 .PARAMETER Pigz
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
@@ -3821,6 +3858,8 @@ Use these retention options instead of those from the storage configuration.
 Be quiet.
 .PARAMETER Remove
 Prune older backups according to 'prune-backups'.
+.PARAMETER RepeatMissed
+If true, the job will be run as soon as possible if it was missed while the scheduler was not running.
 .PARAMETER Schedule
 Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Script
@@ -3911,6 +3950,9 @@ PveResponse. Return response.
         [string]$NotesTemplate,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Performance,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -3927,6 +3969,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Remove,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$RepeatMissed,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Schedule,
@@ -3979,12 +4024,14 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
         if($PSBoundParameters['Protected']) { $parameters['protected'] = $Protected }
         if($PSBoundParameters['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
         if($PSBoundParameters['Quiet']) { $parameters['quiet'] = $Quiet }
         if($PSBoundParameters['Remove']) { $parameters['remove'] = $Remove }
+        if($PSBoundParameters['RepeatMissed']) { $parameters['repeat-missed'] = $RepeatMissed }
         if($PSBoundParameters['Schedule']) { $parameters['schedule'] = $Schedule }
         if($PSBoundParameters['Script']) { $parameters['script'] = $Script }
         if($PSBoundParameters['Starttime']) { $parameters['starttime'] = $Starttime }
@@ -7187,7 +7234,7 @@ function Get-PveClusterOptions
 {
 <#
 .DESCRIPTION
-Get datacenter options.
+Get datacenter options. Without 'Sys.Audit' on '/' not all options are returned.
 .PARAMETER PveTicket
 Ticket data connection.
 .OUTPUTS
@@ -7216,6 +7263,8 @@ Ticket data connection.
 Set bandwidth/io limits various operations.
 .PARAMETER Console
 Select the default Console viewer. You can either use the builtin java applet (VNC; deprecated and maps to html5), an external virt-viewer comtatible application (SPICE), an HTML5 based vnc viewer (noVNC), or an HTML5 based console client (xtermjs). If the selected viewer is not available (e.g. SPICE not activated for the VM), the fallback is noVNC. Enum: applet,vv,html5,xtermjs
+.PARAMETER Crs
+Cluster resource scheduling settings.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Description
@@ -7242,8 +7291,14 @@ For cluster wide migration settings.
 Migration is secure using SSH tunnel by default. For secure private networks you can disable it to speed up migration. Deprecated, use the 'migration' property instead!
 .PARAMETER NextId
 Control the range for the free VMID auto-selection pool.
+.PARAMETER RegisteredTags
+A list of tags that require a `Sys.Modify` on '/' to set and delete. Tags set here that are also in 'user-tag-access' also require `Sys.Modify`.
+.PARAMETER TagStyle
+Tag style options.
 .PARAMETER U2f
 u2f
+.PARAMETER UserTagAccess
+Privilege options for user-settable tags
 .PARAMETER Webauthn
 webauthn configuration
 .OUTPUTS
@@ -7261,6 +7316,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateSet('applet','vv','html5','xtermjs')]
         [string]$Console,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Crs,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Delete,
@@ -7305,7 +7363,16 @@ PveResponse. Return response.
         [string]$NextId,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$RegisteredTags,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TagStyle,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$U2f,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$UserTagAccess,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Webauthn
@@ -7315,6 +7382,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
         if($PSBoundParameters['Console']) { $parameters['console'] = $Console }
+        if($PSBoundParameters['Crs']) { $parameters['crs'] = $Crs }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Description']) { $parameters['description'] = $Description }
         if($PSBoundParameters['EmailFrom']) { $parameters['email_from'] = $EmailFrom }
@@ -7328,7 +7396,10 @@ PveResponse. Return response.
         if($PSBoundParameters['Migration']) { $parameters['migration'] = $Migration }
         if($PSBoundParameters['MigrationUnsecure']) { $parameters['migration_unsecure'] = $MigrationUnsecure }
         if($PSBoundParameters['NextId']) { $parameters['next-id'] = $NextId }
+        if($PSBoundParameters['RegisteredTags']) { $parameters['registered-tags'] = $RegisteredTags }
+        if($PSBoundParameters['TagStyle']) { $parameters['tag-style'] = $TagStyle }
         if($PSBoundParameters['U2f']) { $parameters['u2f'] = $U2f }
+        if($PSBoundParameters['UserTagAccess']) { $parameters['user-tag-access'] = $UserTagAccess }
         if($PSBoundParameters['Webauthn']) { $parameters['webauthn'] = $Webauthn }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/options" -Parameters $parameters
@@ -7480,6 +7551,8 @@ Create or restore a virtual machine.
 Ticket data connection.
 .PARAMETER Acpi
 Enable/disable ACPI.
+.PARAMETER Affinity
+List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the Qemu Guest Agent and its properties.
 .PARAMETER Arch
@@ -7533,7 +7606,7 @@ Script that will be executed during various steps in the vms lifetime.
 .PARAMETER HostpciN
 Map host PCI devices into guest.
 .PARAMETER Hotplug
-Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory' and 'usb'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`.
+Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
 .PARAMETER Hugepages
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
@@ -7565,7 +7638,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
+cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -7595,7 +7668,7 @@ Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax ST
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
+cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -7633,7 +7706,7 @@ Assign a unique random ethernet address.
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
-Configure an USB device (n is 0 to 4).
+Configure an USB device (n is 0 to 4, for machine version >= 7.1 and ostype l26 or windows > 7, n can be up to 14).
 .PARAMETER Vcpus
 Number of hotplugged vcpus.
 .PARAMETER Vga
@@ -7659,6 +7732,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Acpi,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Affinity,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Agent,
@@ -7924,6 +8000,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Acpi']) { $parameters['acpi'] = $Acpi }
+        if($PSBoundParameters['Affinity']) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters['Agent']) { $parameters['agent'] = $Agent }
         if($PSBoundParameters['Arch']) { $parameters['arch'] = $Arch }
         if($PSBoundParameters['Archive']) { $parameters['archive'] = $Archive }
@@ -8832,6 +8909,8 @@ function Remove-PveNodesQemuFirewallIpset
 Delete IPSet
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Force
+Delete all members of the IPSet, if there are any.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -8847,6 +8926,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Force,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name,
 
@@ -8858,7 +8940,10 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name"
+        $parameters = @{}
+        if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters
     }
 }
 
@@ -10439,6 +10524,8 @@ Set virtual machine options (asynchrounous API).
 Ticket data connection.
 .PARAMETER Acpi
 Enable/disable ACPI.
+.PARAMETER Affinity
+List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the Qemu Guest Agent and its properties.
 .PARAMETER Arch
@@ -10494,7 +10581,7 @@ Script that will be executed during various steps in the vms lifetime.
 .PARAMETER HostpciN
 Map host PCI devices into guest.
 .PARAMETER Hotplug
-Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory' and 'usb'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`.
+Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
 .PARAMETER Hugepages
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
@@ -10524,7 +10611,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
+cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -10554,7 +10641,7 @@ Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax ST
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
+cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -10588,7 +10675,7 @@ Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the sp
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
-Configure an USB device (n is 0 to 4).
+Configure an USB device (n is 0 to 4, for machine version >= 7.1 and ostype l26 or windows > 7, n can be up to 14).
 .PARAMETER Vcpus
 Number of hotplugged vcpus.
 .PARAMETER Vga
@@ -10614,6 +10701,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Acpi,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Affinity,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Agent,
@@ -10873,6 +10963,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Acpi']) { $parameters['acpi'] = $Acpi }
+        if($PSBoundParameters['Affinity']) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters['Agent']) { $parameters['agent'] = $Agent }
         if($PSBoundParameters['Arch']) { $parameters['arch'] = $Arch }
         if($PSBoundParameters['Args_']) { $parameters['args'] = $Args_ }
@@ -10968,6 +11059,8 @@ Set virtual machine options (synchrounous API) - You should consider using the P
 Ticket data connection.
 .PARAMETER Acpi
 Enable/disable ACPI.
+.PARAMETER Affinity
+List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the Qemu Guest Agent and its properties.
 .PARAMETER Arch
@@ -11021,7 +11114,7 @@ Script that will be executed during various steps in the vms lifetime.
 .PARAMETER HostpciN
 Map host PCI devices into guest.
 .PARAMETER Hotplug
-Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory' and 'usb'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`.
+Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
 .PARAMETER Hugepages
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
@@ -11051,7 +11144,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
+cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -11081,7 +11174,7 @@ Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax ST
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will'	    .' automatically use the setting from the host if neither searchdomain nor nameserver'	    .' are set.
+cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -11115,7 +11208,7 @@ Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the sp
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
-Configure an USB device (n is 0 to 4).
+Configure an USB device (n is 0 to 4, for machine version >= 7.1 and ostype l26 or windows > 7, n can be up to 14).
 .PARAMETER Vcpus
 Number of hotplugged vcpus.
 .PARAMETER Vga
@@ -11141,6 +11234,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [switch]$Acpi,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Affinity,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Agent,
@@ -11397,6 +11493,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Acpi']) { $parameters['acpi'] = $Acpi }
+        if($PSBoundParameters['Affinity']) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters['Agent']) { $parameters['agent'] = $Agent }
         if($PSBoundParameters['Arch']) { $parameters['arch'] = $Arch }
         if($PSBoundParameters['Args_']) { $parameters['args'] = $Args_ }
@@ -11511,6 +11608,111 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/pending"
+    }
+}
+
+function Get-PveNodesQemuCloudinit
+{
+<#
+.DESCRIPTION
+Get the cloudinit configuration with both current and pending values.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/cloudinit"
+    }
+}
+
+function Set-PveNodesQemuCloudinit
+{
+<#
+.DESCRIPTION
+Regenerate and change cloudinit config drive.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/cloudinit"
+    }
+}
+
+function Get-PveNodesQemuCloudinitDump
+{
+<#
+.DESCRIPTION
+Get automatically generated cloudinit config.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Type
+Config type. Enum: user,network,meta
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('user','network','meta')]
+        [string]$Type,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/cloudinit/dump" -Parameters $parameters
     }
 }
 
@@ -12582,6 +12784,82 @@ PveResponse. Return response.
     }
 }
 
+function New-PveNodesQemuRemoteMigrate
+{
+<#
+.DESCRIPTION
+Migrate virtual machine to a remote cluster. Creates a new migration task. EXPERIMENTAL feature!
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Bwlimit
+Override I/O bandwidth limit (in KiB/s).
+.PARAMETER Delete
+Delete the original VM and related data after successful migration. By default the original VM is kept on the source cluster in a stopped state.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Online
+Use online/live migration if VM is running. Ignored if VM is stopped.
+.PARAMETER TargetBridge
+Mapping from source to target bridges. Providing only a single bridge ID maps all source bridges to that bridge. Providing the special value '1' will map each source bridge to itself.
+.PARAMETER TargetEndpoint
+Remote target endpoint
+.PARAMETER TargetStorage
+Mapping from source to target storages. Providing only a single storage ID maps all source storages to that storage. Providing the special value '1' will map each source storage to itself.
+.PARAMETER TargetVmid
+The (unique) ID of the VM.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Bwlimit,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Delete,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Online,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetBridge,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetEndpoint,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetStorage,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$TargetVmid,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Online']) { $parameters['online'] = $Online }
+        if($PSBoundParameters['TargetBridge']) { $parameters['target-bridge'] = $TargetBridge }
+        if($PSBoundParameters['TargetEndpoint']) { $parameters['target-endpoint'] = $TargetEndpoint }
+        if($PSBoundParameters['TargetStorage']) { $parameters['target-storage'] = $TargetStorage }
+        if($PSBoundParameters['TargetVmid']) { $parameters['target-vmid'] = $TargetVmid }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/remote_migrate" -Parameters $parameters
+    }
+}
+
 function New-PveNodesQemuMonitor
 {
 <#
@@ -12940,6 +13218,8 @@ Ticket data connection.
 The cluster node name.
 .PARAMETER Snapname
 The name of the snapshot.
+.PARAMETER Start
+Whether the VM should get started after rolling back successfully
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -12957,12 +13237,18 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Start,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/rollback"
+        $parameters = @{}
+        if($PSBoundParameters['Start']) { $parameters['start'] = $Start }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters
     }
 }
 
@@ -13004,6 +13290,98 @@ PveResponse. Return response.
         if($PSBoundParameters['Disk']) { $parameters['disk'] = $Disk }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/template" -Parameters $parameters
+    }
+}
+
+function New-PveNodesQemuMtunnel
+{
+<#
+.DESCRIPTION
+Migration tunnel endpoint - only for internal use by VM migration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Bridges
+List of network bridges to check availability. Will be checked again for actually used bridges during migration.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Storages
+List of storages to check permission and availability. Will be checked again for all actually used storages during migration.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Bridges,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Storages,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Bridges']) { $parameters['bridges'] = $Bridges }
+        if($PSBoundParameters['Storages']) { $parameters['storages'] = $Storages }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/mtunnel" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesQemuMtunnelwebsocket
+{
+<#
+.DESCRIPTION
+Migration tunnel endpoint for websocket upgrade - only for internal use by VM migration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Socket
+unix socket to forward to
+.PARAMETER Ticket
+ticket return by initial 'mtunnel' API call, or retrieved via 'ticket' tunnel command
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Socket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Ticket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Socket']) { $parameters['socket'] = $Socket }
+        if($PSBoundParameters['Ticket']) { $parameters['ticket'] = $Ticket }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/mtunnelwebsocket" -Parameters $parameters
     }
 }
 
@@ -13054,7 +13432,7 @@ The number of cores assigned to the container. A container can use all available
 .PARAMETER Cpulimit
 Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
-CPU weight for a VM. Argument is used in the kernel fair scheduler. The larger the number is, the more CPU time this VM gets. Number is relative to the weights of all the other running VMs.NOTE':' You can disable fair-scheduler configuration by setting this to 0.
+CPU weight for a container, will be clamped to \[1, 10000] in cgroup v2.
 .PARAMETER Debug_
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Description
@@ -13070,9 +13448,9 @@ Set a host name for the container.
 .PARAMETER IgnoreUnpackErrors
 Ignore errors when extracting the template.
 .PARAMETER Lock
-Lock/unlock the VM. Enum: backup,create,destroyed,disk,fstrim,migrate,mounted,rollback,snapshot,snapshot-delete
+Lock/unlock the container. Enum: backup,create,destroyed,disk,fstrim,migrate,mounted,rollback,snapshot,snapshot-delete
 .PARAMETER Memory
-Amount of RAM for the VM in MB.
+Amount of RAM for the container in MB.
 .PARAMETER MpN
 Use volume as container mount point. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
 .PARAMETER Nameserver
@@ -13082,7 +13460,7 @@ Specifies network interfaces for the container.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Onboot
-Specifies whether a VM will be started during system bootup.
+Specifies whether a container will be started during system bootup.
 .PARAMETER Ostemplate
 The OS template or backup file.
 .PARAMETER Ostype
@@ -13108,7 +13486,7 @@ Startup and shutdown behavior. Order is a non-negative number defining the gener
 .PARAMETER Storage
 Default Storage.
 .PARAMETER Swap
-Amount of SWAP for the VM in MB.
+Amount of SWAP for the container in MB.
 .PARAMETER Tags
 Tags of the Container. This is only meta information.
 .PARAMETER Template
@@ -13462,7 +13840,7 @@ The number of cores assigned to the container. A container can use all available
 .PARAMETER Cpulimit
 Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
-CPU weight for a VM. Argument is used in the kernel fair scheduler. The larger the number is, the more CPU time this VM gets. Number is relative to the weights of all the other running VMs.NOTE':' You can disable fair-scheduler configuration by setting this to 0.
+CPU weight for a container, will be clamped to \[1, 10000] in cgroup v2.
 .PARAMETER Debug_
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Delete
@@ -13478,9 +13856,9 @@ Script that will be exectued during various steps in the containers lifetime.
 .PARAMETER Hostname
 Set a host name for the container.
 .PARAMETER Lock
-Lock/unlock the VM. Enum: backup,create,destroyed,disk,fstrim,migrate,mounted,rollback,snapshot,snapshot-delete
+Lock/unlock the container. Enum: backup,create,destroyed,disk,fstrim,migrate,mounted,rollback,snapshot,snapshot-delete
 .PARAMETER Memory
-Amount of RAM for the VM in MB.
+Amount of RAM for the container in MB.
 .PARAMETER MpN
 Use volume as container mount point. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
 .PARAMETER Nameserver
@@ -13490,7 +13868,7 @@ Specifies network interfaces for the container.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Onboot
-Specifies whether a VM will be started during system bootup.
+Specifies whether a container will be started during system bootup.
 .PARAMETER Ostype
 OS type. This is used to setup configuration inside the container, and corresponds to lxc setup scripts in /usr/share/lxc/config/<ostype>.common.conf. Value 'unmanaged' can be used to skip and OS specific setup. Enum: debian,devuan,ubuntu,centos,fedora,opensuse,archlinux,alpine,gentoo,nixos,unmanaged
 .PARAMETER Protection
@@ -13504,7 +13882,7 @@ Sets DNS search domains for a container. Create will automatically use the setti
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Swap
-Amount of SWAP for the VM in MB.
+Amount of SWAP for the container in MB.
 .PARAMETER Tags
 Tags of the Container. This is only meta information.
 .PARAMETER Template
@@ -14146,6 +14524,8 @@ Ticket data connection.
 The cluster node name.
 .PARAMETER Snapname
 The name of the snapshot.
+.PARAMETER Start
+Whether the container should get started after rolling back successfully
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -14163,12 +14543,18 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Start,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/rollback"
+        $parameters = @{}
+        if($PSBoundParameters['Start']) { $parameters['start'] = $Start }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters
     }
 }
 
@@ -14989,6 +15375,8 @@ function Remove-PveNodesLxcFirewallIpset
 Delete IPSet
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Force
+Delete all members of the IPSet, if there are any.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -15004,6 +15392,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Force,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name,
 
@@ -15015,7 +15406,10 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name"
+        $parameters = @{}
+        if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters
     }
 }
 
@@ -15768,6 +16162,94 @@ PveResponse. Return response.
     }
 }
 
+function New-PveNodesLxcRemoteMigrate
+{
+<#
+.DESCRIPTION
+Migrate the container to another cluster. Creates a new migration task. EXPERIMENTAL feature!
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Bwlimit
+Override I/O bandwidth limit (in KiB/s).
+.PARAMETER Delete
+Delete the original CT and related data after successful migration. By default the original CT is kept on the source cluster in a stopped state.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Online
+Use online/live migration.
+.PARAMETER Restart
+Use restart migration
+.PARAMETER TargetBridge
+Mapping from source to target bridges. Providing only a single bridge ID maps all source bridges to that bridge. Providing the special value '1' will map each source bridge to itself.
+.PARAMETER TargetEndpoint
+Remote target endpoint
+.PARAMETER TargetStorage
+Mapping from source to target storages. Providing only a single storage ID maps all source storages to that storage. Providing the special value '1' will map each source storage to itself.
+.PARAMETER TargetVmid
+The (unique) ID of the VM.
+.PARAMETER Timeout
+Timeout in seconds for shutdown for restart migration
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [float]$Bwlimit,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Delete,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Online,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Restart,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetBridge,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetEndpoint,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetStorage,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$TargetVmid,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Timeout,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Online']) { $parameters['online'] = $Online }
+        if($PSBoundParameters['Restart']) { $parameters['restart'] = $Restart }
+        if($PSBoundParameters['TargetBridge']) { $parameters['target-bridge'] = $TargetBridge }
+        if($PSBoundParameters['TargetEndpoint']) { $parameters['target-endpoint'] = $TargetEndpoint }
+        if($PSBoundParameters['TargetStorage']) { $parameters['target-storage'] = $TargetStorage }
+        if($PSBoundParameters['TargetVmid']) { $parameters['target-vmid'] = $TargetVmid }
+        if($PSBoundParameters['Timeout']) { $parameters['timeout'] = $Timeout }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/remote_migrate" -Parameters $parameters
+    }
+}
+
 function New-PveNodesLxcMigrate
 {
 <#
@@ -16171,6 +16653,98 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/pending"
+    }
+}
+
+function New-PveNodesLxcMtunnel
+{
+<#
+.DESCRIPTION
+Migration tunnel endpoint - only for internal use by CT migration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Bridges
+List of network bridges to check availability. Will be checked again for actually used bridges during migration.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Storages
+List of storages to check permission and availability. Will be checked again for all actually used storages during migration.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Bridges,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Storages,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Bridges']) { $parameters['bridges'] = $Bridges }
+        if($PSBoundParameters['Storages']) { $parameters['storages'] = $Storages }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/mtunnel" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesLxcMtunnelwebsocket
+{
+<#
+.DESCRIPTION
+Migration tunnel endpoint for websocket upgrade - only for internal use by VM migration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Socket
+unix socket to forward to
+.PARAMETER Ticket
+ticket return by initial 'mtunnel' API call, or retrieved via 'ticket' tunnel command
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Socket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Ticket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Socket']) { $parameters['socket'] = $Socket }
+        if($PSBoundParameters['Ticket']) { $parameters['ticket'] = $Ticket }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/mtunnelwebsocket" -Parameters $parameters
     }
 }
 
@@ -17463,6 +18037,55 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesCephCmdSafety
+{
+<#
+.DESCRIPTION
+Heuristical check if it is safe to perform an action.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Action
+Action to check Enum: stop,destroy
+.PARAMETER Id
+ID of the service
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Service
+Service type Enum: osd,mon,mds
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('stop','destroy')]
+        [string]$Action,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Id,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('osd','mon','mds')]
+        [string]$Service
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Action']) { $parameters['action'] = $Action }
+        if($PSBoundParameters['Id']) { $parameters['id'] = $Id }
+        if($PSBoundParameters['Service']) { $parameters['service'] = $Service }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cmd-safety" -Parameters $parameters
+    }
+}
+
 function New-PveNodesVzdump
 {
 <#
@@ -17497,7 +18120,9 @@ Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
 Only run if executed on this node.
 .PARAMETER NotesTemplate
-Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future.
+Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future. Needs to be a single line, newline and backslash need to be escaped as '\n' and '\\' respectively.
+.PARAMETER Performance
+Other performance-related settings.
 .PARAMETER Pigz
 Use pigz instead of gzip when N>0. N=1 uses half of cores, N>1 uses N as thread count.
 .PARAMETER Pool
@@ -17583,6 +18208,9 @@ PveResponse. Return response.
         [string]$NotesTemplate,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Performance,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -17643,6 +18271,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
         if($PSBoundParameters['Protected']) { $parameters['protected'] = $Protected }
@@ -20661,12 +21290,14 @@ Pool sector size exponent.
 The compression algorithm to use. Enum: on,off,gzip,lz4,lzjb,zle,zstd
 .PARAMETER Devices
 The block devices you want to create the zpool on.
+.PARAMETER DraidConfig
+--
 .PARAMETER Name
 The storage identifier.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Raidlevel
-The RAID level to use. Enum: single,mirror,raid10,raidz,raidz2,raidz3
+The RAID level to use. Enum: single,mirror,raid10,raidz,raidz2,raidz3,draid,draid2,draid3
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -20689,6 +21320,9 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Devices,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$DraidConfig,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Name,
 
@@ -20696,7 +21330,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('single','mirror','raid10','raidz','raidz2','raidz3')]
+        [ValidateNotNullOrEmpty()][ValidateSet('single','mirror','raid10','raidz','raidz2','raidz3','draid','draid2','draid3')]
         [string]$Raidlevel
     )
 
@@ -20706,6 +21340,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Ashift']) { $parameters['ashift'] = $Ashift }
         if($PSBoundParameters['Compression']) { $parameters['compression'] = $Compression }
         if($PSBoundParameters['Devices']) { $parameters['devices'] = $Devices }
+        if($PSBoundParameters['DraidConfig']) { $parameters['draid-config'] = $DraidConfig }
         if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
         if($PSBoundParameters['Raidlevel']) { $parameters['raidlevel'] = $Raidlevel }
 
@@ -22894,7 +23529,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: ceph_install,upgrade,login
+Run specific command or default to login. Enum: ceph_install,login,upgrade
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Height
@@ -22915,7 +23550,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('ceph_install','upgrade','login')]
+        [ValidateSet('ceph_install','login','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -22954,7 +23589,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: ceph_install,upgrade,login
+Run specific command or default to login. Enum: ceph_install,login,upgrade
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -22969,7 +23604,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('ceph_install','upgrade','login')]
+        [ValidateSet('ceph_install','login','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -23037,7 +23672,7 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: ceph_install,upgrade,login
+Run specific command or default to login. Enum: ceph_install,login,upgrade
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -23054,7 +23689,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('ceph_install','upgrade','login')]
+        [ValidateSet('ceph_install','login','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -23647,7 +24282,7 @@ IP addresses of monitors (for external clusters).
 .PARAMETER Mountpoint
 mount point
 .PARAMETER Namespace
-RBD Namespace.
+Namespace.
 .PARAMETER Nocow
 Set the NOCOW flag on files. Disables data checksumming and causes data errors to be unrecoverable from while allowing direct I/O. Only use this if data does not need to be any more safe than on a single ext4 formatted disk with no underlying raid system.
 .PARAMETER Nodes
@@ -24071,7 +24706,7 @@ IP addresses of monitors (for external clusters).
 .PARAMETER Mountpoint
 mount point
 .PARAMETER Namespace
-RBD Namespace.
+Namespace.
 .PARAMETER Nocow
 Set the NOCOW flag on files. Disables data checksumming and causes data errors to be unrecoverable from while allowing direct I/O. Only use this if data does not need to be any more safe than on a single ext4 formatted disk with no underlying raid system.
 .PARAMETER Nodes
