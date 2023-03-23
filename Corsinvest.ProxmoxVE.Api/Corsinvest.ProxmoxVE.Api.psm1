@@ -4764,7 +4764,7 @@ Add ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,cf,clouddns,cloudns,cn,conoha,constellix,cx,cyon,da,ddnss,desec,df,dgon,dnsimple,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,freedns,gandi_livedns,gcloud,gd,gdnsdk,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ispconfig,jd,joker,kappernet,kas,kinghost,knot,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,namecheap,namecom,namesilo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rcode0,regru,scaleway,schlundtech,selectel,servercow,simply,tele3,transip,ultra,unoeuro,variomedia,veesp,vscale,vultr,websupport,world4you,yandex,zilore,zone,zonomi
+API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gd,geoscaling,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Disable
@@ -4787,7 +4787,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','cf','clouddns','cloudns','cn','conoha','constellix','cx','cyon','da','ddnss','desec','df','dgon','dnsimple','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','freedns','gandi_livedns','gcloud','gd','gdnsdk','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ispconfig','jd','joker','kappernet','kas','kinghost','knot','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','namecheap','namecom','namesilo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rcode0','regru','scaleway','schlundtech','selectel','servercow','simply','tele3','transip','ultra','unoeuro','variomedia','veesp','vscale','vultr','websupport','world4you','yandex','zilore','zone','zonomi')]
+        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gd','geoscaling','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -4886,7 +4886,7 @@ Update ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,cf,clouddns,cloudns,cn,conoha,constellix,cx,cyon,da,ddnss,desec,df,dgon,dnsimple,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,freedns,gandi_livedns,gcloud,gd,gdnsdk,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ispconfig,jd,joker,kappernet,kas,kinghost,knot,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,namecheap,namecom,namesilo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rcode0,regru,scaleway,schlundtech,selectel,servercow,simply,tele3,transip,ultra,unoeuro,variomedia,veesp,vscale,vultr,websupport,world4you,yandex,zilore,zone,zonomi
+API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gd,geoscaling,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Delete
@@ -4911,7 +4911,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','cf','clouddns','cloudns','cn','conoha','constellix','cx','cyon','da','ddnss','desec','df','dgon','dnsimple','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','freedns','gandi_livedns','gcloud','gd','gdnsdk','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ispconfig','jd','joker','kappernet','kas','kinghost','knot','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','namecheap','namecom','namesilo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rcode0','regru','scaleway','schlundtech','selectel','servercow','simply','tele3','transip','ultra','unoeuro','variomedia','veesp','vscale','vultr','websupport','world4you','yandex','zilore','zone','zonomi')]
+        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gd','geoscaling','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -7291,6 +7291,8 @@ For cluster wide migration settings.
 Migration is secure using SSH tunnel by default. For secure private networks you can disable it to speed up migration. Deprecated, use the 'migration' property instead!
 .PARAMETER NextId
 Control the range for the free VMID auto-selection pool.
+.PARAMETER Notify
+Cluster-wide notification settings.
 .PARAMETER RegisteredTags
 A list of tags that require a `Sys.Modify` on '/' to set and delete. Tags set here that are also in 'user-tag-access' also require `Sys.Modify`.
 .PARAMETER TagStyle
@@ -7363,6 +7365,9 @@ PveResponse. Return response.
         [string]$NextId,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Notify,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$RegisteredTags,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -7396,6 +7401,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Migration']) { $parameters['migration'] = $Migration }
         if($PSBoundParameters['MigrationUnsecure']) { $parameters['migration_unsecure'] = $MigrationUnsecure }
         if($PSBoundParameters['NextId']) { $parameters['next-id'] = $NextId }
+        if($PSBoundParameters['Notify']) { $parameters['notify'] = $Notify }
         if($PSBoundParameters['RegisteredTags']) { $parameters['registered-tags'] = $RegisteredTags }
         if($PSBoundParameters['TagStyle']) { $parameters['tag-style'] = $TagStyle }
         if($PSBoundParameters['U2f']) { $parameters['u2f'] = $U2f }
@@ -7554,7 +7560,7 @@ Enable/disable ACPI.
 .PARAMETER Affinity
 List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
-Enable/disable communication with the Qemu Guest Agent and its properties.
+Enable/disable communication with the QEMU Guest Agent and its properties.
 .PARAMETER Arch
 Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Archive
@@ -7566,7 +7572,7 @@ Configure a audio device, useful in combination with QXL/Spice.
 .PARAMETER Autostart
 Automatic restart after crash (currently ignored).
 .PARAMETER Balloon
-Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
+Amount of target RAM for the VM in MiB. Using zero disables the ballon driver.
 .PARAMETER Bios
 Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
@@ -7596,7 +7602,7 @@ CPU weight for a VM, will be clamped to \[1, 10000] in cgroup v2.
 .PARAMETER Description
 Description for the VM. Shown in the web-interface VM's summary. This is saved as comment inside the configuration file.
 .PARAMETER Efidisk0
-Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Allow to overwrite existing VM.
 .PARAMETER Freeze
@@ -7628,9 +7634,9 @@ Set the real time clock (RTC) to local time. This is enabled by default if the `
 .PARAMETER Lock
 Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot-delete,suspending,suspended
 .PARAMETER Machine
-Specifies the Qemu machine type.
+Specifies the QEMU machine type.
 .PARAMETER Memory
-Amount of RAM for the VM in MB. This is the maximum available memory when you use the balloon device.
+Amount of RAM for the VM in MiB. This is the maximum available memory when you use the balloon device.
 .PARAMETER MigrateDowntime
 Set maximum tolerated downtime (in seconds) for migrations.
 .PARAMETER MigrateSpeed
@@ -9348,8 +9354,12 @@ Ticket data connection.
 --
 .PARAMETER Node
 The cluster node name.
+.PARAMETER Since
+Display log since this UNIX epoch.
 .PARAMETER Start
 --
+.PARAMETER Until
+Display log until this UNIX epoch.
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -9368,7 +9378,13 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Since,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Start,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Until,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -9377,7 +9393,9 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Limit']) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters['Since']) { $parameters['since'] = $Since }
         if($PSBoundParameters['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters['Until']) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/firewall/log" -Parameters $parameters
     }
@@ -9428,7 +9446,7 @@ function Get-PveNodesQemuAgent
 {
 <#
 .DESCRIPTION
-Qemu Agent command index.
+QEMU Guest Agent command index.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -9460,7 +9478,7 @@ function New-PveNodesQemuAgent
 {
 <#
 .DESCRIPTION
-Execute Qemu Guest Agent commands.
+Execute QEMU Guest Agent commands.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Command
@@ -10527,7 +10545,7 @@ Enable/disable ACPI.
 .PARAMETER Affinity
 List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
-Enable/disable communication with the Qemu Guest Agent and its properties.
+Enable/disable communication with the QEMU Guest Agent and its properties.
 .PARAMETER Arch
 Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Args_
@@ -10539,7 +10557,7 @@ Automatic restart after crash (currently ignored).
 .PARAMETER BackgroundDelay
 Time to wait for the task to finish. We return 'null' if the task finish within that time.
 .PARAMETER Balloon
-Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
+Amount of target RAM for the VM in MiB. Using zero disables the ballon driver.
 .PARAMETER Bios
 Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
@@ -10571,7 +10589,7 @@ Description for the VM. Shown in the web-interface VM's summary. This is saved a
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Efidisk0
-Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
 .PARAMETER Freeze
@@ -10601,9 +10619,9 @@ Set the real time clock (RTC) to local time. This is enabled by default if the `
 .PARAMETER Lock
 Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot-delete,suspending,suspended
 .PARAMETER Machine
-Specifies the Qemu machine type.
+Specifies the QEMU machine type.
 .PARAMETER Memory
-Amount of RAM for the VM in MB. This is the maximum available memory when you use the balloon device.
+Amount of RAM for the VM in MiB. This is the maximum available memory when you use the balloon device.
 .PARAMETER MigrateDowntime
 Set maximum tolerated downtime (in seconds) for migrations.
 .PARAMETER MigrateSpeed
@@ -11062,7 +11080,7 @@ Enable/disable ACPI.
 .PARAMETER Affinity
 List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
-Enable/disable communication with the Qemu Guest Agent and its properties.
+Enable/disable communication with the QEMU Guest Agent and its properties.
 .PARAMETER Arch
 Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Args_
@@ -11072,7 +11090,7 @@ Configure a audio device, useful in combination with QXL/Spice.
 .PARAMETER Autostart
 Automatic restart after crash (currently ignored).
 .PARAMETER Balloon
-Amount of target RAM for the VM in MB. Using zero disables the ballon driver.
+Amount of target RAM for the VM in MiB. Using zero disables the ballon driver.
 .PARAMETER Bios
 Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
@@ -11104,7 +11122,7 @@ Description for the VM. Shown in the web-interface VM's summary. This is saved a
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Efidisk0
-Configure a Disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
 .PARAMETER Freeze
@@ -11134,9 +11152,9 @@ Set the real time clock (RTC) to local time. This is enabled by default if the `
 .PARAMETER Lock
 Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot-delete,suspending,suspended
 .PARAMETER Machine
-Specifies the Qemu machine type.
+Specifies the QEMU machine type.
 .PARAMETER Memory
-Amount of RAM for the VM in MB. This is the maximum available memory when you use the balloon device.
+Amount of RAM for the VM in MiB. This is the maximum available memory when you use the balloon device.
 .PARAMETER MigrateDowntime
 Set maximum tolerated downtime (in seconds) for migrations.
 .PARAMETER MigrateSpeed
@@ -12009,7 +12027,7 @@ Ticket data connection.
 .PARAMETER ForceCpu
 Override QEMU's -cpu argument with the given string.
 .PARAMETER Machine
-Specifies the Qemu machine type.
+Specifies the QEMU machine type.
 .PARAMETER Migratedfrom
 The cluster node name.
 .PARAMETER MigrationNetwork
@@ -12864,7 +12882,7 @@ function New-PveNodesQemuMonitor
 {
 <#
 .DESCRIPTION
-Execute Qemu monitor commands.
+Execute QEMU monitor commands.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Command
@@ -13219,7 +13237,7 @@ The cluster node name.
 .PARAMETER Snapname
 The name of the snapshot.
 .PARAMETER Start
-Whether the VM should get started after rolling back successfully
+Whether the VM should get started after rolling back successfully. (Note':' VMs will be automatically started if the snapshot includes RAM.)
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -13420,7 +13438,7 @@ Create or restore a container.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Arch
-OS architecture type. Enum: amd64,i386,arm64,armhf
+OS architecture type. Enum: amd64,i386,arm64,armhf,riscv32,riscv64
 .PARAMETER Bwlimit
 Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Cmode
@@ -13513,7 +13531,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('amd64','i386','arm64','armhf')]
+        [ValidateSet('amd64','i386','arm64','armhf','riscv32','riscv64')]
         [string]$Arch,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -13830,7 +13848,7 @@ Set container options.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Arch
-OS architecture type. Enum: amd64,i386,arm64,armhf
+OS architecture type. Enum: amd64,i386,arm64,armhf,riscv32,riscv64
 .PARAMETER Cmode
 Console mode. By default, the console command tries to open a connection to one of the available tty devices. By setting cmode to 'console' it tries to attach to /dev/console instead. If you set cmode to 'shell', it simply invokes a shell inside the container (no login). Enum: shell,console,tty
 .PARAMETER Console
@@ -13907,7 +13925,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('amd64','i386','arm64','armhf')]
+        [ValidateSet('amd64','i386','arm64','armhf','riscv32','riscv64')]
         [string]$Arch,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -15814,8 +15832,12 @@ Ticket data connection.
 --
 .PARAMETER Node
 The cluster node name.
+.PARAMETER Since
+Display log since this UNIX epoch.
 .PARAMETER Start
 --
+.PARAMETER Until
+Display log until this UNIX epoch.
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -15834,7 +15856,13 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Since,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Start,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Until,
 
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -15843,7 +15871,9 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Limit']) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters['Since']) { $parameters['since'] = $Since }
         if($PSBoundParameters['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters['Until']) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/firewall/log" -Parameters $parameters
     }
@@ -16775,6 +16805,87 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesCephCfg
+{
+<#
+.DESCRIPTION
+Directory index.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cfg"
+    }
+}
+
+function Get-PveNodesCephCfgRaw
+{
+<#
+.DESCRIPTION
+Get the Ceph configuration file.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cfg/raw"
+    }
+}
+
+function Get-PveNodesCephCfgDb
+{
+<#
+.DESCRIPTION
+Get the Ceph configuration database.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cfg/db"
+    }
+}
+
 function Get-PveNodesCephOsd
 {
 <#
@@ -16910,6 +17021,111 @@ PveResponse. Return response.
         if($PSBoundParameters['Cleanup']) { $parameters['cleanup'] = $Cleanup }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/osd/$Osdid" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesCephOsdIdx
+{
+<#
+.DESCRIPTION
+OSD index.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Osdid
+OSD ID
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Osdid
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/osd/$Osdid"
+    }
+}
+
+function Get-PveNodesCephOsdMetadata
+{
+<#
+.DESCRIPTION
+Get OSD details
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Osdid
+OSD ID
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Osdid
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/osd/$Osdid/metadata"
+    }
+}
+
+function Get-PveNodesCephOsdLvInfo
+{
+<#
+.DESCRIPTION
+Get OSD volume details
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Osdid
+OSD ID
+.PARAMETER Type
+OSD device type Enum: block,db,wal
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Osdid,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('block','db','wal')]
+        [string]$Type
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/osd/$Osdid/lv-info" -Parameters $parameters
     }
 }
 
@@ -17379,11 +17595,355 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesCephPool
+{
+<#
+.DESCRIPTION
+List all pools and their settings (which are settable by the POST/PUT endpoints).
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/pool"
+    }
+}
+
+function New-PveNodesCephPool
+{
+<#
+.DESCRIPTION
+Create Ceph pool
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER AddStorages
+Configure VM and CT storage using the new pool.
+.PARAMETER Application
+The application of the pool. Enum: rbd,cephfs,rgw
+.PARAMETER CrushRule
+The rule to use for mapping object placement in the cluster.
+.PARAMETER ErasureCoding
+Create an erasure coded pool for RBD with an accompaning replicated pool for metadata storage. With EC, the common ceph options 'size', 'min_size' and 'crush_rule' parameters will be applied to the metadata pool.
+.PARAMETER MinSize
+Minimum number of replicas per object
+.PARAMETER Name
+The name of the pool. It must be unique.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER PgAutoscaleMode
+The automatic PG scaling mode of the pool. Enum: on,off,warn
+.PARAMETER PgNum
+Number of placement groups.
+.PARAMETER PgNumMin
+Minimal number of placement groups.
+.PARAMETER Size
+Number of replicas per object
+.PARAMETER TargetSize
+The estimated target size of the pool for the PG autoscaler.
+.PARAMETER TargetSizeRatio
+The estimated target ratio of the pool for the PG autoscaler.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$AddStorages,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('rbd','cephfs','rgw')]
+        [string]$Application,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CrushRule,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ErasureCoding,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$MinSize,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('on','off','warn')]
+        [string]$PgAutoscaleMode,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$PgNum,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$PgNumMin,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Size,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetSize,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [float]$TargetSizeRatio
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['AddStorages']) { $parameters['add_storages'] = $AddStorages }
+        if($PSBoundParameters['Application']) { $parameters['application'] = $Application }
+        if($PSBoundParameters['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
+        if($PSBoundParameters['ErasureCoding']) { $parameters['erasure-coding'] = $ErasureCoding }
+        if($PSBoundParameters['MinSize']) { $parameters['min_size'] = $MinSize }
+        if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
+        if($PSBoundParameters['PgNum']) { $parameters['pg_num'] = $PgNum }
+        if($PSBoundParameters['PgNumMin']) { $parameters['pg_num_min'] = $PgNumMin }
+        if($PSBoundParameters['Size']) { $parameters['size'] = $Size }
+        if($PSBoundParameters['TargetSize']) { $parameters['target_size'] = $TargetSize }
+        if($PSBoundParameters['TargetSizeRatio']) { $parameters['target_size_ratio'] = $TargetSizeRatio }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/pool" -Parameters $parameters
+    }
+}
+
+function Remove-PveNodesCephPool
+{
+<#
+.DESCRIPTION
+Destroy pool
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Force
+If true, destroys pool even if in use
+.PARAMETER Name
+The name of the pool. It must be unique.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER RemoveEcprofile
+Remove the erasure code profile. Defaults to true, if applicable.
+.PARAMETER RemoveStorages
+Remove all pveceph-managed storages configured for this pool
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Force,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$RemoveEcprofile,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$RemoveStorages
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters['RemoveEcprofile']) { $parameters['remove_ecprofile'] = $RemoveEcprofile }
+        if($PSBoundParameters['RemoveStorages']) { $parameters['remove_storages'] = $RemoveStorages }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesCephPoolIdx
+{
+<#
+.DESCRIPTION
+Pool index.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+The name of the pool.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/pool/$Name"
+    }
+}
+
+function Set-PveNodesCephPool
+{
+<#
+.DESCRIPTION
+Change POOL settings
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Application
+The application of the pool. Enum: rbd,cephfs,rgw
+.PARAMETER CrushRule
+The rule to use for mapping object placement in the cluster.
+.PARAMETER MinSize
+Minimum number of replicas per object
+.PARAMETER Name
+The name of the pool. It must be unique.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER PgAutoscaleMode
+The automatic PG scaling mode of the pool. Enum: on,off,warn
+.PARAMETER PgNum
+Number of placement groups.
+.PARAMETER PgNumMin
+Minimal number of placement groups.
+.PARAMETER Size
+Number of replicas per object
+.PARAMETER TargetSize
+The estimated target size of the pool for the PG autoscaler.
+.PARAMETER TargetSizeRatio
+The estimated target ratio of the pool for the PG autoscaler.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('rbd','cephfs','rgw')]
+        [string]$Application,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$CrushRule,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$MinSize,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateSet('on','off','warn')]
+        [string]$PgAutoscaleMode,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$PgNum,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$PgNumMin,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Size,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$TargetSize,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [float]$TargetSizeRatio
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Application']) { $parameters['application'] = $Application }
+        if($PSBoundParameters['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
+        if($PSBoundParameters['MinSize']) { $parameters['min_size'] = $MinSize }
+        if($PSBoundParameters['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
+        if($PSBoundParameters['PgNum']) { $parameters['pg_num'] = $PgNum }
+        if($PSBoundParameters['PgNumMin']) { $parameters['pg_num_min'] = $PgNumMin }
+        if($PSBoundParameters['Size']) { $parameters['size'] = $Size }
+        if($PSBoundParameters['TargetSize']) { $parameters['target_size'] = $TargetSize }
+        if($PSBoundParameters['TargetSizeRatio']) { $parameters['target_size_ratio'] = $TargetSizeRatio }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesCephPoolStatus
+{
+<#
+.DESCRIPTION
+Show the current pool status.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+The name of the pool. It must be unique.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Verbose_
+If enabled, will display additional data(eg. statistics).
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Verbose_
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Verbose_']) { $parameters['verbose'] = $Verbose_ }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/pool/$Name/status" -Parameters $parameters
+    }
+}
+
 function Get-PveNodesCephPools
 {
 <#
 .DESCRIPTION
-List all pools.
+List all pools. Deprecated, please use `/nodes/{node}/ceph/pool`.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -17410,7 +17970,7 @@ function New-PveNodesCephPools
 {
 <#
 .DESCRIPTION
-Create Ceph pool
+Create Ceph pool. Deprecated, please use `/nodes/{node}/ceph/pool`.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER AddStorages
@@ -17513,7 +18073,7 @@ function Remove-PveNodesCephPools
 {
 <#
 .DESCRIPTION
-Destroy pool
+Destroy pool. Deprecated, please use `/nodes/{node}/ceph/pool/{name}`.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Force
@@ -17565,7 +18125,7 @@ function Get-PveNodesCephPoolsIdx
 {
 <#
 .DESCRIPTION
-List pool settings.
+List pool settings. Deprecated, please use `/nodes/{node}/ceph/pool/{pool}/status`.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Name
@@ -17605,7 +18165,7 @@ function Set-PveNodesCephPools
 {
 <#
 .DESCRIPTION
-Change POOL settings
+Change POOL settings. Deprecated, please use `/nodes/{node}/ceph/pool/{name}`.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Application
@@ -17695,7 +18255,7 @@ function Get-PveNodesCephConfig
 {
 <#
 .DESCRIPTION
-Get Ceph configuration.
+Get the Ceph configuration file. Deprecated, please use `/nodes/{node}/ceph/cfg/raw.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -17722,7 +18282,7 @@ function Get-PveNodesCephConfigdb
 {
 <#
 .DESCRIPTION
-Get Ceph configuration database.
+Get the Ceph configuration database. Deprecated, please use `/nodes/{node}/ceph/cfg/db.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -19419,12 +19979,14 @@ function Get-PveNodesTasksLog
 Read task log.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Download
+Whether the tasklog file should be downloaded. This parameter can't be used in conjunction with other parameters
 .PARAMETER Limit
-The maximum amount of lines that should be printed.
+The amount of lines to read from the tasklog.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Start
-The line number to start printing at.
+Start at this line when reading the tasklog
 .PARAMETER Upid
 The task's unique ID.
 .OUTPUTS
@@ -19435,6 +19997,9 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$Download,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$Limit,
@@ -19451,6 +20016,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['Download']) { $parameters['download'] = $Download }
         if($PSBoundParameters['Limit']) { $parameters['limit'] = $Limit }
         if($PSBoundParameters['Start']) { $parameters['start'] = $Start }
 
@@ -22304,6 +22870,8 @@ Enable logging of conntrack information.
 Enable NDP (Neighbor Discovery Protocol).
 .PARAMETER NfConntrackAllowInvalid
 Allow invalid packets on connection tracking.
+.PARAMETER NfConntrackHelpers
+Enable conntrack helpers for specific protocols. Supported protocols':' amanda, ftp, irc, netbios-ns, pptp, sane, sip, snmp, tftp
 .PARAMETER NfConntrackMax
 Maximum number of tracked connections.
 .PARAMETER NfConntrackTcpTimeoutEstablished
@@ -22362,6 +22930,9 @@ PveResponse. Return response.
         [switch]$NfConntrackAllowInvalid,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$NfConntrackHelpers,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [int]$NfConntrackMax,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -22407,6 +22978,7 @@ PveResponse. Return response.
         if($PSBoundParameters['LogNfConntrack']) { $parameters['log_nf_conntrack'] = $LogNfConntrack }
         if($PSBoundParameters['Ndp']) { $parameters['ndp'] = $Ndp }
         if($PSBoundParameters['NfConntrackAllowInvalid']) { $parameters['nf_conntrack_allow_invalid'] = $NfConntrackAllowInvalid }
+        if($PSBoundParameters['NfConntrackHelpers']) { $parameters['nf_conntrack_helpers'] = $NfConntrackHelpers }
         if($PSBoundParameters['NfConntrackMax']) { $parameters['nf_conntrack_max'] = $NfConntrackMax }
         if($PSBoundParameters['NfConntrackTcpTimeoutEstablished']) { $parameters['nf_conntrack_tcp_timeout_established'] = $NfConntrackTcpTimeoutEstablished }
         if($PSBoundParameters['NfConntrackTcpTimeoutSynRecv']) { $parameters['nf_conntrack_tcp_timeout_syn_recv'] = $NfConntrackTcpTimeoutSynRecv }
@@ -22433,8 +23005,12 @@ Ticket data connection.
 --
 .PARAMETER Node
 The cluster node name.
+.PARAMETER Since
+Display log since this UNIX epoch.
 .PARAMETER Start
 --
+.PARAMETER Until
+Display log until this UNIX epoch.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -22451,13 +23027,21 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$Start
+        [int]$Since,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Start,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Until
     )
 
     process {
         $parameters = @{}
         if($PSBoundParameters['Limit']) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters['Since']) { $parameters['since'] = $Since }
         if($PSBoundParameters['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters['Until']) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/firewall/log" -Parameters $parameters
     }
@@ -23529,7 +24113,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: ceph_install,login,upgrade
+Run specific command or default to login. Enum: ceph_install,upgrade,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Height
@@ -23550,7 +24134,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('ceph_install','login','upgrade')]
+        [ValidateSet('ceph_install','upgrade','login')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -23589,7 +24173,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: ceph_install,login,upgrade
+Run specific command or default to login. Enum: ceph_install,upgrade,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -23604,7 +24188,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('ceph_install','login','upgrade')]
+        [ValidateSet('ceph_install','upgrade','login')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -23672,7 +24256,7 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: ceph_install,login,upgrade
+Run specific command or default to login. Enum: ceph_install,upgrade,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -23689,7 +24273,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('ceph_install','login','upgrade')]
+        [ValidateSet('ceph_install','upgrade','login')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -24038,8 +24622,12 @@ function New-PveNodesStopall
 Stop all VMs and Containers.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER ForceStop
+Force a hard-stop after the timeout.
 .PARAMETER Node
 The cluster node name.
+.PARAMETER Timeout
+Timeout for each guest shutdown task. Depending on `force-stop`, the shutdown gets then simply aborted or a hard-stop is forced.
 .PARAMETER Vms
 Only consider Guests with these IDs.
 .OUTPUTS
@@ -24051,8 +24639,14 @@ PveResponse. Return response.
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [switch]$ForceStop,
+
         [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Node,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Timeout,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Vms
@@ -24060,6 +24654,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['ForceStop']) { $parameters['force-stop'] = $ForceStop }
+        if($PSBoundParameters['Timeout']) { $parameters['timeout'] = $Timeout }
         if($PSBoundParameters['Vms']) { $parameters['vms'] = $Vms }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/stopall" -Parameters $parameters
@@ -24074,7 +24670,7 @@ Migrate all VMs and Containers.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Maxworkers
-Maximal number of parallel migration job. If not set use 'max_workers' from datacenter.cfg, one of both must be set!
+Maximal number of parallel migration job. If not set, uses'max_workers' from datacenter.cfg. One of both must be set!
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Target
@@ -24239,6 +24835,8 @@ host group for comstar views
 target group for comstar views
 .PARAMETER Content
 Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
+.PARAMETER ContentDirs
+Overrides for default content type directories.
 .PARAMETER DataPool
 Data Pool (for erasure coding only)
 .PARAMETER Datastore
@@ -24370,6 +24968,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Content,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ContentDirs,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$DataPool,
@@ -24538,6 +25139,7 @@ PveResponse. Return response.
         if($PSBoundParameters['ComstarHg']) { $parameters['comstar_hg'] = $ComstarHg }
         if($PSBoundParameters['ComstarTg']) { $parameters['comstar_tg'] = $ComstarTg }
         if($PSBoundParameters['Content']) { $parameters['content'] = $Content }
+        if($PSBoundParameters['ContentDirs']) { $parameters['content-dirs'] = $ContentDirs }
         if($PSBoundParameters['DataPool']) { $parameters['data-pool'] = $DataPool }
         if($PSBoundParameters['Datastore']) { $parameters['datastore'] = $Datastore }
         if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
@@ -24665,6 +25267,8 @@ host group for comstar views
 target group for comstar views
 .PARAMETER Content
 Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
+.PARAMETER ContentDirs
+Overrides for default content type directories.
 .PARAMETER DataPool
 Data Pool (for erasure coding only)
 .PARAMETER Delete
@@ -24772,6 +25376,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Content,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ContentDirs,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$DataPool,
@@ -24910,6 +25517,7 @@ PveResponse. Return response.
         if($PSBoundParameters['ComstarHg']) { $parameters['comstar_hg'] = $ComstarHg }
         if($PSBoundParameters['ComstarTg']) { $parameters['comstar_tg'] = $ComstarTg }
         if($PSBoundParameters['Content']) { $parameters['content'] = $Content }
+        if($PSBoundParameters['ContentDirs']) { $parameters['content-dirs'] = $ContentDirs }
         if($PSBoundParameters['DataPool']) { $parameters['data-pool'] = $DataPool }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
@@ -25040,7 +25648,7 @@ Keys for two factor auth (yubico).
 .PARAMETER Password
 Initial password.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25106,7 +25714,7 @@ Delete user.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25133,7 +25741,7 @@ Get user configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25178,7 +25786,7 @@ Keys for two factor auth (yubico).
 .PARAMETER Lastname
 --
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25245,7 +25853,7 @@ Ticket data connection.
 .PARAMETER Multiple
 Request all entries as an array.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25278,7 +25886,7 @@ Get user API tokens.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25307,7 +25915,7 @@ Ticket data connection.
 .PARAMETER Tokenid
 User-specific token identifier.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25339,7 +25947,7 @@ Ticket data connection.
 .PARAMETER Tokenid
 User-specific token identifier.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25377,7 +25985,7 @@ Restrict API token privileges with separate ACLs (default), or give full privile
 .PARAMETER Tokenid
 User-specific token identifier.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -25429,7 +26037,7 @@ Restrict API token privileges with separate ACLs (default), or give full privile
 .PARAMETER Tokenid
 User-specific token identifier.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26443,7 +27051,7 @@ DEPRECATED':' use 'remove-vanished' instead. Remove ACLs for users or groups whi
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER RemoveVanished
-A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync.
+A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Scope
 Select what to sync. Enum: users,groups,both
 .OUTPUTS
@@ -26651,7 +27259,7 @@ List TFA configurations of users.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26688,7 +27296,7 @@ A totp URI.
 .PARAMETER Type
 TFA Entry Type. Enum: totp,u2f,webauthn,recovery,yubico
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .PARAMETER Value
 The current value for the provided totp URI, or a Webauthn/U2F challenge response
 .OUTPUTS
@@ -26748,7 +27356,7 @@ A TFA entry id.
 .PARAMETER Password
 The current password.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26786,7 +27394,7 @@ Ticket data connection.
 .PARAMETER Id
 A TFA entry id.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26824,7 +27432,7 @@ A TFA entry id.
 .PARAMETER Password
 The current password.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26964,7 +27572,7 @@ Ticket data connection.
 .PARAMETER Password
 The new password.
 .PARAMETER Userid
-User ID
+Full User ID, in the `name@realm` format.
 .OUTPUTS
 PveResponse. Return response.
 #>
