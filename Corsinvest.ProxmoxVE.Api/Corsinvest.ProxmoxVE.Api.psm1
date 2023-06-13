@@ -613,9 +613,13 @@ Get VMs/CTs from id or name.
 Ticket data connection.
 .PARAMETER VmIdOrName
 The id or name VM/CT comma separated (eg. 100,101,102,TestDebian)
+-vmid or -name exclude (e.g. -200,-TestUbuntu)
 range 100:107,-105,200:204
-'all-???' for all VM/CT in specific host (e.g. all-pve1, all-\$(hostname)),
-'all' or '*' for all VM/CT in cluster
+'@pool-???' for all VM/CT in specific pool (e.g. @pool-customer1),
+'@tag-???' for all VM/CT in specific tags (e.g. @tag-customerA),
+'@node-???' for all VM/CT in specific node (e.g. @node-pve1, @node-\$(hostname)),
+'@all-???' for all VM/CT in specific host (e.g. @all-pve1, @all-\$(hostname)),
+'@all' for all VM/CT in cluster";
 .OUTPUTS
 PSCustomObject. Return Vm Data.
 #>
@@ -689,6 +693,16 @@ function VmCheckIdOrName
         Elseif($item.IndexOf("@all-") -eq 0 -and $item.Substring(5) -eq $vm.node)
         {
             #all vm in node
+            return $true
+        }
+        Elseif($item.IndexOf("@node-") -eq 0 -and $item.Substring(6) -eq $vm.node)
+        {
+            #all vm in node
+            return $true
+        }
+        Elseif($item.IndexOf("@pool-") -eq 0 -and $item.Substring(6) -eq $vm.pool)
+        {
+            #all vm in pool
             return $true
         }
         Elseif($item.IndexOf("@tags-") -eq 0)

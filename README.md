@@ -21,12 +21,12 @@ cv4pve-api-powershell is a part of suite cv4pve-tools.
 For more information visit https://www.cv4pve-tools.com
 ```
 
-## Copyright and License
+## 📰 Copyright
 
 Copyright: Corsinvest Srl
 For licensing details please visit [LICENSE.md](LICENSE.md)
 
-## Commercial Support
+## 🦺 Commercial Support
 
 This software is part of a suite of tools called cv4pve-tools. If you want commercial support, visit the [site](https://www.corsinvest.it/cv4pve)
 
@@ -38,7 +38,7 @@ PowerShell for Proxmox VE.
 
 this is a CmdLet for PowerShell to manage Proxmox VE.
 
-## Main features
+## 🚀 Main features
 
 * Easy to learn
 * Set ResponseType json, png, extjs, html, text
@@ -75,7 +75,11 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 * Form Proxmox VE 6.2 support Api Token for user
 * Enter-PveSpice enter Spice VM
 
-## Tutorial
+## 📙 Documentation
+
+[Documentation](https://htmlpreview.github.io/?https://github.com/Corsinvest/cv4pve-api-powershell/blob/main/doc/index.html)
+
+## :sos: Tutorial
 
 [Tutorial interactive in VSCode notebook](https://tinyurl.com/cv4pve-api-pwsh-learn)
 
