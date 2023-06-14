@@ -17,8 +17,8 @@
 
 powerShell for Proxmox VE         (Made in Italy)
 
-cv4pve-api-powershell is a part of suite cv4pve-tools.
-For more information visit https://www.cv4pve-tools.com
+cv4pve-api-powershell is a part of suite cv4pve.
+For more information visit https://www.corsinvest.it/cv4pve
 ```
 
 ## 📰 Copyright
@@ -28,7 +28,7 @@ For licensing details please visit [LICENSE.md](LICENSE.md)
 
 ## 🦺 Commercial Support
 
-This software is part of a suite of tools called cv4pve-tools. If you want commercial support, visit the [site](https://www.corsinvest.it/cv4pve)
+This software is part of a suite of tools called cv4pve. If you want commercial support, visit the [site](https://www.corsinvest.it/cv4pve)
 
 ## Introduction
 
@@ -77,9 +77,9 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 ## 📙 Documentation
 
-[Documentation](https://htmlpreview.github.io/?https://github.com/Corsinvest/cv4pve-api-powershell/blob/main/doc/index.html)
+[Documentation](https://htmlpreview.github.io/?https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/index.html)
 
-## :sos: Tutorial
+## Tutorial
 
 [Tutorial interactive in VSCode notebook](https://tinyurl.com/cv4pve-api-pwsh-learn)
 
@@ -251,4 +251,4 @@ vmstate name                         parent                       description   
 For build documentation use command **Build-PveDocumentation**
 
 This command accept **TemplateFile** parameter is a template for generate documentation.
-The default [file](https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/cv4pve-api-powershell-help-out-html.ps1).
+The default [file](https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/help-out-html.ps1).
