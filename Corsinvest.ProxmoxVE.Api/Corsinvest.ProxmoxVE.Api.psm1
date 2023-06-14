@@ -303,7 +303,7 @@ Output file
     [OutputType([void])]
     param (
         [Parameter()]
-        [string] $TemplateFile = 'https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/cv4pve-api-pwsh-help-out-html.ps1',
+        [string] $TemplateFile = 'https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/help-out-html.ps1',
 
         [Parameter(Mandatory)]
         [string] $OutputFile
