@@ -1,3 +1,7 @@
+#!meta
+
+{"kernelInfo":{"defaultKernelName":"csharp","items":[{"aliases":[],"name":"csharp"}]}}
+
 #!markdown
 
 # Hello World
@@ -130,4 +134,4 @@ Get snapshot of VM/CT with number 100
 #!pwsh
 
 #Change number vm
-(Get-PveVMSnapshots -VmIdOrName 100).ToTable()
+(Get-PveVMSnapshot -VmIdOrName 100).ToTable()

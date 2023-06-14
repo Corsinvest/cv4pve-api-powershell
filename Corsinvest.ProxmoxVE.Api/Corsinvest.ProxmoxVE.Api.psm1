@@ -2,12 +2,12 @@
 # SPDX-License-Identifier: GPL-3.0-only
 
 class PveValidVmId : System.Management.Automation.IValidateSetValuesGenerator {
-    [string[]] GetValidValues() { return Get-PveVM | Select-Object -ExpandProperty vmid }
+    [string[]] GetValidValues() { return Get-PveVm | Select-Object -ExpandProperty vmid }
 }
 
 class PveValidVmName : System.Management.Automation.IValidateSetValuesGenerator {
     [string[]] GetValidValues() {
-        return Get-PveVM | Where-Object {$_.status -ne 'unknown' } | Select-Object -ExpandProperty name
+        return Get-PveVm | Where-Object {$_.status -ne 'unknown' } | Select-Object -ExpandProperty name
     }
 }
 
@@ -316,9 +316,11 @@ Output file
         $data = [System.Collections.ArrayList]::new()
         foreach ($item in $commands) {
             $progress++
-            Write-Progress -Activity "Elaborate command $($item.Name)" `
-                            -CurrentOperation "Completed $($progress) of $totProgress." `
-                            -PercentComplete $(($progress / $totProgress) * 100)
+            $perc = [Math]::Round(($progress / $totProgress) * 100)
+                            #-CurrentOperation "Completed $($progress) of $totProgress." `
+            Write-Progress -Activity "Elaborate command" `
+                            -Status "$perc% $($item.Name)" `
+                            -PercentComplete $perc
 
             #help
             $help = Get-Help $item.Name -Full
@@ -371,14 +373,14 @@ Date time
 [Int32]. Return Unix Time.
 #>
     [CmdletBinding()]
-    [OutputType([Int32])]
+    [OutputType([long])]
     param (
         [Parameter(Mandatory,Position = 0,ValueFromPipeline )]
         [DateTime]$Date
     )
 
     process {
-        [Int32] ($Date.ToUniversalTime() - (Get-Date '1/1/1970').ToUniversalTime()).TotalSeconds
+        [long] (New-Object -TypeName System.DateTimeOffset -ArgumentList ($Date)).ToUnixTimeSeconds()
     }
 }
 
@@ -398,7 +400,7 @@ DateTime. Return DateTime from Unix Time.
         [long] $Time
     )
 
-    return (New-Object -Type DateTime -ArgumentList 1970, 1, 1, 0, 0, 0, 0).ToLocalTime().AddSeconds($Time)
+    return [System.DateTimeOffset]::FromUnixTimeSeconds($Time).DateTime
 }
 #endregion
 
@@ -434,7 +436,7 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName | Select-Object -First 1
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName | Select-Object -First 1
         if ($vm.type -eq 'qemu') {
             $node = $vm.node
             $vmid = $vm.vmid
@@ -605,7 +607,7 @@ PSCustomObject. Return Vm Data.
     }
 }
 
-function Get-PveVM {
+function Get-PveVm {
     <#
 .DESCRIPTION
 Get VMs/CTs from id or name.
@@ -722,7 +724,7 @@ function VmCheckIdOrName
     return $false
 }
 
-function Unlock-PveVM {
+function Unlock-PveVm {
     <#
 .DESCRIPTION
 Unlock VM.
@@ -746,14 +748,14 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Set-PveNodesQemuConfig -PveTicket $PveTicket -Delete 'lock' -Skiplock }
         ElseIf ($vm.type -eq 'lxc') { return $vm | Set-PveNodesLxcConfig -PveTicket $PveTicket -Delete 'lock' }
     }
 }
 
 #region VM status
-function Start-PveVM {
+function Start-PveVm {
     <#
 .DESCRIPTION
 Start VM.
@@ -777,13 +779,13 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
         ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
     }
 }
 
-function Stop-PveVM {
+function Stop-PveVm {
     <#
 .DESCRIPTION
 Stop VM.
@@ -807,13 +809,13 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket }
         ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
     }
 }
 
-function Suspend-PveVM {
+function Suspend-PveVm {
     <#
 .DESCRIPTION
 Suspend VM.
@@ -837,13 +839,13 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket }
         ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
     }
 }
 
-function Resume-PveVM {
+function Resume-PveVm {
     <#
 .DESCRIPTION
 Resume VM.
@@ -867,13 +869,13 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket }
         ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
     }
 }
 
-function Reset-PveVM {
+function Reset-PveVm {
     <#
 .DESCRIPTION
 Reset VM.
@@ -897,7 +899,7 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket }
         ElseIf ($vm.type -eq 'lxc') { throw "Lxc not implement reset!" }
     }
@@ -905,7 +907,7 @@ PveResponse. Return response.
 #endregion
 
 #region Snapshot
-function Get-PveVMSnapshots {
+function Get-PveVmSnapshot {
     <#
 .DESCRIPTION
 Get snapshots VM.
@@ -929,13 +931,13 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Get-PveNodesQemuSnapshot -PveTicket $PveTicket }
         ElseIf ($vm.type -eq 'lxc') { return $vm | Get-PveNodesLxcSnapshot -PveTicket $PveTicket }
     }
 }
 
-function New-PveVMSnapshot {
+function New-PveVmSnapshot {
     <#
 .DESCRIPTION
 Create snapshot VM.
@@ -976,7 +978,7 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu')
         {
             if ($Vmstate) {
@@ -994,7 +996,7 @@ PveResponse. Return response.
     }
 }
 
-function Remove-PveVMSnapshot {
+function Remove-PveVmSnapshot {
     <#
 .DESCRIPTION
 Delete a VM snapshot.
@@ -1024,13 +1026,13 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname }
         ElseIf ($vm.type -eq 'lxc') { return $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
     }
 }
 
-function Undo-PveVMSnapshot {
+function Undo-PveVmSnapshot {
     <#
 .DESCRIPTION
 Rollback VM state to specified snapshot.
@@ -1060,7 +1062,7 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVM -PveTicket $PveTicket -VmIdOrName $VmIdOrName
+        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
         if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
         ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
     }
@@ -1081,7 +1083,7 @@ Set-Alias -Name Stop-PveQemu -Value New-PveNodesQeumStatusStop -PassThru
 Set-Alias -Name Suspend-PveQemu -Value New-PveNodesQemuStatusSuspend -PassThru
 Set-Alias -Name Resume-PveQemu -Value New-PveNodesQemuStatusResume -PassThru
 Set-Alias -Name Reset-PveQemu -Value New-PveNodesQemuStatusReset -PassThru
-#Set-Alias -Name Reboot-PveQemu -Value New-PveNodesQemuStatusReboot
+Set-Alias -Name Restart-PveQemu -Value New-PveNodesQemuStatusReboot -PassThru
 #Set-Alias -Name Shutdown-PveQemu -Value New-PveNodesQemuStatusShutdown
 Set-Alias -Name Move-PveQemu -Value New-PveNodesQemuMigrate -PassThru
 Set-Alias -Name New-PveQemu -Value New-PveNodesQemu -PassThru
@@ -1092,7 +1094,7 @@ Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusStart -PassThru
 Set-Alias -Name Stop-PveLxc -Value New-PveNodesLxcStatusStop -PassThru
 Set-Alias -Name Suspend-PveLxc -Value New-PveNodesLxcStatusSuspend -PassThru
 Set-Alias -Name Resume-PveLxc -Value New-PveNodesLxcStatusResume -PassThru
-#Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusReboot
+Set-Alias -Name Restart-PveLxc -Value New-PveNodesLxcStatusReboot -PassThru
 #Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusShutdown
 Set-Alias -Name Move-PveLxc -Value New-PveNodesLxcMigrate -PassThru
 Set-Alias -Name Copy-PveLxc -Value New-PveNodesLxcClone -PassThru
@@ -1100,6 +1102,7 @@ Set-Alias -Name Copy-PveLxc -Value New-PveNodesLxcClone -PassThru
 #NODE
 Set-Alias -Name Update-PveNode -Value New-PveNodesAptUpdate -PassThru
 Set-Alias -Name Backup-PveVzdump -Value New-PveNodesVzdump -PassThru
+#Set-Alias -Name Stop-PveNode -Value New-PveNodesStatus -Command 'shutdown' -PassThru
 
 #########
 ## API ##

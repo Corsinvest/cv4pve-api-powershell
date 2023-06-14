@@ -55,13 +55,13 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
   * Wait-PveTaskIsFinish
   * Get-PveTaskIsRunning
   * Build-PveDocumentation
-  * Get-PveVM (from id or name)
-  * Unlock-PveVM (from id or name)
-  * Start-PveVM (from id or name)
-  * Stop-PveVM (from id or name)
-  * Suspend-PveVM (from id or name)
-  * Resume-PveVM (from id or name)
-  * Reset-PveVM (from id or name)
+  * Get-PveVm (from id or name)
+  * Unlock-PveVm (from id or name)
+  * Start-PveVm (from id or name)
+  * Stop-PveVm (from id or name)
+  * Suspend-PveVm (from id or name)
+  * Resume-PveVm (from id or name)
+  * Reset-PveVm (from id or name)
   * And More
 * Method direct access using Invoke-PveRestApi return PveResponse
 * Connect-PveCluster accept multiple hosts for HA
@@ -230,7 +230,7 @@ vmstate name                         parent                       description   
 Other method
 
 ```ps
-(Get-PveVM -VmIdOrName 100 | Get-PveNodesQemuSnapshot).ToTable()
+(Get-PveVm -VmIdOrName 100 | Get-PveNodesQemuSnapshot).ToTable()
 vmstate name                         parent                       description       snaptime
 ------- ----                         ------                       -----------       --------
       0 autowin10service200221183059 autowin10service200220183012 cv4pve-autosnap 1582306261
