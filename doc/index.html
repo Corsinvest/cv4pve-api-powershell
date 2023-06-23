@@ -10,7 +10,8 @@ SPDX-License-Identifier: GPL-3.0-only
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
         crossorigin="anonymous">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/default.min.css" />
 
     <title>Documentation cv4pve-api-powershell PowerShell for Proxmox VE</title>
     <meta name='generator' content='cv4pve-api-powershell - Build-PveDocumentation'>
@@ -178,8 +179,15 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterHaStatusCurrent'>Get-PveClusterHaStatusCurrent</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterHaStatusManagerStatus'>Get-PveClusterHaStatusManagerStatus</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterJobs'>Get-PveClusterJobs</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterJobsRealmSync'>Get-PveClusterJobsRealmSync</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterJobsRealmSyncIdx'>Get-PveClusterJobsRealmSyncIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterJobsScheduleAnalyze'>Get-PveClusterJobsScheduleAnalyze</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterLog'>Get-PveClusterLog</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterMapping'>Get-PveClusterMapping</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterMappingPci'>Get-PveClusterMappingPci</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterMappingPciIdx'>Get-PveClusterMappingPciIdx</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterMappingUsb'>Get-PveClusterMappingUsb</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterMappingUsbIdx'>Get-PveClusterMappingUsbIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetrics'>Get-PveClusterMetrics</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetricsServer'>Get-PveClusterMetricsServer</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetricsServerIdx'>Get-PveClusterMetricsServerIdx</a></li>
@@ -220,8 +228,6 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephCfgDb'>Get-PveNodesCephCfgDb</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephCfgRaw'>Get-PveNodesCephCfgRaw</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephCmdSafety'>Get-PveNodesCephCmdSafety</a></li>
-<li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephConfig'>Get-PveNodesCephConfig</a></li>
-<li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephConfigdb'>Get-PveNodesCephConfigdb</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephCrush'>Get-PveNodesCephCrush</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephFs'>Get-PveNodesCephFs</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephLog'>Get-PveNodesCephLog</a></li>
@@ -234,8 +240,6 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephOsdMetadata'>Get-PveNodesCephOsdMetadata</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephPool'>Get-PveNodesCephPool</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephPoolIdx'>Get-PveNodesCephPoolIdx</a></li>
-<li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephPools'>Get-PveNodesCephPools</a></li>
-<li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephPoolsIdx'>Get-PveNodesCephPoolsIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephPoolStatus'>Get-PveNodesCephPoolStatus</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephRules'>Get-PveNodesCephRules</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesCephStatus'>Get-PveNodesCephStatus</a></li>
@@ -394,7 +398,6 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessOpenidLogin'>New-PveAccessOpenidLogin</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessRoles'>New-PveAccessRoles</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessTfa'>New-PveAccessTfa</a></li>
-<li class='nav-item'><a class='nav-link' href='#New-PveAccessTfaIdx'>New-PveAccessTfaIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessTicket'>New-PveAccessTicket</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessUsers'>New-PveAccessUsers</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessUsersToken'>New-PveAccessUsersToken</a></li>
@@ -414,6 +417,9 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterHaResources'>New-PveClusterHaResources</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterHaResourcesMigrate'>New-PveClusterHaResourcesMigrate</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterHaResourcesRelocate'>New-PveClusterHaResourcesRelocate</a></li>
+<li class='nav-item'><a class='nav-link' href='#New-PveClusterJobsRealmSync'>New-PveClusterJobsRealmSync</a></li>
+<li class='nav-item'><a class='nav-link' href='#New-PveClusterMappingPci'>New-PveClusterMappingPci</a></li>
+<li class='nav-item'><a class='nav-link' href='#New-PveClusterMappingUsb'>New-PveClusterMappingUsb</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterMetricsServer'>New-PveClusterMetricsServer</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterReplication'>New-PveClusterReplication</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnControllers'>New-PveClusterSdnControllers</a></li>
@@ -435,7 +441,6 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#New-PveNodesCephOsdOut'>New-PveNodesCephOsdOut</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveNodesCephOsdScrub'>New-PveNodesCephOsdScrub</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveNodesCephPool'>New-PveNodesCephPool</a></li>
-<li class='nav-item'><a class='nav-link' href='#New-PveNodesCephPools'>New-PveNodesCephPools</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveNodesCephRestart'>New-PveNodesCephRestart</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveNodesCephStart'>New-PveNodesCephStart</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveNodesCephStop'>New-PveNodesCephStop</a></li>
@@ -550,6 +555,9 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterFirewallRules'>Remove-PveClusterFirewallRules</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterHaGroups'>Remove-PveClusterHaGroups</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterHaResources'>Remove-PveClusterHaResources</a></li>
+<li class='nav-item'><a class='nav-link' href='#Remove-PveClusterJobsRealmSync'>Remove-PveClusterJobsRealmSync</a></li>
+<li class='nav-item'><a class='nav-link' href='#Remove-PveClusterMappingPci'>Remove-PveClusterMappingPci</a></li>
+<li class='nav-item'><a class='nav-link' href='#Remove-PveClusterMappingUsb'>Remove-PveClusterMappingUsb</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterMetricsServer'>Remove-PveClusterMetricsServer</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterReplication'>Remove-PveClusterReplication</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnControllers'>Remove-PveClusterSdnControllers</a></li>
@@ -563,7 +571,6 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Remove-PveNodesCephMon'>Remove-PveNodesCephMon</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveNodesCephOsd'>Remove-PveNodesCephOsd</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveNodesCephPool'>Remove-PveNodesCephPool</a></li>
-<li class='nav-item'><a class='nav-link' href='#Remove-PveNodesCephPools'>Remove-PveNodesCephPools</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveNodesCertificatesAcmeCertificate'>Remove-PveNodesCertificatesAcmeCertificate</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveNodesCertificatesCustom'>Remove-PveNodesCertificatesCustom</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveNodesDisksDirectory'>Remove-PveNodesDisksDirectory</a></li>
@@ -602,6 +609,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Set-PveAccessTfa'>Set-PveAccessTfa</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveAccessUsers'>Set-PveAccessUsers</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveAccessUsersToken'>Set-PveAccessUsersToken</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveAccessUsersUnlockTfa'>Set-PveAccessUsersUnlockTfa</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterAcmeAccount'>Set-PveClusterAcmeAccount</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterAcmePlugins'>Set-PveClusterAcmePlugins</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterBackup'>Set-PveClusterBackup</a></li>
@@ -614,6 +622,9 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterFirewallRules'>Set-PveClusterFirewallRules</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterHaGroups'>Set-PveClusterHaGroups</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterHaResources'>Set-PveClusterHaResources</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveClusterJobsRealmSync'>Set-PveClusterJobsRealmSync</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveClusterMappingPci'>Set-PveClusterMappingPci</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveClusterMappingUsb'>Set-PveClusterMappingUsb</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterMetricsServer'>Set-PveClusterMetricsServer</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterOptions'>Set-PveClusterOptions</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterReplication'>Set-PveClusterReplication</a></li>
@@ -626,7 +637,6 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnZones'>Set-PveClusterSdnZones</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveNodesAptRepositories'>Set-PveNodesAptRepositories</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveNodesCephPool'>Set-PveNodesCephPool</a></li>
-<li class='nav-item'><a class='nav-link' href='#Set-PveNodesCephPools'>Set-PveNodesCephPools</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveNodesCertificatesAcmeCertificate'>Set-PveNodesCertificatesAcmeCertificate</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveNodesConfig'>Set-PveNodesConfig</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveNodesDisksWipedisk'>Set-PveNodesDisksWipedisk</a></li>
@@ -719,13 +729,13 @@ For licensing details please visit <a href="LICENSE.md">LICENSE.md</a></p>
 <li>Wait-PveTaskIsFinish</li>
 <li>Get-PveTaskIsRunning</li>
 <li>Build-PveDocumentation</li>
-<li>Get-PveVM (from id or name)</li>
-<li>Unlock-PveVM (from id or name)</li>
-<li>Start-PveVM (from id or name)</li>
-<li>Stop-PveVM (from id or name)</li>
-<li>Suspend-PveVM (from id or name)</li>
-<li>Resume-PveVM (from id or name)</li>
-<li>Reset-PveVM (from id or name)</li>
+<li>Get-PveVm (from id or name)</li>
+<li>Unlock-PveVm (from id or name)</li>
+<li>Start-PveVm (from id or name)</li>
+<li>Stop-PveVm (from id or name)</li>
+<li>Suspend-PveVm (from id or name)</li>
+<li>Resume-PveVm (from id or name)</li>
+<li>Reset-PveVm (from id or name)</li>
 <li>And More</li>
 </ul>
 </li>
@@ -742,7 +752,7 @@ For licensing details please visit <a href="LICENSE.md">LICENSE.md</a></p>
 <li>Enter-PveSpice enter Spice VM</li>
 </ul>
 <h2 id="documentation">📙 Documentation</h2>
-<p><a href="https://htmlpreview.github.io/?https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/index.html">Documentation</a></p>
+<p><a href="https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html">Documentation</a></p>
 <h2 id="tutorial">Tutorial</h2>
 <p><a href="https://tinyurl.com/cv4pve-api-pwsh-learn">Tutorial interactive in VSCode notebook</a></p>
 <h2 id="installation">Installation</h2>
@@ -861,7 +871,7 @@ vmstate name                         parent                       description   
         current                      autowin10service200224183012 You are here!
 </code></pre>
 <p>Other method</p>
-<pre><code class="language-ps">(Get-PveVM -VmIdOrName 100 | Get-PveNodesQemuSnapshot).ToTable()
+<pre><code class="language-ps">(Get-PveVm -VmIdOrName 100 | Get-PveNodesQemuSnapshot).ToTable()
 vmstate name                         parent                       description       snaptime
 ------- ----                         ------                       -----------       --------
       0 autowin10service200221183059 autowin10service200220183012 cv4pve-autosnap 1582306261
@@ -4335,6 +4345,104 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Get-PveClusterJobsRealmSync" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterJobsRealmSync </h2>
+<p></p>
+                <p class='searchable'>List configured realm-sync-jobs.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterJobsRealmSync [[-PveTicket] &lt;PveTicket&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterJobsRealmSyncIdx" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterJobsRealmSyncIdx </h2>
+<p></p>
+                <p class='searchable'>Read realm-sync job definition.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterJobsRealmSyncIdx [[-PveTicket] &lt;PveTicket&gt;] [-Id] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Get-PveClusterJobsScheduleAnalyze" class="toggle_container">
             <div class="page-header">
                 <h2> Get-PveClusterJobsScheduleAnalyze </h2>
@@ -4447,6 +4555,263 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterMapping" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterMapping </h2>
+<p></p>
+                <p class='searchable'>List resource types.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterMapping [[-PveTicket] &lt;PveTicket&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterMappingPci" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterMappingPci </h2>
+<p></p>
+                <p class='searchable'>List PCI Hardware Mapping</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterMappingPci [[-PveTicket] &lt;PveTicket&gt;] [[-CheckNode] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-CheckNode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>If given, checks the configurations on the given node for correctness, and adds relevant diagnostics for the devices to the response.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterMappingPciIdx" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterMappingPciIdx </h2>
+<p></p>
+                <p class='searchable'>Get PCI Mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterMappingPciIdx [[-PveTicket] &lt;PveTicket&gt;] [-Id] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterMappingUsb" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterMappingUsb </h2>
+<p></p>
+                <p class='searchable'>List USB Hardware Mappings</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterMappingUsb [[-PveTicket] &lt;PveTicket&gt;] [[-CheckNode] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-CheckNode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>If given, checks the configurations on the given node for correctness, and adds relevant errors to the devices.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterMappingUsbIdx" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterMappingUsbIdx </h2>
+<p></p>
+                <p class='searchable'>Get USB Mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterMappingUsbIdx [[-PveTicket] &lt;PveTicket&gt;] [-Id] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
             </tr>
                     </tbody>
                 </table>
@@ -6681,112 +7046,6 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
-        <div id="Get-PveNodesCephConfig" class="toggle_container">
-            <div class="page-header">
-                <h2> Get-PveNodesCephConfig </h2>
-<p></p>
-                <p class='searchable'>Get the Ceph configuration file. Deprecated, please use `/nodes/{node}/ceph/cfg/raw.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>Get-PveNodesCephConfig [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
-        <div id="Get-PveNodesCephConfigdb" class="toggle_container">
-            <div class="page-header">
-                <h2> Get-PveNodesCephConfigdb </h2>
-<p></p>
-                <p class='searchable'>Get the Ceph configuration database. Deprecated, please use `/nodes/{node}/ceph/cfg/db.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>Get-PveNodesCephConfigdb [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
         <div id="Get-PveNodesCephCrush" class="toggle_container">
             <div class="page-header">
                 <h2> Get-PveNodesCephCrush </h2>
@@ -7469,128 +7728,6 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
-        <div id="Get-PveNodesCephPools" class="toggle_container">
-            <div class="page-header">
-                <h2> Get-PveNodesCephPools </h2>
-<p></p>
-                <p class='searchable'>List all pools. Deprecated, please use `/nodes/{node}/ceph/pool`.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>Get-PveNodesCephPools [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
-        <div id="Get-PveNodesCephPoolsIdx" class="toggle_container">
-            <div class="page-header">
-                <h2> Get-PveNodesCephPoolsIdx </h2>
-<p></p>
-                <p class='searchable'>List pool settings. Deprecated, please use `/nodes/{node}/ceph/pool/{pool}/status`.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>Get-PveNodesCephPoolsIdx [[-PveTicket] &lt;PveTicket&gt;] [-Name] &lt;String&gt; [-Node] &lt;String&gt; [-Verbose_] [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Name</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The name of the pool. It must be unique.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Verbose_</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>If enabled, will display additional data(eg. statistics).</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>False</td>
             </tr>
                     </tbody>
                 </table>
@@ -11070,7 +11207,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Only list specific interface types. Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,any_bridge</td>
+                <td class='searchable'>Only list specific interface types. Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,any_bridge,any_local_bridge</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -18074,59 +18211,6 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveAccessTfa </h2>
 <p></p>
-                <p class='searchable'>Finish a u2f challenge.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>New-PveAccessTfa [[-PveTicket] &lt;PveTicket&gt;] [-Response] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Response</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The response to the current authentication challenge.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
-        <div id="New-PveAccessTfaIdx" class="toggle_container">
-            <div class="page-header">
-                <h2> New-PveAccessTfaIdx </h2>
-<p></p>
                 <p class='searchable'>Add a TFA entry for a user.</p>
             </div>
 <div>
@@ -18134,7 +18218,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveAccessTfaIdx [[-PveTicket] &lt;PveTicket&gt;] [[-Challenge] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Totp] &lt;String&gt;] [-Type] &lt;String&gt; [-Userid] &lt;String&gt; [[-Value] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveAccessTfa [[-PveTicket] &lt;PveTicket&gt;] [[-Challenge] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Totp] &lt;String&gt;] [-Type] &lt;String&gt; [-Userid] &lt;String&gt; [[-Value] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -18263,7 +18347,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-NewFormat</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>With webauthn the format of half-authenticated tickts changed. New clients should pass 1 here and not worry about the old format. The old format is deprecated and will be retired with PVE-8.0</td>
+                <td class='searchable'>This parameter is now ignored and assumed to be 1.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -18659,7 +18743,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Api</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gd,geoscaling,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi</td>
+                <td class='searchable'>API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -18732,7 +18816,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;String&gt;] [[-Id] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Id] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -18768,7 +18852,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Bwlimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Limit I/O bandwidth (KBytes per second).</td>
+                <td class='searchable'>Limit I/O bandwidth (in KiB/s).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -18840,7 +18924,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Ionice</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set CFQ ionice priority.</td>
+                <td class='searchable'>Set IO priority when using the BFQ scheduler. For snapshot and suspend mode backups of VMs, this only affects the compressor. A value of 8 means the idle priority is used, otherwise the best-effort priority is used with the specified value.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -19574,7 +19658,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19893,7 +19977,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -20274,6 +20358,261 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Sid</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="New-PveClusterJobsRealmSync" class="toggle_container">
+            <div class="page-header">
+                <h2> New-PveClusterJobsRealmSync </h2>
+<p></p>
+                <p class='searchable'>Create new realm-sync job.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>New-PveClusterJobsRealmSync [[-PveTicket] &lt;PveTicket&gt;] [[-Comment] &lt;String&gt;] [-EnableNew] [-Enabled] [-Id] &lt;String&gt; [[-Realm] &lt;String&gt;] [[-RemoveVanished] &lt;String&gt;] [-Schedule] &lt;String&gt; [[-Scope] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Comment</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Description for the Job.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-EnableNew</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Enable newly synced users immediately.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Enabled</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Determines if the job is enabled.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the job.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Realm</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Authentication domain ID</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-RemoveVanished</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Schedule</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Backup schedule. The format is a subset of `systemd` calendar events.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Scope</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Select what to sync. Enum: users,groups,both</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="New-PveClusterMappingPci" class="toggle_container">
+            <div class="page-header">
+                <h2> New-PveClusterMappingPci </h2>
+<p></p>
+                <p class='searchable'>Create a new hardware mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>New-PveClusterMappingPci [[-PveTicket] &lt;PveTicket&gt;] [[-Description] &lt;String&gt;] [-Id] &lt;String&gt; [-Map] &lt;Array&gt; [-Mdev] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Description</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Description of the logical PCI device.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the logical PCI mapping.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Map</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of maps for the cluster nodes.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Mdev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="New-PveClusterMappingUsb" class="toggle_container">
+            <div class="page-header">
+                <h2> New-PveClusterMappingUsb </h2>
+<p></p>
+                <p class='searchable'>Create a new hardware mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>New-PveClusterMappingUsb [[-PveTicket] &lt;PveTicket&gt;] [[-Description] &lt;String&gt;] [-Id] &lt;String&gt; [-Map] &lt;Array&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Description</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Description of the logical PCI device.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the logical PCI mapping.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Map</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of maps for the cluster nodes.</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -21077,7 +21416,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveClusterSdnZones [[-PveTicket] &lt;PveTicket&gt;] [-AdvertiseSubnets] [[-Bridge] &lt;String&gt;] [-BridgeDisableMacLearning] [[-Controller] &lt;String&gt;] [-DisableArpNdSuppression] [[-Dns] &lt;String&gt;] [[-Dnszone] &lt;String&gt;] [[-DpId] &lt;Int32&gt;] [[-Exitnodes] &lt;String&gt;] [-ExitnodesLocalRouting] [[-ExitnodesPrimary] &lt;String&gt;] [[-Ipam] &lt;String&gt;] [[-Mac] &lt;String&gt;] [[-Mtu] &lt;Int32&gt;] [[-Nodes] &lt;String&gt;] [[-Peers] &lt;String&gt;] [[-Reversedns] &lt;String&gt;] [[-RtImport] &lt;String&gt;] [[-Tag] &lt;Int32&gt;] [-Type] &lt;String&gt; [[-VlanProtocol] &lt;String&gt;] [[-VrfVxlan] &lt;Int32&gt;] [-Zone] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveClusterSdnZones [[-PveTicket] &lt;PveTicket&gt;] [-AdvertiseSubnets] [[-Bridge] &lt;String&gt;] [-BridgeDisableMacLearning] [[-Controller] &lt;String&gt;] [-DisableArpNdSuppression] [[-Dns] &lt;String&gt;] [[-Dnszone] &lt;String&gt;] [[-DpId] &lt;Int32&gt;] [[-Exitnodes] &lt;String&gt;] [-ExitnodesLocalRouting] [[-ExitnodesPrimary] &lt;String&gt;] [[-Ipam] &lt;String&gt;] [[-Mac] &lt;String&gt;] [[-Mtu] &lt;Int32&gt;] [[-Nodes] &lt;String&gt;] [[-Peers] &lt;String&gt;] [[-Reversedns] &lt;String&gt;] [[-RtImport] &lt;String&gt;] [[-Tag] &lt;Int32&gt;] [-Type] &lt;String&gt; [[-VlanProtocol] &lt;String&gt;] [[-VrfVxlan] &lt;Int32&gt;] [[-VxlanPort] &lt;Int32&gt;] [-Zone] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -21274,6 +21613,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-VrfVxlan</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>l3vni.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-VxlanPort</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Vxlan tunnel udp port (default 4789).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -22354,155 +22701,6 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
-        <div id="New-PveNodesCephPools" class="toggle_container">
-            <div class="page-header">
-                <h2> New-PveNodesCephPools </h2>
-<p></p>
-                <p class='searchable'>Create Ceph pool. Deprecated, please use `/nodes/{node}/ceph/pool`.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>New-PveNodesCephPools [[-PveTicket] &lt;PveTicket&gt;] [-AddStorages] [[-Application] &lt;String&gt;] [[-CrushRule] &lt;String&gt;] [[-ErasureCoding] &lt;String&gt;] [[-MinSize] &lt;Int32&gt;] [-Name] &lt;String&gt; [-Node] &lt;String&gt; [[-PgAutoscaleMode] &lt;String&gt;] [[-PgNum] &lt;Int32&gt;] [[-PgNumMin] &lt;Int32&gt;] [[-Size] &lt;Int32&gt;] [[-TargetSize] &lt;String&gt;] [[-TargetSizeRatio] &lt;Single&gt;] [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-AddStorages</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Configure VM and CT storage using the new pool.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>False</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Application</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The application of the pool. Enum: rbd,cephfs,rgw</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-CrushRule</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The rule to use for mapping object placement in the cluster.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-ErasureCoding</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Create an erasure coded pool for RBD with an accompaning replicated pool for metadata storage. With EC, the common ceph options 'size', 'min_size' and 'crush_rule' parameters will be applied to the metadata pool.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-MinSize</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Minimum number of replicas per object</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Name</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The name of the pool. It must be unique.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-PgAutoscaleMode</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The automatic PG scaling mode of the pool. Enum: on,off,warn</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-PgNum</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Number of placement groups.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-PgNumMin</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Minimal number of placement groups.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Size</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Number of replicas per object</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-TargetSize</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The estimated target size of the pool for the PG autoscaler.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-TargetSizeRatio</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The estimated target ratio of the pool for the PG autoscaler.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
         <div id="New-PveNodesCephRestart" class="toggle_container">
             <div class="page-header">
                 <h2> New-PveNodesCephRestart </h2>
@@ -23253,7 +23451,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveNodesExecute </h2>
 <p></p>
-                <p class='searchable'>Execute multiple commands in order.</p>
+                <p class='searchable'>Execute multiple commands in order, root only.</p>
             </div>
 <div>
             <h3> Syntax </h3>
@@ -23397,7 +23595,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -24434,7 +24632,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -26251,7 +26449,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemu [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Archive] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Bwlimit] &lt;Int32&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Description] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-LiveRestore] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;Int32&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [[-Pool] &lt;String&gt;] [-Protection] [-Reboot] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [-Start] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [[-Storage] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [-Unique] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemu [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Archive] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Bwlimit] &lt;Int32&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Description] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-LiveRestore] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;Int32&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [[-Pool] &lt;String&gt;] [-Protection] [-Reboot] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [-Start] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [[-Storage] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [-Unique] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -26411,6 +26609,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Ciupgrade</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>cloud-init':' do an automatic package upgrade after the first boot.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Ciuser</nobr></td>
@@ -27053,7 +27259,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemuAgentExec [[-PveTicket] &lt;PveTicket&gt;] [[-Command] &lt;String&gt;] [[-InputData] &lt;String&gt;] [-Node] &lt;String&gt; [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemuAgentExec [[-PveTicket] &lt;PveTicket&gt;] [-Command] &lt;Array&gt; [[-InputData] &lt;String&gt;] [-Node] &lt;String&gt; [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -27081,8 +27287,8 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Command</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The command as a list of program + arguments</td>
-                <td class='visible-lg visible-md'>false</td>
+                <td class='searchable'>The command as a list of program + arguments.</td>
+                <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
             </tr>
@@ -28000,7 +28206,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-BackgroundDelay] &lt;Int32&gt;] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;Int32&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-BackgroundDelay] &lt;Int32&gt;] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;Int32&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -28152,6 +28358,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Ciupgrade</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>cloud-init':' do an automatic package upgrade after the first boot.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Ciuser</nobr></td>
@@ -29064,7 +29278,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -31148,7 +31362,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Cmd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Run specific command or default to login. Enum: ceph_install,upgrade,login</td>
+                <td class='searchable'>Run specific command or default to login. Enum: login,ceph_install,upgrade</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -31820,7 +32034,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Force</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Always connect to server, even if we have up to date info inside local cache.</td>
+                <td class='searchable'>Always connect to server, even if local cache is still valid.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -31881,7 +32095,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Cmd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Run specific command or default to login. Enum: ceph_install,upgrade,login</td>
+                <td class='searchable'>Run specific command or default to login. Enum: login,ceph_install,upgrade</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -31950,7 +32164,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Cmd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Run specific command or default to login. Enum: ceph_install,upgrade,login</td>
+                <td class='searchable'>Run specific command or default to login. Enum: login,ceph_install,upgrade</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -32025,7 +32239,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -32061,7 +32275,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Bwlimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Limit I/O bandwidth (KBytes per second).</td>
+                <td class='searchable'>Limit I/O bandwidth (in KiB/s).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -32101,7 +32315,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Ionice</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set CFQ ionice priority.</td>
+                <td class='searchable'>Set IO priority when using the BFQ scheduler. For snapshot and suspend mode backups of VMs, this only affects the compressor. A value of 8 means the idle priority is used, otherwise the best-effort priority is used with the specified value.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -32424,7 +32638,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Authsupported] &lt;String&gt;] [[-Base] &lt;String&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [[-DataPool] &lt;String&gt;] [[-Datastore] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Export] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Iscsiprovider] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Path] &lt;String&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Portal] &lt;String&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [[-Share] &lt;String&gt;] [-Shared] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Target] &lt;String&gt;] [[-Thinpool] &lt;String&gt;] [[-Transport] &lt;String&gt;] [-Type] &lt;String&gt; [[-Username] &lt;String&gt;] [[-Vgname] &lt;String&gt;] [[-Volume] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Authsupported] &lt;String&gt;] [[-Base] &lt;String&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [-CreateBasePath] [-CreateSubdirs] [[-DataPool] &lt;String&gt;] [[-Datastore] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Export] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Iscsiprovider] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Path] &lt;String&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Portal] &lt;String&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [[-Share] &lt;String&gt;] [-Shared] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Target] &lt;String&gt;] [[-Thinpool] &lt;String&gt;] [[-Transport] &lt;String&gt;] [-Type] &lt;String&gt; [[-Username] &lt;String&gt;] [[-Vgname] &lt;String&gt;] [[-Volume] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -32476,7 +32690,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Bwlimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set bandwidth/io limits various operations.</td>
+                <td class='searchable'>Set I/O bandwidth limit for various operations (in KiB/s).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -32512,6 +32726,22 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-CreateBasePath</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Create the base directory if it doesn't exist.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-CreateSubdirs</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Populate the directory with the default structure.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-DataPool</nobr></td>
@@ -32660,7 +32890,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mkdir</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Create the directory if it doesn't exist.</td>
+                <td class='searchable'>Create the directory if it doesn't exist and populate it with default sub-dirs. NOTE':' Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -32716,7 +32946,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Options</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>NFS mount options (see 'man nfs')</td>
+                <td class='searchable'>NFS/CIFS mount options (see 'man nfs' or 'man mount.cifs')</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -34041,6 +34271,165 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Remove-PveClusterJobsRealmSync" class="toggle_container">
+            <div class="page-header">
+                <h2> Remove-PveClusterJobsRealmSync </h2>
+<p></p>
+                <p class='searchable'>Delete realm-sync job definition.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Remove-PveClusterJobsRealmSync [[-PveTicket] &lt;PveTicket&gt;] [-Id] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Remove-PveClusterMappingPci" class="toggle_container">
+            <div class="page-header">
+                <h2> Remove-PveClusterMappingPci </h2>
+<p></p>
+                <p class='searchable'>Remove Hardware Mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Remove-PveClusterMappingPci [[-PveTicket] &lt;PveTicket&gt;] [-Id] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Remove-PveClusterMappingUsb" class="toggle_container">
+            <div class="page-header">
+                <h2> Remove-PveClusterMappingUsb </h2>
+<p></p>
+                <p class='searchable'>Remove Hardware Mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Remove-PveClusterMappingUsb [[-PveTicket] &lt;PveTicket&gt;] [-Id] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Remove-PveClusterMetricsServer" class="toggle_container">
             <div class="page-header">
                 <h2> Remove-PveClusterMetricsServer </h2>
@@ -34753,91 +35142,6 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         <div class='panel panel-default'>
             <div class='panel-body'>
                 <code class='powershell'>Remove-PveNodesCephPool [[-PveTicket] &lt;PveTicket&gt;] [-Force] [-Name] &lt;String&gt; [-Node] &lt;String&gt; [-RemoveEcprofile] [-RemoveStorages] [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Force</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>If true, destroys pool even if in use</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>False</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Name</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The name of the pool. It must be unique.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-RemoveEcprofile</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Remove the erasure code profile. Defaults to true, if applicable.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>False</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-RemoveStorages</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Remove all pveceph-managed storages configured for this pool</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>False</td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
-        <div id="Remove-PveNodesCephPools" class="toggle_container">
-            <div class="page-header">
-                <h2> Remove-PveNodesCephPools </h2>
-<p></p>
-                <p class='searchable'>Destroy pool. Deprecated, please use `/nodes/{node}/ceph/pool/{name}`.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>Remove-PveNodesCephPools [[-PveTicket] &lt;PveTicket&gt;] [-Force] [-Name] &lt;String&gt; [-Node] &lt;String&gt; [-RemoveEcprofile] [-RemoveStorages] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -37957,6 +38261,59 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Set-PveAccessUsersUnlockTfa" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveAccessUsersUnlockTfa </h2>
+<p></p>
+                <p class='searchable'>Unlock a user's TFA authentication.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveAccessUsersUnlockTfa [[-PveTicket] &lt;PveTicket&gt;] [-Userid] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Userid</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Full User ID, in the `name@realm` format.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Set-PveClusterAcmeAccount" class="toggle_container">
             <div class="page-header">
                 <h2> Set-PveClusterAcmeAccount </h2>
@@ -38057,7 +38414,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Api</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gd,geoscaling,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi</td>
+                <td class='searchable'>API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -38138,7 +38495,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;String&gt;] [-Id] &lt;String&gt; [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [-Id] &lt;String&gt; [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -38174,7 +38531,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Bwlimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Limit I/O bandwidth (KBytes per second).</td>
+                <td class='searchable'>Limit I/O bandwidth (in KiB/s).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -38254,7 +38611,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Ionice</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set CFQ ionice priority.</td>
+                <td class='searchable'>Set IO priority when using the BFQ scheduler. For snapshot and suspend mode backups of VMs, this only affects the compressor. A value of 8 means the idle priority is used, otherwise the best-effort priority is used with the specified value.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -38850,7 +39207,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -39217,7 +39574,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -39513,6 +39870,293 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Set-PveClusterJobsRealmSync" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveClusterJobsRealmSync </h2>
+<p></p>
+                <p class='searchable'>Update realm-sync job definition.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveClusterJobsRealmSync [[-PveTicket] &lt;PveTicket&gt;] [[-Comment] &lt;String&gt;] [[-Delete] &lt;String&gt;] [-EnableNew] [-Enabled] [-Id] &lt;String&gt; [[-RemoveVanished] &lt;String&gt;] [-Schedule] &lt;String&gt; [[-Scope] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Comment</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Description for the Job.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Delete</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of settings you want to delete.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-EnableNew</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Enable newly synced users immediately.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Enabled</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Determines if the job is enabled.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the job.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-RemoveVanished</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Schedule</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Backup schedule. The format is a subset of `systemd` calendar events.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Scope</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Select what to sync. Enum: users,groups,both</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Set-PveClusterMappingPci" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveClusterMappingPci </h2>
+<p></p>
+                <p class='searchable'>Update a hardware mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveClusterMappingPci [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Id] &lt;String&gt; [[-Map] &lt;Array&gt;] [-Mdev] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Delete</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of settings you want to delete.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Description</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Description of the logical PCI device.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the logical PCI mapping.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Map</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of maps for the cluster nodes.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Mdev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Set-PveClusterMappingUsb" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveClusterMappingUsb </h2>
+<p></p>
+                <p class='searchable'>Update a hardware mapping.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveClusterMappingUsb [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Id] &lt;String&gt; [-Map] &lt;Array&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Delete</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of settings you want to delete.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Description</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Description of the logical PCI device.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Id</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the logical PCI mapping.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Map</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of maps for the cluster nodes.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Set-PveClusterMetricsServer" class="toggle_container">
             <div class="page-header">
                 <h2> Set-PveClusterMetricsServer </h2>
@@ -39733,7 +40377,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Bwlimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set bandwidth/io limits various operations.</td>
+                <td class='searchable'>Set I/O bandwidth limit for various operations (in KiB/s).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40609,7 +41253,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveClusterSdnZones [[-PveTicket] &lt;PveTicket&gt;] [-AdvertiseSubnets] [[-Bridge] &lt;String&gt;] [-BridgeDisableMacLearning] [[-Controller] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-DisableArpNdSuppression] [[-Dns] &lt;String&gt;] [[-Dnszone] &lt;String&gt;] [[-DpId] &lt;Int32&gt;] [[-Exitnodes] &lt;String&gt;] [-ExitnodesLocalRouting] [[-ExitnodesPrimary] &lt;String&gt;] [[-Ipam] &lt;String&gt;] [[-Mac] &lt;String&gt;] [[-Mtu] &lt;Int32&gt;] [[-Nodes] &lt;String&gt;] [[-Peers] &lt;String&gt;] [[-Reversedns] &lt;String&gt;] [[-RtImport] &lt;String&gt;] [[-Tag] &lt;Int32&gt;] [[-VlanProtocol] &lt;String&gt;] [[-VrfVxlan] &lt;Int32&gt;] [-Zone] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveClusterSdnZones [[-PveTicket] &lt;PveTicket&gt;] [-AdvertiseSubnets] [[-Bridge] &lt;String&gt;] [-BridgeDisableMacLearning] [[-Controller] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-DisableArpNdSuppression] [[-Dns] &lt;String&gt;] [[-Dnszone] &lt;String&gt;] [[-DpId] &lt;Int32&gt;] [[-Exitnodes] &lt;String&gt;] [-ExitnodesLocalRouting] [[-ExitnodesPrimary] &lt;String&gt;] [[-Ipam] &lt;String&gt;] [[-Mac] &lt;String&gt;] [[-Mtu] &lt;Int32&gt;] [[-Nodes] &lt;String&gt;] [[-Peers] &lt;String&gt;] [[-Reversedns] &lt;String&gt;] [[-RtImport] &lt;String&gt;] [[-Tag] &lt;Int32&gt;] [[-VlanProtocol] &lt;String&gt;] [[-VrfVxlan] &lt;Int32&gt;] [[-VxlanPort] &lt;Int32&gt;] [-Zone] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -40819,6 +41463,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'>0</td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-VxlanPort</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Vxlan tunnel udp port (default 4789).</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-Zone</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>The SDN zone object identifier.</td>
@@ -40916,139 +41568,6 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         <div class='panel panel-default'>
             <div class='panel-body'>
                 <code class='powershell'>Set-PveNodesCephPool [[-PveTicket] &lt;PveTicket&gt;] [[-Application] &lt;String&gt;] [[-CrushRule] &lt;String&gt;] [[-MinSize] &lt;Int32&gt;] [-Name] &lt;String&gt; [-Node] &lt;String&gt; [[-PgAutoscaleMode] &lt;String&gt;] [[-PgNum] &lt;Int32&gt;] [[-PgNumMin] &lt;Int32&gt;] [[-Size] &lt;Int32&gt;] [[-TargetSize] &lt;String&gt;] [[-TargetSizeRatio] &lt;Single&gt;] [&lt;CommonParameters&gt;]</code>
-            </div>
-        </div>
-            <div>
-                <h3> Parameters </h3>
-                <table class="table table-striped table-bordered table-condensed visible-on">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th class="visible-lg visible-md">Alias</th>
-                            <th>Description</th>
-                            <th class="visible-lg visible-md">Required?</th>
-                            <th class="visible-lg">Pipeline Input</th>
-                            <th class="visible-lg">Default Value</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-<tr>
-                <td class='searchable'><nobr>-PveTicket</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Ticket data connection.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Application</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The application of the pool. Enum: rbd,cephfs,rgw</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-CrushRule</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The rule to use for mapping object placement in the cluster.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-MinSize</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Minimum number of replicas per object</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Name</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The name of the pool. It must be unique.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Node</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The cluster node name.</td>
-                <td class='visible-lg visible-md'>true</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-PgAutoscaleMode</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The automatic PG scaling mode of the pool. Enum: on,off,warn</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-PgNum</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Number of placement groups.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-PgNumMin</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Minimal number of placement groups.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-Size</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Number of replicas per object</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-TargetSize</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The estimated target size of the pool for the PG autoscaler.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'></td>
-            </tr>
-<tr>
-                <td class='searchable'><nobr>-TargetSizeRatio</nobr></td>
-                <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The estimated target ratio of the pool for the PG autoscaler.</td>
-                <td class='visible-lg visible-md'>false</td>
-                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
-                <td class='visible-lg'>0</td>
-            </tr>
-                    </tbody>
-                </table>
-            </div>
-<div>
-            <h3> Outputs </h3>
-            <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PveResponse. Return response.</li></ul>
-        </div>
-    </div>
-        <div id="Set-PveNodesCephPools" class="toggle_container">
-            <div class="page-header">
-                <h2> Set-PveNodesCephPools </h2>
-<p></p>
-                <p class='searchable'>Change POOL settings. Deprecated, please use `/nodes/{node}/ceph/pool/{name}`.</p>
-            </div>
-<div>
-            <h3> Syntax </h3>
-        </div>
-        <div class='panel panel-default'>
-            <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesCephPools [[-PveTicket] &lt;PveTicket&gt;] [[-Application] &lt;String&gt;] [[-CrushRule] &lt;String&gt;] [[-MinSize] &lt;Int32&gt;] [-Name] &lt;String&gt; [-Node] &lt;String&gt; [[-PgAutoscaleMode] &lt;String&gt;] [[-PgNum] &lt;Int32&gt;] [[-PgNumMin] &lt;Int32&gt;] [[-Size] &lt;Int32&gt;] [[-TargetSize] &lt;String&gt;] [[-TargetSizeRatio] &lt;Single&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -41786,7 +42305,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -42651,7 +43170,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -43317,7 +43836,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;Int32&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;Int32&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -43461,6 +43980,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Ciupgrade</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>cloud-init':' do an automatic package upgrade after the first boot.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Ciuser</nobr></td>
@@ -44469,7 +44996,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-IcmpType</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp'.</td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -45198,7 +45725,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [[-DataPool] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [-Shared] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Transport] &lt;String&gt;] [[-Username] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [-CreateBasePath] [-CreateSubdirs] [[-DataPool] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [-Shared] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Transport] &lt;String&gt;] [[-Username] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -45234,7 +45761,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Bwlimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set bandwidth/io limits various operations.</td>
+                <td class='searchable'>Set I/O bandwidth limit for various operations (in KiB/s).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -45270,6 +45797,22 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-CreateBasePath</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Create the base directory if it doesn't exist.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-CreateSubdirs</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Populate the directory with the default structure.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-DataPool</nobr></td>
@@ -45410,7 +45953,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mkdir</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Create the directory if it doesn't exist.</td>
+                <td class='searchable'>Create the directory if it doesn't exist and populate it with default sub-dirs. NOTE':' Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -45466,7 +46009,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Options</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>NFS mount options (see 'man nfs')</td>
+                <td class='searchable'>NFS/CIFS mount options (see 'man nfs' or 'man mount.cifs')</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -46006,10 +46549,16 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+        integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+        crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/languages/powershell.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.slim.min.js"
+        integrity="sha256-tG5mcZUtJsZvyKAxYLVXrmjKBVLd6VpVccqz/r4ypFE="
+        crossorigin="anonymous"></script>
 
       <script>
         document.addEventListener('DOMContentLoaded', (event) => {
