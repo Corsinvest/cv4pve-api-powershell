@@ -423,7 +423,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -479,7 +478,6 @@ Bool. Return tas is running.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -527,7 +525,6 @@ Bool. Return tas is running.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -555,7 +552,6 @@ Bool. Return tas is running.
 #     [CmdletBinding()]
 #     Param(
 #         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-#         [ValidateNotNull]
 #         [PveTicket]$PveTicket,
 
 #         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -587,7 +583,6 @@ PSCustomObject. Return Vm Data.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -629,7 +624,6 @@ PSCustomObject. Return Vm Data.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -739,7 +733,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -770,7 +763,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -800,7 +792,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -830,7 +821,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -860,7 +850,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -890,7 +879,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -922,7 +910,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -958,7 +945,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -1013,7 +999,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -1049,7 +1034,6 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNull]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
