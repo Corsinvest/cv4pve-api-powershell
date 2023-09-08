@@ -683,8 +683,7 @@ SPDX-License-Identifier: GPL-3.0-only
             <div class="page-header">
             </div>
 <h1 id="cv4pve-api-powershell">cv4pve-api-powershell</h1>
-<p><a href="LICENSE"><img src="https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell.svg" alt="License" /></a>
-<a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/"><img src="https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api" alt="PowerShell Gallery Version" /></a>
+<p><a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/"><img src="https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api" alt="PowerShell Gallery Version" /></a>
 <img src="https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api" alt="download" /></p>
 <p><a href="https://pve.proxmox.com/pve-docs/api-viewer/">ProxmoxVE Api</a></p>
 <p><a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/">PowerShell Gallery</a></p>
@@ -750,6 +749,7 @@ For licensing details please visit <a href="LICENSE">LICENSE</a></p>
 <li>Open Source</li>
 <li>Form Proxmox VE 6.2 support Api Token for user</li>
 <li>Enter-PveSpice enter Spice VM</li>
+<li>Login with One-time password for Two-factor authentication</li>
 </ul>
 <h2 id="documentation">📙 Documentation</h2>
 <p><a href="https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html">Documentation</a></p>
@@ -956,7 +956,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Connect-PveCluster [-HostsAndPorts] &lt;String[]&gt; [[-Credentials] &lt;PSCredential&gt;] [[-ApiToken] &lt;String&gt;] [-SkipCertificateCheck] [-SkipRefreshPveTicketLast] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Connect-PveCluster [-HostsAndPorts] &lt;String[]&gt; [[-Credentials] &lt;PSCredential&gt;] [[-ApiToken] &lt;String&gt;] [[-Otp] &lt;String&gt;] [-SkipCertificateCheck] [-SkipRefreshPveTicketLast] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -993,6 +993,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-ApiToken</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Api Token format USER@REALM!TOKENID=UUID</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>false</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Otp</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>One-time password for Two-factor authentication.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>false</td>
                 <td class='visible-lg'></td>
