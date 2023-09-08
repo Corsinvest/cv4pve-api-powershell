@@ -1,6 +1,5 @@
 # cv4pve-api-powershell
 
-[![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell.svg)](LICENSE.md)
 [![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
 ![download](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api)
 
@@ -24,7 +23,7 @@ For more information visit https://www.corsinvest.it/cv4pve
 ## 📰 Copyright
 
 Copyright: Corsinvest Srl
-For licensing details please visit [LICENSE.md](LICENSE.md)
+For licensing details please visit [LICENSE](LICENSE)
 
 ## 🦺 Commercial Support
 
@@ -74,6 +73,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 * Open Source
 * Form Proxmox VE 6.2 support Api Token for user
 * Enter-PveSpice enter Spice VM
+* Login with One-time password for Two-factor authentication
 
 ## 📙 Documentation
 

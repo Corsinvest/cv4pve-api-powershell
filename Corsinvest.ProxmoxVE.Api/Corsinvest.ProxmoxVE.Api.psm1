@@ -62,6 +62,8 @@ Skips certificate validation checks.
 Username and password, username formatted as user@pam, user@pve, user@yourdomain or user (default domain pam).
 .PARAMETER ApiToken
 Api Token format USER@REALM!TOKENID=UUID
+.PARAMETER Otp
+One-time password for Two-factor authentication.
 .PARAMETER SkipRefreshPveTicketLast
 Skip refresh PveTicket Last global variable
 .EXAMPLE
@@ -78,6 +80,8 @@ PveTicket. Return ticket connection.
         [pscredential]$Credentials,
 
         [string]$ApiToken,
+
+        [string]$Otp,
 
         [switch]$SkipCertificateCheck,
 
@@ -127,11 +131,17 @@ PveTicket. Return ticket connection.
                 password = $Credentials.GetNetworkCredential().Password
             }
 
+            if($PSBoundParameters['Otp']) { $parameters['otp'] = $Otp }
+
             $response = Invoke-PveRestApi -PveTicket $pveTicket -Method Create -Resource '/access/ticket' -Parameters $parameters
 
             #erro response
             if (!$response.IsSuccessStatusCode -or $response.StatusCode -le 0) {
                 throw $response.ReasonPhrase
+            }
+
+            if ($response.Response.data.NeedTFA){
+                throw "Couldn't authenticate user: missing Two Factor Authentication (TFA)"
             }
 
             $pveTicket.Ticket = $response.Response.data.ticket
