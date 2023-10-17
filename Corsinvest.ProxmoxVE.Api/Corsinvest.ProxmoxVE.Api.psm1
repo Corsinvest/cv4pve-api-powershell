@@ -226,23 +226,28 @@ Return object request
         $session.cookies.add($cookie)
 
         $query = ''
-        if ($Parameters -and $Parameters.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -eq 0) {
+
+        $parametersTmp = @{}
+
+        if ($Parameters -and $Parameters.Count -gt 0 )
+        {
+             $Parameters.keys | ForEach-Object {
+                 $parametersTmp[$_] =$Parameters[$_] -is [switch] `
+                                         ? $Parameters[$_] ? 1 : 0 `
+                                         : $Parameters[$_]
+             }
+        }
+
+        if ($parametersTmp.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -eq 0) {
             Write-Debug 'Parameters:'
-            $Parameters.keys | ForEach-Object { Write-Debug "$_ => $($Parameters[$_])" }
+            $parametersTmp.keys | ForEach-Object { Write-Debug "$_ => $($parametersTmp[$_])" }
 
-            #fix switch parameter from bool to 1/0
-            $Parameters.keys | ForEach-Object {
-                if ($Parameters[$_] -is [switch]) {
-                    $Parameters[$_] = $Parameters[$_] ? 1 : 0
-                }
-            }
-
-            $query = '?' + (($Parameters.Keys | ForEach-Object { "$_=$($Parameters[$_])" }) -join '&')
+            $query = '?' + (($parametersTmp.Keys | ForEach-Object { "$_=$($parametersTmp[$_])" }) -join '&')
         }
 
         $response = New-Object PveResponse -Property @{
             Method          = $restMethod
-            Parameters      = $Parameters
+            Parameters      = $parametersTmp
             ResponseType    = $ResponseType
             RequestResource = $Resource
         }
@@ -265,8 +270,8 @@ Return object request
         Write-Debug ($params | Format-List | Out-String)
 
         #body parameters
-        if ($Parameters -and $Parameters.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -ge 0) {
-            $params['body'] = $Parameters
+        if ($parametersTmp.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -ge 0) {
+            $params['body'] = $parametersTmp
             Write-Debug "Body: $($params.body | Format-Table | Out-String)"
         }
 
