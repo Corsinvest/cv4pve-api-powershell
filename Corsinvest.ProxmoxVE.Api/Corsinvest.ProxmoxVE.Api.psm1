@@ -1,17 +1,17 @@
 # SPDX-FileCopyrightText: Copyright Corsinvest Srl
 # SPDX-License-Identifier: GPL-3.0-only
 
-class PveValidVmId : System.Management.Automation.IValidateSetValuesGenerator {
+class PveValidateVmId : System.Management.Automation.IValidateSetValuesGenerator {
     [string[]] GetValidValues() { return Get-PveVm | Select-Object -ExpandProperty vmid }
 }
 
-class PveValidVmName : System.Management.Automation.IValidateSetValuesGenerator {
+class PveValidateVmName : System.Management.Automation.IValidateSetValuesGenerator {
     [string[]] GetValidValues() {
-        return Get-PveVm | Where-Object {$_.status -ne 'unknown' } | Select-Object -ExpandProperty name
+        return Get-PveVm | Where-Object { $_.status -ne 'unknown' } | Select-Object -ExpandProperty name
     }
 }
 
-class PveValidNode : System.Management.Automation.IValidateSetValuesGenerator {
+class PveValidateNode : System.Management.Automation.IValidateSetValuesGenerator {
     [string[]] GetValidValues() { return Get-PveNodes | Select-Object -ExpandProperty node }
 }
 
@@ -238,7 +238,7 @@ Return object request
              }
         }
 
-        if ($parametersTmp.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -eq 0) {
+        if ($parametersTmp.Count -gt 0) { #-and $('Post', 'Put').IndexOf($restMethod) -eq 0
             Write-Debug 'Parameters:'
             $parametersTmp.keys | ForEach-Object { Write-Debug "$_ => $($parametersTmp[$_])" }
 
@@ -1120,7 +1120,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1142,7 +1142,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1182,35 +1182,35 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Rate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('local','full')]
         [string]$RemoveJob,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('local')]
         [string]$Type
     )
@@ -1250,16 +1250,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Keep
     )
 
@@ -1287,10 +1287,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -1330,35 +1330,35 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Rate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('local','full')]
         [string]$RemoveJob,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source
     )
 
@@ -1390,7 +1390,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1412,7 +1412,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1436,10 +1436,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -1463,10 +1463,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -1520,58 +1520,58 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ApiPathPrefix,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bucket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('udp','http','https')]
         [string]$Influxdbproto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxBodySize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Mtu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Organization,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Path,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('udp','tcp')]
         [string]$Proto,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Server,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Token,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('graphite','influxdb')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$VerifyCertificate
     )
 
@@ -1644,60 +1644,60 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ApiPathPrefix,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bucket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('udp','http','https')]
         [string]$Influxdbproto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxBodySize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Mtu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Organization,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Path,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('udp','tcp')]
         [string]$Proto,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Server,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Token,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$VerifyCertificate
     )
 
@@ -1737,7 +1737,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1767,19 +1767,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Clustername,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$LinkN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Nodeid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Votes
     )
 
@@ -1808,7 +1808,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1830,7 +1830,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -1854,10 +1854,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -1893,28 +1893,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Apiversion,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$LinkN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NewNodeIp,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Nodeid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Votes
     )
 
@@ -1947,10 +1947,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -1989,28 +1989,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Fingerprint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Hostname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$LinkN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Nodeid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Votes
     )
 
@@ -2042,7 +2042,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -2064,7 +2064,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -2086,7 +2086,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -2108,7 +2108,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -2138,19 +2138,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename
     )
 
@@ -2180,10 +2180,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group
     )
 
@@ -2207,10 +2207,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group
     )
 
@@ -2264,56 +2264,56 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
         [string]$Type
     )
@@ -2359,16 +2359,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos
     )
 
@@ -2397,13 +2397,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos
     )
 
@@ -2461,62 +2461,62 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Moveto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('in','out','group')]
         [string]$Type
     )
@@ -2557,7 +2557,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -2609,53 +2609,53 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
         [string]$Type
     )
@@ -2699,13 +2699,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos
     )
 
@@ -2732,10 +2732,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos
     )
 
@@ -2791,59 +2791,59 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Moveto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('in','out','group')]
         [string]$Type
     )
@@ -2884,7 +2884,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -2914,19 +2914,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename
     )
 
@@ -2958,13 +2958,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -2991,10 +2991,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -3024,19 +3024,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nomatch
     )
 
@@ -3069,16 +3069,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -3107,13 +3107,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -3145,22 +3145,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nomatch
     )
 
@@ -3187,7 +3187,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -3215,16 +3215,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -3255,13 +3255,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -3288,10 +3288,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -3323,22 +3323,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename
     )
 
@@ -3366,7 +3366,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -3402,29 +3402,29 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ebtables,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$LogRatelimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyIn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyOut
     )
@@ -3456,7 +3456,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -3480,10 +3480,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('alias','ipset')]
         [string]$Type
     )
@@ -3509,7 +3509,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -3603,118 +3603,118 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$All,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('0','1','gzip','lzo','zstd')]
         [string]$Compress,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dow,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dumpdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exclude,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [array]$ExcludePath,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ionice,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Lockwait,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('always','failure')]
         [string]$Mailnotification,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mailto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('snapshot','suspend','stop')]
         [string]$Mode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NotesTemplate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protected,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Quiet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Remove,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$RepeatMissed,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Script,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Starttime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stdexcludes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stop,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Stopwait,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tmpdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Zstd
     )
 
@@ -3776,10 +3776,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -3803,10 +3803,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -3902,121 +3902,121 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$All,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('0','1','gzip','lzo','zstd')]
         [string]$Compress,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dow,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dumpdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exclude,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [array]$ExcludePath,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ionice,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Lockwait,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('always','failure')]
         [string]$Mailnotification,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mailto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('snapshot','suspend','stop')]
         [string]$Mode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NotesTemplate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protected,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Quiet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Remove,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$RepeatMissed,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Script,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Starttime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stdexcludes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stop,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Stopwait,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tmpdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Zstd
     )
 
@@ -4078,10 +4078,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -4103,7 +4103,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4125,7 +4125,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4147,7 +4147,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4171,10 +4171,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ct','vm')]
         [string]$Type
     )
@@ -4214,29 +4214,29 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxRelocate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxRestart,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Sid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('started','stopped','enabled','disabled','ignored')]
         [string]$State,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ct','vm')]
         [string]$Type
     )
@@ -4270,10 +4270,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Sid
     )
 
@@ -4297,10 +4297,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Sid
     )
 
@@ -4338,31 +4338,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxRelocate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxRestart,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Sid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('started','stopped','enabled','disabled','ignored')]
         [string]$State
     )
@@ -4398,13 +4398,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Sid
     )
 
@@ -4433,13 +4433,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Sid
     )
 
@@ -4464,7 +4464,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4498,25 +4498,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nofailback,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restricted,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('group')]
         [string]$Type
     )
@@ -4549,10 +4549,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group
     )
 
@@ -4576,10 +4576,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group
     )
 
@@ -4615,28 +4615,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Group,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nofailback,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restricted
     )
 
@@ -4666,7 +4666,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4688,7 +4688,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4710,7 +4710,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4732,7 +4732,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -4756,10 +4756,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('dns','standalone')]
         [string]$Type
     )
@@ -4799,30 +4799,30 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
         [string]$Api,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Data,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('dns','standalone')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$ValidationDelay
     )
 
@@ -4855,10 +4855,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -4882,10 +4882,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -4923,32 +4923,32 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
         [string]$Api,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Data,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$ValidationDelay
     )
 
@@ -4979,7 +4979,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5009,19 +5009,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Contact,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Directory,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TosUrl
     )
 
@@ -5051,10 +5051,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -5078,10 +5078,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -5107,13 +5107,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Contact,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name
     )
 
@@ -5140,10 +5140,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Directory
     )
 
@@ -5168,7 +5168,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5190,7 +5190,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5212,7 +5212,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5236,10 +5236,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('all','versions')]
         [string]$Scope
     )
@@ -5265,7 +5265,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5287,7 +5287,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5331,40 +5331,40 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nobackfill,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$NodeepScrub,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nodown,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Noin,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Noout,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Norebalance,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Norecover,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Noscrub,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Notieragent,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Noup,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pause
     )
 
@@ -5401,10 +5401,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('nobackfill','nodeep-scrub','nodown','noin','noout','norebalance','norecover','noscrub','notieragent','noup','pause')]
         [string]$Flag
     )
@@ -5431,14 +5431,14 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('nobackfill','nodeep-scrub','nodown','noin','noout','norebalance','norecover','noscrub','notieragent','noup','pause')]
         [string]$Flag,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [switch]$Value
     )
 
@@ -5463,7 +5463,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5485,7 +5485,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5509,10 +5509,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -5536,10 +5536,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -5577,31 +5577,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$EnableNew,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$RemoveVanished,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('users','groups','both')]
         [string]$Scope
     )
@@ -5649,31 +5649,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$EnableNew,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$RemoveVanished,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('users','groups','both')]
         [string]$Scope
     )
@@ -5711,16 +5711,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Iterations,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Schedule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Starttime
     )
 
@@ -5747,7 +5747,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -5771,10 +5771,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CheckNode
     )
 
@@ -5807,19 +5807,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [array]$Map,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Mdev
     )
 
@@ -5849,10 +5849,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -5876,10 +5876,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -5913,25 +5913,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [array]$Map,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Mdev
     )
 
@@ -5962,10 +5962,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CheckNode
     )
 
@@ -5996,16 +5996,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [array]$Map
     )
 
@@ -6034,10 +6034,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -6061,10 +6061,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id
     )
 
@@ -6096,22 +6096,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [array]$Map
     )
 
@@ -6139,7 +6139,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -6161,7 +6161,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -6187,13 +6187,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running
     )
 
@@ -6231,26 +6231,26 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Alias,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('vnet')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Vlanaware,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -6282,10 +6282,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6313,16 +6313,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6362,28 +6362,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Alias,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Vlanaware,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -6419,16 +6419,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6466,26 +6466,26 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dnszoneprefix,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Gateway,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Snat,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('subnet')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6518,13 +6518,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6554,19 +6554,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6606,28 +6606,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dnszoneprefix,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Gateway,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Snat,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vnet
     )
 
@@ -6662,16 +6662,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('evpn','faucet','qinq','simple','vlan','vxlan')]
         [string]$Type
     )
@@ -6747,81 +6747,81 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AdvertiseSubnets,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bridge,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BridgeDisableMacLearning,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableArpNdSuppression,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dnszone,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$DpId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exitnodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$ExitnodesLocalRouting,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ExitnodesPrimary,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mac,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Mtu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Peers,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Reversedns,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$RtImport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('evpn','faucet','qinq','simple','vlan','vxlan')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('802.1q','802.1ad')]
         [string]$VlanProtocol,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$VrfVxlan,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$VxlanPort,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -6871,10 +6871,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -6902,16 +6902,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -6987,83 +6987,83 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AdvertiseSubnets,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bridge,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BridgeDisableMacLearning,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableArpNdSuppression,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dnszone,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$DpId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exitnodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$ExitnodesLocalRouting,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ExitnodesPrimary,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mac,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Mtu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Peers,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Reversedns,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$RtImport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('802.1q','802.1ad')]
         [string]$VlanProtocol,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$VrfVxlan,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$VxlanPort,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -7117,16 +7117,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('bgp','evpn','faucet')]
         [string]$Type
     )
@@ -7172,34 +7172,34 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Asn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BgpMultipathAsPathRelax,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ebgp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$EbgpMultihop,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Loopback,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Peers,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('bgp','evpn','faucet')]
         [string]$Type
     )
@@ -7235,10 +7235,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Controller
     )
 
@@ -7266,16 +7266,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Pending,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Running
     )
 
@@ -7321,37 +7321,37 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Asn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BgpMultipathAsPathRelax,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ebgp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$EbgpMultihop,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Loopback,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Peers
     )
 
@@ -7386,10 +7386,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('netbox','phpipam','pve')]
         [string]$Type
     )
@@ -7425,23 +7425,23 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Section,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Token,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('netbox','phpipam','pve')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Url
     )
 
@@ -7472,10 +7472,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ipam
     )
 
@@ -7499,10 +7499,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ipam
     )
 
@@ -7536,25 +7536,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Section,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Token,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Url
     )
 
@@ -7585,10 +7585,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('powerdns')]
         [string]$Type
     )
@@ -7628,29 +7628,29 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Dns,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Key,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Reversemaskv6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Reversev6mask,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ttl,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('powerdns')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Url
     )
 
@@ -7683,10 +7683,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Dns
     )
 
@@ -7710,10 +7710,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Dns
     )
 
@@ -7749,28 +7749,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Dns,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Key,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Reversemaskv6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ttl,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Url
     )
 
@@ -7802,10 +7802,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Max
     )
 
@@ -7832,10 +7832,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('vm','storage','node','sdn')]
         [string]$Type
     )
@@ -7861,7 +7861,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -7883,7 +7883,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -7949,77 +7949,77 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('applet','vv','html5','xtermjs')]
         [string]$Console,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Crs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$EmailFrom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('watchdog','hardware','both')]
         [string]$Fencing,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ha,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$HttpProxy,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ca','da','de','en','es','eu','fa','fr','he','it','ja','nb','nn','pl','pt_BR','ru','sl','sv','tr','zh_CN','zh_TW')]
         [string]$Language,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MacPrefix,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxWorkers,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Migration,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$MigrationUnsecure,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NextId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Notify,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$RegisteredTags,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TagStyle,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$U2f,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$UserTagAccess,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Webauthn
     )
 
@@ -8065,7 +8065,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -8089,10 +8089,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -8117,7 +8117,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -8141,10 +8141,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -8170,13 +8170,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Full,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -8375,276 +8375,276 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Acpi,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Affinity,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Agent,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('x86_64','aarch64')]
         [string]$Arch,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Archive,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Args_,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Audio0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autostart,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Balloon,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('seabios','ovmf')]
         [string]$Bios,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Boot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bootdisk,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cdrom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cicustom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Cipassword,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('configdrive2','nocloud','opennebula')]
         [string]$Citype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ciupgrade,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ciuser,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cpu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Cpulimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Efidisk0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Freeze,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$HostpciN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hotplug,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('any','2','1024')]
         [string]$Hugepages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IdeN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IpconfigN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ivshmem,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Keephugepages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Kvm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$LiveRestore,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Localtime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','clone','create','migrate','rollback','snapshot','snapshot-delete','suspending','suspended')]
         [string]$Lock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Machine,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Memory,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$MigrateDowntime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MigrateSpeed,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nameserver,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NetN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Numa,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NumaN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Onboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('other','wxp','w2k','w2k3','w2k8','wvista','win7','win8','win10','win11','l24','l26','solaris')]
         [string]$Ostype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$ParallelN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protection,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Reboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rng0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$SataN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$ScsiN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('lsi','lsi53c810','virtio-scsi-pci','virtio-scsi-single','megasas','pvscsi')]
         [string]$Scsihw,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Searchdomain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$SerialN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Shares,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Smbios1,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Smp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Sockets,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SpiceEnhancements,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sshkeys,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startdate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startup,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tablet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tdf,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Template,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tpmstate0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Unique,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UsbN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vcpus,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vga,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$VirtioN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmgenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmstatestorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Watchdog
     )
 
@@ -8765,22 +8765,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DestroyUnreferencedDisks,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Purge,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -8811,13 +8811,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -8843,13 +8843,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -8875,13 +8875,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -8937,60 +8937,60 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9037,19 +9037,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9080,16 +9080,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9149,66 +9149,66 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Moveto,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('in','out','group')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9252,13 +9252,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9290,22 +9290,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9340,19 +9340,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9383,16 +9383,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9428,28 +9428,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9481,13 +9481,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9521,25 +9521,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9575,19 +9575,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9618,16 +9618,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9661,25 +9661,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nomatch,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9716,22 +9716,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9764,19 +9764,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9812,28 +9812,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nomatch,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9864,13 +9864,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -9920,53 +9920,53 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Dhcp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ipfilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$LogLevelIn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$LogLevelOut,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Macfilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ndp,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyIn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyOut,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Radv,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10014,25 +10014,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Since,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Until,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10066,17 +10066,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('alias','ipset')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10105,13 +10105,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10139,17 +10139,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('fsfreeze-freeze','fsfreeze-status','fsfreeze-thaw','fstrim','get-fsinfo','get-host-name','get-memory-block-info','get-memory-blocks','get-osinfo','get-time','get-timezone','get-users','get-vcpus','info','network-get-interfaces','ping','shutdown','suspend-disk','suspend-hybrid','suspend-ram')]
         [string]$Command,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10178,13 +10178,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10210,13 +10210,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10242,13 +10242,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10274,13 +10274,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10306,13 +10306,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10338,13 +10338,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10370,13 +10370,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10402,13 +10402,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10434,13 +10434,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10466,13 +10466,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10498,13 +10498,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10530,13 +10530,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10562,13 +10562,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10594,13 +10594,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10626,13 +10626,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10658,13 +10658,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10690,13 +10690,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10722,13 +10722,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10754,13 +10754,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10786,13 +10786,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10824,22 +10824,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Crypted,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Username,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10874,19 +10874,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [array]$Command,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$InputData,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10918,16 +10918,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Pid_,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -10958,16 +10958,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$File,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -11002,22 +11002,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Content,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Encode,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$File,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -11054,24 +11054,24 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ds,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -11106,21 +11106,21 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -11154,19 +11154,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Current,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Snapshot,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -11362,270 +11362,270 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Acpi,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Affinity,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Agent,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('x86_64','aarch64')]
         [string]$Arch,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Args_,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Audio0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autostart,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$BackgroundDelay,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Balloon,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('seabios','ovmf')]
         [string]$Bios,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Boot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bootdisk,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cdrom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cicustom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Cipassword,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('configdrive2','nocloud','opennebula')]
         [string]$Citype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ciupgrade,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ciuser,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cpu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Cpulimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Efidisk0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Freeze,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$HostpciN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hotplug,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('any','2','1024')]
         [string]$Hugepages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IdeN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IpconfigN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ivshmem,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Keephugepages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Kvm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Localtime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','clone','create','migrate','rollback','snapshot','snapshot-delete','suspending','suspended')]
         [string]$Lock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Machine,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Memory,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$MigrateDowntime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MigrateSpeed,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nameserver,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NetN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Numa,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NumaN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Onboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('other','wxp','w2k','w2k3','w2k8','wvista','win7','win8','win10','win11','l24','l26','solaris')]
         [string]$Ostype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$ParallelN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protection,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Reboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Revert,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rng0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$SataN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$ScsiN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('lsi','lsi53c810','virtio-scsi-pci','virtio-scsi-single','megasas','pvscsi')]
         [string]$Scsihw,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Searchdomain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$SerialN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Shares,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Smbios1,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Smp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Sockets,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SpiceEnhancements,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sshkeys,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startdate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startup,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tablet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tdf,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Template,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tpmstate0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UsbN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vcpus,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vga,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$VirtioN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmgenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmstatestorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Watchdog
     )
 
@@ -11901,267 +11901,267 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Acpi,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Affinity,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Agent,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('x86_64','aarch64')]
         [string]$Arch,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Args_,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Audio0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autostart,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Balloon,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('seabios','ovmf')]
         [string]$Bios,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Boot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bootdisk,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cdrom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cicustom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Cipassword,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('configdrive2','nocloud','opennebula')]
         [string]$Citype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ciupgrade,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ciuser,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cpu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Cpulimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Efidisk0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Freeze,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$HostpciN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hotplug,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('any','2','1024')]
         [string]$Hugepages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IdeN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IpconfigN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ivshmem,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Keephugepages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Kvm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Localtime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','clone','create','migrate','rollback','snapshot','snapshot-delete','suspending','suspended')]
         [string]$Lock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Machine,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Memory,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$MigrateDowntime,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MigrateSpeed,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nameserver,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NetN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Numa,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NumaN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Onboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('other','wxp','w2k','w2k3','w2k8','wvista','win7','win8','win10','win11','l24','l26','solaris')]
         [string]$Ostype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$ParallelN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protection,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Reboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Revert,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rng0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$SataN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$ScsiN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('lsi','lsi53c810','virtio-scsi-pci','virtio-scsi-single','megasas','pvscsi')]
         [string]$Scsihw,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Searchdomain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$SerialN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Shares,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Smbios1,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Smp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Sockets,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SpiceEnhancements,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sshkeys,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startdate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startup,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tablet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tdf,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Template,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tpmstate0,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UsbN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vcpus,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vga,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$VirtioN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmgenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmstatestorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Watchdog
     )
 
@@ -12272,13 +12272,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12304,13 +12304,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12336,13 +12336,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12370,17 +12370,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('user','network','meta')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12413,19 +12413,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Idlist,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12459,19 +12459,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$GeneratePassword,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Websocket
     )
 
@@ -12503,17 +12503,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('serial0','serial1','serial2','serial3')]
         [string]$Serial,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12546,19 +12546,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vncticket
     )
 
@@ -12590,16 +12590,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proxy,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12628,13 +12628,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12660,13 +12660,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12710,41 +12710,41 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ForceCpu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Machine,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Migratedfrom,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MigrationNetwork,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('secure','insecure')]
         [string]$MigrationType,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Stateuri,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Targetstorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12789,25 +12789,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Keepactive,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Migratedfrom,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12841,16 +12841,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12887,25 +12887,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Forcestop,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Keepactive,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12939,16 +12939,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -12983,22 +12983,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Statestorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Todisk,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13033,19 +13033,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nocheck,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13079,19 +13079,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Key,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13125,20 +13125,20 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('snapshot','clone','copy')]
         [string]$Feature,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13188,44 +13188,44 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('raw','qcow2','vmdk')]
         [string]$Format,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Full,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Newid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13281,43 +13281,43 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('ide0','ide1','ide2','ide3','scsi0','scsi1','scsi2','scsi3','scsi4','scsi5','scsi6','scsi7','scsi8','scsi9','scsi10','scsi11','scsi12','scsi13','scsi14','scsi15','scsi16','scsi17','scsi18','scsi19','scsi20','scsi21','scsi22','scsi23','scsi24','scsi25','scsi26','scsi27','scsi28','scsi29','scsi30','virtio0','virtio1','virtio2','virtio3','virtio4','virtio5','virtio6','virtio7','virtio8','virtio9','virtio10','virtio11','virtio12','virtio13','virtio14','virtio15','sata0','sata1','sata2','sata3','sata4','sata5','efidisk0','tpmstate0','unused0','unused1','unused2','unused3','unused4','unused5','unused6','unused7','unused8','unused9','unused10','unused11','unused12','unused13','unused14','unused15','unused16','unused17','unused18','unused19','unused20','unused21','unused22','unused23','unused24','unused25','unused26','unused27','unused28','unused29','unused30','unused31','unused32','unused33','unused34','unused35','unused36','unused37','unused38','unused39','unused40','unused41','unused42','unused43','unused44','unused45','unused46','unused47','unused48','unused49','unused50','unused51','unused52','unused53','unused54','unused55','unused56','unused57','unused58','unused59','unused60','unused61','unused62','unused63','unused64','unused65','unused66','unused67','unused68','unused69','unused70','unused71','unused72','unused73','unused74','unused75','unused76','unused77','unused78','unused79','unused80','unused81','unused82','unused83','unused84','unused85','unused86','unused87','unused88','unused89','unused90','unused91','unused92','unused93','unused94','unused95','unused96','unused97','unused98','unused99','unused100','unused101','unused102','unused103','unused104','unused105','unused106','unused107','unused108','unused109','unused110','unused111','unused112','unused113','unused114','unused115','unused116','unused117','unused118','unused119','unused120','unused121','unused122','unused123','unused124','unused125','unused126','unused127','unused128','unused129','unused130','unused131','unused132','unused133','unused134','unused135','unused136','unused137','unused138','unused139','unused140','unused141','unused142','unused143','unused144','unused145','unused146','unused147','unused148','unused149','unused150','unused151','unused152','unused153','unused154','unused155','unused156','unused157','unused158','unused159','unused160','unused161','unused162','unused163','unused164','unused165','unused166','unused167','unused168','unused169','unused170','unused171','unused172','unused173','unused174','unused175','unused176','unused177','unused178','unused179','unused180','unused181','unused182','unused183','unused184','unused185','unused186','unused187','unused188','unused189','unused190','unused191','unused192','unused193','unused194','unused195','unused196','unused197','unused198','unused199','unused200','unused201','unused202','unused203','unused204','unused205','unused206','unused207','unused208','unused209','unused210','unused211','unused212','unused213','unused214','unused215','unused216','unused217','unused218','unused219','unused220','unused221','unused222','unused223','unused224','unused225','unused226','unused227','unused228','unused229','unused230','unused231','unused232','unused233','unused234','unused235','unused236','unused237','unused238','unused239','unused240','unused241','unused242','unused243','unused244','unused245','unused246','unused247','unused248','unused249','unused250','unused251','unused252','unused253','unused254','unused255')]
         [string]$Disk,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('raw','qcow2','vmdk')]
         [string]$Format,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TargetDigest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ide0','ide1','ide2','ide3','scsi0','scsi1','scsi2','scsi3','scsi4','scsi5','scsi6','scsi7','scsi8','scsi9','scsi10','scsi11','scsi12','scsi13','scsi14','scsi15','scsi16','scsi17','scsi18','scsi19','scsi20','scsi21','scsi22','scsi23','scsi24','scsi25','scsi26','scsi27','scsi28','scsi29','scsi30','virtio0','virtio1','virtio2','virtio3','virtio4','virtio5','virtio6','virtio7','virtio8','virtio9','virtio10','virtio11','virtio12','virtio13','virtio14','virtio15','sata0','sata1','sata2','sata3','sata4','sata5','efidisk0','tpmstate0','unused0','unused1','unused2','unused3','unused4','unused5','unused6','unused7','unused8','unused9','unused10','unused11','unused12','unused13','unused14','unused15','unused16','unused17','unused18','unused19','unused20','unused21','unused22','unused23','unused24','unused25','unused26','unused27','unused28','unused29','unused30','unused31','unused32','unused33','unused34','unused35','unused36','unused37','unused38','unused39','unused40','unused41','unused42','unused43','unused44','unused45','unused46','unused47','unused48','unused49','unused50','unused51','unused52','unused53','unused54','unused55','unused56','unused57','unused58','unused59','unused60','unused61','unused62','unused63','unused64','unused65','unused66','unused67','unused68','unused69','unused70','unused71','unused72','unused73','unused74','unused75','unused76','unused77','unused78','unused79','unused80','unused81','unused82','unused83','unused84','unused85','unused86','unused87','unused88','unused89','unused90','unused91','unused92','unused93','unused94','unused95','unused96','unused97','unused98','unused99','unused100','unused101','unused102','unused103','unused104','unused105','unused106','unused107','unused108','unused109','unused110','unused111','unused112','unused113','unused114','unused115','unused116','unused117','unused118','unused119','unused120','unused121','unused122','unused123','unused124','unused125','unused126','unused127','unused128','unused129','unused130','unused131','unused132','unused133','unused134','unused135','unused136','unused137','unused138','unused139','unused140','unused141','unused142','unused143','unused144','unused145','unused146','unused147','unused148','unused149','unused150','unused151','unused152','unused153','unused154','unused155','unused156','unused157','unused158','unused159','unused160','unused161','unused162','unused163','unused164','unused165','unused166','unused167','unused168','unused169','unused170','unused171','unused172','unused173','unused174','unused175','unused176','unused177','unused178','unused179','unused180','unused181','unused182','unused183','unused184','unused185','unused186','unused187','unused188','unused189','unused190','unused191','unused192','unused193','unused194','unused195','unused196','unused197','unused198','unused199','unused200','unused201','unused202','unused203','unused204','unused205','unused206','unused207','unused208','unused209','unused210','unused211','unused212','unused213','unused214','unused215','unused216','unused217','unused218','unused219','unused220','unused221','unused222','unused223','unused224','unused225','unused226','unused227','unused228','unused229','unused230','unused231','unused232','unused233','unused234','unused235','unused236','unused237','unused238','unused239','unused240','unused241','unused242','unused243','unused244','unused245','unused246','unused247','unused248','unused249','unused250','unused251','unused252','unused253','unused254','unused255')]
         [string]$TargetDisk,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$TargetVmid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13356,16 +13356,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13410,38 +13410,38 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MigrationNetwork,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('secure','insecure')]
         [string]$MigrationType,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Online,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Targetstorage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$WithLocalDisks
     )
 
@@ -13491,34 +13491,34 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Delete,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Online,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetBridge,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetEndpoint,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetStorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$TargetVmid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13555,16 +13555,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Command,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13601,26 +13601,26 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('ide0','ide1','ide2','ide3','scsi0','scsi1','scsi2','scsi3','scsi4','scsi5','scsi6','scsi7','scsi8','scsi9','scsi10','scsi11','scsi12','scsi13','scsi14','scsi15','scsi16','scsi17','scsi18','scsi19','scsi20','scsi21','scsi22','scsi23','scsi24','scsi25','scsi26','scsi27','scsi28','scsi29','scsi30','virtio0','virtio1','virtio2','virtio3','virtio4','virtio5','virtio6','virtio7','virtio8','virtio9','virtio10','virtio11','virtio12','virtio13','virtio14','virtio15','sata0','sata1','sata2','sata3','sata4','sata5','efidisk0','tpmstate0')]
         [string]$Disk,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Size,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13652,13 +13652,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13690,22 +13690,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Vmstate
     )
 
@@ -13740,19 +13740,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13783,16 +13783,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13820,16 +13820,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13859,19 +13859,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13904,19 +13904,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Start,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13947,17 +13947,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ide0','ide1','ide2','ide3','scsi0','scsi1','scsi2','scsi3','scsi4','scsi5','scsi6','scsi7','scsi8','scsi9','scsi10','scsi11','scsi12','scsi13','scsi14','scsi15','scsi16','scsi17','scsi18','scsi19','scsi20','scsi21','scsi22','scsi23','scsi24','scsi25','scsi26','scsi27','scsi28','scsi29','scsi30','virtio0','virtio1','virtio2','virtio3','virtio4','virtio5','virtio6','virtio7','virtio8','virtio9','virtio10','virtio11','virtio12','virtio13','virtio14','virtio15','sata0','sata1','sata2','sata3','sata4','sata5','efidisk0','tpmstate0')]
         [string]$Disk,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -13990,19 +13990,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bridges,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storages,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14036,19 +14036,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Socket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ticket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14076,10 +14076,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -14185,137 +14185,137 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('amd64','i386','arm64','armhf','riscv32','riscv64')]
         [string]$Arch,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('shell','console','tty')]
         [string]$Cmode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Console,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Cpulimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Debug_,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Features,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hostname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$IgnoreUnpackErrors,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','create','destroyed','disk','fstrim','migrate','mounted','rollback','snapshot','snapshot-delete')]
         [string]$Lock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Memory,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$MpN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nameserver,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NetN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Onboot,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ostemplate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','nixos','unmanaged')]
         [string]$Ostype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protection,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restore,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rootfs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Searchdomain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SshPublicKeys,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startup,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Swap,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Template,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Timezone,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tty,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Unique,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Unprivileged,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14391,22 +14391,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DestroyUnreferencedDisks,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Purge,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14437,13 +14437,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14473,19 +14473,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Current,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Snapshot,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14579,113 +14579,113 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('amd64','i386','arm64','armhf','riscv32','riscv64')]
         [string]$Arch,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('shell','console','tty')]
         [string]$Cmode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Console,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Cpulimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cpuunits,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Debug_,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Features,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hostname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','create','destroyed','disk','fstrim','migrate','mounted','rollback','snapshot','snapshot-delete')]
         [string]$Lock,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Memory,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$MpN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nameserver,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NetN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Onboot,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','nixos','unmanaged')]
         [string]$Ostype,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protection,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Revert,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rootfs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Searchdomain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startup,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Swap,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Template,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Timezone,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tty,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Unprivileged,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14746,13 +14746,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14778,13 +14778,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14814,19 +14814,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Debug_,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14858,16 +14858,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skiplock,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14900,19 +14900,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Forcestop,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14942,13 +14942,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -14974,13 +14974,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15008,16 +15008,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15046,13 +15046,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15082,19 +15082,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15128,19 +15128,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15171,16 +15171,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15210,19 +15210,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Start,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15253,16 +15253,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15292,19 +15292,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15333,13 +15333,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15365,13 +15365,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15427,60 +15427,60 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15527,19 +15527,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15570,16 +15570,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15639,66 +15639,66 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Moveto,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('in','out','group')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15742,13 +15742,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15780,22 +15780,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15830,19 +15830,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15873,16 +15873,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15918,28 +15918,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -15971,13 +15971,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16011,25 +16011,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rename,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16065,19 +16065,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16108,16 +16108,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16151,25 +16151,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nomatch,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16206,22 +16206,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16254,19 +16254,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16302,28 +16302,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nomatch,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16354,13 +16354,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16410,53 +16410,53 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Dhcp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ipfilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$LogLevelIn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$LogLevelOut,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Macfilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ndp,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyIn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyOut,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Radv,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16504,25 +16504,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Since,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Until,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16556,17 +16556,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('alias','ipset')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16601,24 +16601,24 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ds,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16653,21 +16653,21 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16703,22 +16703,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Height,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Websocket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Width
     )
 
@@ -16749,13 +16749,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16785,19 +16785,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vncticket
     )
 
@@ -16829,16 +16829,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proxy,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16885,40 +16885,40 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Delete,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Online,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restart,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetBridge,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetEndpoint,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetStorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$TargetVmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -16967,31 +16967,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Bwlimit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Online,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restart,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TargetStorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17029,20 +17029,20 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('snapshot','clone','copy')]
         [string]$Feature,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17072,13 +17072,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17122,40 +17122,40 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Full,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hostname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Newid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Snapname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17198,23 +17198,23 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('rootfs','mp0','mp1','mp2','mp3','mp4','mp5','mp6','mp7','mp8','mp9','mp10','mp11','mp12','mp13','mp14','mp15','mp16','mp17','mp18','mp19','mp20','mp21','mp22','mp23','mp24','mp25','mp26','mp27','mp28','mp29','mp30','mp31','mp32','mp33','mp34','mp35','mp36','mp37','mp38','mp39','mp40','mp41','mp42','mp43','mp44','mp45','mp46','mp47','mp48','mp49','mp50','mp51','mp52','mp53','mp54','mp55','mp56','mp57','mp58','mp59','mp60','mp61','mp62','mp63','mp64','mp65','mp66','mp67','mp68','mp69','mp70','mp71','mp72','mp73','mp74','mp75','mp76','mp77','mp78','mp79','mp80','mp81','mp82','mp83','mp84','mp85','mp86','mp87','mp88','mp89','mp90','mp91','mp92','mp93','mp94','mp95','mp96','mp97','mp98','mp99','mp100','mp101','mp102','mp103','mp104','mp105','mp106','mp107','mp108','mp109','mp110','mp111','mp112','mp113','mp114','mp115','mp116','mp117','mp118','mp119','mp120','mp121','mp122','mp123','mp124','mp125','mp126','mp127','mp128','mp129','mp130','mp131','mp132','mp133','mp134','mp135','mp136','mp137','mp138','mp139','mp140','mp141','mp142','mp143','mp144','mp145','mp146','mp147','mp148','mp149','mp150','mp151','mp152','mp153','mp154','mp155','mp156','mp157','mp158','mp159','mp160','mp161','mp162','mp163','mp164','mp165','mp166','mp167','mp168','mp169','mp170','mp171','mp172','mp173','mp174','mp175','mp176','mp177','mp178','mp179','mp180','mp181','mp182','mp183','mp184','mp185','mp186','mp187','mp188','mp189','mp190','mp191','mp192','mp193','mp194','mp195','mp196','mp197','mp198','mp199','mp200','mp201','mp202','mp203','mp204','mp205','mp206','mp207','mp208','mp209','mp210','mp211','mp212','mp213','mp214','mp215','mp216','mp217','mp218','mp219','mp220','mp221','mp222','mp223','mp224','mp225','mp226','mp227','mp228','mp229','mp230','mp231','mp232','mp233','mp234','mp235','mp236','mp237','mp238','mp239','mp240','mp241','mp242','mp243','mp244','mp245','mp246','mp247','mp248','mp249','mp250','mp251','mp252','mp253','mp254','mp255')]
         [string]$Disk,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Size,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17261,38 +17261,38 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TargetDigest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$TargetVmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('rootfs','mp0','mp1','mp2','mp3','mp4','mp5','mp6','mp7','mp8','mp9','mp10','mp11','mp12','mp13','mp14','mp15','mp16','mp17','mp18','mp19','mp20','mp21','mp22','mp23','mp24','mp25','mp26','mp27','mp28','mp29','mp30','mp31','mp32','mp33','mp34','mp35','mp36','mp37','mp38','mp39','mp40','mp41','mp42','mp43','mp44','mp45','mp46','mp47','mp48','mp49','mp50','mp51','mp52','mp53','mp54','mp55','mp56','mp57','mp58','mp59','mp60','mp61','mp62','mp63','mp64','mp65','mp66','mp67','mp68','mp69','mp70','mp71','mp72','mp73','mp74','mp75','mp76','mp77','mp78','mp79','mp80','mp81','mp82','mp83','mp84','mp85','mp86','mp87','mp88','mp89','mp90','mp91','mp92','mp93','mp94','mp95','mp96','mp97','mp98','mp99','mp100','mp101','mp102','mp103','mp104','mp105','mp106','mp107','mp108','mp109','mp110','mp111','mp112','mp113','mp114','mp115','mp116','mp117','mp118','mp119','mp120','mp121','mp122','mp123','mp124','mp125','mp126','mp127','mp128','mp129','mp130','mp131','mp132','mp133','mp134','mp135','mp136','mp137','mp138','mp139','mp140','mp141','mp142','mp143','mp144','mp145','mp146','mp147','mp148','mp149','mp150','mp151','mp152','mp153','mp154','mp155','mp156','mp157','mp158','mp159','mp160','mp161','mp162','mp163','mp164','mp165','mp166','mp167','mp168','mp169','mp170','mp171','mp172','mp173','mp174','mp175','mp176','mp177','mp178','mp179','mp180','mp181','mp182','mp183','mp184','mp185','mp186','mp187','mp188','mp189','mp190','mp191','mp192','mp193','mp194','mp195','mp196','mp197','mp198','mp199','mp200','mp201','mp202','mp203','mp204','mp205','mp206','mp207','mp208','mp209','mp210','mp211','mp212','mp213','mp214','mp215','mp216','mp217','mp218','mp219','mp220','mp221','mp222','mp223','mp224','mp225','mp226','mp227','mp228','mp229','mp230','mp231','mp232','mp233','mp234','mp235','mp236','mp237','mp238','mp239','mp240','mp241','mp242','mp243','mp244','mp245','mp246','mp247','mp248','mp249','mp250','mp251','mp252','mp253','mp254','mp255','unused0','unused1','unused2','unused3','unused4','unused5','unused6','unused7','unused8','unused9','unused10','unused11','unused12','unused13','unused14','unused15','unused16','unused17','unused18','unused19','unused20','unused21','unused22','unused23','unused24','unused25','unused26','unused27','unused28','unused29','unused30','unused31','unused32','unused33','unused34','unused35','unused36','unused37','unused38','unused39','unused40','unused41','unused42','unused43','unused44','unused45','unused46','unused47','unused48','unused49','unused50','unused51','unused52','unused53','unused54','unused55','unused56','unused57','unused58','unused59','unused60','unused61','unused62','unused63','unused64','unused65','unused66','unused67','unused68','unused69','unused70','unused71','unused72','unused73','unused74','unused75','unused76','unused77','unused78','unused79','unused80','unused81','unused82','unused83','unused84','unused85','unused86','unused87','unused88','unused89','unused90','unused91','unused92','unused93','unused94','unused95','unused96','unused97','unused98','unused99','unused100','unused101','unused102','unused103','unused104','unused105','unused106','unused107','unused108','unused109','unused110','unused111','unused112','unused113','unused114','unused115','unused116','unused117','unused118','unused119','unused120','unused121','unused122','unused123','unused124','unused125','unused126','unused127','unused128','unused129','unused130','unused131','unused132','unused133','unused134','unused135','unused136','unused137','unused138','unused139','unused140','unused141','unused142','unused143','unused144','unused145','unused146','unused147','unused148','unused149','unused150','unused151','unused152','unused153','unused154','unused155','unused156','unused157','unused158','unused159','unused160','unused161','unused162','unused163','unused164','unused165','unused166','unused167','unused168','unused169','unused170','unused171','unused172','unused173','unused174','unused175','unused176','unused177','unused178','unused179','unused180','unused181','unused182','unused183','unused184','unused185','unused186','unused187','unused188','unused189','unused190','unused191','unused192','unused193','unused194','unused195','unused196','unused197','unused198','unused199','unused200','unused201','unused202','unused203','unused204','unused205','unused206','unused207','unused208','unused209','unused210','unused211','unused212','unused213','unused214','unused215','unused216','unused217','unused218','unused219','unused220','unused221','unused222','unused223','unused224','unused225','unused226','unused227','unused228','unused229','unused230','unused231','unused232','unused233','unused234','unused235','unused236','unused237','unused238','unused239','unused240','unused241','unused242','unused243','unused244','unused245','unused246','unused247','unused248','unused249','unused250','unused251','unused252','unused253','unused254','unused255')]
         [string]$TargetVolume,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('rootfs','mp0','mp1','mp2','mp3','mp4','mp5','mp6','mp7','mp8','mp9','mp10','mp11','mp12','mp13','mp14','mp15','mp16','mp17','mp18','mp19','mp20','mp21','mp22','mp23','mp24','mp25','mp26','mp27','mp28','mp29','mp30','mp31','mp32','mp33','mp34','mp35','mp36','mp37','mp38','mp39','mp40','mp41','mp42','mp43','mp44','mp45','mp46','mp47','mp48','mp49','mp50','mp51','mp52','mp53','mp54','mp55','mp56','mp57','mp58','mp59','mp60','mp61','mp62','mp63','mp64','mp65','mp66','mp67','mp68','mp69','mp70','mp71','mp72','mp73','mp74','mp75','mp76','mp77','mp78','mp79','mp80','mp81','mp82','mp83','mp84','mp85','mp86','mp87','mp88','mp89','mp90','mp91','mp92','mp93','mp94','mp95','mp96','mp97','mp98','mp99','mp100','mp101','mp102','mp103','mp104','mp105','mp106','mp107','mp108','mp109','mp110','mp111','mp112','mp113','mp114','mp115','mp116','mp117','mp118','mp119','mp120','mp121','mp122','mp123','mp124','mp125','mp126','mp127','mp128','mp129','mp130','mp131','mp132','mp133','mp134','mp135','mp136','mp137','mp138','mp139','mp140','mp141','mp142','mp143','mp144','mp145','mp146','mp147','mp148','mp149','mp150','mp151','mp152','mp153','mp154','mp155','mp156','mp157','mp158','mp159','mp160','mp161','mp162','mp163','mp164','mp165','mp166','mp167','mp168','mp169','mp170','mp171','mp172','mp173','mp174','mp175','mp176','mp177','mp178','mp179','mp180','mp181','mp182','mp183','mp184','mp185','mp186','mp187','mp188','mp189','mp190','mp191','mp192','mp193','mp194','mp195','mp196','mp197','mp198','mp199','mp200','mp201','mp202','mp203','mp204','mp205','mp206','mp207','mp208','mp209','mp210','mp211','mp212','mp213','mp214','mp215','mp216','mp217','mp218','mp219','mp220','mp221','mp222','mp223','mp224','mp225','mp226','mp227','mp228','mp229','mp230','mp231','mp232','mp233','mp234','mp235','mp236','mp237','mp238','mp239','mp240','mp241','mp242','mp243','mp244','mp245','mp246','mp247','mp248','mp249','mp250','mp251','mp252','mp253','mp254','mp255','unused0','unused1','unused2','unused3','unused4','unused5','unused6','unused7','unused8','unused9','unused10','unused11','unused12','unused13','unused14','unused15','unused16','unused17','unused18','unused19','unused20','unused21','unused22','unused23','unused24','unused25','unused26','unused27','unused28','unused29','unused30','unused31','unused32','unused33','unused34','unused35','unused36','unused37','unused38','unused39','unused40','unused41','unused42','unused43','unused44','unused45','unused46','unused47','unused48','unused49','unused50','unused51','unused52','unused53','unused54','unused55','unused56','unused57','unused58','unused59','unused60','unused61','unused62','unused63','unused64','unused65','unused66','unused67','unused68','unused69','unused70','unused71','unused72','unused73','unused74','unused75','unused76','unused77','unused78','unused79','unused80','unused81','unused82','unused83','unused84','unused85','unused86','unused87','unused88','unused89','unused90','unused91','unused92','unused93','unused94','unused95','unused96','unused97','unused98','unused99','unused100','unused101','unused102','unused103','unused104','unused105','unused106','unused107','unused108','unused109','unused110','unused111','unused112','unused113','unused114','unused115','unused116','unused117','unused118','unused119','unused120','unused121','unused122','unused123','unused124','unused125','unused126','unused127','unused128','unused129','unused130','unused131','unused132','unused133','unused134','unused135','unused136','unused137','unused138','unused139','unused140','unused141','unused142','unused143','unused144','unused145','unused146','unused147','unused148','unused149','unused150','unused151','unused152','unused153','unused154','unused155','unused156','unused157','unused158','unused159','unused160','unused161','unused162','unused163','unused164','unused165','unused166','unused167','unused168','unused169','unused170','unused171','unused172','unused173','unused174','unused175','unused176','unused177','unused178','unused179','unused180','unused181','unused182','unused183','unused184','unused185','unused186','unused187','unused188','unused189','unused190','unused191','unused192','unused193','unused194','unused195','unused196','unused197','unused198','unused199','unused200','unused201','unused202','unused203','unused204','unused205','unused206','unused207','unused208','unused209','unused210','unused211','unused212','unused213','unused214','unused215','unused216','unused217','unused218','unused219','unused220','unused221','unused222','unused223','unused224','unused225','unused226','unused227','unused228','unused229','unused230','unused231','unused232','unused233','unused234','unused235','unused236','unused237','unused238','unused239','unused240','unused241','unused242','unused243','unused244','unused245','unused246','unused247','unused248','unused249','unused250','unused251','unused252','unused253','unused254','unused255')]
         [string]$Volume
     )
@@ -17329,13 +17329,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17365,19 +17365,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bridges,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storages,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17411,19 +17411,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Socket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ticket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -17451,10 +17451,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17478,10 +17478,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17505,10 +17505,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17532,10 +17532,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17559,10 +17559,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17600,31 +17600,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CrushDeviceClass,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$DbDev,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$DbDevSize,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Dev,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Encrypted,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$WalDev,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$WalDevSize
     )
 
@@ -17661,16 +17661,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Cleanup,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid
     )
 
@@ -17699,13 +17699,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid
     )
 
@@ -17731,13 +17731,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid
     )
 
@@ -17765,16 +17765,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('block','db','wal')]
         [string]$Type
     )
@@ -17804,13 +17804,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid
     )
 
@@ -17836,13 +17836,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid
     )
 
@@ -17870,16 +17870,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Deep,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Osdid
     )
 
@@ -17906,10 +17906,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17935,13 +17935,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -17969,16 +17969,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Hotstandby,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18005,10 +18005,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18034,13 +18034,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18066,13 +18066,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18096,10 +18096,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18125,13 +18125,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Monid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18159,16 +18159,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MonAddress,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Monid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18195,10 +18195,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18228,19 +18228,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AddStorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$PgNum
     )
 
@@ -18268,10 +18268,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18319,48 +18319,48 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AddStorages,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('rbd','cephfs','rgw')]
         [string]$Application,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CrushRule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ErasureCoding,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MinSize,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('on','off','warn')]
         [string]$PgAutoscaleMode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$PgNum,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$PgNumMin,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Size,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TargetSize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$TargetSizeRatio
     )
 
@@ -18406,22 +18406,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$RemoveEcprofile,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$RemoveStorages
     )
 
@@ -18452,13 +18452,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18502,42 +18502,42 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('rbd','cephfs','rgw')]
         [string]$Application,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CrushRule,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MinSize,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('on','off','warn')]
         [string]$PgAutoscaleMode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$PgNum,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$PgNumMin,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Size,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TargetSize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [float]$TargetSizeRatio
     )
 
@@ -18576,16 +18576,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Verbose_
     )
 
@@ -18624,28 +18624,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClusterNetwork,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableCephx,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MinSize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Network,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$PgBits,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Size
     )
 
@@ -18679,13 +18679,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Service
     )
 
@@ -18714,13 +18714,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Service
     )
 
@@ -18749,13 +18749,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Service
     )
 
@@ -18782,10 +18782,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18809,10 +18809,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18840,16 +18840,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start
     )
 
@@ -18877,10 +18877,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -18910,20 +18910,20 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('stop','destroy')]
         [string]$Action,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('osd','mon','mds')]
         [string]$Service
     )
@@ -19011,100 +19011,100 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$All,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('0','1','gzip','lzo','zstd')]
         [string]$Compress,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dumpdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exclude,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [array]$ExcludePath,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ionice,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Lockwait,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('always','failure')]
         [string]$Mailnotification,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mailto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('snapshot','suspend','stop')]
         [string]$Mode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NotesTemplate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pigz,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protected,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Quiet,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Remove,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Script,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stdexcludes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stdout,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Stop,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Stopwait,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tmpdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Zstd
     )
 
@@ -19161,13 +19161,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage
     )
 
@@ -19196,13 +19196,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Volume
     )
 
@@ -19229,10 +19229,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19258,13 +19258,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('chrony','corosync','cron','ksmtuned','postfix','pve-cluster','pve-firewall','pve-ha-crm','pve-ha-lrm','pvedaemon','pvefw-logger','pveproxy','pvescheduler','pvestatd','spiceproxy','sshd','syslog','systemd-journald','systemd-timesyncd')]
         [string]$Service
     )
@@ -19291,13 +19291,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('chrony','corosync','cron','ksmtuned','postfix','pve-cluster','pve-firewall','pve-ha-crm','pve-ha-lrm','pvedaemon','pvefw-logger','pveproxy','pvescheduler','pvestatd','spiceproxy','sshd','syslog','systemd-journald','systemd-timesyncd')]
         [string]$Service
     )
@@ -19324,13 +19324,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('chrony','corosync','cron','ksmtuned','postfix','pve-cluster','pve-firewall','pve-ha-crm','pve-ha-lrm','pvedaemon','pvefw-logger','pveproxy','pvescheduler','pvestatd','spiceproxy','sshd','syslog','systemd-journald','systemd-timesyncd')]
         [string]$Service
     )
@@ -19357,13 +19357,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('chrony','corosync','cron','ksmtuned','postfix','pve-cluster','pve-firewall','pve-ha-crm','pve-ha-lrm','pvedaemon','pvefw-logger','pveproxy','pvescheduler','pvestatd','spiceproxy','sshd','syslog','systemd-journald','systemd-timesyncd')]
         [string]$Service
     )
@@ -19390,13 +19390,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('chrony','corosync','cron','ksmtuned','postfix','pve-cluster','pve-firewall','pve-ha-crm','pve-ha-lrm','pvedaemon','pvefw-logger','pveproxy','pvescheduler','pvestatd','spiceproxy','sshd','syslog','systemd-journald','systemd-timesyncd')]
         [string]$Service
     )
@@ -19423,13 +19423,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('chrony','corosync','cron','ksmtuned','postfix','pve-cluster','pve-firewall','pve-ha-crm','pve-ha-lrm','pvedaemon','pvefw-logger','pveproxy','pvescheduler','pvestatd','spiceproxy','sshd','syslog','systemd-journald','systemd-timesyncd')]
         [string]$Service
     )
@@ -19454,10 +19454,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19481,10 +19481,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19510,13 +19510,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19545,13 +19545,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Key,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19578,10 +19578,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19607,13 +19607,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','any_bridge','any_local_bridge')]
         [string]$Type
     )
@@ -19695,94 +19695,94 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Address,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Address6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autostart,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BondPrimary,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('balance-rr','active-backup','balance-xor','broadcast','802.3ad','balance-tlb','balance-alb','balance-slb','lacp-balance-slb','lacp-balance-tcp')]
         [string]$BondMode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('layer2','layer2+3','layer3+4')]
         [string]$BondXmitHashPolicy,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BridgePorts,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BridgeVlanAware,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cidr6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comments,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comments6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Gateway,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Gateway6,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Mtu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Netmask,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Netmask6,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsBonds,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsBridge,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsOptions,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsPorts,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$OvsTag,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Slaves,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','unknown')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$VlanId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$VlanRawDevice
     )
 
@@ -19835,10 +19835,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19864,13 +19864,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19896,13 +19896,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -19982,97 +19982,97 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Address,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Address6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autostart,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BondPrimary,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('balance-rr','active-backup','balance-xor','broadcast','802.3ad','balance-tlb','balance-alb','balance-slb','lacp-balance-slb','lacp-balance-tcp')]
         [string]$BondMode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('layer2','layer2+3','layer3+4')]
         [string]$BondXmitHashPolicy,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BridgePorts,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BridgeVlanAware,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cidr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cidr6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comments,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comments6,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Gateway,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Gateway6,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Mtu,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Netmask,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Netmask6,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsBonds,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsBridge,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsOptions,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$OvsPorts,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$OvsTag,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Slaves,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','unknown')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$VlanId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$VlanRawDevice
     )
 
@@ -20145,41 +20145,41 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Errors,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Since,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('archive','active','all')]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Statusfilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Typefilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Until,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Userfilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -20217,13 +20217,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Upid
     )
 
@@ -20249,13 +20249,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Upid
     )
 
@@ -20287,22 +20287,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Download,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Upid
     )
 
@@ -20333,13 +20333,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Upid
     )
 
@@ -20363,10 +20363,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20392,13 +20392,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Server
     )
 
@@ -20433,22 +20433,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Server,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Username
     )
 
@@ -20488,25 +20488,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Fingerprint,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Server,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Username
     )
 
@@ -20539,13 +20539,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Server
     )
 
@@ -20574,13 +20574,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Portal
     )
 
@@ -20607,10 +20607,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20636,13 +20636,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vg
     )
 
@@ -20669,10 +20669,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20696,10 +20696,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20727,16 +20727,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PciClassBlacklist,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Verbose_
     )
 
@@ -20766,13 +20766,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Pciid
     )
 
@@ -20798,13 +20798,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Pciid
     )
 
@@ -20828,10 +20828,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20855,10 +20855,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20882,10 +20882,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20909,10 +20909,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20936,10 +20936,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -20973,25 +20973,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Content,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Format,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Target
     )
 
@@ -21024,13 +21024,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage
     )
 
@@ -21062,23 +21062,23 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('qemu','lxc')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -21115,23 +21115,23 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('qemu','lxc')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -21166,19 +21166,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Content,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -21216,26 +21216,26 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Filename,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('raw','qcow2','subvol')]
         [string]$Format,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Size,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
     )
 
@@ -21271,19 +21271,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Delay,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Volume
     )
 
@@ -21314,16 +21314,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Volume
     )
 
@@ -21355,22 +21355,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TargetNode,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Volume
     )
 
@@ -21406,22 +21406,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Notes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Protected,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Volume
     )
 
@@ -21451,13 +21451,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage
     )
 
@@ -21489,23 +21489,23 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ds,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe
     )
@@ -21541,20 +21541,20 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe
     )
@@ -21595,30 +21595,30 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Checksum,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('md5','sha1','sha224','sha256','sha384','sha512')]
         [string]$ChecksumAlgorithm,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl')]
         [string]$Content,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Filename,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tmpfilename
     )
 
@@ -21663,33 +21663,33 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Checksum,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('md5','sha1','sha224','sha256','sha384','sha512')]
         [string]$ChecksumAlgorithm,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl')]
         [string]$Content,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Filename,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Url,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$VerifyCertificates
     )
 
@@ -21721,10 +21721,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -21748,10 +21748,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -21781,19 +21781,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AddStorage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Device,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -21828,19 +21828,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupConfig,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupDisks,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -21868,10 +21868,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -21901,19 +21901,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AddStorage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Device,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -21950,22 +21950,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupConfig,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupDisks,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$VolumeGroup
     )
 
@@ -21994,10 +21994,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22029,23 +22029,23 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AddStorage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Device,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ext4','xfs')]
         [string]$Filesystem,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22081,19 +22081,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupConfig,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupDisks,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22121,10 +22121,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22162,32 +22162,32 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$AddStorage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ashift,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('on','off','gzip','lz4','lzjb','zle','zstd')]
         [string]$Compression,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Devices,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$DraidConfig,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('single','mirror','raid10','raidz','raidz2','raidz3','draid','draid2','draid3')]
         [string]$Raidlevel
     )
@@ -22227,19 +22227,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupConfig,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CleanupDisks,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22269,13 +22269,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22305,19 +22305,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$IncludePartitions,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Skipsmart,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('unused','journal_disks')]
         [string]$Type
     )
@@ -22351,16 +22351,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Disk,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Healthonly,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22392,16 +22392,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Disk,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Uuid
     )
 
@@ -22431,13 +22431,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Disk,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22464,10 +22464,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22491,10 +22491,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22522,16 +22522,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Notify,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Quiet
     )
 
@@ -22563,16 +22563,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Version
     )
 
@@ -22600,10 +22600,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22635,22 +22635,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Index,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Path
     )
 
@@ -22684,16 +22684,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Handle,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22721,10 +22721,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22748,10 +22748,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22775,10 +22775,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -22832,56 +22832,56 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
         [string]$Type
     )
@@ -22927,16 +22927,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos
     )
 
@@ -22965,13 +22965,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos
     )
 
@@ -23029,62 +23029,62 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Action,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IcmpType,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iface,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$Log,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Macro,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Moveto,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Pos,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proto,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Source,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Sport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('in','out','group')]
         [string]$Type
     )
@@ -23127,10 +23127,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23192,71 +23192,71 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$LogLevelIn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$LogLevelOut,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$LogNfConntrack,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Ndp,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$NfConntrackAllowInvalid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NfConntrackHelpers,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$NfConntrackMax,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$NfConntrackTcpTimeoutEstablished,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$NfConntrackTcpTimeoutSynRecv,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nosmurfs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$ProtectionSynflood,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$ProtectionSynfloodBurst,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$ProtectionSynfloodRate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$SmurfLogLevel,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
         [string]$TcpFlagsLogLevel,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Tcpflags
     )
 
@@ -23309,22 +23309,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Since,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Until
     )
 
@@ -23356,13 +23356,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Guest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23391,13 +23391,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23423,13 +23423,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23459,19 +23459,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start
     )
 
@@ -23501,13 +23501,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23531,10 +23531,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23558,10 +23558,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23585,10 +23585,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23614,13 +23614,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23649,13 +23649,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23682,10 +23682,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23711,13 +23711,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restart
     )
 
@@ -23752,22 +23752,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Certificates,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Key,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Restart
     )
 
@@ -23799,13 +23799,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('acme','acmedomain0','acmedomain1','acmedomain2','acmedomain3','acmedomain4','acmedomain5','description','startall-onboot-delay','wakeonlan')]
         [string]$Property
     )
@@ -23847,31 +23847,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Acme,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$AcmedomainN,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$StartallOnbootDelay,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Wakeonlan
     )
 
@@ -23905,10 +23905,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23932,10 +23932,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -23961,13 +23961,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -23993,13 +23993,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
     )
 
@@ -24023,10 +24023,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24050,10 +24050,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24079,14 +24079,14 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('reboot','shutdown')]
         [string]$Command,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24113,10 +24113,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24142,13 +24142,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Commands,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24175,10 +24175,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24208,20 +24208,20 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ds,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe
     )
@@ -24255,17 +24255,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('AVERAGE','MAX')]
         [string]$Cf,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('hour','day','week','month','year')]
         [string]$Timeframe
     )
@@ -24304,25 +24304,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Service,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Since,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Start,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Until
     )
 
@@ -24363,25 +24363,25 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Endcursor,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Lastentries,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Since,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startcursor,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Until
     )
 
@@ -24405,7 +24405,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: login,ceph_install,upgrade
+Run specific command or default to login. Enum: upgrade,ceph_install,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Height
@@ -24422,26 +24422,26 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('login','ceph_install','upgrade')]
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('upgrade','ceph_install','login')]
         [string]$Cmd,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CmdOpts,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Height,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Websocket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Width
     )
 
@@ -24465,7 +24465,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: login,ceph_install,upgrade
+Run specific command or default to login. Enum: upgrade,ceph_install,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -24476,17 +24476,17 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('login','ceph_install','upgrade')]
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('upgrade','ceph_install','login')]
         [string]$Cmd,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CmdOpts,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24518,16 +24518,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vncticket
     )
 
@@ -24548,7 +24548,7 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: login,ceph_install,upgrade
+Run specific command or default to login. Enum: upgrade,ceph_install,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -24561,20 +24561,20 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateSet('login','ceph_install','upgrade')]
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('upgrade','ceph_install','login')]
         [string]$Cmd,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$CmdOpts,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Proxy
     )
 
@@ -24603,10 +24603,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24638,22 +24638,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns1,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns2,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns3,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Search
     )
 
@@ -24683,10 +24683,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24712,13 +24712,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Timezone
     )
 
@@ -24745,10 +24745,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24776,16 +24776,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Template
     )
 
@@ -24817,16 +24817,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Url,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$VerifyCertificates
     )
 
@@ -24854,10 +24854,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -24885,16 +24885,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Force,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vms
     )
 
@@ -24928,19 +24928,19 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$ForceStop,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vms
     )
 
@@ -24977,22 +24977,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Maxworkers,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vms,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$WithLocalDisks
     )
 
@@ -25022,10 +25022,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -25053,16 +25053,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Data,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
     )
 
@@ -25090,10 +25090,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('btrfs','cephfs','cifs','dir','glusterfs','iscsi','iscsidirect','lvm','lvmthin','nfs','pbs','rbd','zfs','zfspool')]
         [string]$Type
     )
@@ -25241,194 +25241,194 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Authsupported,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Base,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Blocksize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ComstarHg,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ComstarTg,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Content,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ContentDirs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CreateBasePath,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CreateSubdirs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$DataPool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Datastore,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$EncryptionKey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Export,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Fingerprint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Format,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FsName,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Fuse,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IsMountpoint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Iscsiprovider,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Keyring,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Krbd,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$LioTpg,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MasterPubkey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxProtectedBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Mkdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Monhost,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mountpoint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Namespace,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nocow,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nowritecache,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Options,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Path,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Portal,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('off','metadata','falloc','full')]
         [string]$Preallocation,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Saferemove,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SaferemoveThroughput,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server2,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Share,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Shared,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('default','2.0','2.1','3','3.0','3.11')]
         [string]$Smbversion,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Sparse,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Subdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$TaggedOnly,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Target,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Thinpool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('tcp','rdma','unix')]
         [string]$Transport,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('btrfs','cephfs','cifs','dir','glusterfs','iscsi','iscsidirect','lvm','lvmthin','nfs','pbs','rbd','zfs','zfspool')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Username,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vgname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Volume
     )
 
@@ -25515,10 +25515,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage
     )
 
@@ -25542,10 +25542,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage
     )
 
@@ -25667,160 +25667,160 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Blocksize,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bwlimit,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ComstarHg,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ComstarTg,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Content,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ContentDirs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CreateBasePath,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CreateSubdirs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$DataPool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Disable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$EncryptionKey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Fingerprint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Format,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FsName,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Fuse,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IsMountpoint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Keyring,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Krbd,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$LioTpg,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MasterPubkey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MaxProtectedBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Maxfiles,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Mkdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Monhost,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Mountpoint,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Namespace,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nocow,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Nowritecache,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Options,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Pool,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('off','metadata','falloc','full')]
         [string]$Preallocation,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Saferemove,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SaferemoveThroughput,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server2,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Shared,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('default','2.0','2.1','3','3.0','3.11')]
         [string]$Smbversion,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Sparse,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Subdir,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$TaggedOnly,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('tcp','rdma','unix')]
         [string]$Transport,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Username
     )
 
@@ -25893,7 +25893,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -25919,13 +25919,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enabled,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Full
     )
 
@@ -25971,37 +25971,37 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Email,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Expire,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Firstname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Groups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Keys,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Lastname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26037,10 +26037,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26064,10 +26064,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26109,37 +26109,37 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Append,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Email,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Expire,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Firstname,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Groups,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Keys,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Lastname,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26176,13 +26176,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Multiple,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26209,10 +26209,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26236,10 +26236,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26265,13 +26265,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Tokenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26297,13 +26297,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Tokenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26335,22 +26335,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Expire,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Privsep,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Tokenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26387,22 +26387,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Expire,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Privsep,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Tokenid,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -26429,7 +26429,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -26455,13 +26455,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Groupid
     )
 
@@ -26489,10 +26489,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Groupid
     )
 
@@ -26516,10 +26516,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Groupid
     )
 
@@ -26545,13 +26545,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Groupid
     )
 
@@ -26576,7 +26576,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -26602,13 +26602,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Privs,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Roleid
     )
 
@@ -26636,10 +26636,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Roleid
     )
 
@@ -26663,10 +26663,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Roleid
     )
 
@@ -26694,16 +26694,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Append,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Privs,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Roleid
     )
 
@@ -26729,7 +26729,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -26765,28 +26765,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Groups,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Path,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Propagate,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Roles,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tokens,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Users
     )
 
@@ -26817,7 +26817,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -26913,121 +26913,121 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$AcrValues,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autocreate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BaseDn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BindDn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Capath,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CaseSensitive,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cert,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Certkey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientKey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Default,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Filter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupClasses,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupDn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupFilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupNameAttr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IssuerUrl,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ldap','ldaps','ldap+starttls')]
         [string]$Mode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Prompt,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Scopes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Secure,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server1,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server2,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('tlsv1','tlsv1_1','tlsv1_2','tlsv1_3')]
         [string]$Sslversion,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SyncDefaultsOptions,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SyncAttributes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tfa,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('ad','ldap','openid','pam','pve')]
         [string]$Type,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$UserAttr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$UserClasses,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$UsernameClaim,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Verify
     )
 
@@ -27090,10 +27090,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm
     )
 
@@ -27117,10 +27117,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm
     )
 
@@ -27216,120 +27216,120 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$AcrValues,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Autocreate,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BaseDn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BindDn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Capath,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$CaseSensitive,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cert,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Certkey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientId,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientKey,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Default,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Filter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupClasses,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupDn,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupFilter,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$GroupNameAttr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IssuerUrl,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ldap','ldaps','ldap+starttls')]
         [string]$Mode,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Port,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Prompt,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Scopes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Secure,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server1,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server2,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('tlsv1','tlsv1_1','tlsv1_2','tlsv1_3')]
         [string]$Sslversion,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SyncDefaultsOptions,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SyncAttributes,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tfa,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$UserAttr,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$UserClasses,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Verify
     )
 
@@ -27403,28 +27403,28 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DryRun,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$EnableNew,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Full,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Purge,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$RemoveVanished,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('users','groups','both')]
         [string]$Scope
     )
@@ -27455,7 +27455,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -27481,13 +27481,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$RedirectUrl
     )
 
@@ -27519,16 +27519,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Code,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$RedirectUrl,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$State
     )
 
@@ -27555,7 +27555,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -27579,10 +27579,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -27618,29 +27618,29 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Challenge,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Totp,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('totp','u2f','webauthn','recovery','yubico')]
         [string]$Type,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Value
     )
 
@@ -27676,16 +27676,16 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -27714,13 +27714,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -27752,22 +27752,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -27794,7 +27794,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -27832,31 +27832,31 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$NewFormat,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Otp,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Path,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Privs,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$TfaChallenge,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Username
     )
 
@@ -27892,13 +27892,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [SecureString]$Password,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -27928,13 +27928,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Path,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Userid
     )
 
@@ -27960,7 +27960,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
@@ -27986,13 +27986,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Poolid
     )
 
@@ -28020,10 +28020,10 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Poolid
     )
 
@@ -28049,13 +28049,13 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Poolid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('qemu','lxc','storage')]
         [string]$Type
     )
@@ -28091,22 +28091,22 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Delete,
 
-        [Parameter(Mandatory,ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Poolid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vms
     )
 
@@ -28134,7 +28134,7 @@ PveResponse. Return response.
     [OutputType([PveResponse])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
