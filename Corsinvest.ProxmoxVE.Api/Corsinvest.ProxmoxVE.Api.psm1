@@ -1311,7 +1311,7 @@ Description.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disable
 Flag to disable/deactivate the entry.
 .PARAMETER Id
@@ -1611,7 +1611,7 @@ The InfluxDB bucket/db. Only necessary when using the http v2 api.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disable
 Flag to disable the plugin.
 .PARAMETER Id
@@ -1721,6 +1721,1012 @@ PveResponse. Return response.
         if($PSBoundParameters['VerifyCertificate']) { $parameters['verify-certificate'] = $VerifyCertificate }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterNotifications
+{
+<#
+.DESCRIPTION
+Index for notification-related API endpoints.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications"
+    }
+}
+
+function Get-PveClusterNotificationsEndpoints
+{
+<#
+.DESCRIPTION
+Index for all available endpoint types.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints"
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsSendmail
+{
+<#
+.DESCRIPTION
+Returns a list of all sendmail endpoints
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/sendmail"
+    }
+}
+
+function New-PveClusterNotificationsEndpointsSendmail
+{
+<#
+.DESCRIPTION
+Create a new sendmail endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Author
+Author of the mail
+.PARAMETER Comment
+Comment
+.PARAMETER Disable
+Disable this target
+.PARAMETER FromAddress
+`From` address for the mail
+.PARAMETER Mailto
+List of email recipients
+.PARAMETER MailtoUser
+List of users
+.PARAMETER Name
+The name of the endpoint.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Author,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$FromAddress,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Mailto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MailtoUser,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Author']) { $parameters['author'] = $Author }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['FromAddress']) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters['Mailto']) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/sendmail" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterNotificationsEndpointsSendmail
+{
+<#
+.DESCRIPTION
+Remove sendmail endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/sendmail/$Name"
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsSendmailIdx
+{
+<#
+.DESCRIPTION
+Return a specific sendmail endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/sendmail/$Name"
+    }
+}
+
+function Set-PveClusterNotificationsEndpointsSendmail
+{
+<#
+.DESCRIPTION
+Update existing sendmail endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Author
+Author of the mail
+.PARAMETER Comment
+Comment
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Disable
+Disable this target
+.PARAMETER FromAddress
+`From` address for the mail
+.PARAMETER Mailto
+List of email recipients
+.PARAMETER MailtoUser
+List of users
+.PARAMETER Name
+The name of the endpoint.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Author,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$FromAddress,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Mailto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MailtoUser,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Author']) { $parameters['author'] = $Author }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['FromAddress']) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters['Mailto']) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/sendmail/$Name" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsGotify
+{
+<#
+.DESCRIPTION
+Returns a list of all gotify endpoints
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/gotify"
+    }
+}
+
+function New-PveClusterNotificationsEndpointsGotify
+{
+<#
+.DESCRIPTION
+Create a new gotify endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Comment
+Comment
+.PARAMETER Disable
+Disable this target
+.PARAMETER Name
+The name of the endpoint.
+.PARAMETER Server
+Server URL
+.PARAMETER Token
+Secret token
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Server,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Token
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters['Token']) { $parameters['token'] = $Token }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/gotify" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterNotificationsEndpointsGotify
+{
+<#
+.DESCRIPTION
+Remove gotify endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/gotify/$Name"
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsGotifyIdx
+{
+<#
+.DESCRIPTION
+Return a specific gotify endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+Name of the endpoint.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/gotify/$Name"
+    }
+}
+
+function Set-PveClusterNotificationsEndpointsGotify
+{
+<#
+.DESCRIPTION
+Update existing gotify endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Comment
+Comment
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Disable
+Disable this target
+.PARAMETER Name
+The name of the endpoint.
+.PARAMETER Server
+Server URL
+.PARAMETER Token
+Secret token
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Server,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Token
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters['Token']) { $parameters['token'] = $Token }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/gotify/$Name" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsSmtp
+{
+<#
+.DESCRIPTION
+Returns a list of all smtp endpoints
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/smtp"
+    }
+}
+
+function New-PveClusterNotificationsEndpointsSmtp
+{
+<#
+.DESCRIPTION
+Create a new smtp endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Author
+Author of the mail. Defaults to 'Proxmox VE'.
+.PARAMETER Comment
+Comment
+.PARAMETER Disable
+Disable this target
+.PARAMETER FromAddress
+`From` address for the mail
+.PARAMETER Mailto
+List of email recipients
+.PARAMETER MailtoUser
+List of users
+.PARAMETER Mode
+Determine which encryption method shall be used for the connection. Enum: insecure,starttls,tls
+.PARAMETER Name
+The name of the endpoint.
+.PARAMETER Password
+Password for SMTP authentication
+.PARAMETER Port
+The port to be used. Defaults to 465 for TLS based connections, 587 for STARTTLS based connections and port 25 for insecure plain-text connections.
+.PARAMETER Server
+The address of the SMTP server.
+.PARAMETER Username
+Username for SMTP authentication
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Author,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$FromAddress,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Mailto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MailtoUser,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('insecure','starttls','tls')]
+        [string]$Mode,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [SecureString]$Password,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Port,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Server,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Username
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Author']) { $parameters['author'] = $Author }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['FromAddress']) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters['Mailto']) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
+        if($PSBoundParameters['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters['Username']) { $parameters['username'] = $Username }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/smtp" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterNotificationsEndpointsSmtp
+{
+<#
+.DESCRIPTION
+Remove smtp endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/smtp/$Name"
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsSmtpIdx
+{
+<#
+.DESCRIPTION
+Return a specific smtp endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/smtp/$Name"
+    }
+}
+
+function Set-PveClusterNotificationsEndpointsSmtp
+{
+<#
+.DESCRIPTION
+Update existing smtp endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Author
+Author of the mail. Defaults to 'Proxmox VE'.
+.PARAMETER Comment
+Comment
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Disable
+Disable this target
+.PARAMETER FromAddress
+`From` address for the mail
+.PARAMETER Mailto
+List of email recipients
+.PARAMETER MailtoUser
+List of users
+.PARAMETER Mode
+Determine which encryption method shall be used for the connection. Enum: insecure,starttls,tls
+.PARAMETER Name
+The name of the endpoint.
+.PARAMETER Password
+Password for SMTP authentication
+.PARAMETER Port
+The port to be used. Defaults to 465 for TLS based connections, 587 for STARTTLS based connections and port 25 for insecure plain-text connections.
+.PARAMETER Server
+The address of the SMTP server.
+.PARAMETER Username
+Username for SMTP authentication
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Author,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$FromAddress,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Mailto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MailtoUser,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('insecure','starttls','tls')]
+        [string]$Mode,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [SecureString]$Password,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Port,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Server,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Username
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Author']) { $parameters['author'] = $Author }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['FromAddress']) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters['Mailto']) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters['Port']) { $parameters['port'] = $Port }
+        if($PSBoundParameters['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters['Username']) { $parameters['username'] = $Username }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/smtp/$Name" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterNotificationsTargets
+{
+<#
+.DESCRIPTION
+Returns a list of all entities that can be used as notification targets.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/targets"
+    }
+}
+
+function Get-PveClusterNotificationsMatchers
+{
+<#
+.DESCRIPTION
+Returns a list of all matchers
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/matchers"
+    }
+}
+
+function New-PveClusterNotificationsMatchers
+{
+<#
+.DESCRIPTION
+Create a new matcher
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Comment
+Comment
+.PARAMETER Disable
+Disable this matcher
+.PARAMETER InvertMatch
+Invert match of the whole matcher
+.PARAMETER MatchCalendar
+Match notification timestamp
+.PARAMETER MatchField
+Metadata fields to match (regex or exact match). Must be in the form (regex|exact)':'<field>=<value>
+.PARAMETER MatchSeverity
+Notification severities to match
+.PARAMETER Mode
+Choose between 'all' and 'any' for when multiple properties are specified Enum: all,any
+.PARAMETER Name
+Name of the matcher.
+.PARAMETER Target
+Targets to notify on match
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$InvertMatch,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MatchCalendar,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MatchField,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MatchSeverity,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('all','any')]
+        [string]$Mode,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Target
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['InvertMatch']) { $parameters['invert-match'] = $InvertMatch }
+        if($PSBoundParameters['MatchCalendar']) { $parameters['match-calendar'] = $MatchCalendar }
+        if($PSBoundParameters['MatchField']) { $parameters['match-field'] = $MatchField }
+        if($PSBoundParameters['MatchSeverity']) { $parameters['match-severity'] = $MatchSeverity }
+        if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters['Target']) { $parameters['target'] = $Target }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/matchers" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterNotificationsMatchers
+{
+<#
+.DESCRIPTION
+Remove matcher
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/matchers/$Name"
+    }
+}
+
+function Get-PveClusterNotificationsMatchersIdx
+{
+<#
+.DESCRIPTION
+Return a specific matcher
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/matchers/$Name"
+    }
+}
+
+function Set-PveClusterNotificationsMatchers
+{
+<#
+.DESCRIPTION
+Update existing matcher
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Comment
+Comment
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Disable
+Disable this matcher
+.PARAMETER InvertMatch
+Invert match of the whole matcher
+.PARAMETER MatchCalendar
+Match notification timestamp
+.PARAMETER MatchField
+Metadata fields to match (regex or exact match). Must be in the form (regex|exact)':'<field>=<value>
+.PARAMETER MatchSeverity
+Notification severities to match
+.PARAMETER Mode
+Choose between 'all' and 'any' for when multiple properties are specified Enum: all,any
+.PARAMETER Name
+Name of the matcher.
+.PARAMETER Target
+Targets to notify on match
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$InvertMatch,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MatchCalendar,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MatchField,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$MatchSeverity,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('all','any')]
+        [string]$Mode,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Target
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['InvertMatch']) { $parameters['invert-match'] = $InvertMatch }
+        if($PSBoundParameters['MatchCalendar']) { $parameters['match-calendar'] = $MatchCalendar }
+        if($PSBoundParameters['MatchField']) { $parameters['match-field'] = $MatchField }
+        if($PSBoundParameters['MatchSeverity']) { $parameters['match-severity'] = $MatchSeverity }
+        if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters['Target']) { $parameters['target'] = $Target }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/matchers/$Name" -Parameters $parameters
     }
 }
 
@@ -2127,7 +3133,7 @@ Ticket data connection.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Group
 Security Group name.
 .PARAMETER Rename
@@ -2233,7 +3239,7 @@ Descriptive comment.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -2348,7 +3354,7 @@ Delete rule.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Group
 Security Group name.
 .PARAMETER Pos
@@ -2428,7 +3434,7 @@ A list of settings you want to delete.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -2580,7 +3586,7 @@ Descriptive comment.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -2690,7 +3696,7 @@ Delete rule.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Pos
 Update rule at position <pos>.
 .OUTPUTS
@@ -2760,7 +3766,7 @@ A list of settings you want to delete.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -2903,7 +3909,7 @@ Ticket data connection.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Rename
@@ -3060,7 +4066,7 @@ Ticket data connection.
 .PARAMETER Cidr
 Network/IP specification in CIDR format.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .OUTPUTS
@@ -3134,7 +4140,7 @@ Network/IP specification in CIDR format.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Nomatch
@@ -3246,7 +4252,7 @@ Remove IP or Network alias.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 Alias name.
 .OUTPUTS
@@ -3312,7 +4318,7 @@ Network/IP specification in CIDR format.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 Alias name.
 .PARAMETER Rename
@@ -3385,7 +4391,7 @@ Ticket data connection.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Ebtables
 Enable ebtables rules cluster wide.
 .PARAMETER Enable
@@ -3550,9 +4556,9 @@ Set IO priority when using the BFQ scheduler. For snapshot and suspend mode back
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Specify when to send an email Enum: always,failure
+Deprecated':' use 'notification-policy' instead. Enum: always,failure
 .PARAMETER Mailto
-Comma-separated list of email addresses or users that should receive email notifications.
+Comma-separated list of email addresses or users that should receive email notifications. Has no effect if the 'notification-target' option  is set at the same time.
 .PARAMETER Maxfiles
 Deprecated':' use 'prune-backups' instead. Maximal number of backup files per guest system.
 .PARAMETER Mode
@@ -3561,6 +4567,10 @@ Backup mode. Enum: snapshot,suspend,stop
 Only run if executed on this node.
 .PARAMETER NotesTemplate
 Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future. Needs to be a single line, newline and backslash need to be escaped as '\n' and '\\' respectively.
+.PARAMETER NotificationPolicy
+Specify when to send a notification Enum: always,failure,never
+.PARAMETER NotificationTarget
+Determine the target to which notifications should be sent. Can either be a notification endpoint or a notification group. This option takes precedence over 'mailto', meaning that if both are  set, the 'mailto' option will be ignored.
 .PARAMETER Performance
 Other performance-related settings.
 .PARAMETER Pigz
@@ -3664,6 +4674,13 @@ PveResponse. Return response.
         [string]$NotesTemplate,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('always','failure','never')]
+        [string]$NotificationPolicy,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$NotificationTarget,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -3738,6 +4755,8 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
+        if($PSBoundParameters['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
         if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
@@ -3849,9 +4868,9 @@ Set IO priority when using the BFQ scheduler. For snapshot and suspend mode back
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Specify when to send an email Enum: always,failure
+Deprecated':' use 'notification-policy' instead. Enum: always,failure
 .PARAMETER Mailto
-Comma-separated list of email addresses or users that should receive email notifications.
+Comma-separated list of email addresses or users that should receive email notifications. Has no effect if the 'notification-target' option  is set at the same time.
 .PARAMETER Maxfiles
 Deprecated':' use 'prune-backups' instead. Maximal number of backup files per guest system.
 .PARAMETER Mode
@@ -3860,6 +4879,10 @@ Backup mode. Enum: snapshot,suspend,stop
 Only run if executed on this node.
 .PARAMETER NotesTemplate
 Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future. Needs to be a single line, newline and backslash need to be escaped as '\n' and '\\' respectively.
+.PARAMETER NotificationPolicy
+Specify when to send a notification Enum: always,failure,never
+.PARAMETER NotificationTarget
+Determine the target to which notifications should be sent. Can either be a notification endpoint or a notification group. This option takes precedence over 'mailto', meaning that if both are  set, the 'mailto' option will be ignored.
 .PARAMETER Performance
 Other performance-related settings.
 .PARAMETER Pigz
@@ -3966,6 +4989,13 @@ PveResponse. Return response.
         [string]$NotesTemplate,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('always','failure','never')]
+        [string]$NotificationPolicy,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$NotificationTarget,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -4040,6 +5070,8 @@ PveResponse. Return response.
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
+        if($PSBoundParameters['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
         if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
@@ -4321,7 +5353,7 @@ Description.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Group
 The HA group identifier.
 .PARAMETER MaxRelocate
@@ -4600,7 +5632,7 @@ Description.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Group
 The HA group identifier.
 .PARAMETER Nodes
@@ -4780,7 +5812,7 @@ Add ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
+API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,artfiles,arvan,aurora,autodns,aws,azion,azure,bookmyname,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnsexit,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,tencent,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Disable
@@ -4803,7 +5835,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
+        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','artfiles','arvan','aurora','autodns','aws','azion','azure','bookmyname','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnsexit','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','tencent','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -4902,13 +5934,13 @@ Update ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,arvan,aurora,autodns,aws,azion,azure,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
+API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,artfiles,arvan,aurora,autodns,aws,azion,azure,bookmyname,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnsexit,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,tencent,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disable
 Flag to disable the config.
 .PARAMETER Id
@@ -4927,7 +5959,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','arvan','aurora','autodns','aws','azion','azure','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
+        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','artfiles','arvan','aurora','autodns','aws','azion','azure','bookmyname','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnsexit','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','tencent','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -4999,6 +6031,10 @@ Ticket data connection.
 Contact email addresses.
 .PARAMETER Directory
 URL of ACME CA directory endpoint.
+.PARAMETER EabHmacKey
+HMAC key for External Account Binding.
+.PARAMETER EabKid
+Key Identifier for External Account Binding.
 .PARAMETER Name
 ACME account config file name.
 .PARAMETER TosUrl
@@ -5019,6 +6055,12 @@ PveResponse. Return response.
         [string]$Directory,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$EabHmacKey,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$EabKid,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -5029,6 +6071,8 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters['Contact']) { $parameters['contact'] = $Contact }
         if($PSBoundParameters['Directory']) { $parameters['directory'] = $Directory }
+        if($PSBoundParameters['EabHmacKey']) { $parameters['eab-hmac-key'] = $EabHmacKey }
+        if($PSBoundParameters['EabKid']) { $parameters['eab-kid'] = $EabKid }
         if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
         if($PSBoundParameters['TosUrl']) { $parameters['tos_url'] = $TosUrl }
 
@@ -5129,7 +6173,7 @@ function Get-PveClusterAcmeTos
 {
 <#
 .DESCRIPTION
-Retrieve ACME TermsOfService URL from CA.
+Retrieve ACME TermsOfService URL from CA. Deprecated, please use /cluster/acme/meta.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Directory
@@ -5152,6 +6196,36 @@ PveResponse. Return response.
         if($PSBoundParameters['Directory']) { $parameters['directory'] = $Directory }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/tos" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterAcmeMeta
+{
+<#
+.DESCRIPTION
+Retrieve ACME Directory Meta Information
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Directory
+URL of ACME CA directory endpoint.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Directory
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Directory']) { $parameters['directory'] = $Directory }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/meta" -Parameters $parameters
     }
 }
 
@@ -5900,7 +6974,7 @@ A list of settings you want to delete.
 .PARAMETER Description
 Description of the logical PCI device.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Id
 The ID of the logical PCI mapping.
 .PARAMETER Map
@@ -5985,9 +7059,9 @@ Create a new hardware mapping.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Description
-Description of the logical PCI device.
+Description of the logical USB device.
 .PARAMETER Id
-The ID of the logical PCI mapping.
+The ID of the logical USB mapping.
 .PARAMETER Map
 A list of maps for the cluster nodes.
 .OUTPUTS
@@ -6083,11 +7157,11 @@ Ticket data connection.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Description
-Description of the logical PCI device.
+Description of the logical USB device.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Id
-The ID of the logical PCI mapping.
+The ID of the logical USB mapping.
 .PARAMETER Map
 A list of maps for the cluster nodes.
 .OUTPUTS
@@ -6347,7 +7421,7 @@ alias name of the vnet
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Tag
 vlan or vxlan id
 .PARAMETER Vlanaware
@@ -6448,6 +7522,10 @@ function New-PveClusterSdnVnetsSubnets
 Create a new sdn subnet object.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER DhcpDnsServer
+IP address for the DNS server
+.PARAMETER DhcpRange
+A list of DHCP ranges for this subnet
 .PARAMETER Dnszoneprefix
 dns domain zone prefix  ex':' 'adm' -> <hostname>.adm.mydomain.com
 .PARAMETER Gateway
@@ -6468,6 +7546,12 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$DhcpDnsServer,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$DhcpRange,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dnszoneprefix,
@@ -6491,6 +7575,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['DhcpDnsServer']) { $parameters['dhcp-dns-server'] = $DhcpDnsServer }
+        if($PSBoundParameters['DhcpRange']) { $parameters['dhcp-range'] = $DhcpRange }
         if($PSBoundParameters['Dnszoneprefix']) { $parameters['dnszoneprefix'] = $Dnszoneprefix }
         if($PSBoundParameters['Gateway']) { $parameters['gateway'] = $Gateway }
         if($PSBoundParameters['Snat']) { $parameters['snat'] = $Snat }
@@ -6588,8 +7674,12 @@ Update sdn subnet object configuration.
 Ticket data connection.
 .PARAMETER Delete
 A list of settings you want to delete.
+.PARAMETER DhcpDnsServer
+IP address for the DNS server
+.PARAMETER DhcpRange
+A list of DHCP ranges for this subnet
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dnszoneprefix
 dns domain zone prefix  ex':' 'adm' -> <hostname>.adm.mydomain.com
 .PARAMETER Gateway
@@ -6613,6 +7703,12 @@ PveResponse. Return response.
         [string]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$DhcpDnsServer,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$DhcpRange,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -6634,12 +7730,161 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['DhcpDnsServer']) { $parameters['dhcp-dns-server'] = $DhcpDnsServer }
+        if($PSBoundParameters['DhcpRange']) { $parameters['dhcp-range'] = $DhcpRange }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Dnszoneprefix']) { $parameters['dnszoneprefix'] = $Dnszoneprefix }
         if($PSBoundParameters['Gateway']) { $parameters['gateway'] = $Gateway }
         if($PSBoundParameters['Snat']) { $parameters['snat'] = $Snat }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterSdnVnetsIps
+{
+<#
+.DESCRIPTION
+Delete IP Mappings in a VNet
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Ip
+The IP address to delete
+.PARAMETER Mac
+Unicast MAC address.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.PARAMETER Zone
+The SDN zone object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Ip,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Mac,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Zone
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Ip']) { $parameters['ip'] = $Ip }
+        if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
+    }
+}
+
+function New-PveClusterSdnVnetsIps
+{
+<#
+.DESCRIPTION
+Create IP Mapping in a VNet
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Ip
+The IP address to associate with the given MAC address
+.PARAMETER Mac
+Unicast MAC address.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.PARAMETER Zone
+The SDN zone object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Ip,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Mac,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Zone
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Ip']) { $parameters['ip'] = $Ip }
+        if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
+    }
+}
+
+function Set-PveClusterSdnVnetsIps
+{
+<#
+.DESCRIPTION
+Update IP Mapping in a VNet
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Ip
+The IP address to associate with the given MAC address
+.PARAMETER Mac
+Unicast MAC address.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.PARAMETER Zone
+The SDN zone object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Ip,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Mac,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Vmid,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Zone
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Ip']) { $parameters['ip'] = $Ip }
+        if($PSBoundParameters['Mac']) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
     }
 }
 
@@ -6701,6 +7946,8 @@ Advertise evpn subnets if you have silent hosts
 Disable auto mac learning.
 .PARAMETER Controller
 Frr router name
+.PARAMETER Dhcp
+Type of the DHCP backend for this zone Enum: dnsmasq
 .PARAMETER DisableArpNdSuppression
 Disable ipv4 arp && ipv6 neighbour discovery suppression
 .PARAMETER Dns
@@ -6761,6 +8008,10 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Controller,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('dnsmasq')]
+        [string]$Dhcp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$DisableArpNdSuppression,
@@ -6831,6 +8082,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Bridge']) { $parameters['bridge'] = $Bridge }
         if($PSBoundParameters['BridgeDisableMacLearning']) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
         if($PSBoundParameters['Controller']) { $parameters['controller'] = $Controller }
+        if($PSBoundParameters['Dhcp']) { $parameters['dhcp'] = $Dhcp }
         if($PSBoundParameters['DisableArpNdSuppression']) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
         if($PSBoundParameters['Dns']) { $parameters['dns'] = $Dns }
         if($PSBoundParameters['Dnszone']) { $parameters['dnszone'] = $Dnszone }
@@ -6941,8 +8193,10 @@ Disable auto mac learning.
 Frr router name
 .PARAMETER Delete
 A list of settings you want to delete.
+.PARAMETER Dhcp
+Type of the DHCP backend for this zone Enum: dnsmasq
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER DisableArpNdSuppression
 Disable ipv4 arp && ipv6 neighbour discovery suppression
 .PARAMETER Dns
@@ -7004,6 +8258,10 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('dnsmasq')]
+        [string]$Dhcp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
@@ -7074,6 +8332,7 @@ PveResponse. Return response.
         if($PSBoundParameters['BridgeDisableMacLearning']) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
         if($PSBoundParameters['Controller']) { $parameters['controller'] = $Controller }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Dhcp']) { $parameters['dhcp'] = $Dhcp }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['DisableArpNdSuppression']) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
         if($PSBoundParameters['Dns']) { $parameters['dns'] = $Dns }
@@ -7110,7 +8369,7 @@ Display pending config.
 .PARAMETER Running
 Display running config.
 .PARAMETER Type
-Only list sdn controllers of specific type Enum: bgp,evpn,faucet
+Only list sdn controllers of specific type Enum: bgp,evpn,faucet,isis
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -7127,7 +8386,7 @@ PveResponse. Return response.
         [switch]$Running,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('bgp','evpn','faucet')]
+        [ValidateSet('bgp','evpn','faucet','isis')]
         [string]$Type
     )
 
@@ -7158,6 +8417,12 @@ The SDN controller object identifier.
 Enable ebgp. (remote-as external)
 .PARAMETER EbgpMultihop
 --
+.PARAMETER IsisDomain
+ISIS domain.
+.PARAMETER IsisIfaces
+ISIS interface.
+.PARAMETER IsisNet
+ISIS network entity title.
 .PARAMETER Loopback
 source loopback interface.
 .PARAMETER Node
@@ -7165,7 +8430,7 @@ The cluster node name.
 .PARAMETER Peers
 peers address list.
 .PARAMETER Type
-Plugin type. Enum: bgp,evpn,faucet
+Plugin type. Enum: bgp,evpn,faucet,isis
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -7191,6 +8456,15 @@ PveResponse. Return response.
         [int]$EbgpMultihop,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IsisDomain,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IsisIfaces,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IsisNet,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Loopback,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -7200,7 +8474,7 @@ PveResponse. Return response.
         [string]$Peers,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('bgp','evpn','faucet')]
+        [ValidateNotNullOrEmpty()][ValidateSet('bgp','evpn','faucet','isis')]
         [string]$Type
     )
 
@@ -7211,6 +8485,9 @@ PveResponse. Return response.
         if($PSBoundParameters['Controller']) { $parameters['controller'] = $Controller }
         if($PSBoundParameters['Ebgp']) { $parameters['ebgp'] = $Ebgp }
         if($PSBoundParameters['EbgpMultihop']) { $parameters['ebgp-multihop'] = $EbgpMultihop }
+        if($PSBoundParameters['IsisDomain']) { $parameters['isis-domain'] = $IsisDomain }
+        if($PSBoundParameters['IsisIfaces']) { $parameters['isis-ifaces'] = $IsisIfaces }
+        if($PSBoundParameters['IsisNet']) { $parameters['isis-net'] = $IsisNet }
         if($PSBoundParameters['Loopback']) { $parameters['loopback'] = $Loopback }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['Peers']) { $parameters['peers'] = $Peers }
@@ -7304,11 +8581,17 @@ The SDN controller object identifier.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Ebgp
 Enable ebgp. (remote-as external)
 .PARAMETER EbgpMultihop
 --
+.PARAMETER IsisDomain
+ISIS domain.
+.PARAMETER IsisIfaces
+ISIS interface.
+.PARAMETER IsisNet
+ISIS network entity title.
 .PARAMETER Loopback
 source loopback interface.
 .PARAMETER Node
@@ -7346,6 +8629,15 @@ PveResponse. Return response.
         [int]$EbgpMultihop,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IsisDomain,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IsisIfaces,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IsisNet,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Loopback,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -7363,6 +8655,9 @@ PveResponse. Return response.
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Ebgp']) { $parameters['ebgp'] = $Ebgp }
         if($PSBoundParameters['EbgpMultihop']) { $parameters['ebgp-multihop'] = $EbgpMultihop }
+        if($PSBoundParameters['IsisDomain']) { $parameters['isis-domain'] = $IsisDomain }
+        if($PSBoundParameters['IsisIfaces']) { $parameters['isis-ifaces'] = $IsisIfaces }
+        if($PSBoundParameters['IsisNet']) { $parameters['isis-net'] = $IsisNet }
         if($PSBoundParameters['Loopback']) { $parameters['loopback'] = $Loopback }
         if($PSBoundParameters['Node']) { $parameters['node'] = $Node }
         if($PSBoundParameters['Peers']) { $parameters['peers'] = $Peers }
@@ -7521,7 +8816,7 @@ Ticket data connection.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Ipam
 The SDN ipam object identifier.
 .PARAMETER Section
@@ -7567,6 +8862,33 @@ PveResponse. Return response.
         if($PSBoundParameters['Url']) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/ipams/$Ipam" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterSdnIpamsStatus
+{
+<#
+.DESCRIPTION
+List PVE IPAM Entries
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Ipam
+The SDN ipam object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Ipam
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/ipams/$Ipam/status"
     }
 }
 
@@ -7732,7 +9054,7 @@ Ticket data connection.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dns
 The SDN dns object identifier.
 .PARAMETER Key
@@ -7920,9 +9242,9 @@ Specify external http proxy which is used for downloads (example':' 'http':'//us
 .PARAMETER Keyboard
 Default keybord layout for vnc server. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Language
-Default GUI language. Enum: ca,da,de,en,es,eu,fa,fr,he,it,ja,nb,nn,pl,pt_BR,ru,sl,sv,tr,zh_CN,zh_TW
+Default GUI language. Enum: ar,ca,da,de,en,es,eu,fa,fr,hr,he,it,ja,ka,kr,nb,nl,nn,pl,pt_BR,ru,sl,sv,tr,ukr,zh_CN,zh_TW
 .PARAMETER MacPrefix
-Prefix for autogenerated MAC addresses.
+Prefix for the auto-generated MAC addresses of virtual guests. The default 'BC':'24':'11' is the OUI assigned by the IEEE to Proxmox Server Solutions GmbH for a 24-bit large MAC block. You're allowed to use this in local networks, i.e., those not directly reachable by the public (e.g., in a LAN or behind NAT).
 .PARAMETER MaxWorkers
 Defines how many workers (per node) are maximal started  on actions like 'stopall VMs' or task from the ha-manager.
 .PARAMETER Migration
@@ -7986,7 +9308,7 @@ PveResponse. Return response.
         [string]$Keyboard,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('ca','da','de','en','es','eu','fa','fr','he','it','ja','nb','nn','pl','pt_BR','ru','sl','sv','tr','zh_CN','zh_TW')]
+        [ValidateSet('ar','ca','da','de','en','es','eu','fa','fr','hr','he','it','ja','ka','kr','nb','nl','nn','pl','pt_BR','ru','sl','sv','tr','ukr','zh_CN','zh_TW')]
         [string]$Language,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -8278,7 +9600,7 @@ Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot
 .PARAMETER Machine
 Specifies the QEMU machine type.
 .PARAMETER Memory
-Amount of RAM for the VM in MiB. This is the maximum available memory when you use the balloon device.
+Memory properties.
 .PARAMETER MigrateDowntime
 Set maximum tolerated downtime (in seconds) for migrations.
 .PARAMETER MigrateSpeed
@@ -8508,7 +9830,7 @@ PveResponse. Return response.
         [string]$Machine,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Memory,
+        [string]$Memory,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [float]$MigrateDowntime,
@@ -8904,7 +10226,7 @@ Descriptive comment.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -9024,7 +10346,7 @@ Delete rule.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Pos
@@ -9114,7 +10436,7 @@ A list of settings you want to delete.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -9327,7 +10649,7 @@ Remove IP or Network alias.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 Alias name.
 .PARAMETER Node
@@ -9413,7 +10735,7 @@ Network/IP specification in CIDR format.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 Alias name.
 .PARAMETER Node
@@ -9506,7 +10828,7 @@ Ticket data connection.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -9703,7 +11025,7 @@ Ticket data connection.
 .PARAMETER Cidr
 Network/IP specification in CIDR format.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -9797,7 +11119,7 @@ Network/IP specification in CIDR format.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -9891,7 +11213,7 @@ A list of settings you want to delete.
 .PARAMETER Dhcp
 Enable DHCP.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Enable
 Enable/disable firewall rules.
 .PARAMETER Ipfilter
@@ -11269,7 +12591,7 @@ Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot
 .PARAMETER Machine
 Specifies the QEMU machine type.
 .PARAMETER Memory
-Amount of RAM for the VM in MiB. This is the maximum available memory when you use the balloon device.
+Memory properties.
 .PARAMETER MigrateDowntime
 Set maximum tolerated downtime (in seconds) for migrations.
 .PARAMETER MigrateSpeed
@@ -11495,7 +12817,7 @@ PveResponse. Return response.
         [string]$Machine,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Memory,
+        [string]$Memory,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [float]$MigrateDowntime,
@@ -11808,7 +13130,7 @@ Lock/unlock the VM. Enum: backup,clone,create,migrate,rollback,snapshot,snapshot
 .PARAMETER Machine
 Specifies the QEMU machine type.
 .PARAMETER Memory
-Amount of RAM for the VM in MiB. This is the maximum available memory when you use the balloon device.
+Memory properties.
 .PARAMETER MigrateDowntime
 Set maximum tolerated downtime (in seconds) for migrations.
 .PARAMETER MigrateSpeed
@@ -12031,7 +13353,7 @@ PveResponse. Return response.
         [string]$Machine,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Memory,
+        [string]$Memory,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [float]$MigrateDowntime,
@@ -12452,7 +13774,7 @@ The cluster node name.
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .PARAMETER Websocket
-starts websockify instead of vncproxy
+Prepare for websocket upgrade (only required when using serial terminal, otherwise upgrade is always possible).
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -14113,6 +15435,8 @@ CPU weight for a container, will be clamped to \[1, 10000] in cgroup v2.
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Description
 Description for the Container. Shown in the web-interface CT's summary. This is saved as comment inside the configuration file.
+.PARAMETER DevN
+Device to pass through to the container
 .PARAMETER Features
 Allow containers access to advanced features.
 .PARAMETER Force
@@ -14216,6 +15540,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [hashtable]$DevN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Features,
@@ -14360,6 +15687,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Unprivileged']) { $parameters['unprivileged'] = $Unprivileged }
         if($PSBoundParameters['Vmid']) { $parameters['vmid'] = $Vmid }
 
+        if($PSBoundParameters['DevN']) { $DevN.keys | ForEach-Object { $parameters['dev' + $_] = $DevN[$_] } }
         if($PSBoundParameters['MpN']) { $MpN.keys | ForEach-Object { $parameters['mp' + $_] = $MpN[$_] } }
         if($PSBoundParameters['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
         if($PSBoundParameters['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
@@ -14523,6 +15851,8 @@ Try to be more verbose. For now this only enables debug log-level on start.
 A list of settings you want to delete.
 .PARAMETER Description
 Description for the Container. Shown in the web-interface CT's summary. This is saved as comment inside the configuration file.
+.PARAMETER DevN
+Device to pass through to the container
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Features
@@ -14610,6 +15940,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [hashtable]$DevN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
@@ -14721,6 +16054,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Tty']) { $parameters['tty'] = $Tty }
         if($PSBoundParameters['Unprivileged']) { $parameters['unprivileged'] = $Unprivileged }
 
+        if($PSBoundParameters['DevN']) { $DevN.keys | ForEach-Object { $parameters['dev' + $_] = $DevN[$_] } }
         if($PSBoundParameters['MpN']) { $MpN.keys | ForEach-Object { $parameters['mp' + $_] = $MpN[$_] } }
         if($PSBoundParameters['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
         if($PSBoundParameters['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
@@ -15394,7 +16728,7 @@ Descriptive comment.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -15514,7 +16848,7 @@ Delete rule.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Pos
@@ -15604,7 +16938,7 @@ A list of settings you want to delete.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -15817,7 +17151,7 @@ Remove IP or Network alias.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 Alias name.
 .PARAMETER Node
@@ -15903,7 +17237,7 @@ Network/IP specification in CIDR format.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 Alias name.
 .PARAMETER Node
@@ -15996,7 +17330,7 @@ Ticket data connection.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -16193,7 +17527,7 @@ Ticket data connection.
 .PARAMETER Cidr
 Network/IP specification in CIDR format.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -16287,7 +17621,7 @@ Network/IP specification in CIDR format.
 .PARAMETER Comment
 --
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Name
 IP set name.
 .PARAMETER Node
@@ -16381,7 +17715,7 @@ A list of settings you want to delete.
 .PARAMETER Dhcp
 Enable DHCP.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Enable
 Enable/disable firewall rules.
 .PARAMETER Ipfilter
@@ -17344,6 +18678,38 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesLxcInterfaces
+{
+<#
+.DESCRIPTION
+Get IP addresses of the specified container interface.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Vmid
+The (unique) ID of the VM.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [int]$Vmid
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/interfaces"
+    }
+}
+
 function New-PveNodesLxcMtunnel
 {
 <#
@@ -17544,6 +18910,41 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesCephCfgValue
+{
+<#
+.DESCRIPTION
+Get configured values from either the config file or config DB.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER ConfigKeys
+List of <section>':'<config key> items.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$ConfigKeys,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['ConfigKeys']) { $parameters['config-keys'] = $ConfigKeys }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cfg/value" -Parameters $parameters
+    }
+}
+
 function Get-PveNodesCephOsd
 {
 <#
@@ -17590,6 +18991,8 @@ Block device name.
 Enables encryption of the OSD.
 .PARAMETER Node
 The cluster node name.
+.PARAMETER OsdsPerDevice
+OSD services per physical device. Only useful for fast NVMe devices"		    ." to utilize their performance better.
 .PARAMETER WalDev
 Block device name for block.wal.
 .PARAMETER WalDevSize
@@ -17622,6 +19025,9 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$OsdsPerDevice,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$WalDev,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -17635,6 +19041,7 @@ PveResponse. Return response.
         if($PSBoundParameters['DbDevSize']) { $parameters['db_dev_size'] = $DbDevSize }
         if($PSBoundParameters['Dev']) { $parameters['dev'] = $Dev }
         if($PSBoundParameters['Encrypted']) { $parameters['encrypted'] = $Encrypted }
+        if($PSBoundParameters['OsdsPerDevice']) { $parameters['osds-per-device'] = $OsdsPerDevice }
         if($PSBoundParameters['WalDev']) { $parameters['wal_dev'] = $WalDev }
         if($PSBoundParameters['WalDevSize']) { $parameters['wal_dev_size'] = $WalDevSize }
 
@@ -18615,7 +20022,7 @@ Use specific network for all ceph related traffic
 .PARAMETER Node
 The cluster node name.
 .PARAMETER PgBits
-Placement group bits, used to specify the default number of placement groups.NOTE':' 'osd pool default pg num' does not work for default pools.
+Placement group bits, used to specify the default number of placement groups.Depreacted. This setting was deprecated in recent Ceph versions.
 .PARAMETER Size
 Targeted number of replicas per object
 .OUTPUTS
@@ -18962,9 +20369,9 @@ Set IO priority when using the BFQ scheduler. For snapshot and suspend mode back
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Specify when to send an email Enum: always,failure
+Deprecated':' use 'notification-policy' instead. Enum: always,failure
 .PARAMETER Mailto
-Comma-separated list of email addresses or users that should receive email notifications.
+Comma-separated list of email addresses or users that should receive email notifications. Has no effect if the 'notification-target' option  is set at the same time.
 .PARAMETER Maxfiles
 Deprecated':' use 'prune-backups' instead. Maximal number of backup files per guest system.
 .PARAMETER Mode
@@ -18973,6 +20380,10 @@ Backup mode. Enum: snapshot,suspend,stop
 Only run if executed on this node.
 .PARAMETER NotesTemplate
 Template string for generating notes for the backup(s). It can contain variables which will be replaced by their values. Currently supported are {{cluster}}, {{guestname}}, {{node}}, and {{vmid}}, but more might be added in the future. Needs to be a single line, newline and backslash need to be escaped as '\n' and '\\' respectively.
+.PARAMETER NotificationPolicy
+Specify when to send a notification Enum: always,failure,never
+.PARAMETER NotificationTarget
+Determine the target to which notifications should be sent. Can either be a notification endpoint or a notification group. This option takes precedence over 'mailto', meaning that if both are  set, the 'mailto' option will be ignored.
 .PARAMETER Performance
 Other performance-related settings.
 .PARAMETER Pigz
@@ -19060,6 +20471,13 @@ PveResponse. Return response.
         [string]$NotesTemplate,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('always','failure','never')]
+        [string]$NotificationPolicy,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$NotificationTarget,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -19123,6 +20541,8 @@ PveResponse. Return response.
         if($PSBoundParameters['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
         if($PSBoundParameters['Mode']) { $parameters['mode'] = $Mode }
         if($PSBoundParameters['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
+        if($PSBoundParameters['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
         if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
@@ -21645,6 +23065,8 @@ Ticket data connection.
 The expected checksum of the file.
 .PARAMETER ChecksumAlgorithm
 The algorithm to calculate the checksum of the file. Enum: md5,sha1,sha224,sha256,sha384,sha512
+.PARAMETER Compression
+Decompress the downloaded file using the specified compression algorithm.
 .PARAMETER Content
 Content type. Enum: iso,vztmpl
 .PARAMETER Filename
@@ -21673,6 +23095,9 @@ PveResponse. Return response.
         [ValidateSet('md5','sha1','sha224','sha256','sha384','sha512')]
         [string]$ChecksumAlgorithm,
 
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Compression,
+
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl')]
         [string]$Content,
@@ -21697,6 +23122,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters['Checksum']) { $parameters['checksum'] = $Checksum }
         if($PSBoundParameters['ChecksumAlgorithm']) { $parameters['checksum-algorithm'] = $ChecksumAlgorithm }
+        if($PSBoundParameters['Compression']) { $parameters['compression'] = $Compression }
         if($PSBoundParameters['Content']) { $parameters['content'] = $Content }
         if($PSBoundParameters['Filename']) { $parameters['filename'] = $Filename }
         if($PSBoundParameters['Url']) { $parameters['url'] = $Url }
@@ -22513,7 +23939,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Notify
-Send notification mail about new packages (to email address specified for user 'root@pam').
+Send notification about new packages.
 .PARAMETER Quiet
 Only produces output suitable for logging, omitting progress indicators.
 .OUTPUTS
@@ -22801,7 +24227,7 @@ Descriptive comment.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -22916,7 +24342,7 @@ Delete rule.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Pos
@@ -22996,7 +24422,7 @@ A list of settings you want to delete.
 .PARAMETER Dest
 Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
 Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
@@ -23149,7 +24575,7 @@ Ticket data connection.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Enable
 Enable host firewall rules.
 .PARAMETER LogLevelIn
@@ -24405,7 +25831,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: upgrade,ceph_install,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Height
@@ -24426,7 +25852,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('ceph_install','login','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -24465,7 +25891,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: upgrade,ceph_install,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -24480,7 +25906,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('ceph_install','login','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -24548,7 +25974,7 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login. Enum: upgrade,ceph_install,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -24565,7 +25991,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('ceph_install','login','upgrade')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -24954,6 +26380,41 @@ PveResponse. Return response.
     }
 }
 
+function New-PveNodesSuspendall
+{
+<#
+.DESCRIPTION
+Suspend all VMs.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Vms
+Only consider Guests with these IDs.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Vms
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Vms']) { $parameters['vms'] = $Vms }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/suspendall" -Parameters $parameters
+    }
+}
+
 function New-PveNodesMigrateall
 {
 <#
@@ -25044,7 +26505,7 @@ Ticket data connection.
 .PARAMETER Data
 The target content of /etc/hosts.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Node
 The cluster node name.
 .OUTPUTS
@@ -25582,7 +27043,7 @@ Data Pool (for erasure coding only)
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Disable
 Flag to disable the storage.
 .PARAMETER Domain
@@ -26849,6 +28310,8 @@ username is case-sensitive
 Path to the client certificate
 .PARAMETER Certkey
 Path to the client certificate key
+.PARAMETER CheckConnection
+Check bind connection to the server.
 .PARAMETER ClientId
 OpenID Client ID
 .PARAMETER ClientKey
@@ -26939,6 +28402,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Certkey,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$CheckConnection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientId,
@@ -27041,6 +28507,7 @@ PveResponse. Return response.
         if($PSBoundParameters['CaseSensitive']) { $parameters['case-sensitive'] = $CaseSensitive }
         if($PSBoundParameters['Cert']) { $parameters['cert'] = $Cert }
         if($PSBoundParameters['Certkey']) { $parameters['certkey'] = $Certkey }
+        if($PSBoundParameters['CheckConnection']) { $parameters['check-connection'] = $CheckConnection }
         if($PSBoundParameters['ClientId']) { $parameters['client-id'] = $ClientId }
         if($PSBoundParameters['ClientKey']) { $parameters['client-key'] = $ClientKey }
         if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
@@ -27152,6 +28619,8 @@ username is case-sensitive
 Path to the client certificate
 .PARAMETER Certkey
 Path to the client certificate key
+.PARAMETER CheckConnection
+Check bind connection to the server.
 .PARAMETER ClientId
 OpenID Client ID
 .PARAMETER ClientKey
@@ -27163,7 +28632,7 @@ Use this as default realm
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Domain
 AD domain name
 .PARAMETER Filter
@@ -27242,6 +28711,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Certkey,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$CheckConnection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientId,
@@ -27343,6 +28815,7 @@ PveResponse. Return response.
         if($PSBoundParameters['CaseSensitive']) { $parameters['case-sensitive'] = $CaseSensitive }
         if($PSBoundParameters['Cert']) { $parameters['cert'] = $Cert }
         if($PSBoundParameters['Certkey']) { $parameters['certkey'] = $Certkey }
+        if($PSBoundParameters['CheckConnection']) { $parameters['check-connection'] = $CheckConnection }
         if($PSBoundParameters['ClientId']) { $parameters['client-id'] = $ClientId }
         if($PSBoundParameters['ClientKey']) { $parameters['client-key'] = $ClientKey }
         if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
@@ -27947,13 +29420,15 @@ PveResponse. Return response.
     }
 }
 
-function Get-PvePools
+function Remove-PvePools
 {
 <#
 .DESCRIPTION
-Pool index.
+Delete pool.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Poolid
+--
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -27961,11 +29436,54 @@ PveResponse. Return response.
     [CmdletBinding()]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
-        [PveTicket]$PveTicket
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Poolid
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/pools"
+        $parameters = @{}
+        if($PSBoundParameters['Poolid']) { $parameters['poolid'] = $Poolid }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/pools" -Parameters $parameters
+    }
+}
+
+function Get-PvePools
+{
+<#
+.DESCRIPTION
+List pools or get pool configuration.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Poolid
+--
+.PARAMETER Type
+-- Enum: qemu,lxc,storage
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Poolid,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('qemu','lxc','storage')]
+        [string]$Type
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Poolid']) { $parameters['poolid'] = $Poolid }
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/pools" -Parameters $parameters
     }
 }
 
@@ -28005,11 +29523,71 @@ PveResponse. Return response.
     }
 }
 
-function Remove-PvePools
+function Set-PvePools
 {
 <#
 .DESCRIPTION
-Delete pool.
+Update pool.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER AllowMove
+Allow adding a guest even if already in another pool. The guest will be removed from its current pool and added to this one.
+.PARAMETER Comment
+--
+.PARAMETER Delete
+Remove the passed VMIDs and/or storage IDs instead of adding them.
+.PARAMETER Poolid
+--
+.PARAMETER Storage
+List of storage IDs to add or remove from this pool.
+.PARAMETER Vms
+List of guest VMIDs to add or remove from this pool.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$AllowMove,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Delete,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Poolid,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Storage,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Vms
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['AllowMove']) { $parameters['allow-move'] = $AllowMove }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Poolid']) { $parameters['poolid'] = $Poolid }
+        if($PSBoundParameters['Storage']) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters['Vms']) { $parameters['vms'] = $Vms }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools" -Parameters $parameters
+    }
+}
+
+function Remove-PvePoolsIdx
+{
+<#
+.DESCRIPTION
+Delete pool (deprecated, no support for nested pools, use 'DELETE /pools/?poolid={poolid}').
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Poolid
@@ -28036,7 +29614,7 @@ function Get-PvePoolsIdx
 {
 <#
 .DESCRIPTION
-Get pool configuration.
+Get pool configuration (deprecated, no support for nested pools, use 'GET /pools/?poolid={poolid}').
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Poolid
@@ -28068,23 +29646,25 @@ PveResponse. Return response.
     }
 }
 
-function Set-PvePools
+function Set-PvePoolsIdx
 {
 <#
 .DESCRIPTION
-Update pool data.
+Update pool data (deprecated, no support for nested pools - use 'PUT /pools/?poolid={poolid}' instead).
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER AllowMove
+Allow adding a guest even if already in another pool. The guest will be removed from its current pool and added to this one.
 .PARAMETER Comment
 --
 .PARAMETER Delete
-Remove vms/storage (instead of adding it).
+Remove the passed VMIDs and/or storage IDs instead of adding them.
 .PARAMETER Poolid
 --
 .PARAMETER Storage
-List of storage IDs.
+List of storage IDs to add or remove from this pool.
 .PARAMETER Vms
-List of virtual machines.
+List of guest VMIDs to add or remove from this pool.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -28093,6 +29673,9 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$AllowMove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
@@ -28112,6 +29695,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters['AllowMove']) { $parameters['allow-move'] = $AllowMove }
         if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Storage']) { $parameters['storage'] = $Storage }
