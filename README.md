@@ -246,6 +246,22 @@ vmstate name                         parent                       description   
         current                      autowin10service200224183012 You are here!
 ```
 
+## Indexed data parameter
+
+if you need to pass indexed parameters e.g. (-ScsiN, -IdeN, -NetN) you must use the following way:
+
+```powershell
+#create variabile
+$networkConfig = @{ 1 = [uri]::EscapeDataString("model=virtio,bridge=vmbr0") }
+$storageConfig = @{ 1 = 'ssdpool:32' }
+$bootableIso = @{ 1 = 'local:iso/ubuntu.iso' }
+
+#use variable
+New-PveNodesQemu -Node $node -Vmid 105 -Memory 2048 -ScsiN $storageConfig -IdeN $bootableIso -NetN $networkConfig
+```
+
+The **[uri]::EscapeDataString** escape value to pass.
+
 ## Build documentation
 
 For build documentation use command **Build-PveDocumentation**

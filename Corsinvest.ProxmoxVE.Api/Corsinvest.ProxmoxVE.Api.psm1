@@ -238,7 +238,7 @@ Return object request
              }
         }
 
-        if ($parametersTmp.Count -gt 0) { #-and $('Post', 'Put').IndexOf($restMethod) -eq 0
+        if ($parametersTmp.Count -gt 0) {
             Write-Debug 'Parameters:'
             $parametersTmp.keys | ForEach-Object { Write-Debug "$_ => $($parametersTmp[$_])" }
 
