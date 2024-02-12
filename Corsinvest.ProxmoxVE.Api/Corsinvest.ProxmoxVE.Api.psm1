@@ -128,7 +128,7 @@ PveTicket. Return ticket connection.
 
             $parameters = @{
                 username = $userName
-                password = $Credentials.GetNetworkCredential().Password
+                password = [uri]::EscapeDataString($Credentials.GetNetworkCredential().Password)
             }
 
             if($PSBoundParameters['Otp']) { $parameters['otp'] = $Otp }
