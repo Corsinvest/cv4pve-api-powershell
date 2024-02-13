@@ -128,7 +128,7 @@ PveTicket. Return ticket connection.
 
             $parameters = @{
                 username = $userName
-                password = [uri]::EscapeDataString($Credentials.GetNetworkCredential().Password)
+                password = $Credentials.GetNetworkCredential().Password
             }
 
             if($PSBoundParameters['Otp']) { $parameters['otp'] = $Otp }
@@ -232,13 +232,13 @@ Return object request
         if ($Parameters -and $Parameters.Count -gt 0 )
         {
              $Parameters.keys | ForEach-Object {
-                 $parametersTmp[$_] =$Parameters[$_] -is [switch] `
+                $parametersTmp[$_] = $Parameters[$_] -is [switch] `
                                          ? $Parameters[$_] ? 1 : 0 `
                                          : $Parameters[$_]
              }
         }
 
-        if ($parametersTmp.Count -gt 0) {
+        if ($parametersTmp.Count -gt 0 -and $('Get', 'Delete').IndexOf($restMethod) -ge 0) {
             Write-Debug 'Parameters:'
             $parametersTmp.keys | ForEach-Object { Write-Debug "$_ => $($parametersTmp[$_])" }
 
@@ -252,7 +252,7 @@ Return object request
             RequestResource = $Resource
         }
 
-        $headers = @{ CSRFPreventionToken = $PveTicket.CSRFPreventionToken  }
+        $headers = @{ CSRFPreventionToken = $PveTicket.CSRFPreventionToken }
         if($PveTicket.ApiToken -ne '') { $headers.Authorization = 'PVEAPIToken ' + $PveTicket.ApiToken }
 
         $url = "https://$($PveTicket.HostName):$($PveTicket.Port)/api2"
@@ -271,7 +271,8 @@ Return object request
 
         #body parameters
         if ($parametersTmp.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -ge 0) {
-            $params['body'] = $parametersTmp
+            $params['ContentType'] = 'application/json'
+            $params['body'] = ($parametersTmp | ConvertTo-Json)
             Write-Debug "Body: $($params.body | Format-Table | Out-String)"
         }
 
@@ -2220,7 +2221,7 @@ Disable this target
 .PARAMETER FromAddress
 `From` address for the mail
 .PARAMETER Mailto
-List of email recipients
+List of     email recipients
 .PARAMETER MailtoUser
 List of users
 .PARAMETER Mode
