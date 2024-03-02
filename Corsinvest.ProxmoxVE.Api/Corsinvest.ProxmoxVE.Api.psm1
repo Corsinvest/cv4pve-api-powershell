@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: Copyright Corsinvest Srl
 # SPDX-License-Identifier: GPL-3.0-only
 
+#Requires -Version 6.0
+
 class PveValidateVmId : System.Management.Automation.IValidateSetValuesGenerator {
     [string[]] GetValidValues() { return Get-PveVm | Select-Object -ExpandProperty vmid }
 }
