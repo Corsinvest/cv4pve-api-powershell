@@ -83,6 +83,9 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 [Tutorial interactive in VSCode notebook](https://tinyurl.com/cv4pve-api-pwsh-learn)
 
+## Video
+<a href="https://asciinema.org/a/656606" target="_blank"><img src="https://asciinema.org/a/656606.svg" /></a>
+
 ## Requirement
 
 Minimum version requirement for Powershell is 6.0
