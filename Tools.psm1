@@ -36,7 +36,7 @@ function Invoke-PveAction {
             $publishModuleSplat = @{
                 Path              = ".\Corsinvest.ProxmoxVE.Api"
                 #Name              = "Corsinvest.ProxmoxVE.Api"
-                NuGetApiKey       = $ENV:NugetApiKey
+                NuGetApiKey       = $ENV:PowerShellGalleryApiKey
                 Verbose           = $true
                 Debug             = $true
                 Force             = $true
