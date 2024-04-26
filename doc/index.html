@@ -381,6 +381,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesStorageContent'>Get-PveNodesStorageContent</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesStorageContentIdx'>Get-PveNodesStorageContentIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesStorageIdx'>Get-PveNodesStorageIdx</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveNodesStorageImportMetadata'>Get-PveNodesStorageImportMetadata</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesStoragePrunebackups'>Get-PveNodesStoragePrunebackups</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesStorageRrd'>Get-PveNodesStorageRrd</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesStorageRrddata'>Get-PveNodesStorageRrddata</a></li>
@@ -405,6 +406,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveVm'>Get-PveVm</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveVmSnapshot'>Get-PveVmSnapshot</a></li>
 <li class='nav-item'><a class='nav-link' href='#Invoke-PveRestApi'>Invoke-PveRestApi</a></li>
+<li class='nav-item'><a class='nav-link' href='#Invoke-PveSpice'>Invoke-PveSpice</a></li>
 <li class='nav-item'><a class='nav-link' href='#IsNumeric'>IsNumeric</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessDomains'>New-PveAccessDomains</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveAccessDomainsSync'>New-PveAccessDomainsSync</a></li>
@@ -788,6 +790,10 @@ For licensing details please visit <a href="LICENSE">LICENSE</a></p>
 <p><a href="https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html">Documentation</a></p>
 <h2 id="tutorial">Tutorial</h2>
 <p><a href="https://tinyurl.com/cv4pve-api-pwsh-learn">Tutorial interactive in VSCode notebook</a></p>
+<h2 id="video">Video</h2>
+<p><a href="https://asciinema.org/a/656606" target="_blank"><img src="https://asciinema.org/a/656606.svg" /></a></p>
+<h2 id="requirement">Requirement</h2>
+<p>Minimum version requirement for Powershell is 6.0</p>
 <h2 id="installation">Installation</h2>
 <p>Install <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell">PowerShell</a> in your system.</p>
 <h3 id="from-powershell-gallery">From PowerShell Gallery</h3>
@@ -919,6 +925,17 @@ vmstate name                         parent                       description   
       0 autowin10service200222183019 autowin10service200221183059 cv4pve-autosnap 1582392621
         current                      autowin10service200224183012 You are here!
 </code></pre>
+<h2 id="indexed-data-parameter">Indexed data parameter</h2>
+<p>if you need to pass indexed parameters e.g. (-ScsiN, -IdeN, -NetN) you must use the following way:</p>
+<pre><code class="language-powershell">#create variabile
+$networkConfig = @{ 1 = [uri]::EscapeDataString(&quot;model=virtio,bridge=vmbr0&quot;) }
+$storageConfig = @{ 1 = 'ssdpool:32' }
+$bootableIso = @{ 1 = 'local:iso/ubuntu.iso' }
+
+#use variable
+New-PveNodesQemu -Node $node -Vmid 105 -Memory 2048 -ScsiN $storageConfig -IdeN $bootableIso -NetN $networkConfig
+</code></pre>
+<p>The <strong>[uri]::EscapeDataString</strong> escape value to pass.</p>
 <h2 id="build-documentation">Build documentation</h2>
 <p>For build documentation use command <strong>Build-PveDocumentation</strong></p>
 <p>This command accept <strong>TemplateFile</strong> parameter is a template for generate documentation.
@@ -6837,7 +6854,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <div>
             <h3> Outputs </h3>
             <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PSCustomObject. Return Vm Data.</li></ul>
+            <ul><li>PSCustomObject. Return Node/s data.</li></ul>
         </div>
     </div>
         <div id="Get-PveNodes" class="toggle_container">
@@ -16668,6 +16685,75 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Get-PveNodesStorageImportMetadata" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveNodesStorageImportMetadata </h2>
+<p></p>
+                <p class='searchable'>Get the base parameters for creating a guest which imports data from a foreign importable guest, like an ESXi VM</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveNodesStorageImportMetadata [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-Storage] &lt;String&gt; [-Volume] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Node</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The cluster node name.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Storage</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The storage identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Volume</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Volume identifier for the guest archive/entry.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Get-PveNodesStoragePrunebackups" class="toggle_container">
             <div class="page-header">
                 <h2> Get-PveNodesStoragePrunebackups </h2>
@@ -17930,7 +18016,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Only list storage of specific type Enum: btrfs,cephfs,cifs,dir,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool</td>
+                <td class='searchable'>Only list storage of specific type Enum: btrfs,cephfs,cifs,dir,esxi,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -18145,7 +18231,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <div>
             <h3> Outputs </h3>
             <p>The output type is the type of the objects that the cmdlet emits.</p>
-            <ul><li>PSCustomObject. Return Vm Data.</li></ul>
+            <ul><li>PSCustomObject. Return Vm/s data.</li></ul>
         </div>
     </div>
         <div id="Get-PveVmSnapshot" class="toggle_container">
@@ -18294,6 +18380,67 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
              <div>data----@{version=5.4; release=15; repoid=d0ec33c6; keyboard=it}</div>
                 </div>
             </div>
+    </div>
+        <div id="Invoke-PveSpice" class="toggle_container">
+            <div class="page-header">
+                <h2> Invoke-PveSpice </h2>
+<p></p>
+                <p class='searchable'>Enter Spice VM.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Invoke-PveSpice [[-PveTicket] &lt;PveTicket&gt;] [-VmIdOrName] &lt;String&gt; [-Viewer] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-VmIdOrName</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The (unique) ID or Name of the VM.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Viewer</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Path of Spice remove viewer.- Linux /usr/bin/remote-viewer- Windows C:\Program Files\VirtViewer v?.?-???\bin\remote-viewer.exe</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByValue, ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
     </div>
         <div id="IsNumeric" class="toggle_container">
             <div class="page-header">
@@ -19082,7 +19229,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Password</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The current password.</td>
+                <td class='searchable'>The current password of the user performing the change.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19652,7 +19799,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Id] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Id] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -19744,7 +19891,15 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-ExcludePath</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Exclude certain files/directories (shell globs). Paths starting with '/' are anchored to the container's root,  other paths match relative to each subdirectory.</td>
+                <td class='searchable'>Exclude certain files/directories (shell globs). Paths starting with '/' are anchored to the container's root, other paths match relative to each subdirectory.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Fleecing</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Options for backup fleecing (VM only).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19776,7 +19931,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mailnotification</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Deprecated':' use 'notification-policy' instead. Enum: always,failure</td>
+                <td class='searchable'>Deprecated':' use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19784,7 +19939,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mailto</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Comma-separated list of email addresses or users that should receive email notifications. Has no effect if the 'notification-target' option  is set at the same time.</td>
+                <td class='searchable'>Deprecated':' Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19822,9 +19977,17 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-NotificationMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Determine which notification system to use. If set to 'legacy-sendmail', vzdump will consider the mailto/mailnotification parameters and send emails to the specified address(es) via the 'sendmail' command. If set to 'notification-system', a notification will be sent via PVE's notification system, and the mailto and mailnotification will be ignored. If set to 'auto' (default setting), an email will be sent if mailto is set, and the notification system will be used if not. Enum: auto,legacy-sendmail,notification-system</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-NotificationPolicy</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify when to send a notification Enum: always,failure,never</td>
+                <td class='searchable'>Deprecated':' Do not use Enum: always,failure,never</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19832,7 +19995,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Determine the target to which notifications should be sent. Can either be a notification endpoint or a notification group. This option takes precedence over 'mailto', meaning that if both are  set, the 'mailto' option will be ignored.</td>
+                <td class='searchable'>Deprecated':' Do not use</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -19976,7 +20139,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Zstd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Zstd threads. N=0 uses half of the available cores, N&gt;0 uses N as thread count.</td>
+                <td class='searchable'>Zstd threads. N=0 uses half of the available cores, if N is set to a value bigger than 0, N is used as thread count.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -21395,7 +21558,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mdev</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>--</td>
+                <td class='searchable'>Marks the device(s) as being capable of providing mediated devices.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -27175,7 +27338,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesLxcStatusStop [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-Skiplock] [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesLxcStatusStop [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-OverruleShutdown] [-Skiplock] [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -27207,6 +27370,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-OverruleShutdown</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Try to abort active 'vzshutdown' tasks before stopping.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Skiplock</nobr></td>
@@ -28210,7 +28381,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-LiveRestore</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Start the VM immediately from the backup and restore in background. PBS only.</td>
+                <td class='searchable'>Start the VM immediately while importing or restoring in the background.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -28234,7 +28405,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Machine</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specifies the QEMU machine type.</td>
+                <td class='searchable'>Specify the QEMU machine.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -29991,7 +30162,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Machine</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specifies the QEMU machine type.</td>
+                <td class='searchable'>Specify the QEMU machine.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -31820,7 +31991,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveNodesQemuStatusShutdown </h2>
 <p></p>
-                <p class='searchable'>Shutdown virtual machine. This is similar to pressing the power button on a physical machine.This will send an ACPI event for the guest OS, which should then proceed to a clean shutdown.</p>
+                <p class='searchable'>Shutdown virtual machine. This is similar to pressing the power button on a physical machine. This will send an ACPI event for the guest OS, which should then proceed to a clean shutdown.</p>
             </div>
 <div>
             <h3> Syntax </h3>
@@ -31966,7 +32137,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Machine</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specifies the QEMU machine type.</td>
+                <td class='searchable'>Specify the QEMU machine.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -32056,14 +32227,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveNodesQemuStatusStop </h2>
 <p></p>
-                <p class='searchable'>Stop virtual machine. The qemu process will exit immediately. Thisis akin to pulling the power plug of a running computer and may damage the VM data</p>
+                <p class='searchable'>Stop virtual machine. The qemu process will exit immediately. This is akin to pulling the power plug of a running computer and may damage the VM data.</p>
             </div>
 <div>
             <h3> Syntax </h3>
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemuStatusStop [[-PveTicket] &lt;PveTicket&gt;] [-Keepactive] [[-Migratedfrom] &lt;String&gt;] [-Node] &lt;String&gt; [-Skiplock] [[-Timeout] &lt;Int32&gt;] [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemuStatusStop [[-PveTicket] &lt;PveTicket&gt;] [-Keepactive] [[-Migratedfrom] &lt;String&gt;] [-Node] &lt;String&gt; [-OverruleShutdown] [-Skiplock] [[-Timeout] &lt;Int32&gt;] [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -32111,6 +32282,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-OverruleShutdown</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Try to abort active 'qmshutdown' tasks before stopping.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Skiplock</nobr></td>
@@ -32799,7 +32978,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Cmd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade</td>
+                <td class='searchable'>Run specific command or default to login (requires 'root@pam') Enum: upgrade,ceph_install,login</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33601,7 +33780,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Cmd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade</td>
+                <td class='searchable'>Run specific command or default to login (requires 'root@pam') Enum: upgrade,ceph_install,login</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33670,7 +33849,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Cmd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade</td>
+                <td class='searchable'>Run specific command or default to login (requires 'root@pam') Enum: upgrade,ceph_install,login</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33745,7 +33924,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -33813,7 +33992,15 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-ExcludePath</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Exclude certain files/directories (shell globs). Paths starting with '/' are anchored to the container's root,  other paths match relative to each subdirectory.</td>
+                <td class='searchable'>Exclude certain files/directories (shell globs). Paths starting with '/' are anchored to the container's root, other paths match relative to each subdirectory.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Fleecing</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Options for backup fleecing (VM only).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33837,7 +34024,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mailnotification</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Deprecated':' use 'notification-policy' instead. Enum: always,failure</td>
+                <td class='searchable'>Deprecated':' use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33845,7 +34032,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mailto</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Comma-separated list of email addresses or users that should receive email notifications. Has no effect if the 'notification-target' option  is set at the same time.</td>
+                <td class='searchable'>Deprecated':' Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33883,9 +34070,17 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-NotificationMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Determine which notification system to use. If set to 'legacy-sendmail', vzdump will consider the mailto/mailnotification parameters and send emails to the specified address(es) via the 'sendmail' command. If set to 'notification-system', a notification will be sent via PVE's notification system, and the mailto and mailnotification will be ignored. If set to 'auto' (default setting), an email will be sent if mailto is set, and the notification system will be used if not. Enum: auto,legacy-sendmail,notification-system</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-NotificationPolicy</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify when to send a notification Enum: always,failure,never</td>
+                <td class='searchable'>Deprecated':' Do not use Enum: always,failure,never</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -33893,7 +34088,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Determine the target to which notifications should be sent. Can either be a notification endpoint or a notification group. This option takes precedence over 'mailto', meaning that if both are  set, the 'mailto' option will be ignored.</td>
+                <td class='searchable'>Deprecated':' Do not use</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -34021,7 +34216,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Zstd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Zstd threads. N=0 uses half of the available cores, N&gt;0 uses N as thread count.</td>
+                <td class='searchable'>Zstd threads. N=0 uses half of the available cores, if N is set to a value bigger than 0, N is used as thread count.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -34160,7 +34355,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Authsupported] &lt;String&gt;] [[-Base] &lt;String&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [-CreateBasePath] [-CreateSubdirs] [[-DataPool] &lt;String&gt;] [[-Datastore] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Export] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Iscsiprovider] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Path] &lt;String&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Portal] &lt;String&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [[-Share] &lt;String&gt;] [-Shared] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Target] &lt;String&gt;] [[-Thinpool] &lt;String&gt;] [[-Transport] &lt;String&gt;] [-Type] &lt;String&gt; [[-Username] &lt;String&gt;] [[-Vgname] &lt;String&gt;] [[-Volume] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Authsupported] &lt;String&gt;] [[-Base] &lt;String&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [-CreateBasePath] [-CreateSubdirs] [[-DataPool] &lt;String&gt;] [[-Datastore] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Export] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Iscsiprovider] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Path] &lt;String&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Portal] &lt;String&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [[-Share] &lt;String&gt;] [-Shared] [-SkipCertVerification] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Target] &lt;String&gt;] [[-Thinpool] &lt;String&gt;] [[-Transport] &lt;String&gt;] [-Type] &lt;String&gt; [[-Username] &lt;String&gt;] [[-Vgname] &lt;String&gt;] [[-Volume] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -34452,7 +34647,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Nodes</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>List of cluster node names.</td>
+                <td class='searchable'>List of nodes for which the storage configuration applies.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -34572,7 +34767,15 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Shared</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Mark storage as shared.</td>
+                <td class='searchable'>Indicate that this is a single storage with the same contents on all nodes (or all listed in the 'nodes' option). It will not make the contents of a local storage automatically accessible to other nodes, it just marks an already shared storage as such!</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-SkipCertVerification</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Disable TLS certificate verification, only enable on fully trusted networks!</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -34644,7 +34847,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Storage type. Enum: btrfs,cephfs,cifs,dir,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool</td>
+                <td class='searchable'>Storage type. Enum: btrfs,cephfs,cifs,dir,esxi,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -34965,7 +35168,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Password</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The current password.</td>
+                <td class='searchable'>The current password of the user performing the change.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -39719,7 +39922,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveAccessPassword [[-PveTicket] &lt;PveTicket&gt;] [-Password] &lt;SecureString&gt; [-Userid] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveAccessPassword [[-PveTicket] &lt;PveTicket&gt;] [[-ConfirmationPassword] &lt;SecureString&gt;] [-Password] &lt;SecureString&gt; [-Userid] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -39740,6 +39943,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-PveTicket</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-ConfirmationPassword</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The current password of the user performing the change.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -39901,7 +40112,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Password</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The current password.</td>
+                <td class='searchable'>The current password of the user performing the change.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40367,7 +40578,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [-Id] &lt;String&gt; [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [-Id] &lt;String&gt; [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -40467,7 +40678,15 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-ExcludePath</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Exclude certain files/directories (shell globs). Paths starting with '/' are anchored to the container's root,  other paths match relative to each subdirectory.</td>
+                <td class='searchable'>Exclude certain files/directories (shell globs). Paths starting with '/' are anchored to the container's root, other paths match relative to each subdirectory.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Fleecing</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Options for backup fleecing (VM only).</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40499,7 +40718,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mailnotification</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Deprecated':' use 'notification-policy' instead. Enum: always,failure</td>
+                <td class='searchable'>Deprecated':' use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40507,7 +40726,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mailto</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Comma-separated list of email addresses or users that should receive email notifications. Has no effect if the 'notification-target' option  is set at the same time.</td>
+                <td class='searchable'>Deprecated':' Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40545,9 +40764,17 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-NotificationMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Determine which notification system to use. If set to 'legacy-sendmail', vzdump will consider the mailto/mailnotification parameters and send emails to the specified address(es) via the 'sendmail' command. If set to 'notification-system', a notification will be sent via PVE's notification system, and the mailto and mailnotification will be ignored. If set to 'auto' (default setting), an email will be sent if mailto is set, and the notification system will be used if not. Enum: auto,legacy-sendmail,notification-system</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-NotificationPolicy</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specify when to send a notification Enum: always,failure,never</td>
+                <td class='searchable'>Deprecated':' Do not use Enum: always,failure,never</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40555,7 +40782,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Determine the target to which notifications should be sent. Can either be a notification endpoint or a notification group. This option takes precedence over 'mailto', meaning that if both are  set, the 'mailto' option will be ignored.</td>
+                <td class='searchable'>Deprecated':' Do not use</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -40699,7 +40926,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Zstd</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Zstd threads. N=0 uses half of the available cores, N&gt;0 uses N as thread count.</td>
+                <td class='searchable'>Zstd threads. N=0 uses half of the available cores, if N is set to a value bigger than 0, N is used as thread count.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -41946,7 +42173,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Mdev</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>--</td>
+                <td class='searchable'>Marks the device(s) as being capable of providing mediated devices.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -44374,7 +44601,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Wakeonlan</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>MAC address for wake on LAN</td>
+                <td class='searchable'>Node specific wake on LAN settings.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -44545,7 +44772,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Enable] [[-LogLevelIn] &lt;String&gt;] [[-LogLevelOut] &lt;String&gt;] [-LogNfConntrack] [-Ndp] [-NfConntrackAllowInvalid] [[-NfConntrackHelpers] &lt;String&gt;] [[-NfConntrackMax] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutEstablished] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutSynRecv] &lt;Int32&gt;] [-Node] &lt;String&gt; [-Nosmurfs] [-ProtectionSynflood] [[-ProtectionSynfloodBurst] &lt;Int32&gt;] [[-ProtectionSynfloodRate] &lt;Int32&gt;] [[-SmurfLogLevel] &lt;String&gt;] [[-TcpFlagsLogLevel] &lt;String&gt;] [-Tcpflags] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveNodesFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Enable] [[-LogLevelIn] &lt;String&gt;] [[-LogLevelOut] &lt;String&gt;] [-LogNfConntrack] [-Ndp] [-NfConntrackAllowInvalid] [[-NfConntrackHelpers] &lt;String&gt;] [[-NfConntrackMax] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutEstablished] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutSynRecv] &lt;Int32&gt;] [-Nftables] [-Node] &lt;String&gt; [-Nosmurfs] [-ProtectionSynflood] [[-ProtectionSynfloodBurst] &lt;Int32&gt;] [[-ProtectionSynfloodRate] &lt;Int32&gt;] [[-SmurfLogLevel] &lt;String&gt;] [[-TcpFlagsLogLevel] &lt;String&gt;] [-Tcpflags] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -44665,6 +44892,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Nftables</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Enable nftables based firewall (tech preview)</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Node</nobr></td>
@@ -46713,7 +46948,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Machine</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Specifies the QEMU machine type.</td>
+                <td class='searchable'>Specify the QEMU machine.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -48363,7 +48598,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [-CreateBasePath] [-CreateSubdirs] [[-DataPool] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [-Shared] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Transport] &lt;String&gt;] [[-Username] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveStorage [[-PveTicket] &lt;PveTicket&gt;] [[-Blocksize] &lt;String&gt;] [[-Bwlimit] &lt;String&gt;] [[-ComstarHg] &lt;String&gt;] [[-ComstarTg] &lt;String&gt;] [[-Content] &lt;String&gt;] [[-ContentDirs] &lt;String&gt;] [-CreateBasePath] [-CreateSubdirs] [[-DataPool] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Disable] [[-Domain] &lt;String&gt;] [[-EncryptionKey] &lt;String&gt;] [[-Fingerprint] &lt;String&gt;] [[-Format] &lt;String&gt;] [[-FsName] &lt;String&gt;] [-Fuse] [[-IsMountpoint] &lt;String&gt;] [[-Keyring] &lt;String&gt;] [-Krbd] [[-LioTpg] &lt;String&gt;] [[-MasterPubkey] &lt;String&gt;] [[-MaxProtectedBackups] &lt;Int32&gt;] [[-Maxfiles] &lt;Int32&gt;] [-Mkdir] [[-Monhost] &lt;String&gt;] [[-Mountpoint] &lt;String&gt;] [[-Namespace] &lt;String&gt;] [-Nocow] [[-Nodes] &lt;String&gt;] [-Nowritecache] [[-Options] &lt;String&gt;] [[-Password] &lt;SecureString&gt;] [[-Pool] &lt;String&gt;] [[-Port] &lt;Int32&gt;] [[-Preallocation] &lt;String&gt;] [[-PruneBackups] &lt;String&gt;] [-Saferemove] [[-SaferemoveThroughput] &lt;String&gt;] [[-Server] &lt;String&gt;] [[-Server2] &lt;String&gt;] [-Shared] [-SkipCertVerification] [[-Smbversion] &lt;String&gt;] [-Sparse] [-Storage] &lt;String&gt; [[-Subdir] &lt;String&gt;] [-TaggedOnly] [[-Transport] &lt;String&gt;] [[-Username] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -48631,7 +48866,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Nodes</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>List of cluster node names.</td>
+                <td class='searchable'>List of nodes for which the storage configuration applies.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -48727,7 +48962,15 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Shared</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Mark storage as shared.</td>
+                <td class='searchable'>Indicate that this is a single storage with the same contents on all nodes (or all listed in the 'nodes' option). It will not make the contents of a local storage automatically accessible to other nodes, it just marks an already shared storage as such!</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-SkipCertVerification</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Disable TLS certificate verification, only enable on fully trusted networks!</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
@@ -49183,7 +49426,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         <div class='fixed-bottom text-white bg-dark'>
                 <a href='https://github.com/Corsinvest/cv4pve-api-powershell' target='_blank'>cv4pve-api-powershell</a> - Proxmox VE Client API PowerShell Module by Corsinvest Srl <br>
                 This is a part of suite <a href='https://www.corsinvest.it/cv4pve' target='_blank'>cv4pve</a>
- - Version 0.0
+ - Version 8.1.2
         </div>
     </div>
 
