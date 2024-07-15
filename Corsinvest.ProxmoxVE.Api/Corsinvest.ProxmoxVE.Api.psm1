@@ -1073,7 +1073,7 @@ PveResponse. Return response.
 ## ALIAS ##
 ###########
 
-Set-Alias -Name Show-PveSpice -Value Enter-PveSpice -PassThru
+Set-Alias -Name Show-PveSpice -Value Invoke-PveSpice -PassThru
 Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus -PassThru
 
 #QEMU

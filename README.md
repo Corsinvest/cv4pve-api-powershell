@@ -72,7 +72,7 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 * Execute out side Proxmox VE
 * Open Source
 * Form Proxmox VE 6.2 support Api Token for user
-* Enter-PveSpice enter Spice VM
+* Invoke-PveSpice enter Spice VM
 * Login with One-time password for Two-factor authentication
 
 ## 📙 Documentation
