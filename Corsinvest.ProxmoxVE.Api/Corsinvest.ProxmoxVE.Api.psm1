@@ -1083,7 +1083,7 @@ Set-Alias -Name Suspend-PveQemu -Value New-PveNodesQemuStatusSuspend -PassThru
 Set-Alias -Name Resume-PveQemu -Value New-PveNodesQemuStatusResume -PassThru
 Set-Alias -Name Reset-PveQemu -Value New-PveNodesQemuStatusReset -PassThru
 Set-Alias -Name Restart-PveQemu -Value New-PveNodesQemuStatusReboot -PassThru
-#Set-Alias -Name Shutdown-PveQemu -Value New-PveNodesQemuStatusShutdown
+Set-Alias -Name Shutdown-PveQemu -Value New-PveNodesQemuStatusShutdown
 Set-Alias -Name Move-PveQemu -Value New-PveNodesQemuMigrate -PassThru
 Set-Alias -Name New-PveQemu -Value New-PveNodesQemu -PassThru
 Set-Alias -Name Copy-PveQemu -Value New-PveNodesQemuClone -PassThru
@@ -1094,7 +1094,7 @@ Set-Alias -Name Stop-PveLxc -Value New-PveNodesLxcStatusStop -PassThru
 Set-Alias -Name Suspend-PveLxc -Value New-PveNodesLxcStatusSuspend -PassThru
 Set-Alias -Name Resume-PveLxc -Value New-PveNodesLxcStatusResume -PassThru
 Set-Alias -Name Restart-PveLxc -Value New-PveNodesLxcStatusReboot -PassThru
-#Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusShutdown
+Set-Alias -Name Shutdown-PveLxc -Value New-PveNodesLxcStatusShutdown
 Set-Alias -Name Move-PveLxc -Value New-PveNodesLxcMigrate -PassThru
 Set-Alias -Name Copy-PveLxc -Value New-PveNodesLxcClone -PassThru
 
