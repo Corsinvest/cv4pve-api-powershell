@@ -102,7 +102,7 @@ PveTicket. Return ticket connection.
 
             if ($data.Length -eq 2 ) { [int32]::TryParse($data[1] , [ref]$portTmp) | Out-Null }
 
-            if (Test-Connection -Ping $hostTmp -BufferSize 16 -Count 1 -ea 0 -quiet) {
+            if (Test-Connection -Ping $hostTmp -Count 1 -ea 0 -quiet) {
                 $hostName = $hostTmp;
                 $port = $portTmp;
                 break;
