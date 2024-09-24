@@ -329,16 +329,16 @@ Output file
 
     process {
         $progress = 0
-        $commands = (Get-Command -module 'Corsinvest.ProxmoxVE.Api' -CommandType Function) | Sort-Object #| Select-Object -first 10
+        $commands = (Get-Command -module 'Corsinvest.ProxmoxVE.Api') | Sort-Object #| Select-Object -first 10
         $totProgress = $commands.Length
         $data = [System.Collections.ArrayList]::new()
         foreach ($item in $commands) {
             $progress++
             $perc = [Math]::Round(($progress / $totProgress) * 100)
                             #-CurrentOperation "Completed $($progress) of $totProgress." `
-            Write-Progress -Activity "Elaborate command" `
-                            -Status "$perc% $($item.Name)" `
-                            -PercentComplete $perc
+            Write-Progress -Activity "Status" `
+                           -Status "$perc% $($item.Name)" `
+                           -PercentComplete $perc
 
             #help
             $help = Get-Help $item.Name -Full
@@ -719,7 +719,7 @@ function VmCheckIdOrName
             #all vm in pool
             return $true
         }
-        Elseif($item.IndexOf("@tag-") -eq 0 -and ($vm.tags + "").Split(",").Contains($item.Substring(6)))
+        Elseif($item.IndexOf("@tag-") -eq 0 -and ($vm.tags + "").Split(",").Contains($item.Substring(5)))
         {
             #all vm in tag
             return $true
@@ -1077,26 +1077,56 @@ Set-Alias -Name Show-PveSpice -Value Invoke-PveSpice -PassThru
 Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus -PassThru
 
 #QEMU
+
+## status
 Set-Alias -Name Start-PveQemu -Value New-PveNodesQemuStatusStart -PassThru
 Set-Alias -Name Stop-PveQemu -Value New-PveNodesQeumStatusStop -PassThru
 Set-Alias -Name Suspend-PveQemu -Value New-PveNodesQemuStatusSuspend -PassThru
 Set-Alias -Name Resume-PveQemu -Value New-PveNodesQemuStatusResume -PassThru
 Set-Alias -Name Reset-PveQemu -Value New-PveNodesQemuStatusReset -PassThru
 Set-Alias -Name Restart-PveQemu -Value New-PveNodesQemuStatusReboot -PassThru
-Set-Alias -Name Shutdown-PveQemu -Value New-PveNodesQemuStatusShutdown
+Set-Alias -Name Shutdown-PveQemu -Value New-PveNodesQemuStatusShutdown -PassThru
+
+## snapshot
+Set-Alias -Name Create-PveQemuSnapshot -Value New-PveNodesQemuSnapshot -PassThru
+Set-Alias -Name Remove-PveQemuSnapshot -Value Remove-PveNodesQemuSnapshot -PassThru
+Set-Alias -Name Undo-PveQemuSnapshot -Value New-PveNodesQemuSnapshotRollback -PassThru
+Set-Alias  -Name Get-PveQemuSnapshot -Value Get-PveNodesQemuSnapshot -PassThru
+Set-Alias -Name Get-PveQemuSnapshotConfig -Value Get-PveNodesQemuSnapshotConfig -PassThru
+Set-Alias -Name Set-PveQemuSnapshot -Value Set-PveNodesQemuSnapshotConfig -PassThru
+
+## misc
 Set-Alias -Name Move-PveQemu -Value New-PveNodesQemuMigrate -PassThru
-Set-Alias -Name New-PveQemu -Value New-PveNodesQemu -PassThru
 Set-Alias -Name Copy-PveQemu -Value New-PveNodesQemuClone -PassThru
+Set-Alias -Name New-PveQemu -Value New-PveNodesQemu -PassThru
+Set-Alias -Name Remove-PveQemu -Value Remove-PveNodesQemu -PassThru
+Set-Alias -Name Set-PveQemuConfig -Value Set-PveNodesQemuConfig -PassThru
+Set-Alias -Name Get-PveQemuConfig -Value Get-PveNodesQemuConfig -PassThru
 
 #LXC
+## status
 Set-Alias -Name Start-PveLxc -Value New-PveNodesLxcStatusStart -PassThru
 Set-Alias -Name Stop-PveLxc -Value New-PveNodesLxcStatusStop -PassThru
 Set-Alias -Name Suspend-PveLxc -Value New-PveNodesLxcStatusSuspend -PassThru
 Set-Alias -Name Resume-PveLxc -Value New-PveNodesLxcStatusResume -PassThru
 Set-Alias -Name Restart-PveLxc -Value New-PveNodesLxcStatusReboot -PassThru
 Set-Alias -Name Shutdown-PveLxc -Value New-PveNodesLxcStatusShutdown
+
+## snapshot
+Set-Alias -Name Create-PveLxcSnapshot -Value New-PveNodesLxcSnapshot -PassThru
+Set-Alias -Name Remove-PveLxcSnapshot -Value Remove-PveNodesLxcSnapshot -PassThru
+Set-Alias -Name Undo-PveLxcSnapshot -Value New-PveNodesLxcSnapshotRollback -PassThru
+Set-Alias  -Name Get-PveLxcSnapshot -Value Get-PveNodesLxcSnapshot -PassThru
+Set-Alias -Name Get-PveLxcSnapshotConfig -Value Get-PveNodesLxcSnapshotConfig -PassThru
+Set-Alias -Name Set-PveLxcSnapshot -Value Set-PveNodesLxcSnapshotConfig -PassThru
+
+## misc
 Set-Alias -Name Move-PveLxc -Value New-PveNodesLxcMigrate -PassThru
 Set-Alias -Name Copy-PveLxc -Value New-PveNodesLxcClone -PassThru
+Set-Alias -Name New-PveLxc -Value New-PveNodesLxc -PassThru
+Set-Alias -Name Remove-PveLxc -Value Remove-PveNodesLxc -PassThru
+Set-Alias -Name Set-PveLxcConfig -Value Set-PveNodesLxcConfig -PassThru
+Set-Alias -Name Get-PveLxcConfig -Value Get-PveNodesLxcConfig -PassThru
 
 #NODE
 Set-Alias -Name Update-PveNode -Value New-PveNodesAptUpdate -PassThru
