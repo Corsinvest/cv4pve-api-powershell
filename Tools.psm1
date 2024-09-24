@@ -33,6 +33,8 @@ function Invoke-PveAction {
             Build-AsciinemaFromPs1 -InputFile .\doc\video-commands.ps1 -OutputFile .\doc\video.cast
         }
         elseif ($Action -eq 'publish') {
+            $env:DOTNET_CLI_UI_LANGUAGE='en-us'
+
             $publishModuleSplat = @{
                 Path              = ".\Corsinvest.ProxmoxVE.Api"
                 #Name              = "Corsinvest.ProxmoxVE.Api"
