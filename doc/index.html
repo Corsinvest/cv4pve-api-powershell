@@ -194,6 +194,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMappingUsb'>Get-PveClusterMappingUsb</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMappingUsbIdx'>Get-PveClusterMappingUsbIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetrics'>Get-PveClusterMetrics</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetricsExport'>Get-PveClusterMetricsExport</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetricsServer'>Get-PveClusterMetricsServer</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterMetricsServerIdx'>Get-PveClusterMetricsServerIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNextid'>Get-PveClusterNextid</a></li>
@@ -205,6 +206,10 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsEndpointsSendmailIdx'>Get-PveClusterNotificationsEndpointsSendmailIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsEndpointsSmtp'>Get-PveClusterNotificationsEndpointsSmtp</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsEndpointsSmtpIdx'>Get-PveClusterNotificationsEndpointsSmtpIdx</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsEndpointsWebhook'>Get-PveClusterNotificationsEndpointsWebhook</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsEndpointsWebhookIdx'>Get-PveClusterNotificationsEndpointsWebhookIdx</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsMatcherFields'>Get-PveClusterNotificationsMatcherFields</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsMatcherFieldValues'>Get-PveClusterNotificationsMatcherFieldValues</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsMatchers'>Get-PveClusterNotificationsMatchers</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsMatchersIdx'>Get-PveClusterNotificationsMatchersIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterNotificationsTargets'>Get-PveClusterNotificationsTargets</a></li>
@@ -221,6 +226,10 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnIpamsIdx'>Get-PveClusterSdnIpamsIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnIpamsStatus'>Get-PveClusterSdnIpamsStatus</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnets'>Get-PveClusterSdnVnets</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsFirewall'>Get-PveClusterSdnVnetsFirewall</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsFirewallOptions'>Get-PveClusterSdnVnetsFirewallOptions</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsFirewallRules'>Get-PveClusterSdnVnetsFirewallRules</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsFirewallRulesIdx'>Get-PveClusterSdnVnetsFirewallRulesIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsIdx'>Get-PveClusterSdnVnetsIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsSubnets'>Get-PveClusterSdnVnetsSubnets</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterSdnVnetsSubnetsIdx'>Get-PveClusterSdnVnetsSubnetsIdx</a></li>
@@ -454,12 +463,14 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterNotificationsEndpointsGotify'>New-PveClusterNotificationsEndpointsGotify</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterNotificationsEndpointsSendmail'>New-PveClusterNotificationsEndpointsSendmail</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterNotificationsEndpointsSmtp'>New-PveClusterNotificationsEndpointsSmtp</a></li>
+<li class='nav-item'><a class='nav-link' href='#New-PveClusterNotificationsEndpointsWebhook'>New-PveClusterNotificationsEndpointsWebhook</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterNotificationsMatchers'>New-PveClusterNotificationsMatchers</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterReplication'>New-PveClusterReplication</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnControllers'>New-PveClusterSdnControllers</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnDns'>New-PveClusterSdnDns</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnIpams'>New-PveClusterSdnIpams</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnVnets'>New-PveClusterSdnVnets</a></li>
+<li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnVnetsFirewallRules'>New-PveClusterSdnVnetsFirewallRules</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnVnetsIps'>New-PveClusterSdnVnetsIps</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnVnetsSubnets'>New-PveClusterSdnVnetsSubnets</a></li>
 <li class='nav-item'><a class='nav-link' href='#New-PveClusterSdnZones'>New-PveClusterSdnZones</a></li>
@@ -600,12 +611,14 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterNotificationsEndpointsGotify'>Remove-PveClusterNotificationsEndpointsGotify</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterNotificationsEndpointsSendmail'>Remove-PveClusterNotificationsEndpointsSendmail</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterNotificationsEndpointsSmtp'>Remove-PveClusterNotificationsEndpointsSmtp</a></li>
+<li class='nav-item'><a class='nav-link' href='#Remove-PveClusterNotificationsEndpointsWebhook'>Remove-PveClusterNotificationsEndpointsWebhook</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterNotificationsMatchers'>Remove-PveClusterNotificationsMatchers</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterReplication'>Remove-PveClusterReplication</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnControllers'>Remove-PveClusterSdnControllers</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnDns'>Remove-PveClusterSdnDns</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnIpams'>Remove-PveClusterSdnIpams</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnVnets'>Remove-PveClusterSdnVnets</a></li>
+<li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnVnetsFirewallRules'>Remove-PveClusterSdnVnetsFirewallRules</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnVnetsIps'>Remove-PveClusterSdnVnetsIps</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnVnetsSubnets'>Remove-PveClusterSdnVnetsSubnets</a></li>
 <li class='nav-item'><a class='nav-link' href='#Remove-PveClusterSdnZones'>Remove-PveClusterSdnZones</a></li>
@@ -682,6 +695,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterNotificationsEndpointsGotify'>Set-PveClusterNotificationsEndpointsGotify</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterNotificationsEndpointsSendmail'>Set-PveClusterNotificationsEndpointsSendmail</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterNotificationsEndpointsSmtp'>Set-PveClusterNotificationsEndpointsSmtp</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveClusterNotificationsEndpointsWebhook'>Set-PveClusterNotificationsEndpointsWebhook</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterNotificationsMatchers'>Set-PveClusterNotificationsMatchers</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterOptions'>Set-PveClusterOptions</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterReplication'>Set-PveClusterReplication</a></li>
@@ -690,6 +704,8 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnDns'>Set-PveClusterSdnDns</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnIpams'>Set-PveClusterSdnIpams</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnVnets'>Set-PveClusterSdnVnets</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnVnetsFirewallOptions'>Set-PveClusterSdnVnetsFirewallOptions</a></li>
+<li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnVnetsFirewallRules'>Set-PveClusterSdnVnetsFirewallRules</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnVnetsIps'>Set-PveClusterSdnVnetsIps</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnVnetsSubnets'>Set-PveClusterSdnVnetsSubnets</a></li>
 <li class='nav-item'><a class='nav-link' href='#Set-PveClusterSdnZones'>Set-PveClusterSdnZones</a></li>
@@ -993,7 +1009,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-JobId] &lt;String&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-PbsChangeDetectionMode] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -1083,6 +1099,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'>0</td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-JobId</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the backup job. If set, the 'backup-job' metadata field of the backup notification will be set to this value. Only root@pam can set this parameter.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-Lockwait</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Maximal time to wait for the global lock (minutes).</td>
@@ -1158,6 +1182,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Deprecated':' Do not use</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-PbsChangeDetectionMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -5700,6 +5732,75 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Get-PveClusterMetricsExport" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterMetricsExport </h2>
+<p></p>
+                <p class='searchable'>Retrieve metrics of the cluster.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterMetricsExport [[-PveTicket] &lt;PveTicket&gt;] [-History] [-LocalOnly] [[-StartTime] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-History</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Also return historic values. Returns full available metric history unless `start-time` is also set</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-LocalOnly</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Only return metrics for the current node instead of the whole cluster</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-StartTime</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Only include metrics with a timestamp &gt; start-time.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Get-PveClusterMetricsServer" class="toggle_container">
             <div class="page-header">
                 <h2> Get-PveClusterMetricsServer </h2>
@@ -6235,6 +6336,194 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Get-PveClusterNotificationsEndpointsWebhook" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterNotificationsEndpointsWebhook </h2>
+<p></p>
+                <p class='searchable'>Returns a list of all webhook endpoints</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterNotificationsEndpointsWebhook [[-PveTicket] &lt;PveTicket&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterNotificationsEndpointsWebhookIdx" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterNotificationsEndpointsWebhookIdx </h2>
+<p></p>
+                <p class='searchable'>Return a specific webhook endpoint</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterNotificationsEndpointsWebhookIdx [[-PveTicket] &lt;PveTicket&gt;] [-Name] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Name</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Name of the endpoint.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterNotificationsMatcherFields" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterNotificationsMatcherFields </h2>
+<p></p>
+                <p class='searchable'>Returns known notification metadata fields</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterNotificationsMatcherFields [[-PveTicket] &lt;PveTicket&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterNotificationsMatcherFieldValues" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterNotificationsMatcherFieldValues </h2>
+<p></p>
+                <p class='searchable'>Returns known notification metadata fields and their known values</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterNotificationsMatcherFieldValues [[-PveTicket] &lt;PveTicket&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Get-PveClusterNotificationsMatchers" class="toggle_container">
             <div class="page-header">
                 <h2> Get-PveClusterNotificationsMatchers </h2>
@@ -6560,7 +6849,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>-- Enum: vm,storage,node,sdn</td>
+                <td class='searchable'>Resource type. Enum: vm,storage,node,sdn</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -7073,6 +7362,226 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterSdnVnetsFirewall" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterSdnVnetsFirewall </h2>
+<p></p>
+                <p class='searchable'>Directory index.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterSdnVnetsFirewall [[-PveTicket] &lt;PveTicket&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterSdnVnetsFirewallOptions" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterSdnVnetsFirewallOptions </h2>
+<p></p>
+                <p class='searchable'>Get vnet firewall options.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterSdnVnetsFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterSdnVnetsFirewallRules" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterSdnVnetsFirewallRules </h2>
+<p></p>
+                <p class='searchable'>List rules.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterSdnVnetsFirewallRules [[-PveTicket] &lt;PveTicket&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveClusterSdnVnetsFirewallRulesIdx" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveClusterSdnVnetsFirewallRulesIdx </h2>
+<p></p>
+                <p class='searchable'>Get single rule data.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveClusterSdnVnetsFirewallRulesIdx [[-PveTicket] &lt;PveTicket&gt;] [[-Pos] &lt;Int32&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Pos</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Update rule at position &lt;pos&gt;.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
             </tr>
                     </tbody>
                 </table>
@@ -10777,7 +11286,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Get-PveNodesHardwarePciIdx [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-Pciid] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Get-PveNodesHardwarePciIdx [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-PciIdOrMapping] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -10811,7 +11320,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
-                <td class='searchable'><nobr>-Pciid</nobr></td>
+                <td class='searchable'><nobr>-PciIdOrMapping</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>--</td>
                 <td class='visible-lg visible-md'>true</td>
@@ -10838,7 +11347,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Get-PveNodesHardwarePciMdev [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-Pciid] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Get-PveNodesHardwarePciMdev [[-PveTicket] &lt;PveTicket&gt;] [-Node] &lt;String&gt; [-PciIdOrMapping] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -10872,9 +11381,9 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
-                <td class='searchable'><nobr>-Pciid</nobr></td>
+                <td class='searchable'><nobr>-PciIdOrMapping</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>The PCI ID to list the mdev types for.</td>
+                <td class='searchable'>The PCI ID or mapping to list the mdev types for.</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -21300,7 +21809,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Id] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Id] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-PbsChangeDetectionMode] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -21497,6 +22006,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Deprecated':' Do not use</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-PbsChangeDetectionMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -22238,7 +22755,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -22557,7 +23074,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -23642,6 +24159,115 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="New-PveClusterNotificationsEndpointsWebhook" class="toggle_container">
+            <div class="page-header">
+                <h2> New-PveClusterNotificationsEndpointsWebhook </h2>
+<p></p>
+                <p class='searchable'>Create a new webhook endpoint</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>New-PveClusterNotificationsEndpointsWebhook [[-PveTicket] &lt;PveTicket&gt;] [[-Body] &lt;String&gt;] [[-Comment] &lt;String&gt;] [-Disable] [[-Header] &lt;Array&gt;] [-Method] &lt;String&gt; [-Name] &lt;String&gt; [[-Secret] &lt;Array&gt;] [-Url] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Body</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>HTTP body, base64 encoded</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Comment</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Comment</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Disable</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Disable this target</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Header</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>HTTP headers to set. These have to be formatted as a property string in the format name=&lt;name&gt;,value=&lt;base64 of value&gt;</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Method</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>HTTP method Enum: post,put,get</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Name</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The name of the endpoint.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Secret</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secrets to set. These have to be formatted as a property string in the format name=&lt;name&gt;,value=&lt;base64 of value&gt;</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Url</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Server URL</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="New-PveClusterNotificationsMatchers" class="toggle_container">
             <div class="page-header">
                 <h2> New-PveClusterNotificationsMatchers </h2>
@@ -24214,7 +24840,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveClusterSdnVnets [[-PveTicket] &lt;PveTicket&gt;] [[-Alias] &lt;String&gt;] [[-Tag] &lt;Int32&gt;] [[-Type] &lt;String&gt;] [-Vlanaware] [-Vnet] &lt;String&gt; [-Zone] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveClusterSdnVnets [[-PveTicket] &lt;PveTicket&gt;] [[-Alias] &lt;String&gt;] [-IsolatePorts] [[-Tag] &lt;Int32&gt;] [[-Type] &lt;String&gt;] [-Vlanaware] [-Vnet] &lt;String&gt; [-Zone] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -24246,6 +24872,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-IsolatePorts</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>If true, sets the isolated property for all members of this VNet</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Tag</nobr></td>
@@ -24283,6 +24917,179 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Zone</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>zone id</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="New-PveClusterSdnVnetsFirewallRules" class="toggle_container">
+            <div class="page-header">
+                <h2> New-PveClusterSdnVnetsFirewallRules </h2>
+<p></p>
+                <p class='searchable'>Create new rule.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>New-PveClusterSdnVnetsFirewallRules [[-PveTicket] &lt;PveTicket&gt;] [-Action] &lt;String&gt; [[-Comment] &lt;String&gt;] [[-Dest] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Dport] &lt;String&gt;] [[-Enable] &lt;Int32&gt;] [[-IcmpType] &lt;String&gt;] [[-Iface] &lt;String&gt;] [[-Log] &lt;String&gt;] [[-Macro] &lt;String&gt;] [[-Pos] &lt;Int32&gt;] [[-Proto] &lt;String&gt;] [[-Source] &lt;String&gt;] [[-Sport] &lt;String&gt;] [-Type] &lt;String&gt; [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Action</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Rule action ('ACCEPT', 'DROP', 'REJECT') or security group name.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Comment</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Descriptive comment.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Dest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Dport</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Enable</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Flag to enable/disable a rule.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-IcmpType</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Iface</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Log</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Macro</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Use predefined standard macro.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Pos</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Update rule at position &lt;pos&gt;.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Proto</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defined in '/etc/protocols'.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Source</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Sport</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Type</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -24862,7 +25669,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Hookscript</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Script that will be exectued during various steps in the containers lifetime.</td>
+                <td class='searchable'>Script that will be executed during various steps in the containers lifetime.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -27149,7 +27956,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -27377,7 +28184,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Hookscript</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Script that will be exectued during various steps in the containers lifetime.</td>
+                <td class='searchable'>Script that will be executed during various steps in the containers lifetime.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -28204,7 +29011,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -29708,7 +30515,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesNetwork [[-PveTicket] &lt;PveTicket&gt;] [[-Address] &lt;String&gt;] [[-Address6] &lt;String&gt;] [-Autostart] [[-BondPrimary] &lt;String&gt;] [[-BondMode] &lt;String&gt;] [[-BondXmitHashPolicy] &lt;String&gt;] [[-BridgePorts] &lt;String&gt;] [-BridgeVlanAware] [[-Cidr] &lt;String&gt;] [[-Cidr6] &lt;String&gt;] [[-Comments] &lt;String&gt;] [[-Comments6] &lt;String&gt;] [[-Gateway] &lt;String&gt;] [[-Gateway6] &lt;String&gt;] [-Iface] &lt;String&gt; [[-Mtu] &lt;Int32&gt;] [[-Netmask] &lt;String&gt;] [[-Netmask6] &lt;Int32&gt;] [-Node] &lt;String&gt; [[-OvsBonds] &lt;String&gt;] [[-OvsBridge] &lt;String&gt;] [[-OvsOptions] &lt;String&gt;] [[-OvsPorts] &lt;String&gt;] [[-OvsTag] &lt;Int32&gt;] [[-Slaves] &lt;String&gt;] [-Type] &lt;String&gt; [[-VlanId] &lt;Int32&gt;] [[-VlanRawDevice] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesNetwork [[-PveTicket] &lt;PveTicket&gt;] [[-Address] &lt;String&gt;] [[-Address6] &lt;String&gt;] [-Autostart] [[-BondPrimary] &lt;String&gt;] [[-BondMode] &lt;String&gt;] [[-BondXmitHashPolicy] &lt;String&gt;] [[-BridgePorts] &lt;String&gt;] [[-BridgeVids] &lt;String&gt;] [-BridgeVlanAware] [[-Cidr] &lt;String&gt;] [[-Cidr6] &lt;String&gt;] [[-Comments] &lt;String&gt;] [[-Comments6] &lt;String&gt;] [[-Gateway] &lt;String&gt;] [[-Gateway6] &lt;String&gt;] [-Iface] &lt;String&gt; [[-Mtu] &lt;Int32&gt;] [[-Netmask] &lt;String&gt;] [[-Netmask6] &lt;Int32&gt;] [-Node] &lt;String&gt; [[-OvsBonds] &lt;String&gt;] [[-OvsBridge] &lt;String&gt;] [[-OvsOptions] &lt;String&gt;] [[-OvsPorts] &lt;String&gt;] [[-OvsTag] &lt;Int32&gt;] [[-Slaves] &lt;String&gt;] [-Type] &lt;String&gt; [[-VlanId] &lt;Int32&gt;] [[-VlanRawDevice] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -29785,6 +30592,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-BridgePorts</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Specify the interfaces you want to add to your bridge.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-BridgeVids</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Specify the allowed VLANs. For example':' '2 4 100-200'. Only used if the bridge is VLAN aware.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -29987,7 +30802,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemu [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Archive] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Bwlimit] &lt;Int32&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Description] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-LiveRestore] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [[-Pool] &lt;String&gt;] [-Protection] [-Reboot] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [-Start] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [[-Storage] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [-Unique] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemu [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-AmdSev] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Archive] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Bwlimit] &lt;Int32&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Description] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-ImportWorkingStorage] &lt;String&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-LiveRestore] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [[-Pool] &lt;String&gt;] [-Protection] [-Reboot] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [-Start] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [[-Storage] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [-Unique] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -30032,6 +30847,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Agent</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Enable/disable communication with the QEMU Guest Agent and its properties.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-AmdSev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secure Encrypted Virtualization (SEV) features by AMD CPUs</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -30269,6 +31092,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-ImportWorkingStorage</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-IpconfigN</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.</td>
@@ -30351,7 +31182,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-MigrateDowntime</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations.</td>
+                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -31737,14 +32568,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveNodesQemuConfig </h2>
 <p></p>
-                <p class='searchable'>Set virtual machine options (asynchrounous API).</p>
+                <p class='searchable'>Set virtual machine options (asynchronous API).</p>
             </div>
 <div>
             <h3> Syntax </h3>
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-BackgroundDelay] &lt;Int32&gt;] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-AmdSev] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-BackgroundDelay] &lt;Int32&gt;] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-ImportWorkingStorage] &lt;String&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -31789,6 +32620,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Agent</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Enable/disable communication with the QEMU Guest Agent and its properties.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-AmdSev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secure Encrypted Virtualization (SEV) features by AMD CPUs</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -32034,6 +32873,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-ImportWorkingStorage</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-IpconfigN</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.</td>
@@ -32108,7 +32955,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-MigrateDowntime</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations.</td>
+                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -32888,7 +33735,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -35365,7 +36212,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveNodesStorageDownloadUrl </h2>
 <p></p>
-                <p class='searchable'>Download templates and ISO images by using an URL.</p>
+                <p class='searchable'>Download templates, ISO images and OVAs by using an URL.</p>
             </div>
 <div>
             <h3> Syntax </h3>
@@ -35424,7 +36271,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Content</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Content type. Enum: iso,vztmpl</td>
+                <td class='searchable'>Content type. Enum: iso,vztmpl,import</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -35482,7 +36329,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> New-PveNodesStorageUpload </h2>
 <p></p>
-                <p class='searchable'>Upload templates and ISO images.</p>
+                <p class='searchable'>Upload templates, ISO images and OVAs.</p>
             </div>
 <div>
             <h3> Syntax </h3>
@@ -35533,7 +36380,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Content</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Content type. Enum: iso,vztmpl</td>
+                <td class='searchable'>Content type. Enum: iso,vztmpl,import</td>
                 <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -35884,7 +36731,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesVzdump [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Compress] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [[-Ionice] &lt;Int32&gt;] [[-JobId] &lt;String&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-PbsChangeDetectionMode] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [[-Script] &lt;String&gt;] [-Stdexcludes] [-Stdout] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -35974,6 +36821,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'>0</td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-JobId</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The ID of the backup job. If set, the 'backup-job' metadata field of the backup notification will be set to this value. Only root@pam can set this parameter.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-Lockwait</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Maximal time to wait for the global lock (minutes).</td>
@@ -36049,6 +36904,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Deprecated':' Do not use</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-PbsChangeDetectionMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -36315,7 +37178,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>New-PveNodesQemu [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Archive] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Bwlimit] &lt;Int32&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Description] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-LiveRestore] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [[-Pool] &lt;String&gt;] [-Protection] [-Reboot] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [-Start] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [[-Storage] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [-Unique] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>New-PveNodesQemu [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-AmdSev] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Archive] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Bwlimit] &lt;Int32&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Description] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-ImportWorkingStorage] &lt;String&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-LiveRestore] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [[-Pool] &lt;String&gt;] [-Protection] [-Reboot] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [-Start] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [[-Storage] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [-Unique] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -36360,6 +37223,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Agent</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Enable/disable communication with the QEMU Guest Agent and its properties.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-AmdSev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secure Encrypted Virtualization (SEV) features by AMD CPUs</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -36597,6 +37468,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-ImportWorkingStorage</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-IpconfigN</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.</td>
@@ -36679,7 +37558,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-MigrateDowntime</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations.</td>
+                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -37396,7 +38275,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Port</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>For non default port.</td>
+                <td class='searchable'>Use this port to connect to the storage instead of the default one (for example, with PBS or ESXi). For NFS and CIFS, use the 'options' option to configure the port via the mount options.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -39068,6 +39947,59 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Remove-PveClusterNotificationsEndpointsWebhook" class="toggle_container">
+            <div class="page-header">
+                <h2> Remove-PveClusterNotificationsEndpointsWebhook </h2>
+<p></p>
+                <p class='searchable'>Remove webhook endpoint</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Remove-PveClusterNotificationsEndpointsWebhook [[-PveTicket] &lt;PveTicket&gt;] [-Name] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Name</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>--</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Remove-PveClusterNotificationsMatchers" class="toggle_container">
             <div class="page-header">
                 <h2> Remove-PveClusterNotificationsMatchers </h2>
@@ -39384,6 +40316,75 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Remove-PveClusterSdnVnetsFirewallRules" class="toggle_container">
+            <div class="page-header">
+                <h2> Remove-PveClusterSdnVnetsFirewallRules </h2>
+<p></p>
+                <p class='searchable'>Delete rule.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Remove-PveClusterSdnVnetsFirewallRules [[-PveTicket] &lt;PveTicket&gt;] [[-Digest] &lt;String&gt;] [[-Pos] &lt;Int32&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Pos</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Update rule at position &lt;pos&gt;.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-Vnet</nobr></td>
@@ -43988,7 +44989,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [-Id] &lt;String&gt; [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveClusterBackup [[-PveTicket] &lt;PveTicket&gt;] [-All] [[-Bwlimit] &lt;Int32&gt;] [[-Comment] &lt;String&gt;] [[-Compress] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dow] &lt;String&gt;] [[-Dumpdir] &lt;String&gt;] [-Enabled] [[-Exclude] &lt;String&gt;] [[-ExcludePath] &lt;Array&gt;] [[-Fleecing] &lt;String&gt;] [-Id] &lt;String&gt; [[-Ionice] &lt;Int32&gt;] [[-Lockwait] &lt;Int32&gt;] [[-Mailnotification] &lt;String&gt;] [[-Mailto] &lt;String&gt;] [[-Maxfiles] &lt;Int32&gt;] [[-Mode] &lt;String&gt;] [[-Node] &lt;String&gt;] [[-NotesTemplate] &lt;String&gt;] [[-NotificationMode] &lt;String&gt;] [[-NotificationPolicy] &lt;String&gt;] [[-NotificationTarget] &lt;String&gt;] [[-PbsChangeDetectionMode] &lt;String&gt;] [[-Performance] &lt;String&gt;] [[-Pigz] &lt;Int32&gt;] [[-Pool] &lt;String&gt;] [-Protected] [[-PruneBackups] &lt;String&gt;] [-Quiet] [-Remove] [-RepeatMissed] [[-Schedule] &lt;String&gt;] [[-Script] &lt;String&gt;] [[-Starttime] &lt;String&gt;] [-Stdexcludes] [-Stop] [[-Stopwait] &lt;Int32&gt;] [[-Storage] &lt;String&gt;] [[-Tmpdir] &lt;String&gt;] [[-Vmid] &lt;String&gt;] [[-Zstd] &lt;Int32&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -44193,6 +45194,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-NotificationTarget</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Deprecated':' Do not use</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-PbsChangeDetectionMode</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -44804,7 +45813,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -44914,7 +45923,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveClusterFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Ebtables] [[-Enable] &lt;Int32&gt;] [[-LogRatelimit] &lt;String&gt;] [[-PolicyIn] &lt;String&gt;] [[-PolicyOut] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveClusterFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Ebtables] [[-Enable] &lt;Int32&gt;] [[-LogRatelimit] &lt;String&gt;] [[-PolicyForward] &lt;String&gt;] [[-PolicyIn] &lt;String&gt;] [[-PolicyOut] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -44975,6 +45984,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-LogRatelimit</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Log ratelimiting settings</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-PolicyForward</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Forward policy. Enum: ACCEPT,DROP</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -45171,7 +46188,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -46238,6 +47255,131 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Set-PveClusterNotificationsEndpointsWebhook" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveClusterNotificationsEndpointsWebhook </h2>
+<p></p>
+                <p class='searchable'>Update existing webhook endpoint</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveClusterNotificationsEndpointsWebhook [[-PveTicket] &lt;PveTicket&gt;] [[-Body] &lt;String&gt;] [[-Comment] &lt;String&gt;] [[-Delete] &lt;Array&gt;] [[-Digest] &lt;String&gt;] [-Disable] [[-Header] &lt;Array&gt;] [[-Method] &lt;String&gt;] [-Name] &lt;String&gt; [[-Secret] &lt;Array&gt;] [[-Url] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Body</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>HTTP body, base64 encoded</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Comment</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Comment</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Delete</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of settings you want to delete.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Disable</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Disable this target</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Header</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>HTTP headers to set. These have to be formatted as a property string in the format name=&lt;name&gt;,value=&lt;base64 of value&gt;</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Method</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>HTTP method Enum: post,put,get</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Name</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The name of the endpoint.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Secret</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secrets to set. These have to be formatted as a property string in the format name=&lt;name&gt;,value=&lt;base64 of value&gt;</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Url</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Server URL</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Set-PveClusterNotificationsMatchers" class="toggle_container">
             <div class="page-header">
                 <h2> Set-PveClusterNotificationsMatchers </h2>
@@ -47108,7 +48250,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveClusterSdnVnets [[-PveTicket] &lt;PveTicket&gt;] [[-Alias] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Tag] &lt;Int32&gt;] [-Vlanaware] [-Vnet] &lt;String&gt; [[-Zone] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveClusterSdnVnets [[-PveTicket] &lt;PveTicket&gt;] [[-Alias] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-IsolatePorts] [[-Tag] &lt;Int32&gt;] [-Vlanaware] [-Vnet] &lt;String&gt; [[-Zone] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -47158,6 +48300,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg'></td>
             </tr>
 <tr>
+                <td class='searchable'><nobr>-IsolatePorts</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>If true, sets the isolated property for all members of this VNet</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
                 <td class='searchable'><nobr>-Tag</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>vlan or vxlan id</td>
@@ -47186,6 +48336,288 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>zone id</td>
                 <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Set-PveClusterSdnVnetsFirewallOptions" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveClusterSdnVnetsFirewallOptions </h2>
+<p></p>
+                <p class='searchable'>Set Firewall options.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveClusterSdnVnetsFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Enable] [[-LogLevelForward] &lt;String&gt;] [[-PolicyForward] &lt;String&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Delete</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of settings you want to delete.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Enable</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Enable/disable firewall rules.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-LogLevelForward</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Log level for forwarded traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-PolicyForward</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Forward policy. Enum: ACCEPT,DROP</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Set-PveClusterSdnVnetsFirewallRules" class="toggle_container">
+            <div class="page-header">
+                <h2> Set-PveClusterSdnVnetsFirewallRules </h2>
+<p></p>
+                <p class='searchable'>Modify rule data.</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Set-PveClusterSdnVnetsFirewallRules [[-PveTicket] &lt;PveTicket&gt;] [[-Action] &lt;String&gt;] [[-Comment] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Dest] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Dport] &lt;String&gt;] [[-Enable] &lt;Int32&gt;] [[-IcmpType] &lt;String&gt;] [[-Iface] &lt;String&gt;] [[-Log] &lt;String&gt;] [[-Macro] &lt;String&gt;] [[-Moveto] &lt;Int32&gt;] [[-Pos] &lt;Int32&gt;] [[-Proto] &lt;String&gt;] [[-Source] &lt;String&gt;] [[-Sport] &lt;String&gt;] [[-Type] &lt;String&gt;] [-Vnet] &lt;String&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Action</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Rule action ('ACCEPT', 'DROP', 'REJECT') or security group name.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Comment</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Descriptive comment.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Delete</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>A list of settings you want to delete.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Dest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Digest</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Dport</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Enable</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Flag to enable/disable a rule.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-IcmpType</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Iface</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Log</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Macro</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Use predefined standard macro.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Moveto</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Move rule to new position &lt;moveto&gt;. Other arguments are ignored.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Pos</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Update rule at position &lt;pos&gt;.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Proto</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defined in '/etc/protocols'.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Source</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Sport</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Type</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vnet</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The SDN vnet object identifier.</td>
+                <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
             </tr>
@@ -47788,7 +49220,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Hookscript</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Script that will be exectued during various steps in the containers lifetime.</td>
+                <td class='searchable'>Script that will be executed during various steps in the containers lifetime.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -48584,7 +50016,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Enable] [[-LogLevelIn] &lt;String&gt;] [[-LogLevelOut] &lt;String&gt;] [-LogNfConntrack] [-Ndp] [-NfConntrackAllowInvalid] [[-NfConntrackHelpers] &lt;String&gt;] [[-NfConntrackMax] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutEstablished] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutSynRecv] &lt;Int32&gt;] [-Nftables] [-Node] &lt;String&gt; [-Nosmurfs] [-ProtectionSynflood] [[-ProtectionSynfloodBurst] &lt;Int32&gt;] [[-ProtectionSynfloodRate] &lt;Int32&gt;] [[-SmurfLogLevel] &lt;String&gt;] [[-TcpFlagsLogLevel] &lt;String&gt;] [-Tcpflags] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveNodesFirewallOptions [[-PveTicket] &lt;PveTicket&gt;] [[-Delete] &lt;String&gt;] [[-Digest] &lt;String&gt;] [-Enable] [[-LogLevelForward] &lt;String&gt;] [[-LogLevelIn] &lt;String&gt;] [[-LogLevelOut] &lt;String&gt;] [-LogNfConntrack] [-Ndp] [-NfConntrackAllowInvalid] [[-NfConntrackHelpers] &lt;String&gt;] [[-NfConntrackMax] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutEstablished] &lt;Int32&gt;] [[-NfConntrackTcpTimeoutSynRecv] &lt;Int32&gt;] [-Nftables] [-Node] &lt;String&gt; [-Nosmurfs] [-ProtectionSynflood] [[-ProtectionSynfloodBurst] &lt;Int32&gt;] [[-ProtectionSynfloodRate] &lt;Int32&gt;] [[-SmurfLogLevel] &lt;String&gt;] [[-TcpFlagsLogLevel] &lt;String&gt;] [-Tcpflags] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -48632,6 +50064,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>False</td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-LogLevelForward</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Log level for forwarded traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
             </tr>
 <tr>
                 <td class='searchable'><nobr>-LogLevelIn</nobr></td>
@@ -48961,7 +50401,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -49120,7 +50560,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Hookscript</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Script that will be exectued during various steps in the containers lifetime.</td>
+                <td class='searchable'>Script that will be executed during various steps in the containers lifetime.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -49844,7 +51284,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -50102,7 +51542,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesNetworkIdx [[-PveTicket] &lt;PveTicket&gt;] [[-Address] &lt;String&gt;] [[-Address6] &lt;String&gt;] [-Autostart] [[-BondPrimary] &lt;String&gt;] [[-BondMode] &lt;String&gt;] [[-BondXmitHashPolicy] &lt;String&gt;] [[-BridgePorts] &lt;String&gt;] [-BridgeVlanAware] [[-Cidr] &lt;String&gt;] [[-Cidr6] &lt;String&gt;] [[-Comments] &lt;String&gt;] [[-Comments6] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Gateway] &lt;String&gt;] [[-Gateway6] &lt;String&gt;] [-Iface] &lt;String&gt; [[-Mtu] &lt;Int32&gt;] [[-Netmask] &lt;String&gt;] [[-Netmask6] &lt;Int32&gt;] [-Node] &lt;String&gt; [[-OvsBonds] &lt;String&gt;] [[-OvsBridge] &lt;String&gt;] [[-OvsOptions] &lt;String&gt;] [[-OvsPorts] &lt;String&gt;] [[-OvsTag] &lt;Int32&gt;] [[-Slaves] &lt;String&gt;] [-Type] &lt;String&gt; [[-VlanId] &lt;Int32&gt;] [[-VlanRawDevice] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveNodesNetworkIdx [[-PveTicket] &lt;PveTicket&gt;] [[-Address] &lt;String&gt;] [[-Address6] &lt;String&gt;] [-Autostart] [[-BondPrimary] &lt;String&gt;] [[-BondMode] &lt;String&gt;] [[-BondXmitHashPolicy] &lt;String&gt;] [[-BridgePorts] &lt;String&gt;] [[-BridgeVids] &lt;String&gt;] [-BridgeVlanAware] [[-Cidr] &lt;String&gt;] [[-Cidr6] &lt;String&gt;] [[-Comments] &lt;String&gt;] [[-Comments6] &lt;String&gt;] [[-Delete] &lt;String&gt;] [[-Gateway] &lt;String&gt;] [[-Gateway6] &lt;String&gt;] [-Iface] &lt;String&gt; [[-Mtu] &lt;Int32&gt;] [[-Netmask] &lt;String&gt;] [[-Netmask6] &lt;Int32&gt;] [-Node] &lt;String&gt; [[-OvsBonds] &lt;String&gt;] [[-OvsBridge] &lt;String&gt;] [[-OvsOptions] &lt;String&gt;] [[-OvsPorts] &lt;String&gt;] [[-OvsTag] &lt;Int32&gt;] [[-Slaves] &lt;String&gt;] [-Type] &lt;String&gt; [[-VlanId] &lt;Int32&gt;] [[-VlanRawDevice] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -50179,6 +51619,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-BridgePorts</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Specify the interfaces you want to add to your bridge.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-BridgeVids</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Specify the allowed VLANs. For example':' '2 4 100-200'. Only used if the bridge is VLAN aware.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -50433,7 +51881,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> Set-PveNodesQemuConfig </h2>
 <p></p>
-                <p class='searchable'>Set virtual machine options (synchrounous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.</p>
+                <p class='searchable'>Set virtual machine options (synchronous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.</p>
             </div>
             <div class='panel panel-default'>
                 <div class='panel-heading'>
@@ -50450,7 +51898,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-AmdSev] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -50495,6 +51943,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Agent</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Enable/disable communication with the QEMU Guest Agent and its properties.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-AmdSev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secure Encrypted Virtualization (SEV) features by AMD CPUs</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -50806,7 +52262,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-MigrateDowntime</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations.</td>
+                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -51690,7 +53146,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Type</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Rule type. Enum: in,out,group</td>
+                <td class='searchable'>Rule type. Enum: in,out,forward,group</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -52443,14 +53899,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <div class="page-header">
                 <h2> Set-PveNodesQemuConfig </h2>
 <p></p>
-                <p class='searchable'>Set virtual machine options (synchrounous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.</p>
+                <p class='searchable'>Set virtual machine options (synchronous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.</p>
             </div>
 <div>
             <h3> Syntax </h3>
         </div>
         <div class='panel panel-default'>
             <div class='panel-body'>
-                <code class='powershell'>Set-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
+                <code class='powershell'>Set-PveNodesQemuConfig [[-PveTicket] &lt;PveTicket&gt;] [-Acpi] [[-Affinity] &lt;String&gt;] [[-Agent] &lt;String&gt;] [[-AmdSev] &lt;String&gt;] [[-Arch] &lt;String&gt;] [[-Args_] &lt;String&gt;] [[-Audio0] &lt;String&gt;] [-Autostart] [[-Balloon] &lt;Int32&gt;] [[-Bios] &lt;String&gt;] [[-Boot] &lt;String&gt;] [[-Bootdisk] &lt;String&gt;] [[-Cdrom] &lt;String&gt;] [[-Cicustom] &lt;String&gt;] [[-Cipassword] &lt;SecureString&gt;] [[-Citype] &lt;String&gt;] [-Ciupgrade] [[-Ciuser] &lt;String&gt;] [[-Cores] &lt;Int32&gt;] [[-Cpu] &lt;String&gt;] [[-Cpulimit] &lt;Single&gt;] [[-Cpuunits] &lt;Int32&gt;] [[-Delete] &lt;String&gt;] [[-Description] &lt;String&gt;] [[-Digest] &lt;String&gt;] [[-Efidisk0] &lt;String&gt;] [-Force] [-Freeze] [[-Hookscript] &lt;String&gt;] [[-HostpciN] &lt;Hashtable&gt;] [[-Hotplug] &lt;String&gt;] [[-Hugepages] &lt;String&gt;] [[-IdeN] &lt;Hashtable&gt;] [[-IpconfigN] &lt;Hashtable&gt;] [[-Ivshmem] &lt;String&gt;] [-Keephugepages] [[-Keyboard] &lt;String&gt;] [-Kvm] [-Localtime] [[-Lock] &lt;String&gt;] [[-Machine] &lt;String&gt;] [[-Memory] &lt;String&gt;] [[-MigrateDowntime] &lt;Single&gt;] [[-MigrateSpeed] &lt;Int32&gt;] [[-Name] &lt;String&gt;] [[-Nameserver] &lt;String&gt;] [[-NetN] &lt;Hashtable&gt;] [-Node] &lt;String&gt; [-Numa] [[-NumaN] &lt;Hashtable&gt;] [-Onboot] [[-Ostype] &lt;String&gt;] [[-ParallelN] &lt;Hashtable&gt;] [-Protection] [-Reboot] [[-Revert] &lt;String&gt;] [[-Rng0] &lt;String&gt;] [[-SataN] &lt;Hashtable&gt;] [[-ScsiN] &lt;Hashtable&gt;] [[-Scsihw] &lt;String&gt;] [[-Searchdomain] &lt;String&gt;] [[-SerialN] &lt;Hashtable&gt;] [[-Shares] &lt;Int32&gt;] [-Skiplock] [[-Smbios1] &lt;String&gt;] [[-Smp] &lt;Int32&gt;] [[-Sockets] &lt;Int32&gt;] [[-SpiceEnhancements] &lt;String&gt;] [[-Sshkeys] &lt;String&gt;] [[-Startdate] &lt;String&gt;] [[-Startup] &lt;String&gt;] [-Tablet] [[-Tags] &lt;String&gt;] [-Tdf] [-Template] [[-Tpmstate0] &lt;String&gt;] [[-UnusedN] &lt;Hashtable&gt;] [[-UsbN] &lt;Hashtable&gt;] [[-Vcpus] &lt;Int32&gt;] [[-Vga] &lt;String&gt;] [[-VirtioN] &lt;Hashtable&gt;] [[-Vmgenid] &lt;String&gt;] [-Vmid] &lt;Int32&gt; [[-Vmstatestorage] &lt;String&gt;] [[-Watchdog] &lt;String&gt;] [&lt;CommonParameters&gt;]</code>
             </div>
         </div>
             <div>
@@ -52495,6 +53951,14 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='searchable'><nobr>-Agent</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Enable/disable communication with the QEMU Guest Agent and its properties.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-AmdSev</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Secure Encrypted Virtualization (SEV) features by AMD CPUs</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
@@ -52806,7 +54270,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-MigrateDowntime</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations.</td>
+                <td class='searchable'>Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -53552,7 +55016,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <tr>
                 <td class='searchable'><nobr>-Port</nobr></td>
                 <td class='visible-lg visible-md searchable'></td>
-                <td class='searchable'>For non default port.</td>
+                <td class='searchable'>Use this port to connect to the storage instead of the default one (for example, with PBS or ESXi). For NFS and CIFS, use the 'options' option to configure the port via the mount options.</td>
                 <td class='visible-lg visible-md'>false</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'>0</td>
@@ -54974,7 +56438,7 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
         <div class='fixed-bottom text-white bg-dark'>
                 <a href='https://github.com/Corsinvest/cv4pve-api-powershell' target='_blank'>cv4pve-api-powershell</a> - Proxmox VE Client API PowerShell Module by Corsinvest Srl <br>
                 This is a part of suite <a href='https://www.corsinvest.it/cv4pve' target='_blank'>cv4pve</a>
- - Version 0.0
+ - Version 
         </div>
     </div>
 
