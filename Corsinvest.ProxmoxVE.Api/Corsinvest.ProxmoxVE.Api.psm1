@@ -1755,6 +1755,48 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveClusterMetricsExport
+{
+<#
+.DESCRIPTION
+Retrieve metrics of the cluster.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER History
+Also return historic values. Returns full available metric history unless `start-time` is also set
+.PARAMETER LocalOnly
+Only return metrics for the current node instead of the whole cluster
+.PARAMETER StartTime
+Only include metrics with a timestamp > start-time.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$History,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$LocalOnly,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$StartTime
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['History']) { $parameters['history'] = $History }
+        if($PSBoundParameters['LocalOnly']) { $parameters['local-only'] = $LocalOnly }
+        if($PSBoundParameters['StartTime']) { $parameters['start-time'] = $StartTime }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/metrics/export" -Parameters $parameters
+    }
+}
+
 function Get-PveClusterNotifications
 {
 <#
@@ -1774,6 +1816,50 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications"
+    }
+}
+
+function Get-PveClusterNotificationsMatcherFields
+{
+<#
+.DESCRIPTION
+Returns known notification metadata fields
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/matcher-fields"
+    }
+}
+
+function Get-PveClusterNotificationsMatcherFieldValues
+{
+<#
+.DESCRIPTION
+Returns known notification metadata fields and their known values
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/matcher-field-values"
     }
 }
 
@@ -2491,6 +2577,239 @@ PveResponse. Return response.
         if($PSBoundParameters['Username']) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/smtp/$Name" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsWebhook
+{
+<#
+.DESCRIPTION
+Returns a list of all webhook endpoints
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/webhook"
+    }
+}
+
+function New-PveClusterNotificationsEndpointsWebhook
+{
+<#
+.DESCRIPTION
+Create a new webhook endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Body
+HTTP body, base64 encoded
+.PARAMETER Comment
+Comment
+.PARAMETER Disable
+Disable this target
+.PARAMETER Header
+HTTP headers to set. These have to be formatted as a property string in the format name=<name>,value=<base64 of value>
+.PARAMETER Method
+HTTP method Enum: post,put,get
+.PARAMETER Name
+The name of the endpoint.
+.PARAMETER Secret
+Secrets to set. These have to be formatted as a property string in the format name=<name>,value=<base64 of value>
+.PARAMETER Url
+Server URL
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Body,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Header,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('post','put','get')]
+        [string]$Method,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Secret,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Url
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Body']) { $parameters['body'] = $Body }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['Header']) { $parameters['header'] = $Header }
+        if($PSBoundParameters['Method']) { $parameters['method'] = $Method }
+        if($PSBoundParameters['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters['Secret']) { $parameters['secret'] = $Secret }
+        if($PSBoundParameters['Url']) { $parameters['url'] = $Url }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/webhook" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterNotificationsEndpointsWebhook
+{
+<#
+.DESCRIPTION
+Remove webhook endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/webhook/$Name"
+    }
+}
+
+function Get-PveClusterNotificationsEndpointsWebhookIdx
+{
+<#
+.DESCRIPTION
+Return a specific webhook endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+Name of the endpoint.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/endpoints/webhook/$Name"
+    }
+}
+
+function Set-PveClusterNotificationsEndpointsWebhook
+{
+<#
+.DESCRIPTION
+Update existing webhook endpoint
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Body
+HTTP body, base64 encoded
+.PARAMETER Comment
+Comment
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Disable
+Disable this target
+.PARAMETER Header
+HTTP headers to set. These have to be formatted as a property string in the format name=<name>,value=<base64 of value>
+.PARAMETER Method
+HTTP method Enum: post,put,get
+.PARAMETER Name
+The name of the endpoint.
+.PARAMETER Secret
+Secrets to set. These have to be formatted as a property string in the format name=<name>,value=<base64 of value>
+.PARAMETER Url
+Server URL
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Body,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Disable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Header,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('post','put','get')]
+        [string]$Method,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Secret,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Url
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Body']) { $parameters['body'] = $Body }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Disable']) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters['Header']) { $parameters['header'] = $Header }
+        if($PSBoundParameters['Method']) { $parameters['method'] = $Method }
+        if($PSBoundParameters['Secret']) { $parameters['secret'] = $Secret }
+        if($PSBoundParameters['Url']) { $parameters['url'] = $Url }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/webhook/$Name" -Parameters $parameters
     }
 }
 
@@ -3294,7 +3613,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3351,7 +3670,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
+        [ValidateNotNullOrEmpty()][ValidateSet('in','out','forward','group')]
         [string]$Type
     )
 
@@ -3491,7 +3810,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3554,7 +3873,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('in','out','group')]
+        [ValidateSet('in','out','forward','group')]
         [string]$Type
     )
 
@@ -3639,7 +3958,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3693,7 +4012,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
+        [ValidateNotNullOrEmpty()][ValidateSet('in','out','forward','group')]
         [string]$Type
     )
 
@@ -3821,7 +4140,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -3881,7 +4200,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('in','out','group')]
+        [ValidateSet('in','out','forward','group')]
         [string]$Type
     )
 
@@ -4429,6 +4748,8 @@ Enable ebtables rules cluster wide.
 Enable or disable the firewall cluster wide.
 .PARAMETER LogRatelimit
 Log ratelimiting settings
+.PARAMETER PolicyForward
+Forward policy. Enum: ACCEPT,DROP
 .PARAMETER PolicyIn
 Input policy. Enum: ACCEPT,REJECT,DROP
 .PARAMETER PolicyOut
@@ -4458,6 +4779,10 @@ PveResponse. Return response.
         [string]$LogRatelimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('ACCEPT','DROP')]
+        [string]$PolicyForward,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('ACCEPT','REJECT','DROP')]
         [string]$PolicyIn,
 
@@ -4473,6 +4798,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Ebtables']) { $parameters['ebtables'] = $Ebtables }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
         if($PSBoundParameters['LogRatelimit']) { $parameters['log_ratelimit'] = $LogRatelimit }
+        if($PSBoundParameters['PolicyForward']) { $parameters['policy_forward'] = $PolicyForward }
         if($PSBoundParameters['PolicyIn']) { $parameters['policy_in'] = $PolicyIn }
         if($PSBoundParameters['PolicyOut']) { $parameters['policy_out'] = $PolicyOut }
 
@@ -4606,6 +4932,8 @@ Determine which notification system to use. If set to 'legacy-sendmail', vzdump 
 Deprecated':' Do not use Enum: always,failure,never
 .PARAMETER NotificationTarget
 Deprecated':' Do not use
+.PARAMETER PbsChangeDetectionMode
+PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata
 .PARAMETER Performance
 Other performance-related settings.
 .PARAMETER Pigz
@@ -4723,6 +5051,10 @@ PveResponse. Return response.
         [string]$NotificationTarget,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('legacy','data','metadata')]
+        [string]$PbsChangeDetectionMode,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -4801,6 +5133,7 @@ PveResponse. Return response.
         if($PSBoundParameters['NotificationMode']) { $parameters['notification-mode'] = $NotificationMode }
         if($PSBoundParameters['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
         if($PSBoundParameters['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
+        if($PSBoundParameters['PbsChangeDetectionMode']) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
         if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
@@ -4931,6 +5264,8 @@ Determine which notification system to use. If set to 'legacy-sendmail', vzdump 
 Deprecated':' Do not use Enum: always,failure,never
 .PARAMETER NotificationTarget
 Deprecated':' Do not use
+.PARAMETER PbsChangeDetectionMode
+PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata
 .PARAMETER Performance
 Other performance-related settings.
 .PARAMETER Pigz
@@ -5051,6 +5386,10 @@ PveResponse. Return response.
         [string]$NotificationTarget,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('legacy','data','metadata')]
+        [string]$PbsChangeDetectionMode,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -5129,6 +5468,7 @@ PveResponse. Return response.
         if($PSBoundParameters['NotificationMode']) { $parameters['notification-mode'] = $NotificationMode }
         if($PSBoundParameters['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
         if($PSBoundParameters['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
+        if($PSBoundParameters['PbsChangeDetectionMode']) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
         if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
@@ -7346,6 +7686,8 @@ Create a new sdn vnet object.
 Ticket data connection.
 .PARAMETER Alias
 alias name of the vnet
+.PARAMETER IsolatePorts
+If true, sets the isolated property for all members of this VNet
 .PARAMETER Tag
 vlan or vxlan id
 .PARAMETER Type
@@ -7369,6 +7711,9 @@ PveResponse. Return response.
         [string]$Alias,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$IsolatePorts,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -7388,6 +7733,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters['Alias']) { $parameters['alias'] = $Alias }
+        if($PSBoundParameters['IsolatePorts']) { $parameters['isolate-ports'] = $IsolatePorts }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
         if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
         if($PSBoundParameters['Vlanaware']) { $parameters['vlanaware'] = $Vlanaware }
@@ -7479,6 +7825,8 @@ alias name of the vnet
 A list of settings you want to delete.
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER IsolatePorts
+If true, sets the isolated property for all members of this VNet
 .PARAMETER Tag
 vlan or vxlan id
 .PARAMETER Vlanaware
@@ -7506,6 +7854,9 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$IsolatePorts,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -7523,11 +7874,479 @@ PveResponse. Return response.
         if($PSBoundParameters['Alias']) { $parameters['alias'] = $Alias }
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['IsolatePorts']) { $parameters['isolate-ports'] = $IsolatePorts }
         if($PSBoundParameters['Tag']) { $parameters['tag'] = $Tag }
         if($PSBoundParameters['Vlanaware']) { $parameters['vlanaware'] = $Vlanaware }
         if($PSBoundParameters['Zone']) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterSdnVnetsFirewall
+{
+<#
+.DESCRIPTION
+Directory index.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet/firewall"
+    }
+}
+
+function Get-PveClusterSdnVnetsFirewallRules
+{
+<#
+.DESCRIPTION
+List rules.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules"
+    }
+}
+
+function New-PveClusterSdnVnetsFirewallRules
+{
+<#
+.DESCRIPTION
+Create new rule.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Action
+Rule action ('ACCEPT', 'DROP', 'REJECT') or security group name.
+.PARAMETER Comment
+Descriptive comment.
+.PARAMETER Dest
+Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Dport
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+.PARAMETER Enable
+Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.
+.PARAMETER Iface
+Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
+.PARAMETER Log
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
+.PARAMETER Macro
+Use predefined standard macro.
+.PARAMETER Pos
+Update rule at position <pos>.
+.PARAMETER Proto
+IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defined in '/etc/protocols'.
+.PARAMETER Source
+Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
+.PARAMETER Sport
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+.PARAMETER Type
+Rule type. Enum: in,out,forward,group
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Action,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Dest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Dport,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Enable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Iface,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
+        [string]$Log,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Macro,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Pos,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Proto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Source,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Sport,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('in','out','forward','group')]
+        [string]$Type,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Action']) { $parameters['action'] = $Action }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Dest']) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
+        if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters['Pos']) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters['Proto']) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters['Source']) { $parameters['source'] = $Source }
+        if($PSBoundParameters['Sport']) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterSdnVnetsFirewallRules
+{
+<#
+.DESCRIPTION
+Delete rule.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Pos
+Update rule at position <pos>.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Pos,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterSdnVnetsFirewallRulesIdx
+{
+<#
+.DESCRIPTION
+Get single rule data.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Pos
+Update rule at position <pos>.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Pos,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos"
+    }
+}
+
+function Set-PveClusterSdnVnetsFirewallRules
+{
+<#
+.DESCRIPTION
+Modify rule data.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Action
+Rule action ('ACCEPT', 'DROP', 'REJECT') or security group name.
+.PARAMETER Comment
+Descriptive comment.
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Dest
+Restrict packet destination address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Dport
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+.PARAMETER Enable
+Flag to enable/disable a rule.
+.PARAMETER IcmpType
+Specify icmp-type. Only valid if proto equals 'icmp' or 'icmpv6'/'ipv6-icmp'.
+.PARAMETER Iface
+Network interface name. You have to use network configuration key names for VMs and containers ('net\d+'). Host related rules can use arbitrary strings.
+.PARAMETER Log
+Log level for firewall rule. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
+.PARAMETER Macro
+Use predefined standard macro.
+.PARAMETER Moveto
+Move rule to new position <moveto>. Other arguments are ignored.
+.PARAMETER Pos
+Update rule at position <pos>.
+.PARAMETER Proto
+IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defined in '/etc/protocols'.
+.PARAMETER Source
+Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
+.PARAMETER Sport
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+.PARAMETER Type
+Rule type. Enum: in,out,forward,group
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Action,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Comment,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Dest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Dport,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Enable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$IcmpType,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Iface,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
+        [string]$Log,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Macro,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Moveto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Pos,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Proto,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Source,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Sport,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('in','out','forward','group')]
+        [string]$Type,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Action']) { $parameters['action'] = $Action }
+        if($PSBoundParameters['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Dest']) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Dport']) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters['Iface']) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters['Log']) { $parameters['log'] = $Log }
+        if($PSBoundParameters['Macro']) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters['Moveto']) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters['Proto']) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters['Source']) { $parameters['source'] = $Source }
+        if($PSBoundParameters['Sport']) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters['Type']) { $parameters['type'] = $Type }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters
+    }
+}
+
+function Get-PveClusterSdnVnetsFirewallOptions
+{
+<#
+.DESCRIPTION
+Get vnet firewall options.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet/firewall/options"
+    }
+}
+
+function Set-PveClusterSdnVnetsFirewallOptions
+{
+<#
+.DESCRIPTION
+Set Firewall options.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Enable
+Enable/disable firewall rules.
+.PARAMETER LogLevelForward
+Log level for forwarded traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
+.PARAMETER PolicyForward
+Forward policy. Enum: ACCEPT,DROP
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [switch]$Enable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
+        [string]$LogLevelForward,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('ACCEPT','DROP')]
+        [string]$PolicyForward,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['LogLevelForward']) { $parameters['log_level_forward'] = $LogLevelForward }
+        if($PSBoundParameters['PolicyForward']) { $parameters['policy_forward'] = $PolicyForward }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/options" -Parameters $parameters
     }
 }
 
@@ -9204,7 +10023,7 @@ Resources index (cluster wide).
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Type
--- Enum: vm,storage,node,sdn
+Resource type. Enum: vm,storage,node,sdn
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -9580,6 +10399,8 @@ Enable/disable ACPI.
 List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the QEMU Guest Agent and its properties.
+.PARAMETER AmdSev
+Secure Encrypted Virtualization (SEV) features by AMD CPUs
 .PARAMETER Arch
 Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Archive
@@ -9638,6 +10459,8 @@ Selectively enable hotplug features. This is a comma separated list of hotplug f
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+.PARAMETER ImportWorkingStorage
+A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.
 .PARAMETER IpconfigN
 cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
@@ -9659,7 +10482,7 @@ Specify the QEMU machine.
 .PARAMETER Memory
 Memory properties.
 .PARAMETER MigrateDowntime
-Set maximum tolerated downtime (in seconds) for migrations.
+Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.
 .PARAMETER MigrateSpeed
 Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
@@ -9767,6 +10590,9 @@ PveResponse. Return response.
         [string]$Agent,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$AmdSev,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('x86_64','aarch64')]
         [string]$Arch,
 
@@ -9856,6 +10682,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IdeN,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$ImportWorkingStorage,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IpconfigN,
@@ -10032,6 +10861,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Acpi']) { $parameters['acpi'] = $Acpi }
         if($PSBoundParameters['Affinity']) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters['Agent']) { $parameters['agent'] = $Agent }
+        if($PSBoundParameters['AmdSev']) { $parameters['amd-sev'] = $AmdSev }
         if($PSBoundParameters['Arch']) { $parameters['arch'] = $Arch }
         if($PSBoundParameters['Archive']) { $parameters['archive'] = $Archive }
         if($PSBoundParameters['Args_']) { $parameters['args'] = $Args_ }
@@ -10059,6 +10889,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Hookscript']) { $parameters['hookscript'] = $Hookscript }
         if($PSBoundParameters['Hotplug']) { $parameters['hotplug'] = $Hotplug }
         if($PSBoundParameters['Hugepages']) { $parameters['hugepages'] = $Hugepages }
+        if($PSBoundParameters['ImportWorkingStorage']) { $parameters['import-working-storage'] = $ImportWorkingStorage }
         if($PSBoundParameters['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
         if($PSBoundParameters['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
         if($PSBoundParameters['Keyboard']) { $parameters['keyboard'] = $Keyboard }
@@ -10307,7 +11138,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -10366,7 +11197,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
+        [ValidateNotNullOrEmpty()][ValidateSet('in','out','forward','group')]
         [string]$Type,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -10519,7 +11350,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -10584,7 +11415,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('in','out','group')]
+        [ValidateSet('in','out','forward','group')]
         [string]$Type,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -12562,7 +13393,7 @@ function New-PveNodesQemuConfig
 {
 <#
 .DESCRIPTION
-Set virtual machine options (asynchrounous API).
+Set virtual machine options (asynchronous API).
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Acpi
@@ -12571,6 +13402,8 @@ Enable/disable ACPI.
 List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the QEMU Guest Agent and its properties.
+.PARAMETER AmdSev
+Secure Encrypted Virtualization (SEV) features by AMD CPUs
 .PARAMETER Arch
 Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Args_
@@ -12631,6 +13464,8 @@ Selectively enable hotplug features. This is a comma separated list of hotplug f
 Enable/disable hugepages memory. Enum: any,2,1024
 .PARAMETER IdeN
 Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+.PARAMETER ImportWorkingStorage
+A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.
 .PARAMETER IpconfigN
 cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
@@ -12650,7 +13485,7 @@ Specify the QEMU machine.
 .PARAMETER Memory
 Memory properties.
 .PARAMETER MigrateDowntime
-Set maximum tolerated downtime (in seconds) for migrations.
+Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.
 .PARAMETER MigrateSpeed
 Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
@@ -12752,6 +13587,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Agent,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$AmdSev,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('x86_64','aarch64')]
@@ -12848,6 +13686,9 @@ PveResponse. Return response.
         [hashtable]$IdeN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$ImportWorkingStorage,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$IpconfigN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -13013,6 +13854,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Acpi']) { $parameters['acpi'] = $Acpi }
         if($PSBoundParameters['Affinity']) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters['Agent']) { $parameters['agent'] = $Agent }
+        if($PSBoundParameters['AmdSev']) { $parameters['amd-sev'] = $AmdSev }
         if($PSBoundParameters['Arch']) { $parameters['arch'] = $Arch }
         if($PSBoundParameters['Args_']) { $parameters['args'] = $Args_ }
         if($PSBoundParameters['Audio0']) { $parameters['audio0'] = $Audio0 }
@@ -13041,6 +13883,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Hookscript']) { $parameters['hookscript'] = $Hookscript }
         if($PSBoundParameters['Hotplug']) { $parameters['hotplug'] = $Hotplug }
         if($PSBoundParameters['Hugepages']) { $parameters['hugepages'] = $Hugepages }
+        if($PSBoundParameters['ImportWorkingStorage']) { $parameters['import-working-storage'] = $ImportWorkingStorage }
         if($PSBoundParameters['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
         if($PSBoundParameters['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
         if($PSBoundParameters['Keyboard']) { $parameters['keyboard'] = $Keyboard }
@@ -13103,7 +13946,7 @@ function Set-PveNodesQemuConfig
 {
 <#
 .DESCRIPTION
-Set virtual machine options (synchrounous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.
+Set virtual machine options (synchronous API) - You should consider using the POST method instead for any actions involving hotplug or storage allocation.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Acpi
@@ -13112,6 +13955,8 @@ Enable/disable ACPI.
 List of host cores used to execute guest processes, for example':' 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the QEMU Guest Agent and its properties.
+.PARAMETER AmdSev
+Secure Encrypted Virtualization (SEV) features by AMD CPUs
 .PARAMETER Arch
 Virtual processor architecture. Defaults to the host. Enum: x86_64,aarch64
 .PARAMETER Args_
@@ -13189,7 +14034,7 @@ Specify the QEMU machine.
 .PARAMETER Memory
 Memory properties.
 .PARAMETER MigrateDowntime
-Set maximum tolerated downtime (in seconds) for migrations.
+Set maximum tolerated downtime (in seconds) for migrations. Should the migration not be able to converge in the very end, because too much newly dirtied RAM needs to be transferred, the limit will be increased automatically step-by-step until migration can converge.
 .PARAMETER MigrateSpeed
 Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
@@ -13291,6 +14136,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Agent,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$AmdSev,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('x86_64','aarch64')]
@@ -13549,6 +14397,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Acpi']) { $parameters['acpi'] = $Acpi }
         if($PSBoundParameters['Affinity']) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters['Agent']) { $parameters['agent'] = $Agent }
+        if($PSBoundParameters['AmdSev']) { $parameters['amd-sev'] = $AmdSev }
         if($PSBoundParameters['Arch']) { $parameters['arch'] = $Arch }
         if($PSBoundParameters['Args_']) { $parameters['args'] = $Args_ }
         if($PSBoundParameters['Audio0']) { $parameters['audio0'] = $Audio0 }
@@ -15505,7 +16354,7 @@ Allow containers access to advanced features.
 .PARAMETER Force
 Allow to overwrite existing container.
 .PARAMETER Hookscript
-Script that will be exectued during various steps in the containers lifetime.
+Script that will be executed during various steps in the containers lifetime.
 .PARAMETER Hostname
 Set a host name for the container.
 .PARAMETER IgnoreUnpackErrors
@@ -15921,7 +16770,7 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 .PARAMETER Features
 Allow containers access to advanced features.
 .PARAMETER Hookscript
-Script that will be exectued during various steps in the containers lifetime.
+Script that will be executed during various steps in the containers lifetime.
 .PARAMETER Hostname
 Set a host name for the container.
 .PARAMETER Lock
@@ -16821,7 +17670,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -16880,7 +17729,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
+        [ValidateNotNullOrEmpty()][ValidateSet('in','out','forward','group')]
         [string]$Type,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -17033,7 +17882,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
@@ -17098,7 +17947,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('in','out','group')]
+        [ValidateSet('in','out','forward','group')]
         [string]$Type,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -20437,6 +21286,8 @@ Exclude certain files/directories (shell globs). Paths starting with '/' are anc
 Options for backup fleecing (VM only).
 .PARAMETER Ionice
 Set IO priority when using the BFQ scheduler. For snapshot and suspend mode backups of VMs, this only affects the compressor. A value of 8 means the idle priority is used, otherwise the best-effort priority is used with the specified value.
+.PARAMETER JobId
+The ID of the backup job. If set, the 'backup-job' metadata field of the backup notification will be set to this value. Only root@pam can set this parameter.
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
@@ -20457,6 +21308,8 @@ Determine which notification system to use. If set to 'legacy-sendmail', vzdump 
 Deprecated':' Do not use Enum: always,failure,never
 .PARAMETER NotificationTarget
 Deprecated':' Do not use
+.PARAMETER PbsChangeDetectionMode
+PBS mode used to detect file changes and switch encoding format for container backups. Enum: legacy,data,metadata
 .PARAMETER Performance
 Other performance-related settings.
 .PARAMETER Pigz
@@ -20524,6 +21377,9 @@ PveResponse. Return response.
         [int]$Ionice,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$JobId,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Lockwait,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -20556,6 +21412,10 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NotificationTarget,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('legacy','data','metadata')]
+        [string]$PbsChangeDetectionMode,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Performance,
@@ -20616,6 +21476,7 @@ PveResponse. Return response.
         if($PSBoundParameters['ExcludePath']) { $parameters['exclude-path'] = $ExcludePath }
         if($PSBoundParameters['Fleecing']) { $parameters['fleecing'] = $Fleecing }
         if($PSBoundParameters['Ionice']) { $parameters['ionice'] = $Ionice }
+        if($PSBoundParameters['JobId']) { $parameters['job-id'] = $JobId }
         if($PSBoundParameters['Lockwait']) { $parameters['lockwait'] = $Lockwait }
         if($PSBoundParameters['Mailnotification']) { $parameters['mailnotification'] = $Mailnotification }
         if($PSBoundParameters['Mailto']) { $parameters['mailto'] = $Mailto }
@@ -20625,6 +21486,7 @@ PveResponse. Return response.
         if($PSBoundParameters['NotificationMode']) { $parameters['notification-mode'] = $NotificationMode }
         if($PSBoundParameters['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
         if($PSBoundParameters['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
+        if($PSBoundParameters['PbsChangeDetectionMode']) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
         if($PSBoundParameters['Performance']) { $parameters['performance'] = $Performance }
         if($PSBoundParameters['Pigz']) { $parameters['pigz'] = $Pigz }
         if($PSBoundParameters['Pool']) { $parameters['pool'] = $Pool }
@@ -21149,6 +22011,8 @@ Bonding mode. Enum: balance-rr,active-backup,balance-xor,broadcast,802.3ad,balan
 Selects the transmit hash policy to use for slave selection in balance-xor and 802.3ad modes. Enum: layer2,layer2+3,layer3+4
 .PARAMETER BridgePorts
 Specify the interfaces you want to add to your bridge.
+.PARAMETER BridgeVids
+Specify the allowed VLANs. For example':' '2 4 100-200'. Only used if the bridge is VLAN aware.
 .PARAMETER BridgeVlanAware
 Enable bridge vlan support.
 .PARAMETER Cidr
@@ -21224,6 +22088,9 @@ PveResponse. Return response.
         [string]$BridgePorts,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$BridgeVids,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BridgeVlanAware,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -21297,6 +22164,7 @@ PveResponse. Return response.
         if($PSBoundParameters['BondMode']) { $parameters['bond_mode'] = $BondMode }
         if($PSBoundParameters['BondXmitHashPolicy']) { $parameters['bond_xmit_hash_policy'] = $BondXmitHashPolicy }
         if($PSBoundParameters['BridgePorts']) { $parameters['bridge_ports'] = $BridgePorts }
+        if($PSBoundParameters['BridgeVids']) { $parameters['bridge_vids'] = $BridgeVids }
         if($PSBoundParameters['BridgeVlanAware']) { $parameters['bridge_vlan_aware'] = $BridgeVlanAware }
         if($PSBoundParameters['Cidr']) { $parameters['cidr'] = $Cidr }
         if($PSBoundParameters['Cidr6']) { $parameters['cidr6'] = $Cidr6 }
@@ -21434,6 +22302,8 @@ Bonding mode. Enum: balance-rr,active-backup,balance-xor,broadcast,802.3ad,balan
 Selects the transmit hash policy to use for slave selection in balance-xor and 802.3ad modes. Enum: layer2,layer2+3,layer3+4
 .PARAMETER BridgePorts
 Specify the interfaces you want to add to your bridge.
+.PARAMETER BridgeVids
+Specify the allowed VLANs. For example':' '2 4 100-200'. Only used if the bridge is VLAN aware.
 .PARAMETER BridgeVlanAware
 Enable bridge vlan support.
 .PARAMETER Cidr
@@ -21509,6 +22379,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BridgePorts,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$BridgeVids,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$BridgeVlanAware,
@@ -21587,6 +22460,7 @@ PveResponse. Return response.
         if($PSBoundParameters['BondMode']) { $parameters['bond_mode'] = $BondMode }
         if($PSBoundParameters['BondXmitHashPolicy']) { $parameters['bond_xmit_hash_policy'] = $BondXmitHashPolicy }
         if($PSBoundParameters['BridgePorts']) { $parameters['bridge_ports'] = $BridgePorts }
+        if($PSBoundParameters['BridgeVids']) { $parameters['bridge_vids'] = $BridgeVids }
         if($PSBoundParameters['BridgeVlanAware']) { $parameters['bridge_vlan_aware'] = $BridgeVlanAware }
         if($PSBoundParameters['Cidr']) { $parameters['cidr'] = $Cidr }
         if($PSBoundParameters['Cidr6']) { $parameters['cidr6'] = $Cidr6 }
@@ -22260,7 +23134,7 @@ Index of available pci methods
 Ticket data connection.
 .PARAMETER Node
 The cluster node name.
-.PARAMETER Pciid
+.PARAMETER PciIdOrMapping
 --
 .OUTPUTS
 PveResponse. Return response.
@@ -22275,11 +23149,14 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [string]$Pciid
+        [string]$PciIdOrMapping
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/$Pciid"
+        $parameters = @{}
+        if($PSBoundParameters['PciIdOrMapping']) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/{pci_id_or_mapping}" -Parameters $parameters
     }
 }
 
@@ -22292,8 +23169,8 @@ List mediated device types for given PCI device.
 Ticket data connection.
 .PARAMETER Node
 The cluster node name.
-.PARAMETER Pciid
-The PCI ID to list the mdev types for.
+.PARAMETER PciIdOrMapping
+The PCI ID or mapping to list the mdev types for.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -22307,11 +23184,14 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [string]$Pciid
+        [string]$PciIdOrMapping
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/$Pciid/mdev"
+        $parameters = @{}
+        if($PSBoundParameters['PciIdOrMapping']) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/{pci_id_or_mapping}/mdev" -Parameters $parameters
     }
 }
 
@@ -23074,7 +23954,7 @@ function New-PveNodesStorageUpload
 {
 <#
 .DESCRIPTION
-Upload templates and ISO images.
+Upload templates, ISO images and OVAs.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Checksum
@@ -23082,7 +23962,7 @@ The expected checksum of the file.
 .PARAMETER ChecksumAlgorithm
 The algorithm to calculate the checksum of the file. Enum: md5,sha1,sha224,sha256,sha384,sha512
 .PARAMETER Content
-Content type. Enum: iso,vztmpl
+Content type. Enum: iso,vztmpl,import
 .PARAMETER Filename
 The name of the file to create. Caution':' This will be normalized!
 .PARAMETER Node
@@ -23108,7 +23988,7 @@ PveResponse. Return response.
         [string]$ChecksumAlgorithm,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl')]
+        [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl','import')]
         [string]$Content,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -23140,7 +24020,7 @@ function New-PveNodesStorageDownloadUrl
 {
 <#
 .DESCRIPTION
-Download templates and ISO images by using an URL.
+Download templates, ISO images and OVAs by using an URL.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Checksum
@@ -23150,7 +24030,7 @@ The algorithm to calculate the checksum of the file. Enum: md5,sha1,sha224,sha25
 .PARAMETER Compression
 Decompress the downloaded file using the specified compression algorithm.
 .PARAMETER Content
-Content type. Enum: iso,vztmpl
+Content type. Enum: iso,vztmpl,import
 .PARAMETER Filename
 The name of the file to create. Caution':' This will be normalized!
 .PARAMETER Node
@@ -23181,7 +24061,7 @@ PveResponse. Return response.
         [string]$Compression,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl')]
+        [ValidateNotNullOrEmpty()][ValidateSet('iso','vztmpl','import')]
         [string]$Content,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -24373,7 +25253,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -24430,7 +25310,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('in','out','group')]
+        [ValidateNotNullOrEmpty()][ValidateSet('in','out','forward','group')]
         [string]$Type
     )
 
@@ -24570,7 +25450,7 @@ Restrict packet source address. This can refer to a single IP address, an IP set
 .PARAMETER Sport
 Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
-Rule type. Enum: in,out,group
+Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -24633,7 +25513,7 @@ PveResponse. Return response.
         [string]$Sport,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('in','out','group')]
+        [ValidateSet('in','out','forward','group')]
         [string]$Type
     )
 
@@ -24700,6 +25580,8 @@ A list of settings you want to delete.
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Enable
 Enable host firewall rules.
+.PARAMETER LogLevelForward
+Log level for forwarded traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER LogLevelIn
 Log level for incoming traffic. Enum: emerg,alert,crit,err,warning,notice,info,debug,nolog
 .PARAMETER LogLevelOut
@@ -24753,6 +25635,10 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [switch]$Enable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
+        [string]$LogLevelForward,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
@@ -24818,6 +25704,7 @@ PveResponse. Return response.
         if($PSBoundParameters['Delete']) { $parameters['delete'] = $Delete }
         if($PSBoundParameters['Digest']) { $parameters['digest'] = $Digest }
         if($PSBoundParameters['Enable']) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters['LogLevelForward']) { $parameters['log_level_forward'] = $LogLevelForward }
         if($PSBoundParameters['LogLevelIn']) { $parameters['log_level_in'] = $LogLevelIn }
         if($PSBoundParameters['LogLevelOut']) { $parameters['log_level_out'] = $LogLevelOut }
         if($PSBoundParameters['LogNfConntrack']) { $parameters['log_nf_conntrack'] = $LogNfConntrack }
@@ -26781,7 +27668,7 @@ File system path.
 .PARAMETER Pool
 Pool.
 .PARAMETER Port
-For non default port.
+Use this port to connect to the storage instead of the default one (for example, with PBS or ESXi). For NFS and CIFS, use the 'options' option to configure the port via the mount options.
 .PARAMETER Portal
 iSCSI portal (IP or DNS name with optional port).
 .PARAMETER Preallocation
@@ -27227,7 +28114,7 @@ Password for accessing the share/datastore.
 .PARAMETER Pool
 Pool.
 .PARAMETER Port
-For non default port.
+Use this port to connect to the storage instead of the default one (for example, with PBS or ESXi). For NFS and CIFS, use the 'options' option to configure the port via the mount options.
 .PARAMETER Preallocation
 Preallocation mode for raw and qcow2 images. Using 'metadata' on raw images results in preallocation=off. Enum: off,metadata,falloc,full
 .PARAMETER PruneBackups
