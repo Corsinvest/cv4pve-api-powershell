@@ -51,6 +51,40 @@ $Global:PveTicketLast = $null
 ## CORE ##
 ##########
 #region Core
+
+function Test-PortQuick {
+    param (
+        [string]$HostName,
+        [int]$Port,
+        [int]$Timeout = 5000 # Timeout in millisecondi
+    )
+
+    $ret = $false
+    try {
+        $tcpClient = New-Object System.Net.Sockets.TcpClient
+        $tcpClient.ReceiveTimeout = $Timeout
+        $tcpClient.SendTimeout = $Timeout
+
+        $connection = $tcpClient.BeginConnect($HostName, $Port, $null, $null)
+        if ($connection.AsyncWaitHandle.WaitOne($Timeout, $false)) {
+            $tcpClient.EndConnect($connection)
+            $ret = $true
+        }
+        else {
+            #Write-Host "Timeout for ${HostName}:${Port}."
+        }
+    }
+    catch {
+        #Write-Host "Port $Port on $HostName It is NOT reachable."
+    }
+    finally {
+        $tcpClient.Close() | Out-Null
+    }
+
+    return $ret
+}
+
+
 function Connect-PveCluster {
     <#
 .DESCRIPTION
@@ -102,7 +136,7 @@ PveTicket. Return ticket connection.
 
             if ($data.Length -eq 2 ) { [int32]::TryParse($data[1] , [ref]$portTmp) | Out-Null }
 
-            if (Test-Connection -Ping $hostTmp -Count 1 -ea 0 -quiet) {
+            if (Test-PortQuick -HostName $hostTmp -Port $portTmp -Timeout 2000) {
                 $hostName = $hostTmp;
                 $port = $portTmp;
                 break;
