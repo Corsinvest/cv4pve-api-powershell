@@ -1280,15 +1280,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Id']) { $parameters['id'] = $Id }
-        if($PSBoundParameters.ContainsKey['Rate']) { $parameters['rate'] = $Rate }
-        if($PSBoundParameters.ContainsKey['RemoveJob']) { $parameters['remove_job'] = $RemoveJob }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Rate')) { $parameters['rate'] = $Rate }
+        if($PSBoundParameters.ContainsKey('RemoveJob')) { $parameters['remove_job'] = $RemoveJob }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/replication" -Parameters $parameters
     }
@@ -1328,8 +1328,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Keep']) { $parameters['keep'] = $Keep }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Keep')) { $parameters['keep'] = $Keep }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/replication/$Id" -Parameters $parameters
     }
@@ -1427,14 +1427,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Rate']) { $parameters['rate'] = $Rate }
-        if($PSBoundParameters.ContainsKey['RemoveJob']) { $parameters['remove_job'] = $RemoveJob }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Rate')) { $parameters['rate'] = $Rate }
+        if($PSBoundParameters.ContainsKey('RemoveJob')) { $parameters['remove_job'] = $RemoveJob }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/replication/$Id" -Parameters $parameters
     }
@@ -1640,21 +1640,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ApiPathPrefix']) { $parameters['api-path-prefix'] = $ApiPathPrefix }
-        if($PSBoundParameters.ContainsKey['Bucket']) { $parameters['bucket'] = $Bucket }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Influxdbproto']) { $parameters['influxdbproto'] = $Influxdbproto }
-        if($PSBoundParameters.ContainsKey['MaxBodySize']) { $parameters['max-body-size'] = $MaxBodySize }
-        if($PSBoundParameters.ContainsKey['Mtu']) { $parameters['mtu'] = $Mtu }
-        if($PSBoundParameters.ContainsKey['Organization']) { $parameters['organization'] = $Organization }
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
-        if($PSBoundParameters.ContainsKey['Token']) { $parameters['token'] = $Token }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['VerifyCertificate']) { $parameters['verify-certificate'] = $VerifyCertificate }
+        if($PSBoundParameters.ContainsKey('ApiPathPrefix')) { $parameters['api-path-prefix'] = $ApiPathPrefix }
+        if($PSBoundParameters.ContainsKey('Bucket')) { $parameters['bucket'] = $Bucket }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Influxdbproto')) { $parameters['influxdbproto'] = $Influxdbproto }
+        if($PSBoundParameters.ContainsKey('MaxBodySize')) { $parameters['max-body-size'] = $MaxBodySize }
+        if($PSBoundParameters.ContainsKey('Mtu')) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters.ContainsKey('Organization')) { $parameters['organization'] = $Organization }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('VerifyCertificate')) { $parameters['verify-certificate'] = $VerifyCertificate }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
     }
@@ -1766,22 +1766,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ApiPathPrefix']) { $parameters['api-path-prefix'] = $ApiPathPrefix }
-        if($PSBoundParameters.ContainsKey['Bucket']) { $parameters['bucket'] = $Bucket }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Influxdbproto']) { $parameters['influxdbproto'] = $Influxdbproto }
-        if($PSBoundParameters.ContainsKey['MaxBodySize']) { $parameters['max-body-size'] = $MaxBodySize }
-        if($PSBoundParameters.ContainsKey['Mtu']) { $parameters['mtu'] = $Mtu }
-        if($PSBoundParameters.ContainsKey['Organization']) { $parameters['organization'] = $Organization }
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
-        if($PSBoundParameters.ContainsKey['Token']) { $parameters['token'] = $Token }
-        if($PSBoundParameters.ContainsKey['VerifyCertificate']) { $parameters['verify-certificate'] = $VerifyCertificate }
+        if($PSBoundParameters.ContainsKey('ApiPathPrefix')) { $parameters['api-path-prefix'] = $ApiPathPrefix }
+        if($PSBoundParameters.ContainsKey('Bucket')) { $parameters['bucket'] = $Bucket }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Influxdbproto')) { $parameters['influxdbproto'] = $Influxdbproto }
+        if($PSBoundParameters.ContainsKey('MaxBodySize')) { $parameters['max-body-size'] = $MaxBodySize }
+        if($PSBoundParameters.ContainsKey('Mtu')) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters.ContainsKey('Organization')) { $parameters['organization'] = $Organization }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
+        if($PSBoundParameters.ContainsKey('VerifyCertificate')) { $parameters['verify-certificate'] = $VerifyCertificate }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
     }
@@ -1821,9 +1821,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['History']) { $parameters['history'] = $History }
-        if($PSBoundParameters.ContainsKey['LocalOnly']) { $parameters['local-only'] = $LocalOnly }
-        if($PSBoundParameters.ContainsKey['StartTime']) { $parameters['start-time'] = $StartTime }
+        if($PSBoundParameters.ContainsKey('History')) { $parameters['history'] = $History }
+        if($PSBoundParameters.ContainsKey('LocalOnly')) { $parameters['local-only'] = $LocalOnly }
+        if($PSBoundParameters.ContainsKey('StartTime')) { $parameters['start-time'] = $StartTime }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/metrics/export" -Parameters $parameters
     }
@@ -1993,13 +1993,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Author']) { $parameters['author'] = $Author }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['FromAddress']) { $parameters['from-address'] = $FromAddress }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Author')) { $parameters['author'] = $Author }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('FromAddress')) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('MailtoUser')) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/sendmail" -Parameters $parameters
     }
@@ -2123,14 +2123,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Author']) { $parameters['author'] = $Author }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['FromAddress']) { $parameters['from-address'] = $FromAddress }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters.ContainsKey('Author')) { $parameters['author'] = $Author }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('FromAddress')) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('MailtoUser')) { $parameters['mailto-user'] = $MailtoUser }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/sendmail/$Name" -Parameters $parameters
     }
@@ -2202,11 +2202,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Token']) { $parameters['token'] = $Token }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/gotify" -Parameters $parameters
     }
@@ -2320,12 +2320,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Token']) { $parameters['token'] = $Token }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/gotify/$Name" -Parameters $parameters
     }
@@ -2433,18 +2433,18 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Author']) { $parameters['author'] = $Author }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['FromAddress']) { $parameters['from-address'] = $FromAddress }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Author')) { $parameters['author'] = $Author }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('FromAddress')) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('MailtoUser')) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/smtp" -Parameters $parameters
     }
@@ -2594,19 +2594,19 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Author']) { $parameters['author'] = $Author }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['FromAddress']) { $parameters['from-address'] = $FromAddress }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['MailtoUser']) { $parameters['mailto-user'] = $MailtoUser }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Author')) { $parameters['author'] = $Author }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('FromAddress')) { $parameters['from-address'] = $FromAddress }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('MailtoUser')) { $parameters['mailto-user'] = $MailtoUser }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/smtp/$Name" -Parameters $parameters
     }
@@ -2694,14 +2694,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Body']) { $parameters['body'] = $Body }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Header']) { $parameters['header'] = $Header }
-        if($PSBoundParameters.ContainsKey['Method']) { $parameters['method'] = $Method }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Secret']) { $parameters['secret'] = $Secret }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('Body')) { $parameters['body'] = $Body }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Header')) { $parameters['header'] = $Header }
+        if($PSBoundParameters.ContainsKey('Method')) { $parameters['method'] = $Method }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Secret')) { $parameters['secret'] = $Secret }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/webhook" -Parameters $parameters
     }
@@ -2831,15 +2831,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Body']) { $parameters['body'] = $Body }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Header']) { $parameters['header'] = $Header }
-        if($PSBoundParameters.ContainsKey['Method']) { $parameters['method'] = $Method }
-        if($PSBoundParameters.ContainsKey['Secret']) { $parameters['secret'] = $Secret }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('Body')) { $parameters['body'] = $Body }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Header')) { $parameters['header'] = $Header }
+        if($PSBoundParameters.ContainsKey('Method')) { $parameters['method'] = $Method }
+        if($PSBoundParameters.ContainsKey('Secret')) { $parameters['secret'] = $Secret }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/webhook/$Name" -Parameters $parameters
     }
@@ -2954,15 +2954,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['InvertMatch']) { $parameters['invert-match'] = $InvertMatch }
-        if($PSBoundParameters.ContainsKey['MatchCalendar']) { $parameters['match-calendar'] = $MatchCalendar }
-        if($PSBoundParameters.ContainsKey['MatchField']) { $parameters['match-field'] = $MatchField }
-        if($PSBoundParameters.ContainsKey['MatchSeverity']) { $parameters['match-severity'] = $MatchSeverity }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('InvertMatch')) { $parameters['invert-match'] = $InvertMatch }
+        if($PSBoundParameters.ContainsKey('MatchCalendar')) { $parameters['match-calendar'] = $MatchCalendar }
+        if($PSBoundParameters.ContainsKey('MatchField')) { $parameters['match-field'] = $MatchField }
+        if($PSBoundParameters.ContainsKey('MatchSeverity')) { $parameters['match-severity'] = $MatchSeverity }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/matchers" -Parameters $parameters
     }
@@ -3097,16 +3097,16 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['InvertMatch']) { $parameters['invert-match'] = $InvertMatch }
-        if($PSBoundParameters.ContainsKey['MatchCalendar']) { $parameters['match-calendar'] = $MatchCalendar }
-        if($PSBoundParameters.ContainsKey['MatchField']) { $parameters['match-field'] = $MatchField }
-        if($PSBoundParameters.ContainsKey['MatchSeverity']) { $parameters['match-severity'] = $MatchSeverity }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('InvertMatch')) { $parameters['invert-match'] = $InvertMatch }
+        if($PSBoundParameters.ContainsKey('MatchCalendar')) { $parameters['match-calendar'] = $MatchCalendar }
+        if($PSBoundParameters.ContainsKey('MatchField')) { $parameters['match-field'] = $MatchField }
+        if($PSBoundParameters.ContainsKey('MatchSeverity')) { $parameters['match-severity'] = $MatchSeverity }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/matchers/$Name" -Parameters $parameters
     }
@@ -3173,11 +3173,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Clustername']) { $parameters['clustername'] = $Clustername }
-        if($PSBoundParameters.ContainsKey['Nodeid']) { $parameters['nodeid'] = $Nodeid }
-        if($PSBoundParameters.ContainsKey['Votes']) { $parameters['votes'] = $Votes }
+        if($PSBoundParameters.ContainsKey('Clustername')) { $parameters['clustername'] = $Clustername }
+        if($PSBoundParameters.ContainsKey('Nodeid')) { $parameters['nodeid'] = $Nodeid }
+        if($PSBoundParameters.ContainsKey('Votes')) { $parameters['votes'] = $Votes }
 
-        if($PSBoundParameters.ContainsKey['LinkN']) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
+        if($PSBoundParameters.ContainsKey('LinkN')) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config" -Parameters $parameters
     }
@@ -3308,13 +3308,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Apiversion']) { $parameters['apiversion'] = $Apiversion }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['NewNodeIp']) { $parameters['new_node_ip'] = $NewNodeIp }
-        if($PSBoundParameters.ContainsKey['Nodeid']) { $parameters['nodeid'] = $Nodeid }
-        if($PSBoundParameters.ContainsKey['Votes']) { $parameters['votes'] = $Votes }
+        if($PSBoundParameters.ContainsKey('Apiversion')) { $parameters['apiversion'] = $Apiversion }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('NewNodeIp')) { $parameters['new_node_ip'] = $NewNodeIp }
+        if($PSBoundParameters.ContainsKey('Nodeid')) { $parameters['nodeid'] = $Nodeid }
+        if($PSBoundParameters.ContainsKey('Votes')) { $parameters['votes'] = $Votes }
 
-        if($PSBoundParameters.ContainsKey['LinkN']) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
+        if($PSBoundParameters.ContainsKey('LinkN')) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config/nodes/$Node" -Parameters $parameters
     }
@@ -3344,7 +3344,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/config/join" -Parameters $parameters
     }
@@ -3404,14 +3404,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Fingerprint']) { $parameters['fingerprint'] = $Fingerprint }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Hostname']) { $parameters['hostname'] = $Hostname }
-        if($PSBoundParameters.ContainsKey['Nodeid']) { $parameters['nodeid'] = $Nodeid }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Votes']) { $parameters['votes'] = $Votes }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Hostname')) { $parameters['hostname'] = $Hostname }
+        if($PSBoundParameters.ContainsKey('Nodeid')) { $parameters['nodeid'] = $Nodeid }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Votes')) { $parameters['votes'] = $Votes }
 
-        if($PSBoundParameters.ContainsKey['LinkN']) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
+        if($PSBoundParameters.ContainsKey('LinkN')) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config/join" -Parameters $parameters
     }
@@ -3544,10 +3544,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Group']) { $parameters['group'] = $Group }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Group')) { $parameters['group'] = $Group }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/groups" -Parameters $parameters
     }
@@ -3708,21 +3708,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Pos']) { $parameters['pos'] = $Pos }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Pos')) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/groups/$Group" -Parameters $parameters
     }
@@ -3762,7 +3762,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/groups/$Group/$Pos" -Parameters $parameters
     }
@@ -3911,22 +3911,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Moveto']) { $parameters['moveto'] = $Moveto }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Moveto')) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/groups/$Group/$Pos" -Parameters $parameters
     }
@@ -4050,21 +4050,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Pos']) { $parameters['pos'] = $Pos }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Pos')) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/rules" -Parameters $parameters
     }
@@ -4099,7 +4099,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -4238,22 +4238,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Moveto']) { $parameters['moveto'] = $Moveto }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Moveto')) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -4320,10 +4320,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/ipset" -Parameters $parameters
     }
@@ -4358,7 +4358,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters
     }
@@ -4430,9 +4430,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Nomatch']) { $parameters['nomatch'] = $Nomatch }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters
     }
@@ -4472,7 +4472,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name/$Cidr" -Parameters $parameters
     }
@@ -4554,9 +4554,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Nomatch']) { $parameters['nomatch'] = $Nomatch }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/ipset/$Name/$Cidr" -Parameters $parameters
     }
@@ -4618,9 +4618,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/aliases" -Parameters $parameters
     }
@@ -4655,7 +4655,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/aliases/$Name" -Parameters $parameters
     }
@@ -4732,10 +4732,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/aliases/$Name" -Parameters $parameters
     }
@@ -4825,14 +4825,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Ebtables']) { $parameters['ebtables'] = $Ebtables }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['LogRatelimit']) { $parameters['log_ratelimit'] = $LogRatelimit }
-        if($PSBoundParameters.ContainsKey['PolicyForward']) { $parameters['policy_forward'] = $PolicyForward }
-        if($PSBoundParameters.ContainsKey['PolicyIn']) { $parameters['policy_in'] = $PolicyIn }
-        if($PSBoundParameters.ContainsKey['PolicyOut']) { $parameters['policy_out'] = $PolicyOut }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Ebtables')) { $parameters['ebtables'] = $Ebtables }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('LogRatelimit')) { $parameters['log_ratelimit'] = $LogRatelimit }
+        if($PSBoundParameters.ContainsKey('PolicyForward')) { $parameters['policy_forward'] = $PolicyForward }
+        if($PSBoundParameters.ContainsKey('PolicyIn')) { $parameters['policy_in'] = $PolicyIn }
+        if($PSBoundParameters.ContainsKey('PolicyOut')) { $parameters['policy_out'] = $PolicyOut }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/options" -Parameters $parameters
     }
@@ -4885,7 +4885,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/firewall/refs" -Parameters $parameters
     }
@@ -5143,47 +5143,47 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['All']) { $parameters['all'] = $All }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Compress']) { $parameters['compress'] = $Compress }
-        if($PSBoundParameters.ContainsKey['Dow']) { $parameters['dow'] = $Dow }
-        if($PSBoundParameters.ContainsKey['Dumpdir']) { $parameters['dumpdir'] = $Dumpdir }
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['Exclude']) { $parameters['exclude'] = $Exclude }
-        if($PSBoundParameters.ContainsKey['ExcludePath']) { $parameters['exclude-path'] = $ExcludePath }
-        if($PSBoundParameters.ContainsKey['Fleecing']) { $parameters['fleecing'] = $Fleecing }
-        if($PSBoundParameters.ContainsKey['Id']) { $parameters['id'] = $Id }
-        if($PSBoundParameters.ContainsKey['Ionice']) { $parameters['ionice'] = $Ionice }
-        if($PSBoundParameters.ContainsKey['Lockwait']) { $parameters['lockwait'] = $Lockwait }
-        if($PSBoundParameters.ContainsKey['Mailnotification']) { $parameters['mailnotification'] = $Mailnotification }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
-        if($PSBoundParameters.ContainsKey['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
-        if($PSBoundParameters.ContainsKey['NotificationMode']) { $parameters['notification-mode'] = $NotificationMode }
-        if($PSBoundParameters.ContainsKey['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
-        if($PSBoundParameters.ContainsKey['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
-        if($PSBoundParameters.ContainsKey['PbsChangeDetectionMode']) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
-        if($PSBoundParameters.ContainsKey['Performance']) { $parameters['performance'] = $Performance }
-        if($PSBoundParameters.ContainsKey['Pigz']) { $parameters['pigz'] = $Pigz }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Protected']) { $parameters['protected'] = $Protected }
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Quiet']) { $parameters['quiet'] = $Quiet }
-        if($PSBoundParameters.ContainsKey['Remove']) { $parameters['remove'] = $Remove }
-        if($PSBoundParameters.ContainsKey['RepeatMissed']) { $parameters['repeat-missed'] = $RepeatMissed }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Script']) { $parameters['script'] = $Script }
-        if($PSBoundParameters.ContainsKey['Starttime']) { $parameters['starttime'] = $Starttime }
-        if($PSBoundParameters.ContainsKey['Stdexcludes']) { $parameters['stdexcludes'] = $Stdexcludes }
-        if($PSBoundParameters.ContainsKey['Stop']) { $parameters['stop'] = $Stop }
-        if($PSBoundParameters.ContainsKey['Stopwait']) { $parameters['stopwait'] = $Stopwait }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Tmpdir']) { $parameters['tmpdir'] = $Tmpdir }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
-        if($PSBoundParameters.ContainsKey['Zstd']) { $parameters['zstd'] = $Zstd }
+        if($PSBoundParameters.ContainsKey('All')) { $parameters['all'] = $All }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Compress')) { $parameters['compress'] = $Compress }
+        if($PSBoundParameters.ContainsKey('Dow')) { $parameters['dow'] = $Dow }
+        if($PSBoundParameters.ContainsKey('Dumpdir')) { $parameters['dumpdir'] = $Dumpdir }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('Exclude')) { $parameters['exclude'] = $Exclude }
+        if($PSBoundParameters.ContainsKey('ExcludePath')) { $parameters['exclude-path'] = $ExcludePath }
+        if($PSBoundParameters.ContainsKey('Fleecing')) { $parameters['fleecing'] = $Fleecing }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Ionice')) { $parameters['ionice'] = $Ionice }
+        if($PSBoundParameters.ContainsKey('Lockwait')) { $parameters['lockwait'] = $Lockwait }
+        if($PSBoundParameters.ContainsKey('Mailnotification')) { $parameters['mailnotification'] = $Mailnotification }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('Maxfiles')) { $parameters['maxfiles'] = $Maxfiles }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('NotesTemplate')) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters.ContainsKey('NotificationMode')) { $parameters['notification-mode'] = $NotificationMode }
+        if($PSBoundParameters.ContainsKey('NotificationPolicy')) { $parameters['notification-policy'] = $NotificationPolicy }
+        if($PSBoundParameters.ContainsKey('NotificationTarget')) { $parameters['notification-target'] = $NotificationTarget }
+        if($PSBoundParameters.ContainsKey('PbsChangeDetectionMode')) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
+        if($PSBoundParameters.ContainsKey('Performance')) { $parameters['performance'] = $Performance }
+        if($PSBoundParameters.ContainsKey('Pigz')) { $parameters['pigz'] = $Pigz }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Protected')) { $parameters['protected'] = $Protected }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Quiet')) { $parameters['quiet'] = $Quiet }
+        if($PSBoundParameters.ContainsKey('Remove')) { $parameters['remove'] = $Remove }
+        if($PSBoundParameters.ContainsKey('RepeatMissed')) { $parameters['repeat-missed'] = $RepeatMissed }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Script')) { $parameters['script'] = $Script }
+        if($PSBoundParameters.ContainsKey('Starttime')) { $parameters['starttime'] = $Starttime }
+        if($PSBoundParameters.ContainsKey('Stdexcludes')) { $parameters['stdexcludes'] = $Stdexcludes }
+        if($PSBoundParameters.ContainsKey('Stop')) { $parameters['stop'] = $Stop }
+        if($PSBoundParameters.ContainsKey('Stopwait')) { $parameters['stopwait'] = $Stopwait }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Tmpdir')) { $parameters['tmpdir'] = $Tmpdir }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Zstd')) { $parameters['zstd'] = $Zstd }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/backup" -Parameters $parameters
     }
@@ -5478,47 +5478,47 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['All']) { $parameters['all'] = $All }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Compress']) { $parameters['compress'] = $Compress }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dow']) { $parameters['dow'] = $Dow }
-        if($PSBoundParameters.ContainsKey['Dumpdir']) { $parameters['dumpdir'] = $Dumpdir }
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['Exclude']) { $parameters['exclude'] = $Exclude }
-        if($PSBoundParameters.ContainsKey['ExcludePath']) { $parameters['exclude-path'] = $ExcludePath }
-        if($PSBoundParameters.ContainsKey['Fleecing']) { $parameters['fleecing'] = $Fleecing }
-        if($PSBoundParameters.ContainsKey['Ionice']) { $parameters['ionice'] = $Ionice }
-        if($PSBoundParameters.ContainsKey['Lockwait']) { $parameters['lockwait'] = $Lockwait }
-        if($PSBoundParameters.ContainsKey['Mailnotification']) { $parameters['mailnotification'] = $Mailnotification }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
-        if($PSBoundParameters.ContainsKey['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
-        if($PSBoundParameters.ContainsKey['NotificationMode']) { $parameters['notification-mode'] = $NotificationMode }
-        if($PSBoundParameters.ContainsKey['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
-        if($PSBoundParameters.ContainsKey['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
-        if($PSBoundParameters.ContainsKey['PbsChangeDetectionMode']) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
-        if($PSBoundParameters.ContainsKey['Performance']) { $parameters['performance'] = $Performance }
-        if($PSBoundParameters.ContainsKey['Pigz']) { $parameters['pigz'] = $Pigz }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Protected']) { $parameters['protected'] = $Protected }
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Quiet']) { $parameters['quiet'] = $Quiet }
-        if($PSBoundParameters.ContainsKey['Remove']) { $parameters['remove'] = $Remove }
-        if($PSBoundParameters.ContainsKey['RepeatMissed']) { $parameters['repeat-missed'] = $RepeatMissed }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Script']) { $parameters['script'] = $Script }
-        if($PSBoundParameters.ContainsKey['Starttime']) { $parameters['starttime'] = $Starttime }
-        if($PSBoundParameters.ContainsKey['Stdexcludes']) { $parameters['stdexcludes'] = $Stdexcludes }
-        if($PSBoundParameters.ContainsKey['Stop']) { $parameters['stop'] = $Stop }
-        if($PSBoundParameters.ContainsKey['Stopwait']) { $parameters['stopwait'] = $Stopwait }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Tmpdir']) { $parameters['tmpdir'] = $Tmpdir }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
-        if($PSBoundParameters.ContainsKey['Zstd']) { $parameters['zstd'] = $Zstd }
+        if($PSBoundParameters.ContainsKey('All')) { $parameters['all'] = $All }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Compress')) { $parameters['compress'] = $Compress }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dow')) { $parameters['dow'] = $Dow }
+        if($PSBoundParameters.ContainsKey('Dumpdir')) { $parameters['dumpdir'] = $Dumpdir }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('Exclude')) { $parameters['exclude'] = $Exclude }
+        if($PSBoundParameters.ContainsKey('ExcludePath')) { $parameters['exclude-path'] = $ExcludePath }
+        if($PSBoundParameters.ContainsKey('Fleecing')) { $parameters['fleecing'] = $Fleecing }
+        if($PSBoundParameters.ContainsKey('Ionice')) { $parameters['ionice'] = $Ionice }
+        if($PSBoundParameters.ContainsKey('Lockwait')) { $parameters['lockwait'] = $Lockwait }
+        if($PSBoundParameters.ContainsKey('Mailnotification')) { $parameters['mailnotification'] = $Mailnotification }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('Maxfiles')) { $parameters['maxfiles'] = $Maxfiles }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('NotesTemplate')) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters.ContainsKey('NotificationMode')) { $parameters['notification-mode'] = $NotificationMode }
+        if($PSBoundParameters.ContainsKey('NotificationPolicy')) { $parameters['notification-policy'] = $NotificationPolicy }
+        if($PSBoundParameters.ContainsKey('NotificationTarget')) { $parameters['notification-target'] = $NotificationTarget }
+        if($PSBoundParameters.ContainsKey('PbsChangeDetectionMode')) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
+        if($PSBoundParameters.ContainsKey('Performance')) { $parameters['performance'] = $Performance }
+        if($PSBoundParameters.ContainsKey('Pigz')) { $parameters['pigz'] = $Pigz }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Protected')) { $parameters['protected'] = $Protected }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Quiet')) { $parameters['quiet'] = $Quiet }
+        if($PSBoundParameters.ContainsKey('Remove')) { $parameters['remove'] = $Remove }
+        if($PSBoundParameters.ContainsKey('RepeatMissed')) { $parameters['repeat-missed'] = $RepeatMissed }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Script')) { $parameters['script'] = $Script }
+        if($PSBoundParameters.ContainsKey('Starttime')) { $parameters['starttime'] = $Starttime }
+        if($PSBoundParameters.ContainsKey('Stdexcludes')) { $parameters['stdexcludes'] = $Stdexcludes }
+        if($PSBoundParameters.ContainsKey('Stop')) { $parameters['stop'] = $Stop }
+        if($PSBoundParameters.ContainsKey('Stopwait')) { $parameters['stopwait'] = $Stopwait }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Tmpdir')) { $parameters['tmpdir'] = $Tmpdir }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Zstd')) { $parameters['zstd'] = $Zstd }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/backup/$Id" -Parameters $parameters
     }
@@ -5642,7 +5642,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/ha/resources" -Parameters $parameters
     }
@@ -5704,13 +5704,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Group']) { $parameters['group'] = $Group }
-        if($PSBoundParameters.ContainsKey['MaxRelocate']) { $parameters['max_relocate'] = $MaxRelocate }
-        if($PSBoundParameters.ContainsKey['MaxRestart']) { $parameters['max_restart'] = $MaxRestart }
-        if($PSBoundParameters.ContainsKey['Sid']) { $parameters['sid'] = $Sid }
-        if($PSBoundParameters.ContainsKey['State']) { $parameters['state'] = $State }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Group')) { $parameters['group'] = $Group }
+        if($PSBoundParameters.ContainsKey('MaxRelocate')) { $parameters['max_relocate'] = $MaxRelocate }
+        if($PSBoundParameters.ContainsKey('MaxRestart')) { $parameters['max_restart'] = $MaxRestart }
+        if($PSBoundParameters.ContainsKey('Sid')) { $parameters['sid'] = $Sid }
+        if($PSBoundParameters.ContainsKey('State')) { $parameters['state'] = $State }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources" -Parameters $parameters
     }
@@ -5830,13 +5830,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Group']) { $parameters['group'] = $Group }
-        if($PSBoundParameters.ContainsKey['MaxRelocate']) { $parameters['max_relocate'] = $MaxRelocate }
-        if($PSBoundParameters.ContainsKey['MaxRestart']) { $parameters['max_restart'] = $MaxRestart }
-        if($PSBoundParameters.ContainsKey['State']) { $parameters['state'] = $State }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Group')) { $parameters['group'] = $Group }
+        if($PSBoundParameters.ContainsKey('MaxRelocate')) { $parameters['max_relocate'] = $MaxRelocate }
+        if($PSBoundParameters.ContainsKey('MaxRestart')) { $parameters['max_restart'] = $MaxRestart }
+        if($PSBoundParameters.ContainsKey('State')) { $parameters['state'] = $State }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/resources/$Sid" -Parameters $parameters
     }
@@ -5871,7 +5871,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources/$Sid/migrate" -Parameters $parameters
     }
@@ -5906,7 +5906,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources/$Sid/relocate" -Parameters $parameters
     }
@@ -5984,12 +5984,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Group']) { $parameters['group'] = $Group }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Nofailback']) { $parameters['nofailback'] = $Nofailback }
-        if($PSBoundParameters.ContainsKey['Restricted']) { $parameters['restricted'] = $Restricted }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Group')) { $parameters['group'] = $Group }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Nofailback')) { $parameters['nofailback'] = $Nofailback }
+        if($PSBoundParameters.ContainsKey('Restricted')) { $parameters['restricted'] = $Restricted }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/groups" -Parameters $parameters
     }
@@ -6103,12 +6103,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Nofailback']) { $parameters['nofailback'] = $Nofailback }
-        if($PSBoundParameters.ContainsKey['Restricted']) { $parameters['restricted'] = $Restricted }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Nofailback')) { $parameters['nofailback'] = $Nofailback }
+        if($PSBoundParameters.ContainsKey('Restricted')) { $parameters['restricted'] = $Restricted }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/groups/$Group" -Parameters $parameters
     }
@@ -6227,7 +6227,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/plugins" -Parameters $parameters
     }
@@ -6289,13 +6289,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Api']) { $parameters['api'] = $Api }
-        if($PSBoundParameters.ContainsKey['Data']) { $parameters['data'] = $Data }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Id']) { $parameters['id'] = $Id }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['ValidationDelay']) { $parameters['validation-delay'] = $ValidationDelay }
+        if($PSBoundParameters.ContainsKey('Api')) { $parameters['api'] = $Api }
+        if($PSBoundParameters.ContainsKey('Data')) { $parameters['data'] = $Data }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('ValidationDelay')) { $parameters['validation-delay'] = $ValidationDelay }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/acme/plugins" -Parameters $parameters
     }
@@ -6415,13 +6415,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Api']) { $parameters['api'] = $Api }
-        if($PSBoundParameters.ContainsKey['Data']) { $parameters['data'] = $Data }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['ValidationDelay']) { $parameters['validation-delay'] = $ValidationDelay }
+        if($PSBoundParameters.ContainsKey('Api')) { $parameters['api'] = $Api }
+        if($PSBoundParameters.ContainsKey('Data')) { $parameters['data'] = $Data }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('ValidationDelay')) { $parameters['validation-delay'] = $ValidationDelay }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/acme/plugins/$Id" -Parameters $parameters
     }
@@ -6498,12 +6498,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Contact']) { $parameters['contact'] = $Contact }
-        if($PSBoundParameters.ContainsKey['Directory']) { $parameters['directory'] = $Directory }
-        if($PSBoundParameters.ContainsKey['EabHmacKey']) { $parameters['eab-hmac-key'] = $EabHmacKey }
-        if($PSBoundParameters.ContainsKey['EabKid']) { $parameters['eab-kid'] = $EabKid }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['TosUrl']) { $parameters['tos_url'] = $TosUrl }
+        if($PSBoundParameters.ContainsKey('Contact')) { $parameters['contact'] = $Contact }
+        if($PSBoundParameters.ContainsKey('Directory')) { $parameters['directory'] = $Directory }
+        if($PSBoundParameters.ContainsKey('EabHmacKey')) { $parameters['eab-hmac-key'] = $EabHmacKey }
+        if($PSBoundParameters.ContainsKey('EabKid')) { $parameters['eab-kid'] = $EabKid }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('TosUrl')) { $parameters['tos_url'] = $TosUrl }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/acme/account" -Parameters $parameters
     }
@@ -6592,7 +6592,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Contact']) { $parameters['contact'] = $Contact }
+        if($PSBoundParameters.ContainsKey('Contact')) { $parameters['contact'] = $Contact }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/acme/account/$Name" -Parameters $parameters
     }
@@ -6622,7 +6622,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Directory']) { $parameters['directory'] = $Directory }
+        if($PSBoundParameters.ContainsKey('Directory')) { $parameters['directory'] = $Directory }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/tos" -Parameters $parameters
     }
@@ -6652,7 +6652,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Directory']) { $parameters['directory'] = $Directory }
+        if($PSBoundParameters.ContainsKey('Directory')) { $parameters['directory'] = $Directory }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/acme/meta" -Parameters $parameters
     }
@@ -6749,7 +6749,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Scope']) { $parameters['scope'] = $Scope }
+        if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/ceph/metadata" -Parameters $parameters
     }
@@ -6873,17 +6873,17 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Nobackfill']) { $parameters['nobackfill'] = $Nobackfill }
-        if($PSBoundParameters.ContainsKey['NodeepScrub']) { $parameters['nodeep-scrub'] = $NodeepScrub }
-        if($PSBoundParameters.ContainsKey['Nodown']) { $parameters['nodown'] = $Nodown }
-        if($PSBoundParameters.ContainsKey['Noin']) { $parameters['noin'] = $Noin }
-        if($PSBoundParameters.ContainsKey['Noout']) { $parameters['noout'] = $Noout }
-        if($PSBoundParameters.ContainsKey['Norebalance']) { $parameters['norebalance'] = $Norebalance }
-        if($PSBoundParameters.ContainsKey['Norecover']) { $parameters['norecover'] = $Norecover }
-        if($PSBoundParameters.ContainsKey['Noscrub']) { $parameters['noscrub'] = $Noscrub }
-        if($PSBoundParameters.ContainsKey['Notieragent']) { $parameters['notieragent'] = $Notieragent }
-        if($PSBoundParameters.ContainsKey['Noup']) { $parameters['noup'] = $Noup }
-        if($PSBoundParameters.ContainsKey['Pause']) { $parameters['pause'] = $Pause }
+        if($PSBoundParameters.ContainsKey('Nobackfill')) { $parameters['nobackfill'] = $Nobackfill }
+        if($PSBoundParameters.ContainsKey('NodeepScrub')) { $parameters['nodeep-scrub'] = $NodeepScrub }
+        if($PSBoundParameters.ContainsKey('Nodown')) { $parameters['nodown'] = $Nodown }
+        if($PSBoundParameters.ContainsKey('Noin')) { $parameters['noin'] = $Noin }
+        if($PSBoundParameters.ContainsKey('Noout')) { $parameters['noout'] = $Noout }
+        if($PSBoundParameters.ContainsKey('Norebalance')) { $parameters['norebalance'] = $Norebalance }
+        if($PSBoundParameters.ContainsKey('Norecover')) { $parameters['norecover'] = $Norecover }
+        if($PSBoundParameters.ContainsKey('Noscrub')) { $parameters['noscrub'] = $Noscrub }
+        if($PSBoundParameters.ContainsKey('Notieragent')) { $parameters['notieragent'] = $Notieragent }
+        if($PSBoundParameters.ContainsKey('Noup')) { $parameters['noup'] = $Noup }
+        if($PSBoundParameters.ContainsKey('Pause')) { $parameters['pause'] = $Pause }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/flags" -Parameters $parameters
     }
@@ -6947,7 +6947,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Value']) { $parameters['value'] = $Value }
+        if($PSBoundParameters.ContainsKey('Value')) { $parameters['value'] = $Value }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/flags/$Flag" -Parameters $parameters
     }
@@ -7111,13 +7111,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['EnableNew']) { $parameters['enable-new'] = $EnableNew }
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['Realm']) { $parameters['realm'] = $Realm }
-        if($PSBoundParameters.ContainsKey['RemoveVanished']) { $parameters['remove-vanished'] = $RemoveVanished }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Scope']) { $parameters['scope'] = $Scope }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('EnableNew')) { $parameters['enable-new'] = $EnableNew }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('Realm')) { $parameters['realm'] = $Realm }
+        if($PSBoundParameters.ContainsKey('RemoveVanished')) { $parameters['remove-vanished'] = $RemoveVanished }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/jobs/realm-sync/$Id" -Parameters $parameters
     }
@@ -7183,13 +7183,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['EnableNew']) { $parameters['enable-new'] = $EnableNew }
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['RemoveVanished']) { $parameters['remove-vanished'] = $RemoveVanished }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Scope']) { $parameters['scope'] = $Scope }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('EnableNew')) { $parameters['enable-new'] = $EnableNew }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('RemoveVanished')) { $parameters['remove-vanished'] = $RemoveVanished }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/jobs/realm-sync/$Id" -Parameters $parameters
     }
@@ -7229,9 +7229,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Iterations']) { $parameters['iterations'] = $Iterations }
-        if($PSBoundParameters.ContainsKey['Schedule']) { $parameters['schedule'] = $Schedule }
-        if($PSBoundParameters.ContainsKey['Starttime']) { $parameters['starttime'] = $Starttime }
+        if($PSBoundParameters.ContainsKey('Iterations')) { $parameters['iterations'] = $Iterations }
+        if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
+        if($PSBoundParameters.ContainsKey('Starttime')) { $parameters['starttime'] = $Starttime }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/jobs/schedule-analyze" -Parameters $parameters
     }
@@ -7283,7 +7283,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CheckNode']) { $parameters['check-node'] = $CheckNode }
+        if($PSBoundParameters.ContainsKey('CheckNode')) { $parameters['check-node'] = $CheckNode }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/mapping/pci" -Parameters $parameters
     }
@@ -7328,10 +7328,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Id']) { $parameters['id'] = $Id }
-        if($PSBoundParameters.ContainsKey['Map']) { $parameters['map'] = $Map }
-        if($PSBoundParameters.ContainsKey['Mdev']) { $parameters['mdev'] = $Mdev }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
+        if($PSBoundParameters.ContainsKey('Mdev')) { $parameters['mdev'] = $Mdev }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/pci" -Parameters $parameters
     }
@@ -7440,11 +7440,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Map']) { $parameters['map'] = $Map }
-        if($PSBoundParameters.ContainsKey['Mdev']) { $parameters['mdev'] = $Mdev }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
+        if($PSBoundParameters.ContainsKey('Mdev')) { $parameters['mdev'] = $Mdev }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/pci/$Id" -Parameters $parameters
     }
@@ -7474,7 +7474,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CheckNode']) { $parameters['check-node'] = $CheckNode }
+        if($PSBoundParameters.ContainsKey('CheckNode')) { $parameters['check-node'] = $CheckNode }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/mapping/usb" -Parameters $parameters
     }
@@ -7514,9 +7514,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Id']) { $parameters['id'] = $Id }
-        if($PSBoundParameters.ContainsKey['Map']) { $parameters['map'] = $Map }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/usb" -Parameters $parameters
     }
@@ -7620,10 +7620,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Map']) { $parameters['map'] = $Map }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/usb/$Id" -Parameters $parameters
     }
@@ -7702,8 +7702,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets" -Parameters $parameters
     }
@@ -7764,13 +7764,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Alias']) { $parameters['alias'] = $Alias }
-        if($PSBoundParameters.ContainsKey['IsolatePorts']) { $parameters['isolate-ports'] = $IsolatePorts }
-        if($PSBoundParameters.ContainsKey['Tag']) { $parameters['tag'] = $Tag }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Vlanaware']) { $parameters['vlanaware'] = $Vlanaware }
-        if($PSBoundParameters.ContainsKey['Vnet']) { $parameters['vnet'] = $Vnet }
-        if($PSBoundParameters.ContainsKey['Zone']) { $parameters['zone'] = $Zone }
+        if($PSBoundParameters.ContainsKey('Alias')) { $parameters['alias'] = $Alias }
+        if($PSBoundParameters.ContainsKey('IsolatePorts')) { $parameters['isolate-ports'] = $IsolatePorts }
+        if($PSBoundParameters.ContainsKey('Tag')) { $parameters['tag'] = $Tag }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Vlanaware')) { $parameters['vlanaware'] = $Vlanaware }
+        if($PSBoundParameters.ContainsKey('Vnet')) { $parameters['vnet'] = $Vnet }
+        if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets" -Parameters $parameters
     }
@@ -7837,8 +7837,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters
     }
@@ -7903,13 +7903,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Alias']) { $parameters['alias'] = $Alias }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['IsolatePorts']) { $parameters['isolate-ports'] = $IsolatePorts }
-        if($PSBoundParameters.ContainsKey['Tag']) { $parameters['tag'] = $Tag }
-        if($PSBoundParameters.ContainsKey['Vlanaware']) { $parameters['vlanaware'] = $Vlanaware }
-        if($PSBoundParameters.ContainsKey['Zone']) { $parameters['zone'] = $Zone }
+        if($PSBoundParameters.ContainsKey('Alias')) { $parameters['alias'] = $Alias }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('IsolatePorts')) { $parameters['isolate-ports'] = $IsolatePorts }
+        if($PSBoundParameters.ContainsKey('Tag')) { $parameters['tag'] = $Tag }
+        if($PSBoundParameters.ContainsKey('Vlanaware')) { $parameters['vlanaware'] = $Vlanaware }
+        if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters
     }
@@ -8070,21 +8070,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Pos']) { $parameters['pos'] = $Pos }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Pos')) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules" -Parameters $parameters
     }
@@ -8124,7 +8124,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -8273,22 +8273,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Moveto']) { $parameters['moveto'] = $Moveto }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Moveto')) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -8372,11 +8372,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['LogLevelForward']) { $parameters['log_level_forward'] = $LogLevelForward }
-        if($PSBoundParameters.ContainsKey['PolicyForward']) { $parameters['policy_forward'] = $PolicyForward }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('LogLevelForward')) { $parameters['log_level_forward'] = $LogLevelForward }
+        if($PSBoundParameters.ContainsKey('PolicyForward')) { $parameters['policy_forward'] = $PolicyForward }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/options" -Parameters $parameters
     }
@@ -8416,8 +8416,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet/subnets" -Parameters $parameters
     }
@@ -8483,13 +8483,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['DhcpDnsServer']) { $parameters['dhcp-dns-server'] = $DhcpDnsServer }
-        if($PSBoundParameters.ContainsKey['DhcpRange']) { $parameters['dhcp-range'] = $DhcpRange }
-        if($PSBoundParameters.ContainsKey['Dnszoneprefix']) { $parameters['dnszoneprefix'] = $Dnszoneprefix }
-        if($PSBoundParameters.ContainsKey['Gateway']) { $parameters['gateway'] = $Gateway }
-        if($PSBoundParameters.ContainsKey['Snat']) { $parameters['snat'] = $Snat }
-        if($PSBoundParameters.ContainsKey['Subnet']) { $parameters['subnet'] = $Subnet }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('DhcpDnsServer')) { $parameters['dhcp-dns-server'] = $DhcpDnsServer }
+        if($PSBoundParameters.ContainsKey('DhcpRange')) { $parameters['dhcp-range'] = $DhcpRange }
+        if($PSBoundParameters.ContainsKey('Dnszoneprefix')) { $parameters['dnszoneprefix'] = $Dnszoneprefix }
+        if($PSBoundParameters.ContainsKey('Gateway')) { $parameters['gateway'] = $Gateway }
+        if($PSBoundParameters.ContainsKey('Snat')) { $parameters['snat'] = $Snat }
+        if($PSBoundParameters.ContainsKey('Subnet')) { $parameters['subnet'] = $Subnet }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/subnets" -Parameters $parameters
     }
@@ -8566,8 +8566,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters
     }
@@ -8637,13 +8637,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['DhcpDnsServer']) { $parameters['dhcp-dns-server'] = $DhcpDnsServer }
-        if($PSBoundParameters.ContainsKey['DhcpRange']) { $parameters['dhcp-range'] = $DhcpRange }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dnszoneprefix']) { $parameters['dnszoneprefix'] = $Dnszoneprefix }
-        if($PSBoundParameters.ContainsKey['Gateway']) { $parameters['gateway'] = $Gateway }
-        if($PSBoundParameters.ContainsKey['Snat']) { $parameters['snat'] = $Snat }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('DhcpDnsServer')) { $parameters['dhcp-dns-server'] = $DhcpDnsServer }
+        if($PSBoundParameters.ContainsKey('DhcpRange')) { $parameters['dhcp-range'] = $DhcpRange }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dnszoneprefix')) { $parameters['dnszoneprefix'] = $Dnszoneprefix }
+        if($PSBoundParameters.ContainsKey('Gateway')) { $parameters['gateway'] = $Gateway }
+        if($PSBoundParameters.ContainsKey('Snat')) { $parameters['snat'] = $Snat }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters
     }
@@ -8688,9 +8688,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Ip']) { $parameters['ip'] = $Ip }
-        if($PSBoundParameters.ContainsKey['Mac']) { $parameters['mac'] = $Mac }
-        if($PSBoundParameters.ContainsKey['Zone']) { $parameters['zone'] = $Zone }
+        if($PSBoundParameters.ContainsKey('Ip')) { $parameters['ip'] = $Ip }
+        if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
     }
@@ -8735,9 +8735,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Ip']) { $parameters['ip'] = $Ip }
-        if($PSBoundParameters.ContainsKey['Mac']) { $parameters['mac'] = $Mac }
-        if($PSBoundParameters.ContainsKey['Zone']) { $parameters['zone'] = $Zone }
+        if($PSBoundParameters.ContainsKey('Ip')) { $parameters['ip'] = $Ip }
+        if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
     }
@@ -8787,10 +8787,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Ip']) { $parameters['ip'] = $Ip }
-        if($PSBoundParameters.ContainsKey['Mac']) { $parameters['mac'] = $Mac }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
-        if($PSBoundParameters.ContainsKey['Zone']) { $parameters['zone'] = $Zone }
+        if($PSBoundParameters.ContainsKey('Ip')) { $parameters['ip'] = $Ip }
+        if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
     }
@@ -8831,9 +8831,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/zones" -Parameters $parameters
     }
@@ -8986,31 +8986,31 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AdvertiseSubnets']) { $parameters['advertise-subnets'] = $AdvertiseSubnets }
-        if($PSBoundParameters.ContainsKey['Bridge']) { $parameters['bridge'] = $Bridge }
-        if($PSBoundParameters.ContainsKey['BridgeDisableMacLearning']) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
-        if($PSBoundParameters.ContainsKey['Controller']) { $parameters['controller'] = $Controller }
-        if($PSBoundParameters.ContainsKey['Dhcp']) { $parameters['dhcp'] = $Dhcp }
-        if($PSBoundParameters.ContainsKey['DisableArpNdSuppression']) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
-        if($PSBoundParameters.ContainsKey['Dns']) { $parameters['dns'] = $Dns }
-        if($PSBoundParameters.ContainsKey['Dnszone']) { $parameters['dnszone'] = $Dnszone }
-        if($PSBoundParameters.ContainsKey['DpId']) { $parameters['dp-id'] = $DpId }
-        if($PSBoundParameters.ContainsKey['Exitnodes']) { $parameters['exitnodes'] = $Exitnodes }
-        if($PSBoundParameters.ContainsKey['ExitnodesLocalRouting']) { $parameters['exitnodes-local-routing'] = $ExitnodesLocalRouting }
-        if($PSBoundParameters.ContainsKey['ExitnodesPrimary']) { $parameters['exitnodes-primary'] = $ExitnodesPrimary }
-        if($PSBoundParameters.ContainsKey['Ipam']) { $parameters['ipam'] = $Ipam }
-        if($PSBoundParameters.ContainsKey['Mac']) { $parameters['mac'] = $Mac }
-        if($PSBoundParameters.ContainsKey['Mtu']) { $parameters['mtu'] = $Mtu }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Peers']) { $parameters['peers'] = $Peers }
-        if($PSBoundParameters.ContainsKey['Reversedns']) { $parameters['reversedns'] = $Reversedns }
-        if($PSBoundParameters.ContainsKey['RtImport']) { $parameters['rt-import'] = $RtImport }
-        if($PSBoundParameters.ContainsKey['Tag']) { $parameters['tag'] = $Tag }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['VlanProtocol']) { $parameters['vlan-protocol'] = $VlanProtocol }
-        if($PSBoundParameters.ContainsKey['VrfVxlan']) { $parameters['vrf-vxlan'] = $VrfVxlan }
-        if($PSBoundParameters.ContainsKey['VxlanPort']) { $parameters['vxlan-port'] = $VxlanPort }
-        if($PSBoundParameters.ContainsKey['Zone']) { $parameters['zone'] = $Zone }
+        if($PSBoundParameters.ContainsKey('AdvertiseSubnets')) { $parameters['advertise-subnets'] = $AdvertiseSubnets }
+        if($PSBoundParameters.ContainsKey('Bridge')) { $parameters['bridge'] = $Bridge }
+        if($PSBoundParameters.ContainsKey('BridgeDisableMacLearning')) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
+        if($PSBoundParameters.ContainsKey('Controller')) { $parameters['controller'] = $Controller }
+        if($PSBoundParameters.ContainsKey('Dhcp')) { $parameters['dhcp'] = $Dhcp }
+        if($PSBoundParameters.ContainsKey('DisableArpNdSuppression')) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
+        if($PSBoundParameters.ContainsKey('Dns')) { $parameters['dns'] = $Dns }
+        if($PSBoundParameters.ContainsKey('Dnszone')) { $parameters['dnszone'] = $Dnszone }
+        if($PSBoundParameters.ContainsKey('DpId')) { $parameters['dp-id'] = $DpId }
+        if($PSBoundParameters.ContainsKey('Exitnodes')) { $parameters['exitnodes'] = $Exitnodes }
+        if($PSBoundParameters.ContainsKey('ExitnodesLocalRouting')) { $parameters['exitnodes-local-routing'] = $ExitnodesLocalRouting }
+        if($PSBoundParameters.ContainsKey('ExitnodesPrimary')) { $parameters['exitnodes-primary'] = $ExitnodesPrimary }
+        if($PSBoundParameters.ContainsKey('Ipam')) { $parameters['ipam'] = $Ipam }
+        if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters.ContainsKey('Mtu')) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Peers')) { $parameters['peers'] = $Peers }
+        if($PSBoundParameters.ContainsKey('Reversedns')) { $parameters['reversedns'] = $Reversedns }
+        if($PSBoundParameters.ContainsKey('RtImport')) { $parameters['rt-import'] = $RtImport }
+        if($PSBoundParameters.ContainsKey('Tag')) { $parameters['tag'] = $Tag }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('VlanProtocol')) { $parameters['vlan-protocol'] = $VlanProtocol }
+        if($PSBoundParameters.ContainsKey('VrfVxlan')) { $parameters['vrf-vxlan'] = $VrfVxlan }
+        if($PSBoundParameters.ContainsKey('VxlanPort')) { $parameters['vxlan-port'] = $VxlanPort }
+        if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/zones" -Parameters $parameters
     }
@@ -9077,8 +9077,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters
     }
@@ -9235,31 +9235,31 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AdvertiseSubnets']) { $parameters['advertise-subnets'] = $AdvertiseSubnets }
-        if($PSBoundParameters.ContainsKey['Bridge']) { $parameters['bridge'] = $Bridge }
-        if($PSBoundParameters.ContainsKey['BridgeDisableMacLearning']) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
-        if($PSBoundParameters.ContainsKey['Controller']) { $parameters['controller'] = $Controller }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dhcp']) { $parameters['dhcp'] = $Dhcp }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['DisableArpNdSuppression']) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
-        if($PSBoundParameters.ContainsKey['Dns']) { $parameters['dns'] = $Dns }
-        if($PSBoundParameters.ContainsKey['Dnszone']) { $parameters['dnszone'] = $Dnszone }
-        if($PSBoundParameters.ContainsKey['DpId']) { $parameters['dp-id'] = $DpId }
-        if($PSBoundParameters.ContainsKey['Exitnodes']) { $parameters['exitnodes'] = $Exitnodes }
-        if($PSBoundParameters.ContainsKey['ExitnodesLocalRouting']) { $parameters['exitnodes-local-routing'] = $ExitnodesLocalRouting }
-        if($PSBoundParameters.ContainsKey['ExitnodesPrimary']) { $parameters['exitnodes-primary'] = $ExitnodesPrimary }
-        if($PSBoundParameters.ContainsKey['Ipam']) { $parameters['ipam'] = $Ipam }
-        if($PSBoundParameters.ContainsKey['Mac']) { $parameters['mac'] = $Mac }
-        if($PSBoundParameters.ContainsKey['Mtu']) { $parameters['mtu'] = $Mtu }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Peers']) { $parameters['peers'] = $Peers }
-        if($PSBoundParameters.ContainsKey['Reversedns']) { $parameters['reversedns'] = $Reversedns }
-        if($PSBoundParameters.ContainsKey['RtImport']) { $parameters['rt-import'] = $RtImport }
-        if($PSBoundParameters.ContainsKey['Tag']) { $parameters['tag'] = $Tag }
-        if($PSBoundParameters.ContainsKey['VlanProtocol']) { $parameters['vlan-protocol'] = $VlanProtocol }
-        if($PSBoundParameters.ContainsKey['VrfVxlan']) { $parameters['vrf-vxlan'] = $VrfVxlan }
-        if($PSBoundParameters.ContainsKey['VxlanPort']) { $parameters['vxlan-port'] = $VxlanPort }
+        if($PSBoundParameters.ContainsKey('AdvertiseSubnets')) { $parameters['advertise-subnets'] = $AdvertiseSubnets }
+        if($PSBoundParameters.ContainsKey('Bridge')) { $parameters['bridge'] = $Bridge }
+        if($PSBoundParameters.ContainsKey('BridgeDisableMacLearning')) { $parameters['bridge-disable-mac-learning'] = $BridgeDisableMacLearning }
+        if($PSBoundParameters.ContainsKey('Controller')) { $parameters['controller'] = $Controller }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dhcp')) { $parameters['dhcp'] = $Dhcp }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('DisableArpNdSuppression')) { $parameters['disable-arp-nd-suppression'] = $DisableArpNdSuppression }
+        if($PSBoundParameters.ContainsKey('Dns')) { $parameters['dns'] = $Dns }
+        if($PSBoundParameters.ContainsKey('Dnszone')) { $parameters['dnszone'] = $Dnszone }
+        if($PSBoundParameters.ContainsKey('DpId')) { $parameters['dp-id'] = $DpId }
+        if($PSBoundParameters.ContainsKey('Exitnodes')) { $parameters['exitnodes'] = $Exitnodes }
+        if($PSBoundParameters.ContainsKey('ExitnodesLocalRouting')) { $parameters['exitnodes-local-routing'] = $ExitnodesLocalRouting }
+        if($PSBoundParameters.ContainsKey('ExitnodesPrimary')) { $parameters['exitnodes-primary'] = $ExitnodesPrimary }
+        if($PSBoundParameters.ContainsKey('Ipam')) { $parameters['ipam'] = $Ipam }
+        if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
+        if($PSBoundParameters.ContainsKey('Mtu')) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Peers')) { $parameters['peers'] = $Peers }
+        if($PSBoundParameters.ContainsKey('Reversedns')) { $parameters['reversedns'] = $Reversedns }
+        if($PSBoundParameters.ContainsKey('RtImport')) { $parameters['rt-import'] = $RtImport }
+        if($PSBoundParameters.ContainsKey('Tag')) { $parameters['tag'] = $Tag }
+        if($PSBoundParameters.ContainsKey('VlanProtocol')) { $parameters['vlan-protocol'] = $VlanProtocol }
+        if($PSBoundParameters.ContainsKey('VrfVxlan')) { $parameters['vrf-vxlan'] = $VrfVxlan }
+        if($PSBoundParameters.ContainsKey('VxlanPort')) { $parameters['vxlan-port'] = $VxlanPort }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters
     }
@@ -9300,9 +9300,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/controllers" -Parameters $parameters
     }
@@ -9388,18 +9388,18 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Asn']) { $parameters['asn'] = $Asn }
-        if($PSBoundParameters.ContainsKey['BgpMultipathAsPathRelax']) { $parameters['bgp-multipath-as-path-relax'] = $BgpMultipathAsPathRelax }
-        if($PSBoundParameters.ContainsKey['Controller']) { $parameters['controller'] = $Controller }
-        if($PSBoundParameters.ContainsKey['Ebgp']) { $parameters['ebgp'] = $Ebgp }
-        if($PSBoundParameters.ContainsKey['EbgpMultihop']) { $parameters['ebgp-multihop'] = $EbgpMultihop }
-        if($PSBoundParameters.ContainsKey['IsisDomain']) { $parameters['isis-domain'] = $IsisDomain }
-        if($PSBoundParameters.ContainsKey['IsisIfaces']) { $parameters['isis-ifaces'] = $IsisIfaces }
-        if($PSBoundParameters.ContainsKey['IsisNet']) { $parameters['isis-net'] = $IsisNet }
-        if($PSBoundParameters.ContainsKey['Loopback']) { $parameters['loopback'] = $Loopback }
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
-        if($PSBoundParameters.ContainsKey['Peers']) { $parameters['peers'] = $Peers }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Asn')) { $parameters['asn'] = $Asn }
+        if($PSBoundParameters.ContainsKey('BgpMultipathAsPathRelax')) { $parameters['bgp-multipath-as-path-relax'] = $BgpMultipathAsPathRelax }
+        if($PSBoundParameters.ContainsKey('Controller')) { $parameters['controller'] = $Controller }
+        if($PSBoundParameters.ContainsKey('Ebgp')) { $parameters['ebgp'] = $Ebgp }
+        if($PSBoundParameters.ContainsKey('EbgpMultihop')) { $parameters['ebgp-multihop'] = $EbgpMultihop }
+        if($PSBoundParameters.ContainsKey('IsisDomain')) { $parameters['isis-domain'] = $IsisDomain }
+        if($PSBoundParameters.ContainsKey('IsisIfaces')) { $parameters['isis-ifaces'] = $IsisIfaces }
+        if($PSBoundParameters.ContainsKey('IsisNet')) { $parameters['isis-net'] = $IsisNet }
+        if($PSBoundParameters.ContainsKey('Loopback')) { $parameters['loopback'] = $Loopback }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('Peers')) { $parameters['peers'] = $Peers }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/controllers" -Parameters $parameters
     }
@@ -9466,8 +9466,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pending']) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey['Running']) { $parameters['running'] = $Running }
+        if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
+        if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/controllers/$Controller" -Parameters $parameters
     }
@@ -9557,18 +9557,18 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Asn']) { $parameters['asn'] = $Asn }
-        if($PSBoundParameters.ContainsKey['BgpMultipathAsPathRelax']) { $parameters['bgp-multipath-as-path-relax'] = $BgpMultipathAsPathRelax }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Ebgp']) { $parameters['ebgp'] = $Ebgp }
-        if($PSBoundParameters.ContainsKey['EbgpMultihop']) { $parameters['ebgp-multihop'] = $EbgpMultihop }
-        if($PSBoundParameters.ContainsKey['IsisDomain']) { $parameters['isis-domain'] = $IsisDomain }
-        if($PSBoundParameters.ContainsKey['IsisIfaces']) { $parameters['isis-ifaces'] = $IsisIfaces }
-        if($PSBoundParameters.ContainsKey['IsisNet']) { $parameters['isis-net'] = $IsisNet }
-        if($PSBoundParameters.ContainsKey['Loopback']) { $parameters['loopback'] = $Loopback }
-        if($PSBoundParameters.ContainsKey['Node']) { $parameters['node'] = $Node }
-        if($PSBoundParameters.ContainsKey['Peers']) { $parameters['peers'] = $Peers }
+        if($PSBoundParameters.ContainsKey('Asn')) { $parameters['asn'] = $Asn }
+        if($PSBoundParameters.ContainsKey('BgpMultipathAsPathRelax')) { $parameters['bgp-multipath-as-path-relax'] = $BgpMultipathAsPathRelax }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Ebgp')) { $parameters['ebgp'] = $Ebgp }
+        if($PSBoundParameters.ContainsKey('EbgpMultihop')) { $parameters['ebgp-multihop'] = $EbgpMultihop }
+        if($PSBoundParameters.ContainsKey('IsisDomain')) { $parameters['isis-domain'] = $IsisDomain }
+        if($PSBoundParameters.ContainsKey('IsisIfaces')) { $parameters['isis-ifaces'] = $IsisIfaces }
+        if($PSBoundParameters.ContainsKey('IsisNet')) { $parameters['isis-net'] = $IsisNet }
+        if($PSBoundParameters.ContainsKey('Loopback')) { $parameters['loopback'] = $Loopback }
+        if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
+        if($PSBoundParameters.ContainsKey('Peers')) { $parameters['peers'] = $Peers }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/controllers/$Controller" -Parameters $parameters
     }
@@ -9599,7 +9599,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/ipams" -Parameters $parameters
     }
@@ -9650,11 +9650,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Ipam']) { $parameters['ipam'] = $Ipam }
-        if($PSBoundParameters.ContainsKey['Section']) { $parameters['section'] = $Section }
-        if($PSBoundParameters.ContainsKey['Token']) { $parameters['token'] = $Token }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('Ipam')) { $parameters['ipam'] = $Ipam }
+        if($PSBoundParameters.ContainsKey('Section')) { $parameters['section'] = $Section }
+        if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/ipams" -Parameters $parameters
     }
@@ -9763,11 +9763,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Section']) { $parameters['section'] = $Section }
-        if($PSBoundParameters.ContainsKey['Token']) { $parameters['token'] = $Token }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Section')) { $parameters['section'] = $Section }
+        if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/ipams/$Ipam" -Parameters $parameters
     }
@@ -9825,7 +9825,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/dns" -Parameters $parameters
     }
@@ -9886,13 +9886,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Dns']) { $parameters['dns'] = $Dns }
-        if($PSBoundParameters.ContainsKey['Key']) { $parameters['key'] = $Key }
-        if($PSBoundParameters.ContainsKey['Reversemaskv6']) { $parameters['reversemaskv6'] = $Reversemaskv6 }
-        if($PSBoundParameters.ContainsKey['Reversev6mask']) { $parameters['reversev6mask'] = $Reversev6mask }
-        if($PSBoundParameters.ContainsKey['Ttl']) { $parameters['ttl'] = $Ttl }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('Dns')) { $parameters['dns'] = $Dns }
+        if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
+        if($PSBoundParameters.ContainsKey('Reversemaskv6')) { $parameters['reversemaskv6'] = $Reversemaskv6 }
+        if($PSBoundParameters.ContainsKey('Reversev6mask')) { $parameters['reversev6mask'] = $Reversev6mask }
+        if($PSBoundParameters.ContainsKey('Ttl')) { $parameters['ttl'] = $Ttl }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/dns" -Parameters $parameters
     }
@@ -10006,12 +10006,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Key']) { $parameters['key'] = $Key }
-        if($PSBoundParameters.ContainsKey['Reversemaskv6']) { $parameters['reversemaskv6'] = $Reversemaskv6 }
-        if($PSBoundParameters.ContainsKey['Ttl']) { $parameters['ttl'] = $Ttl }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
+        if($PSBoundParameters.ContainsKey('Reversemaskv6')) { $parameters['reversemaskv6'] = $Reversemaskv6 }
+        if($PSBoundParameters.ContainsKey('Ttl')) { $parameters['ttl'] = $Ttl }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/dns/$Dns" -Parameters $parameters
     }
@@ -10041,7 +10041,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Max']) { $parameters['max'] = $Max }
+        if($PSBoundParameters.ContainsKey('Max')) { $parameters['max'] = $Max }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/log" -Parameters $parameters
     }
@@ -10072,7 +10072,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/resources" -Parameters $parameters
     }
@@ -10255,28 +10255,28 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Console']) { $parameters['console'] = $Console }
-        if($PSBoundParameters.ContainsKey['Crs']) { $parameters['crs'] = $Crs }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['EmailFrom']) { $parameters['email_from'] = $EmailFrom }
-        if($PSBoundParameters.ContainsKey['Fencing']) { $parameters['fencing'] = $Fencing }
-        if($PSBoundParameters.ContainsKey['Ha']) { $parameters['ha'] = $Ha }
-        if($PSBoundParameters.ContainsKey['HttpProxy']) { $parameters['http_proxy'] = $HttpProxy }
-        if($PSBoundParameters.ContainsKey['Keyboard']) { $parameters['keyboard'] = $Keyboard }
-        if($PSBoundParameters.ContainsKey['Language']) { $parameters['language'] = $Language }
-        if($PSBoundParameters.ContainsKey['MacPrefix']) { $parameters['mac_prefix'] = $MacPrefix }
-        if($PSBoundParameters.ContainsKey['MaxWorkers']) { $parameters['max_workers'] = $MaxWorkers }
-        if($PSBoundParameters.ContainsKey['Migration']) { $parameters['migration'] = $Migration }
-        if($PSBoundParameters.ContainsKey['MigrationUnsecure']) { $parameters['migration_unsecure'] = $MigrationUnsecure }
-        if($PSBoundParameters.ContainsKey['NextId']) { $parameters['next-id'] = $NextId }
-        if($PSBoundParameters.ContainsKey['Notify']) { $parameters['notify'] = $Notify }
-        if($PSBoundParameters.ContainsKey['RegisteredTags']) { $parameters['registered-tags'] = $RegisteredTags }
-        if($PSBoundParameters.ContainsKey['TagStyle']) { $parameters['tag-style'] = $TagStyle }
-        if($PSBoundParameters.ContainsKey['U2f']) { $parameters['u2f'] = $U2f }
-        if($PSBoundParameters.ContainsKey['UserTagAccess']) { $parameters['user-tag-access'] = $UserTagAccess }
-        if($PSBoundParameters.ContainsKey['Webauthn']) { $parameters['webauthn'] = $Webauthn }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Console')) { $parameters['console'] = $Console }
+        if($PSBoundParameters.ContainsKey('Crs')) { $parameters['crs'] = $Crs }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('EmailFrom')) { $parameters['email_from'] = $EmailFrom }
+        if($PSBoundParameters.ContainsKey('Fencing')) { $parameters['fencing'] = $Fencing }
+        if($PSBoundParameters.ContainsKey('Ha')) { $parameters['ha'] = $Ha }
+        if($PSBoundParameters.ContainsKey('HttpProxy')) { $parameters['http_proxy'] = $HttpProxy }
+        if($PSBoundParameters.ContainsKey('Keyboard')) { $parameters['keyboard'] = $Keyboard }
+        if($PSBoundParameters.ContainsKey('Language')) { $parameters['language'] = $Language }
+        if($PSBoundParameters.ContainsKey('MacPrefix')) { $parameters['mac_prefix'] = $MacPrefix }
+        if($PSBoundParameters.ContainsKey('MaxWorkers')) { $parameters['max_workers'] = $MaxWorkers }
+        if($PSBoundParameters.ContainsKey('Migration')) { $parameters['migration'] = $Migration }
+        if($PSBoundParameters.ContainsKey('MigrationUnsecure')) { $parameters['migration_unsecure'] = $MigrationUnsecure }
+        if($PSBoundParameters.ContainsKey('NextId')) { $parameters['next-id'] = $NextId }
+        if($PSBoundParameters.ContainsKey('Notify')) { $parameters['notify'] = $Notify }
+        if($PSBoundParameters.ContainsKey('RegisteredTags')) { $parameters['registered-tags'] = $RegisteredTags }
+        if($PSBoundParameters.ContainsKey('TagStyle')) { $parameters['tag-style'] = $TagStyle }
+        if($PSBoundParameters.ContainsKey('U2f')) { $parameters['u2f'] = $U2f }
+        if($PSBoundParameters.ContainsKey('UserTagAccess')) { $parameters['user-tag-access'] = $UserTagAccess }
+        if($PSBoundParameters.ContainsKey('Webauthn')) { $parameters['webauthn'] = $Webauthn }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/options" -Parameters $parameters
     }
@@ -10328,7 +10328,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/nextid" -Parameters $parameters
     }
@@ -10412,7 +10412,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Full']) { $parameters['full'] = $Full }
+        if($PSBoundParameters.ContainsKey('Full')) { $parameters['full'] = $Full }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu" -Parameters $parameters
     }
@@ -10890,95 +10890,95 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Acpi']) { $parameters['acpi'] = $Acpi }
-        if($PSBoundParameters.ContainsKey['Affinity']) { $parameters['affinity'] = $Affinity }
-        if($PSBoundParameters.ContainsKey['Agent']) { $parameters['agent'] = $Agent }
-        if($PSBoundParameters.ContainsKey['AmdSev']) { $parameters['amd-sev'] = $AmdSev }
-        if($PSBoundParameters.ContainsKey['Arch']) { $parameters['arch'] = $Arch }
-        if($PSBoundParameters.ContainsKey['Archive']) { $parameters['archive'] = $Archive }
-        if($PSBoundParameters.ContainsKey['Args_']) { $parameters['args'] = $Args_ }
-        if($PSBoundParameters.ContainsKey['Audio0']) { $parameters['audio0'] = $Audio0 }
-        if($PSBoundParameters.ContainsKey['Autostart']) { $parameters['autostart'] = $Autostart }
-        if($PSBoundParameters.ContainsKey['Balloon']) { $parameters['balloon'] = $Balloon }
-        if($PSBoundParameters.ContainsKey['Bios']) { $parameters['bios'] = $Bios }
-        if($PSBoundParameters.ContainsKey['Boot']) { $parameters['boot'] = $Boot }
-        if($PSBoundParameters.ContainsKey['Bootdisk']) { $parameters['bootdisk'] = $Bootdisk }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Cdrom']) { $parameters['cdrom'] = $Cdrom }
-        if($PSBoundParameters.ContainsKey['Cicustom']) { $parameters['cicustom'] = $Cicustom }
-        if($PSBoundParameters.ContainsKey['Cipassword']) { $parameters['cipassword'] = (ConvertFrom-SecureString -SecureString $Cipassword -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Citype']) { $parameters['citype'] = $Citype }
-        if($PSBoundParameters.ContainsKey['Ciupgrade']) { $parameters['ciupgrade'] = $Ciupgrade }
-        if($PSBoundParameters.ContainsKey['Ciuser']) { $parameters['ciuser'] = $Ciuser }
-        if($PSBoundParameters.ContainsKey['Cores']) { $parameters['cores'] = $Cores }
-        if($PSBoundParameters.ContainsKey['Cpu']) { $parameters['cpu'] = $Cpu }
-        if($PSBoundParameters.ContainsKey['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
-        if($PSBoundParameters.ContainsKey['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Efidisk0']) { $parameters['efidisk0'] = $Efidisk0 }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Freeze']) { $parameters['freeze'] = $Freeze }
-        if($PSBoundParameters.ContainsKey['Hookscript']) { $parameters['hookscript'] = $Hookscript }
-        if($PSBoundParameters.ContainsKey['Hotplug']) { $parameters['hotplug'] = $Hotplug }
-        if($PSBoundParameters.ContainsKey['Hugepages']) { $parameters['hugepages'] = $Hugepages }
-        if($PSBoundParameters.ContainsKey['ImportWorkingStorage']) { $parameters['import-working-storage'] = $ImportWorkingStorage }
-        if($PSBoundParameters.ContainsKey['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
-        if($PSBoundParameters.ContainsKey['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
-        if($PSBoundParameters.ContainsKey['Keyboard']) { $parameters['keyboard'] = $Keyboard }
-        if($PSBoundParameters.ContainsKey['Kvm']) { $parameters['kvm'] = $Kvm }
-        if($PSBoundParameters.ContainsKey['LiveRestore']) { $parameters['live-restore'] = $LiveRestore }
-        if($PSBoundParameters.ContainsKey['Localtime']) { $parameters['localtime'] = $Localtime }
-        if($PSBoundParameters.ContainsKey['Lock']) { $parameters['lock'] = $Lock }
-        if($PSBoundParameters.ContainsKey['Machine']) { $parameters['machine'] = $Machine }
-        if($PSBoundParameters.ContainsKey['Memory']) { $parameters['memory'] = $Memory }
-        if($PSBoundParameters.ContainsKey['MigrateDowntime']) { $parameters['migrate_downtime'] = $MigrateDowntime }
-        if($PSBoundParameters.ContainsKey['MigrateSpeed']) { $parameters['migrate_speed'] = $MigrateSpeed }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Nameserver']) { $parameters['nameserver'] = $Nameserver }
-        if($PSBoundParameters.ContainsKey['Numa']) { $parameters['numa'] = $Numa }
-        if($PSBoundParameters.ContainsKey['Onboot']) { $parameters['onboot'] = $Onboot }
-        if($PSBoundParameters.ContainsKey['Ostype']) { $parameters['ostype'] = $Ostype }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Protection']) { $parameters['protection'] = $Protection }
-        if($PSBoundParameters.ContainsKey['Reboot']) { $parameters['reboot'] = $Reboot }
-        if($PSBoundParameters.ContainsKey['Rng0']) { $parameters['rng0'] = $Rng0 }
-        if($PSBoundParameters.ContainsKey['Scsihw']) { $parameters['scsihw'] = $Scsihw }
-        if($PSBoundParameters.ContainsKey['Searchdomain']) { $parameters['searchdomain'] = $Searchdomain }
-        if($PSBoundParameters.ContainsKey['Shares']) { $parameters['shares'] = $Shares }
-        if($PSBoundParameters.ContainsKey['Smbios1']) { $parameters['smbios1'] = $Smbios1 }
-        if($PSBoundParameters.ContainsKey['Smp']) { $parameters['smp'] = $Smp }
-        if($PSBoundParameters.ContainsKey['Sockets']) { $parameters['sockets'] = $Sockets }
-        if($PSBoundParameters.ContainsKey['SpiceEnhancements']) { $parameters['spice_enhancements'] = $SpiceEnhancements }
-        if($PSBoundParameters.ContainsKey['Sshkeys']) { $parameters['sshkeys'] = $Sshkeys }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Startdate']) { $parameters['startdate'] = $Startdate }
-        if($PSBoundParameters.ContainsKey['Startup']) { $parameters['startup'] = $Startup }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Tablet']) { $parameters['tablet'] = $Tablet }
-        if($PSBoundParameters.ContainsKey['Tags']) { $parameters['tags'] = $Tags }
-        if($PSBoundParameters.ContainsKey['Tdf']) { $parameters['tdf'] = $Tdf }
-        if($PSBoundParameters.ContainsKey['Template']) { $parameters['template'] = $Template }
-        if($PSBoundParameters.ContainsKey['Tpmstate0']) { $parameters['tpmstate0'] = $Tpmstate0 }
-        if($PSBoundParameters.ContainsKey['Unique']) { $parameters['unique'] = $Unique }
-        if($PSBoundParameters.ContainsKey['Vcpus']) { $parameters['vcpus'] = $Vcpus }
-        if($PSBoundParameters.ContainsKey['Vga']) { $parameters['vga'] = $Vga }
-        if($PSBoundParameters.ContainsKey['Vmgenid']) { $parameters['vmgenid'] = $Vmgenid }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
-        if($PSBoundParameters.ContainsKey['Vmstatestorage']) { $parameters['vmstatestorage'] = $Vmstatestorage }
-        if($PSBoundParameters.ContainsKey['Watchdog']) { $parameters['watchdog'] = $Watchdog }
+        if($PSBoundParameters.ContainsKey('Acpi')) { $parameters['acpi'] = $Acpi }
+        if($PSBoundParameters.ContainsKey('Affinity')) { $parameters['affinity'] = $Affinity }
+        if($PSBoundParameters.ContainsKey('Agent')) { $parameters['agent'] = $Agent }
+        if($PSBoundParameters.ContainsKey('AmdSev')) { $parameters['amd-sev'] = $AmdSev }
+        if($PSBoundParameters.ContainsKey('Arch')) { $parameters['arch'] = $Arch }
+        if($PSBoundParameters.ContainsKey('Archive')) { $parameters['archive'] = $Archive }
+        if($PSBoundParameters.ContainsKey('Args_')) { $parameters['args'] = $Args_ }
+        if($PSBoundParameters.ContainsKey('Audio0')) { $parameters['audio0'] = $Audio0 }
+        if($PSBoundParameters.ContainsKey('Autostart')) { $parameters['autostart'] = $Autostart }
+        if($PSBoundParameters.ContainsKey('Balloon')) { $parameters['balloon'] = $Balloon }
+        if($PSBoundParameters.ContainsKey('Bios')) { $parameters['bios'] = $Bios }
+        if($PSBoundParameters.ContainsKey('Boot')) { $parameters['boot'] = $Boot }
+        if($PSBoundParameters.ContainsKey('Bootdisk')) { $parameters['bootdisk'] = $Bootdisk }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Cdrom')) { $parameters['cdrom'] = $Cdrom }
+        if($PSBoundParameters.ContainsKey('Cicustom')) { $parameters['cicustom'] = $Cicustom }
+        if($PSBoundParameters.ContainsKey('Cipassword')) { $parameters['cipassword'] = (ConvertFrom-SecureString -SecureString $Cipassword -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Citype')) { $parameters['citype'] = $Citype }
+        if($PSBoundParameters.ContainsKey('Ciupgrade')) { $parameters['ciupgrade'] = $Ciupgrade }
+        if($PSBoundParameters.ContainsKey('Ciuser')) { $parameters['ciuser'] = $Ciuser }
+        if($PSBoundParameters.ContainsKey('Cores')) { $parameters['cores'] = $Cores }
+        if($PSBoundParameters.ContainsKey('Cpu')) { $parameters['cpu'] = $Cpu }
+        if($PSBoundParameters.ContainsKey('Cpulimit')) { $parameters['cpulimit'] = $Cpulimit }
+        if($PSBoundParameters.ContainsKey('Cpuunits')) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Efidisk0')) { $parameters['efidisk0'] = $Efidisk0 }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Freeze')) { $parameters['freeze'] = $Freeze }
+        if($PSBoundParameters.ContainsKey('Hookscript')) { $parameters['hookscript'] = $Hookscript }
+        if($PSBoundParameters.ContainsKey('Hotplug')) { $parameters['hotplug'] = $Hotplug }
+        if($PSBoundParameters.ContainsKey('Hugepages')) { $parameters['hugepages'] = $Hugepages }
+        if($PSBoundParameters.ContainsKey('ImportWorkingStorage')) { $parameters['import-working-storage'] = $ImportWorkingStorage }
+        if($PSBoundParameters.ContainsKey('Ivshmem')) { $parameters['ivshmem'] = $Ivshmem }
+        if($PSBoundParameters.ContainsKey('Keephugepages')) { $parameters['keephugepages'] = $Keephugepages }
+        if($PSBoundParameters.ContainsKey('Keyboard')) { $parameters['keyboard'] = $Keyboard }
+        if($PSBoundParameters.ContainsKey('Kvm')) { $parameters['kvm'] = $Kvm }
+        if($PSBoundParameters.ContainsKey('LiveRestore')) { $parameters['live-restore'] = $LiveRestore }
+        if($PSBoundParameters.ContainsKey('Localtime')) { $parameters['localtime'] = $Localtime }
+        if($PSBoundParameters.ContainsKey('Lock')) { $parameters['lock'] = $Lock }
+        if($PSBoundParameters.ContainsKey('Machine')) { $parameters['machine'] = $Machine }
+        if($PSBoundParameters.ContainsKey('Memory')) { $parameters['memory'] = $Memory }
+        if($PSBoundParameters.ContainsKey('MigrateDowntime')) { $parameters['migrate_downtime'] = $MigrateDowntime }
+        if($PSBoundParameters.ContainsKey('MigrateSpeed')) { $parameters['migrate_speed'] = $MigrateSpeed }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Nameserver')) { $parameters['nameserver'] = $Nameserver }
+        if($PSBoundParameters.ContainsKey('Numa')) { $parameters['numa'] = $Numa }
+        if($PSBoundParameters.ContainsKey('Onboot')) { $parameters['onboot'] = $Onboot }
+        if($PSBoundParameters.ContainsKey('Ostype')) { $parameters['ostype'] = $Ostype }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Protection')) { $parameters['protection'] = $Protection }
+        if($PSBoundParameters.ContainsKey('Reboot')) { $parameters['reboot'] = $Reboot }
+        if($PSBoundParameters.ContainsKey('Rng0')) { $parameters['rng0'] = $Rng0 }
+        if($PSBoundParameters.ContainsKey('Scsihw')) { $parameters['scsihw'] = $Scsihw }
+        if($PSBoundParameters.ContainsKey('Searchdomain')) { $parameters['searchdomain'] = $Searchdomain }
+        if($PSBoundParameters.ContainsKey('Shares')) { $parameters['shares'] = $Shares }
+        if($PSBoundParameters.ContainsKey('Smbios1')) { $parameters['smbios1'] = $Smbios1 }
+        if($PSBoundParameters.ContainsKey('Smp')) { $parameters['smp'] = $Smp }
+        if($PSBoundParameters.ContainsKey('Sockets')) { $parameters['sockets'] = $Sockets }
+        if($PSBoundParameters.ContainsKey('SpiceEnhancements')) { $parameters['spice_enhancements'] = $SpiceEnhancements }
+        if($PSBoundParameters.ContainsKey('Sshkeys')) { $parameters['sshkeys'] = $Sshkeys }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Startdate')) { $parameters['startdate'] = $Startdate }
+        if($PSBoundParameters.ContainsKey('Startup')) { $parameters['startup'] = $Startup }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Tablet')) { $parameters['tablet'] = $Tablet }
+        if($PSBoundParameters.ContainsKey('Tags')) { $parameters['tags'] = $Tags }
+        if($PSBoundParameters.ContainsKey('Tdf')) { $parameters['tdf'] = $Tdf }
+        if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
+        if($PSBoundParameters.ContainsKey('Tpmstate0')) { $parameters['tpmstate0'] = $Tpmstate0 }
+        if($PSBoundParameters.ContainsKey('Unique')) { $parameters['unique'] = $Unique }
+        if($PSBoundParameters.ContainsKey('Vcpus')) { $parameters['vcpus'] = $Vcpus }
+        if($PSBoundParameters.ContainsKey('Vga')) { $parameters['vga'] = $Vga }
+        if($PSBoundParameters.ContainsKey('Vmgenid')) { $parameters['vmgenid'] = $Vmgenid }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Vmstatestorage')) { $parameters['vmstatestorage'] = $Vmstatestorage }
+        if($PSBoundParameters.ContainsKey('Watchdog')) { $parameters['watchdog'] = $Watchdog }
 
-        if($PSBoundParameters.ContainsKey['HostpciN']) { $HostpciN.keys | ForEach-Object { $parameters['hostpci' + $_] = $HostpciN[$_] } }
-        if($PSBoundParameters.ContainsKey['IdeN']) { $IdeN.keys | ForEach-Object { $parameters['ide' + $_] = $IdeN[$_] } }
-        if($PSBoundParameters.ContainsKey['IpconfigN']) { $IpconfigN.keys | ForEach-Object { $parameters['ipconfig' + $_] = $IpconfigN[$_] } }
-        if($PSBoundParameters.ContainsKey['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
-        if($PSBoundParameters.ContainsKey['NumaN']) { $NumaN.keys | ForEach-Object { $parameters['numa' + $_] = $NumaN[$_] } }
-        if($PSBoundParameters.ContainsKey['ParallelN']) { $ParallelN.keys | ForEach-Object { $parameters['parallel' + $_] = $ParallelN[$_] } }
-        if($PSBoundParameters.ContainsKey['SataN']) { $SataN.keys | ForEach-Object { $parameters['sata' + $_] = $SataN[$_] } }
-        if($PSBoundParameters.ContainsKey['ScsiN']) { $ScsiN.keys | ForEach-Object { $parameters['scsi' + $_] = $ScsiN[$_] } }
-        if($PSBoundParameters.ContainsKey['SerialN']) { $SerialN.keys | ForEach-Object { $parameters['serial' + $_] = $SerialN[$_] } }
-        if($PSBoundParameters.ContainsKey['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
-        if($PSBoundParameters.ContainsKey['UsbN']) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
-        if($PSBoundParameters.ContainsKey['VirtioN']) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
+        if($PSBoundParameters.ContainsKey('HostpciN')) { $HostpciN.keys | ForEach-Object { $parameters['hostpci' + $_] = $HostpciN[$_] } }
+        if($PSBoundParameters.ContainsKey('IdeN')) { $IdeN.keys | ForEach-Object { $parameters['ide' + $_] = $IdeN[$_] } }
+        if($PSBoundParameters.ContainsKey('IpconfigN')) { $IpconfigN.keys | ForEach-Object { $parameters['ipconfig' + $_] = $IpconfigN[$_] } }
+        if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
+        if($PSBoundParameters.ContainsKey('NumaN')) { $NumaN.keys | ForEach-Object { $parameters['numa' + $_] = $NumaN[$_] } }
+        if($PSBoundParameters.ContainsKey('ParallelN')) { $ParallelN.keys | ForEach-Object { $parameters['parallel' + $_] = $ParallelN[$_] } }
+        if($PSBoundParameters.ContainsKey('SataN')) { $SataN.keys | ForEach-Object { $parameters['sata' + $_] = $SataN[$_] } }
+        if($PSBoundParameters.ContainsKey('ScsiN')) { $ScsiN.keys | ForEach-Object { $parameters['scsi' + $_] = $ScsiN[$_] } }
+        if($PSBoundParameters.ContainsKey('SerialN')) { $SerialN.keys | ForEach-Object { $parameters['serial' + $_] = $SerialN[$_] } }
+        if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
+        if($PSBoundParameters.ContainsKey('UsbN')) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
+        if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu" -Parameters $parameters
     }
@@ -11028,9 +11028,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['DestroyUnreferencedDisks']) { $parameters['destroy-unreferenced-disks'] = $DestroyUnreferencedDisks }
-        if($PSBoundParameters.ContainsKey['Purge']) { $parameters['purge'] = $Purge }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('DestroyUnreferencedDisks')) { $parameters['destroy-unreferenced-disks'] = $DestroyUnreferencedDisks }
+        if($PSBoundParameters.ContainsKey('Purge')) { $parameters['purge'] = $Purge }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid" -Parameters $parameters
     }
@@ -11238,21 +11238,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Pos']) { $parameters['pos'] = $Pos }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Pos')) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules" -Parameters $parameters
     }
@@ -11297,7 +11297,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -11456,22 +11456,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Moveto']) { $parameters['moveto'] = $Moveto }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Moveto')) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -11553,9 +11553,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases" -Parameters $parameters
     }
@@ -11600,7 +11600,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name" -Parameters $parameters
     }
@@ -11697,10 +11697,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name" -Parameters $parameters
     }
@@ -11787,10 +11787,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset" -Parameters $parameters
     }
@@ -11835,7 +11835,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters
     }
@@ -11927,9 +11927,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Nomatch']) { $parameters['nomatch'] = $Nomatch }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters
     }
@@ -11979,7 +11979,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
     }
@@ -12081,9 +12081,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Nomatch']) { $parameters['nomatch'] = $Nomatch }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
     }
@@ -12214,18 +12214,18 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dhcp']) { $parameters['dhcp'] = $Dhcp }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['Ipfilter']) { $parameters['ipfilter'] = $Ipfilter }
-        if($PSBoundParameters.ContainsKey['LogLevelIn']) { $parameters['log_level_in'] = $LogLevelIn }
-        if($PSBoundParameters.ContainsKey['LogLevelOut']) { $parameters['log_level_out'] = $LogLevelOut }
-        if($PSBoundParameters.ContainsKey['Macfilter']) { $parameters['macfilter'] = $Macfilter }
-        if($PSBoundParameters.ContainsKey['Ndp']) { $parameters['ndp'] = $Ndp }
-        if($PSBoundParameters.ContainsKey['PolicyIn']) { $parameters['policy_in'] = $PolicyIn }
-        if($PSBoundParameters.ContainsKey['PolicyOut']) { $parameters['policy_out'] = $PolicyOut }
-        if($PSBoundParameters.ContainsKey['Radv']) { $parameters['radv'] = $Radv }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dhcp')) { $parameters['dhcp'] = $Dhcp }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('Ipfilter')) { $parameters['ipfilter'] = $Ipfilter }
+        if($PSBoundParameters.ContainsKey('LogLevelIn')) { $parameters['log_level_in'] = $LogLevelIn }
+        if($PSBoundParameters.ContainsKey('LogLevelOut')) { $parameters['log_level_out'] = $LogLevelOut }
+        if($PSBoundParameters.ContainsKey('Macfilter')) { $parameters['macfilter'] = $Macfilter }
+        if($PSBoundParameters.ContainsKey('Ndp')) { $parameters['ndp'] = $Ndp }
+        if($PSBoundParameters.ContainsKey('PolicyIn')) { $parameters['policy_in'] = $PolicyIn }
+        if($PSBoundParameters.ContainsKey('PolicyOut')) { $parameters['policy_out'] = $PolicyOut }
+        if($PSBoundParameters.ContainsKey('Radv')) { $parameters['radv'] = $Radv }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/options" -Parameters $parameters
     }
@@ -12280,10 +12280,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Since']) { $parameters['since'] = $Since }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Until']) { $parameters['until'] = $Until }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/firewall/log" -Parameters $parameters
     }
@@ -12324,7 +12324,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/firewall/refs" -Parameters $parameters
     }
@@ -12397,7 +12397,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Command']) { $parameters['command'] = $Command }
+        if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent" -Parameters $parameters
     }
@@ -13087,9 +13087,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Crypted']) { $parameters['crypted'] = $Crypted }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Crypted')) { $parameters['crypted'] = $Crypted }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/set-user-password" -Parameters $parameters
     }
@@ -13134,8 +13134,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Command']) { $parameters['command'] = $Command }
-        if($PSBoundParameters.ContainsKey['InputData']) { $parameters['input-data'] = $InputData }
+        if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
+        if($PSBoundParameters.ContainsKey('InputData')) { $parameters['input-data'] = $InputData }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/exec" -Parameters $parameters
     }
@@ -13175,7 +13175,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Pid_']) { $parameters['pid'] = $Pid_ }
+        if($PSBoundParameters.ContainsKey('Pid_')) { $parameters['pid'] = $Pid_ }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/agent/exec-status" -Parameters $parameters
     }
@@ -13215,7 +13215,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['File']) { $parameters['file'] = $File }
+        if($PSBoundParameters.ContainsKey('File')) { $parameters['file'] = $File }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/agent/file-read" -Parameters $parameters
     }
@@ -13265,9 +13265,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['Encode']) { $parameters['encode'] = $Encode }
-        if($PSBoundParameters.ContainsKey['File']) { $parameters['file'] = $File }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('Encode')) { $parameters['encode'] = $Encode }
+        if($PSBoundParameters.ContainsKey('File')) { $parameters['file'] = $File }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/file-write" -Parameters $parameters
     }
@@ -13319,9 +13319,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Ds']) { $parameters['ds'] = $Ds }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Ds')) { $parameters['ds'] = $Ds }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/rrd" -Parameters $parameters
     }
@@ -13368,8 +13368,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/rrddata" -Parameters $parameters
     }
@@ -13414,8 +13414,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Current']) { $parameters['current'] = $Current }
-        if($PSBoundParameters.ContainsKey['Snapshot']) { $parameters['snapshot'] = $Snapshot }
+        if($PSBoundParameters.ContainsKey('Current')) { $parameters['current'] = $Current }
+        if($PSBoundParameters.ContainsKey('Snapshot')) { $parameters['snapshot'] = $Snapshot }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
     }
@@ -13883,92 +13883,92 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Acpi']) { $parameters['acpi'] = $Acpi }
-        if($PSBoundParameters.ContainsKey['Affinity']) { $parameters['affinity'] = $Affinity }
-        if($PSBoundParameters.ContainsKey['Agent']) { $parameters['agent'] = $Agent }
-        if($PSBoundParameters.ContainsKey['AmdSev']) { $parameters['amd-sev'] = $AmdSev }
-        if($PSBoundParameters.ContainsKey['Arch']) { $parameters['arch'] = $Arch }
-        if($PSBoundParameters.ContainsKey['Args_']) { $parameters['args'] = $Args_ }
-        if($PSBoundParameters.ContainsKey['Audio0']) { $parameters['audio0'] = $Audio0 }
-        if($PSBoundParameters.ContainsKey['Autostart']) { $parameters['autostart'] = $Autostart }
-        if($PSBoundParameters.ContainsKey['BackgroundDelay']) { $parameters['background_delay'] = $BackgroundDelay }
-        if($PSBoundParameters.ContainsKey['Balloon']) { $parameters['balloon'] = $Balloon }
-        if($PSBoundParameters.ContainsKey['Bios']) { $parameters['bios'] = $Bios }
-        if($PSBoundParameters.ContainsKey['Boot']) { $parameters['boot'] = $Boot }
-        if($PSBoundParameters.ContainsKey['Bootdisk']) { $parameters['bootdisk'] = $Bootdisk }
-        if($PSBoundParameters.ContainsKey['Cdrom']) { $parameters['cdrom'] = $Cdrom }
-        if($PSBoundParameters.ContainsKey['Cicustom']) { $parameters['cicustom'] = $Cicustom }
-        if($PSBoundParameters.ContainsKey['Cipassword']) { $parameters['cipassword'] = (ConvertFrom-SecureString -SecureString $Cipassword -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Citype']) { $parameters['citype'] = $Citype }
-        if($PSBoundParameters.ContainsKey['Ciupgrade']) { $parameters['ciupgrade'] = $Ciupgrade }
-        if($PSBoundParameters.ContainsKey['Ciuser']) { $parameters['ciuser'] = $Ciuser }
-        if($PSBoundParameters.ContainsKey['Cores']) { $parameters['cores'] = $Cores }
-        if($PSBoundParameters.ContainsKey['Cpu']) { $parameters['cpu'] = $Cpu }
-        if($PSBoundParameters.ContainsKey['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
-        if($PSBoundParameters.ContainsKey['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Efidisk0']) { $parameters['efidisk0'] = $Efidisk0 }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Freeze']) { $parameters['freeze'] = $Freeze }
-        if($PSBoundParameters.ContainsKey['Hookscript']) { $parameters['hookscript'] = $Hookscript }
-        if($PSBoundParameters.ContainsKey['Hotplug']) { $parameters['hotplug'] = $Hotplug }
-        if($PSBoundParameters.ContainsKey['Hugepages']) { $parameters['hugepages'] = $Hugepages }
-        if($PSBoundParameters.ContainsKey['ImportWorkingStorage']) { $parameters['import-working-storage'] = $ImportWorkingStorage }
-        if($PSBoundParameters.ContainsKey['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
-        if($PSBoundParameters.ContainsKey['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
-        if($PSBoundParameters.ContainsKey['Keyboard']) { $parameters['keyboard'] = $Keyboard }
-        if($PSBoundParameters.ContainsKey['Kvm']) { $parameters['kvm'] = $Kvm }
-        if($PSBoundParameters.ContainsKey['Localtime']) { $parameters['localtime'] = $Localtime }
-        if($PSBoundParameters.ContainsKey['Lock']) { $parameters['lock'] = $Lock }
-        if($PSBoundParameters.ContainsKey['Machine']) { $parameters['machine'] = $Machine }
-        if($PSBoundParameters.ContainsKey['Memory']) { $parameters['memory'] = $Memory }
-        if($PSBoundParameters.ContainsKey['MigrateDowntime']) { $parameters['migrate_downtime'] = $MigrateDowntime }
-        if($PSBoundParameters.ContainsKey['MigrateSpeed']) { $parameters['migrate_speed'] = $MigrateSpeed }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Nameserver']) { $parameters['nameserver'] = $Nameserver }
-        if($PSBoundParameters.ContainsKey['Numa']) { $parameters['numa'] = $Numa }
-        if($PSBoundParameters.ContainsKey['Onboot']) { $parameters['onboot'] = $Onboot }
-        if($PSBoundParameters.ContainsKey['Ostype']) { $parameters['ostype'] = $Ostype }
-        if($PSBoundParameters.ContainsKey['Protection']) { $parameters['protection'] = $Protection }
-        if($PSBoundParameters.ContainsKey['Reboot']) { $parameters['reboot'] = $Reboot }
-        if($PSBoundParameters.ContainsKey['Revert']) { $parameters['revert'] = $Revert }
-        if($PSBoundParameters.ContainsKey['Rng0']) { $parameters['rng0'] = $Rng0 }
-        if($PSBoundParameters.ContainsKey['Scsihw']) { $parameters['scsihw'] = $Scsihw }
-        if($PSBoundParameters.ContainsKey['Searchdomain']) { $parameters['searchdomain'] = $Searchdomain }
-        if($PSBoundParameters.ContainsKey['Shares']) { $parameters['shares'] = $Shares }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
-        if($PSBoundParameters.ContainsKey['Smbios1']) { $parameters['smbios1'] = $Smbios1 }
-        if($PSBoundParameters.ContainsKey['Smp']) { $parameters['smp'] = $Smp }
-        if($PSBoundParameters.ContainsKey['Sockets']) { $parameters['sockets'] = $Sockets }
-        if($PSBoundParameters.ContainsKey['SpiceEnhancements']) { $parameters['spice_enhancements'] = $SpiceEnhancements }
-        if($PSBoundParameters.ContainsKey['Sshkeys']) { $parameters['sshkeys'] = $Sshkeys }
-        if($PSBoundParameters.ContainsKey['Startdate']) { $parameters['startdate'] = $Startdate }
-        if($PSBoundParameters.ContainsKey['Startup']) { $parameters['startup'] = $Startup }
-        if($PSBoundParameters.ContainsKey['Tablet']) { $parameters['tablet'] = $Tablet }
-        if($PSBoundParameters.ContainsKey['Tags']) { $parameters['tags'] = $Tags }
-        if($PSBoundParameters.ContainsKey['Tdf']) { $parameters['tdf'] = $Tdf }
-        if($PSBoundParameters.ContainsKey['Template']) { $parameters['template'] = $Template }
-        if($PSBoundParameters.ContainsKey['Tpmstate0']) { $parameters['tpmstate0'] = $Tpmstate0 }
-        if($PSBoundParameters.ContainsKey['Vcpus']) { $parameters['vcpus'] = $Vcpus }
-        if($PSBoundParameters.ContainsKey['Vga']) { $parameters['vga'] = $Vga }
-        if($PSBoundParameters.ContainsKey['Vmgenid']) { $parameters['vmgenid'] = $Vmgenid }
-        if($PSBoundParameters.ContainsKey['Vmstatestorage']) { $parameters['vmstatestorage'] = $Vmstatestorage }
-        if($PSBoundParameters.ContainsKey['Watchdog']) { $parameters['watchdog'] = $Watchdog }
+        if($PSBoundParameters.ContainsKey('Acpi')) { $parameters['acpi'] = $Acpi }
+        if($PSBoundParameters.ContainsKey('Affinity')) { $parameters['affinity'] = $Affinity }
+        if($PSBoundParameters.ContainsKey('Agent')) { $parameters['agent'] = $Agent }
+        if($PSBoundParameters.ContainsKey('AmdSev')) { $parameters['amd-sev'] = $AmdSev }
+        if($PSBoundParameters.ContainsKey('Arch')) { $parameters['arch'] = $Arch }
+        if($PSBoundParameters.ContainsKey('Args_')) { $parameters['args'] = $Args_ }
+        if($PSBoundParameters.ContainsKey('Audio0')) { $parameters['audio0'] = $Audio0 }
+        if($PSBoundParameters.ContainsKey('Autostart')) { $parameters['autostart'] = $Autostart }
+        if($PSBoundParameters.ContainsKey('BackgroundDelay')) { $parameters['background_delay'] = $BackgroundDelay }
+        if($PSBoundParameters.ContainsKey('Balloon')) { $parameters['balloon'] = $Balloon }
+        if($PSBoundParameters.ContainsKey('Bios')) { $parameters['bios'] = $Bios }
+        if($PSBoundParameters.ContainsKey('Boot')) { $parameters['boot'] = $Boot }
+        if($PSBoundParameters.ContainsKey('Bootdisk')) { $parameters['bootdisk'] = $Bootdisk }
+        if($PSBoundParameters.ContainsKey('Cdrom')) { $parameters['cdrom'] = $Cdrom }
+        if($PSBoundParameters.ContainsKey('Cicustom')) { $parameters['cicustom'] = $Cicustom }
+        if($PSBoundParameters.ContainsKey('Cipassword')) { $parameters['cipassword'] = (ConvertFrom-SecureString -SecureString $Cipassword -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Citype')) { $parameters['citype'] = $Citype }
+        if($PSBoundParameters.ContainsKey('Ciupgrade')) { $parameters['ciupgrade'] = $Ciupgrade }
+        if($PSBoundParameters.ContainsKey('Ciuser')) { $parameters['ciuser'] = $Ciuser }
+        if($PSBoundParameters.ContainsKey('Cores')) { $parameters['cores'] = $Cores }
+        if($PSBoundParameters.ContainsKey('Cpu')) { $parameters['cpu'] = $Cpu }
+        if($PSBoundParameters.ContainsKey('Cpulimit')) { $parameters['cpulimit'] = $Cpulimit }
+        if($PSBoundParameters.ContainsKey('Cpuunits')) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Efidisk0')) { $parameters['efidisk0'] = $Efidisk0 }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Freeze')) { $parameters['freeze'] = $Freeze }
+        if($PSBoundParameters.ContainsKey('Hookscript')) { $parameters['hookscript'] = $Hookscript }
+        if($PSBoundParameters.ContainsKey('Hotplug')) { $parameters['hotplug'] = $Hotplug }
+        if($PSBoundParameters.ContainsKey('Hugepages')) { $parameters['hugepages'] = $Hugepages }
+        if($PSBoundParameters.ContainsKey('ImportWorkingStorage')) { $parameters['import-working-storage'] = $ImportWorkingStorage }
+        if($PSBoundParameters.ContainsKey('Ivshmem')) { $parameters['ivshmem'] = $Ivshmem }
+        if($PSBoundParameters.ContainsKey('Keephugepages')) { $parameters['keephugepages'] = $Keephugepages }
+        if($PSBoundParameters.ContainsKey('Keyboard')) { $parameters['keyboard'] = $Keyboard }
+        if($PSBoundParameters.ContainsKey('Kvm')) { $parameters['kvm'] = $Kvm }
+        if($PSBoundParameters.ContainsKey('Localtime')) { $parameters['localtime'] = $Localtime }
+        if($PSBoundParameters.ContainsKey('Lock')) { $parameters['lock'] = $Lock }
+        if($PSBoundParameters.ContainsKey('Machine')) { $parameters['machine'] = $Machine }
+        if($PSBoundParameters.ContainsKey('Memory')) { $parameters['memory'] = $Memory }
+        if($PSBoundParameters.ContainsKey('MigrateDowntime')) { $parameters['migrate_downtime'] = $MigrateDowntime }
+        if($PSBoundParameters.ContainsKey('MigrateSpeed')) { $parameters['migrate_speed'] = $MigrateSpeed }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Nameserver')) { $parameters['nameserver'] = $Nameserver }
+        if($PSBoundParameters.ContainsKey('Numa')) { $parameters['numa'] = $Numa }
+        if($PSBoundParameters.ContainsKey('Onboot')) { $parameters['onboot'] = $Onboot }
+        if($PSBoundParameters.ContainsKey('Ostype')) { $parameters['ostype'] = $Ostype }
+        if($PSBoundParameters.ContainsKey('Protection')) { $parameters['protection'] = $Protection }
+        if($PSBoundParameters.ContainsKey('Reboot')) { $parameters['reboot'] = $Reboot }
+        if($PSBoundParameters.ContainsKey('Revert')) { $parameters['revert'] = $Revert }
+        if($PSBoundParameters.ContainsKey('Rng0')) { $parameters['rng0'] = $Rng0 }
+        if($PSBoundParameters.ContainsKey('Scsihw')) { $parameters['scsihw'] = $Scsihw }
+        if($PSBoundParameters.ContainsKey('Searchdomain')) { $parameters['searchdomain'] = $Searchdomain }
+        if($PSBoundParameters.ContainsKey('Shares')) { $parameters['shares'] = $Shares }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Smbios1')) { $parameters['smbios1'] = $Smbios1 }
+        if($PSBoundParameters.ContainsKey('Smp')) { $parameters['smp'] = $Smp }
+        if($PSBoundParameters.ContainsKey('Sockets')) { $parameters['sockets'] = $Sockets }
+        if($PSBoundParameters.ContainsKey('SpiceEnhancements')) { $parameters['spice_enhancements'] = $SpiceEnhancements }
+        if($PSBoundParameters.ContainsKey('Sshkeys')) { $parameters['sshkeys'] = $Sshkeys }
+        if($PSBoundParameters.ContainsKey('Startdate')) { $parameters['startdate'] = $Startdate }
+        if($PSBoundParameters.ContainsKey('Startup')) { $parameters['startup'] = $Startup }
+        if($PSBoundParameters.ContainsKey('Tablet')) { $parameters['tablet'] = $Tablet }
+        if($PSBoundParameters.ContainsKey('Tags')) { $parameters['tags'] = $Tags }
+        if($PSBoundParameters.ContainsKey('Tdf')) { $parameters['tdf'] = $Tdf }
+        if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
+        if($PSBoundParameters.ContainsKey('Tpmstate0')) { $parameters['tpmstate0'] = $Tpmstate0 }
+        if($PSBoundParameters.ContainsKey('Vcpus')) { $parameters['vcpus'] = $Vcpus }
+        if($PSBoundParameters.ContainsKey('Vga')) { $parameters['vga'] = $Vga }
+        if($PSBoundParameters.ContainsKey('Vmgenid')) { $parameters['vmgenid'] = $Vmgenid }
+        if($PSBoundParameters.ContainsKey('Vmstatestorage')) { $parameters['vmstatestorage'] = $Vmstatestorage }
+        if($PSBoundParameters.ContainsKey('Watchdog')) { $parameters['watchdog'] = $Watchdog }
 
-        if($PSBoundParameters.ContainsKey['HostpciN']) { $HostpciN.keys | ForEach-Object { $parameters['hostpci' + $_] = $HostpciN[$_] } }
-        if($PSBoundParameters.ContainsKey['IdeN']) { $IdeN.keys | ForEach-Object { $parameters['ide' + $_] = $IdeN[$_] } }
-        if($PSBoundParameters.ContainsKey['IpconfigN']) { $IpconfigN.keys | ForEach-Object { $parameters['ipconfig' + $_] = $IpconfigN[$_] } }
-        if($PSBoundParameters.ContainsKey['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
-        if($PSBoundParameters.ContainsKey['NumaN']) { $NumaN.keys | ForEach-Object { $parameters['numa' + $_] = $NumaN[$_] } }
-        if($PSBoundParameters.ContainsKey['ParallelN']) { $ParallelN.keys | ForEach-Object { $parameters['parallel' + $_] = $ParallelN[$_] } }
-        if($PSBoundParameters.ContainsKey['SataN']) { $SataN.keys | ForEach-Object { $parameters['sata' + $_] = $SataN[$_] } }
-        if($PSBoundParameters.ContainsKey['ScsiN']) { $ScsiN.keys | ForEach-Object { $parameters['scsi' + $_] = $ScsiN[$_] } }
-        if($PSBoundParameters.ContainsKey['SerialN']) { $SerialN.keys | ForEach-Object { $parameters['serial' + $_] = $SerialN[$_] } }
-        if($PSBoundParameters.ContainsKey['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
-        if($PSBoundParameters.ContainsKey['UsbN']) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
-        if($PSBoundParameters.ContainsKey['VirtioN']) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
+        if($PSBoundParameters.ContainsKey('HostpciN')) { $HostpciN.keys | ForEach-Object { $parameters['hostpci' + $_] = $HostpciN[$_] } }
+        if($PSBoundParameters.ContainsKey('IdeN')) { $IdeN.keys | ForEach-Object { $parameters['ide' + $_] = $IdeN[$_] } }
+        if($PSBoundParameters.ContainsKey('IpconfigN')) { $IpconfigN.keys | ForEach-Object { $parameters['ipconfig' + $_] = $IpconfigN[$_] } }
+        if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
+        if($PSBoundParameters.ContainsKey('NumaN')) { $NumaN.keys | ForEach-Object { $parameters['numa' + $_] = $NumaN[$_] } }
+        if($PSBoundParameters.ContainsKey('ParallelN')) { $ParallelN.keys | ForEach-Object { $parameters['parallel' + $_] = $ParallelN[$_] } }
+        if($PSBoundParameters.ContainsKey('SataN')) { $SataN.keys | ForEach-Object { $parameters['sata' + $_] = $SataN[$_] } }
+        if($PSBoundParameters.ContainsKey('ScsiN')) { $ScsiN.keys | ForEach-Object { $parameters['scsi' + $_] = $ScsiN[$_] } }
+        if($PSBoundParameters.ContainsKey('SerialN')) { $SerialN.keys | ForEach-Object { $parameters['serial' + $_] = $SerialN[$_] } }
+        if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
+        if($PSBoundParameters.ContainsKey('UsbN')) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
+        if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
     }
@@ -14426,90 +14426,90 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Acpi']) { $parameters['acpi'] = $Acpi }
-        if($PSBoundParameters.ContainsKey['Affinity']) { $parameters['affinity'] = $Affinity }
-        if($PSBoundParameters.ContainsKey['Agent']) { $parameters['agent'] = $Agent }
-        if($PSBoundParameters.ContainsKey['AmdSev']) { $parameters['amd-sev'] = $AmdSev }
-        if($PSBoundParameters.ContainsKey['Arch']) { $parameters['arch'] = $Arch }
-        if($PSBoundParameters.ContainsKey['Args_']) { $parameters['args'] = $Args_ }
-        if($PSBoundParameters.ContainsKey['Audio0']) { $parameters['audio0'] = $Audio0 }
-        if($PSBoundParameters.ContainsKey['Autostart']) { $parameters['autostart'] = $Autostart }
-        if($PSBoundParameters.ContainsKey['Balloon']) { $parameters['balloon'] = $Balloon }
-        if($PSBoundParameters.ContainsKey['Bios']) { $parameters['bios'] = $Bios }
-        if($PSBoundParameters.ContainsKey['Boot']) { $parameters['boot'] = $Boot }
-        if($PSBoundParameters.ContainsKey['Bootdisk']) { $parameters['bootdisk'] = $Bootdisk }
-        if($PSBoundParameters.ContainsKey['Cdrom']) { $parameters['cdrom'] = $Cdrom }
-        if($PSBoundParameters.ContainsKey['Cicustom']) { $parameters['cicustom'] = $Cicustom }
-        if($PSBoundParameters.ContainsKey['Cipassword']) { $parameters['cipassword'] = (ConvertFrom-SecureString -SecureString $Cipassword -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Citype']) { $parameters['citype'] = $Citype }
-        if($PSBoundParameters.ContainsKey['Ciupgrade']) { $parameters['ciupgrade'] = $Ciupgrade }
-        if($PSBoundParameters.ContainsKey['Ciuser']) { $parameters['ciuser'] = $Ciuser }
-        if($PSBoundParameters.ContainsKey['Cores']) { $parameters['cores'] = $Cores }
-        if($PSBoundParameters.ContainsKey['Cpu']) { $parameters['cpu'] = $Cpu }
-        if($PSBoundParameters.ContainsKey['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
-        if($PSBoundParameters.ContainsKey['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Efidisk0']) { $parameters['efidisk0'] = $Efidisk0 }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Freeze']) { $parameters['freeze'] = $Freeze }
-        if($PSBoundParameters.ContainsKey['Hookscript']) { $parameters['hookscript'] = $Hookscript }
-        if($PSBoundParameters.ContainsKey['Hotplug']) { $parameters['hotplug'] = $Hotplug }
-        if($PSBoundParameters.ContainsKey['Hugepages']) { $parameters['hugepages'] = $Hugepages }
-        if($PSBoundParameters.ContainsKey['Ivshmem']) { $parameters['ivshmem'] = $Ivshmem }
-        if($PSBoundParameters.ContainsKey['Keephugepages']) { $parameters['keephugepages'] = $Keephugepages }
-        if($PSBoundParameters.ContainsKey['Keyboard']) { $parameters['keyboard'] = $Keyboard }
-        if($PSBoundParameters.ContainsKey['Kvm']) { $parameters['kvm'] = $Kvm }
-        if($PSBoundParameters.ContainsKey['Localtime']) { $parameters['localtime'] = $Localtime }
-        if($PSBoundParameters.ContainsKey['Lock']) { $parameters['lock'] = $Lock }
-        if($PSBoundParameters.ContainsKey['Machine']) { $parameters['machine'] = $Machine }
-        if($PSBoundParameters.ContainsKey['Memory']) { $parameters['memory'] = $Memory }
-        if($PSBoundParameters.ContainsKey['MigrateDowntime']) { $parameters['migrate_downtime'] = $MigrateDowntime }
-        if($PSBoundParameters.ContainsKey['MigrateSpeed']) { $parameters['migrate_speed'] = $MigrateSpeed }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Nameserver']) { $parameters['nameserver'] = $Nameserver }
-        if($PSBoundParameters.ContainsKey['Numa']) { $parameters['numa'] = $Numa }
-        if($PSBoundParameters.ContainsKey['Onboot']) { $parameters['onboot'] = $Onboot }
-        if($PSBoundParameters.ContainsKey['Ostype']) { $parameters['ostype'] = $Ostype }
-        if($PSBoundParameters.ContainsKey['Protection']) { $parameters['protection'] = $Protection }
-        if($PSBoundParameters.ContainsKey['Reboot']) { $parameters['reboot'] = $Reboot }
-        if($PSBoundParameters.ContainsKey['Revert']) { $parameters['revert'] = $Revert }
-        if($PSBoundParameters.ContainsKey['Rng0']) { $parameters['rng0'] = $Rng0 }
-        if($PSBoundParameters.ContainsKey['Scsihw']) { $parameters['scsihw'] = $Scsihw }
-        if($PSBoundParameters.ContainsKey['Searchdomain']) { $parameters['searchdomain'] = $Searchdomain }
-        if($PSBoundParameters.ContainsKey['Shares']) { $parameters['shares'] = $Shares }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
-        if($PSBoundParameters.ContainsKey['Smbios1']) { $parameters['smbios1'] = $Smbios1 }
-        if($PSBoundParameters.ContainsKey['Smp']) { $parameters['smp'] = $Smp }
-        if($PSBoundParameters.ContainsKey['Sockets']) { $parameters['sockets'] = $Sockets }
-        if($PSBoundParameters.ContainsKey['SpiceEnhancements']) { $parameters['spice_enhancements'] = $SpiceEnhancements }
-        if($PSBoundParameters.ContainsKey['Sshkeys']) { $parameters['sshkeys'] = $Sshkeys }
-        if($PSBoundParameters.ContainsKey['Startdate']) { $parameters['startdate'] = $Startdate }
-        if($PSBoundParameters.ContainsKey['Startup']) { $parameters['startup'] = $Startup }
-        if($PSBoundParameters.ContainsKey['Tablet']) { $parameters['tablet'] = $Tablet }
-        if($PSBoundParameters.ContainsKey['Tags']) { $parameters['tags'] = $Tags }
-        if($PSBoundParameters.ContainsKey['Tdf']) { $parameters['tdf'] = $Tdf }
-        if($PSBoundParameters.ContainsKey['Template']) { $parameters['template'] = $Template }
-        if($PSBoundParameters.ContainsKey['Tpmstate0']) { $parameters['tpmstate0'] = $Tpmstate0 }
-        if($PSBoundParameters.ContainsKey['Vcpus']) { $parameters['vcpus'] = $Vcpus }
-        if($PSBoundParameters.ContainsKey['Vga']) { $parameters['vga'] = $Vga }
-        if($PSBoundParameters.ContainsKey['Vmgenid']) { $parameters['vmgenid'] = $Vmgenid }
-        if($PSBoundParameters.ContainsKey['Vmstatestorage']) { $parameters['vmstatestorage'] = $Vmstatestorage }
-        if($PSBoundParameters.ContainsKey['Watchdog']) { $parameters['watchdog'] = $Watchdog }
+        if($PSBoundParameters.ContainsKey('Acpi')) { $parameters['acpi'] = $Acpi }
+        if($PSBoundParameters.ContainsKey('Affinity')) { $parameters['affinity'] = $Affinity }
+        if($PSBoundParameters.ContainsKey('Agent')) { $parameters['agent'] = $Agent }
+        if($PSBoundParameters.ContainsKey('AmdSev')) { $parameters['amd-sev'] = $AmdSev }
+        if($PSBoundParameters.ContainsKey('Arch')) { $parameters['arch'] = $Arch }
+        if($PSBoundParameters.ContainsKey('Args_')) { $parameters['args'] = $Args_ }
+        if($PSBoundParameters.ContainsKey('Audio0')) { $parameters['audio0'] = $Audio0 }
+        if($PSBoundParameters.ContainsKey('Autostart')) { $parameters['autostart'] = $Autostart }
+        if($PSBoundParameters.ContainsKey('Balloon')) { $parameters['balloon'] = $Balloon }
+        if($PSBoundParameters.ContainsKey('Bios')) { $parameters['bios'] = $Bios }
+        if($PSBoundParameters.ContainsKey('Boot')) { $parameters['boot'] = $Boot }
+        if($PSBoundParameters.ContainsKey('Bootdisk')) { $parameters['bootdisk'] = $Bootdisk }
+        if($PSBoundParameters.ContainsKey('Cdrom')) { $parameters['cdrom'] = $Cdrom }
+        if($PSBoundParameters.ContainsKey('Cicustom')) { $parameters['cicustom'] = $Cicustom }
+        if($PSBoundParameters.ContainsKey('Cipassword')) { $parameters['cipassword'] = (ConvertFrom-SecureString -SecureString $Cipassword -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Citype')) { $parameters['citype'] = $Citype }
+        if($PSBoundParameters.ContainsKey('Ciupgrade')) { $parameters['ciupgrade'] = $Ciupgrade }
+        if($PSBoundParameters.ContainsKey('Ciuser')) { $parameters['ciuser'] = $Ciuser }
+        if($PSBoundParameters.ContainsKey('Cores')) { $parameters['cores'] = $Cores }
+        if($PSBoundParameters.ContainsKey('Cpu')) { $parameters['cpu'] = $Cpu }
+        if($PSBoundParameters.ContainsKey('Cpulimit')) { $parameters['cpulimit'] = $Cpulimit }
+        if($PSBoundParameters.ContainsKey('Cpuunits')) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Efidisk0')) { $parameters['efidisk0'] = $Efidisk0 }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Freeze')) { $parameters['freeze'] = $Freeze }
+        if($PSBoundParameters.ContainsKey('Hookscript')) { $parameters['hookscript'] = $Hookscript }
+        if($PSBoundParameters.ContainsKey('Hotplug')) { $parameters['hotplug'] = $Hotplug }
+        if($PSBoundParameters.ContainsKey('Hugepages')) { $parameters['hugepages'] = $Hugepages }
+        if($PSBoundParameters.ContainsKey('Ivshmem')) { $parameters['ivshmem'] = $Ivshmem }
+        if($PSBoundParameters.ContainsKey('Keephugepages')) { $parameters['keephugepages'] = $Keephugepages }
+        if($PSBoundParameters.ContainsKey('Keyboard')) { $parameters['keyboard'] = $Keyboard }
+        if($PSBoundParameters.ContainsKey('Kvm')) { $parameters['kvm'] = $Kvm }
+        if($PSBoundParameters.ContainsKey('Localtime')) { $parameters['localtime'] = $Localtime }
+        if($PSBoundParameters.ContainsKey('Lock')) { $parameters['lock'] = $Lock }
+        if($PSBoundParameters.ContainsKey('Machine')) { $parameters['machine'] = $Machine }
+        if($PSBoundParameters.ContainsKey('Memory')) { $parameters['memory'] = $Memory }
+        if($PSBoundParameters.ContainsKey('MigrateDowntime')) { $parameters['migrate_downtime'] = $MigrateDowntime }
+        if($PSBoundParameters.ContainsKey('MigrateSpeed')) { $parameters['migrate_speed'] = $MigrateSpeed }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Nameserver')) { $parameters['nameserver'] = $Nameserver }
+        if($PSBoundParameters.ContainsKey('Numa')) { $parameters['numa'] = $Numa }
+        if($PSBoundParameters.ContainsKey('Onboot')) { $parameters['onboot'] = $Onboot }
+        if($PSBoundParameters.ContainsKey('Ostype')) { $parameters['ostype'] = $Ostype }
+        if($PSBoundParameters.ContainsKey('Protection')) { $parameters['protection'] = $Protection }
+        if($PSBoundParameters.ContainsKey('Reboot')) { $parameters['reboot'] = $Reboot }
+        if($PSBoundParameters.ContainsKey('Revert')) { $parameters['revert'] = $Revert }
+        if($PSBoundParameters.ContainsKey('Rng0')) { $parameters['rng0'] = $Rng0 }
+        if($PSBoundParameters.ContainsKey('Scsihw')) { $parameters['scsihw'] = $Scsihw }
+        if($PSBoundParameters.ContainsKey('Searchdomain')) { $parameters['searchdomain'] = $Searchdomain }
+        if($PSBoundParameters.ContainsKey('Shares')) { $parameters['shares'] = $Shares }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Smbios1')) { $parameters['smbios1'] = $Smbios1 }
+        if($PSBoundParameters.ContainsKey('Smp')) { $parameters['smp'] = $Smp }
+        if($PSBoundParameters.ContainsKey('Sockets')) { $parameters['sockets'] = $Sockets }
+        if($PSBoundParameters.ContainsKey('SpiceEnhancements')) { $parameters['spice_enhancements'] = $SpiceEnhancements }
+        if($PSBoundParameters.ContainsKey('Sshkeys')) { $parameters['sshkeys'] = $Sshkeys }
+        if($PSBoundParameters.ContainsKey('Startdate')) { $parameters['startdate'] = $Startdate }
+        if($PSBoundParameters.ContainsKey('Startup')) { $parameters['startup'] = $Startup }
+        if($PSBoundParameters.ContainsKey('Tablet')) { $parameters['tablet'] = $Tablet }
+        if($PSBoundParameters.ContainsKey('Tags')) { $parameters['tags'] = $Tags }
+        if($PSBoundParameters.ContainsKey('Tdf')) { $parameters['tdf'] = $Tdf }
+        if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
+        if($PSBoundParameters.ContainsKey('Tpmstate0')) { $parameters['tpmstate0'] = $Tpmstate0 }
+        if($PSBoundParameters.ContainsKey('Vcpus')) { $parameters['vcpus'] = $Vcpus }
+        if($PSBoundParameters.ContainsKey('Vga')) { $parameters['vga'] = $Vga }
+        if($PSBoundParameters.ContainsKey('Vmgenid')) { $parameters['vmgenid'] = $Vmgenid }
+        if($PSBoundParameters.ContainsKey('Vmstatestorage')) { $parameters['vmstatestorage'] = $Vmstatestorage }
+        if($PSBoundParameters.ContainsKey('Watchdog')) { $parameters['watchdog'] = $Watchdog }
 
-        if($PSBoundParameters.ContainsKey['HostpciN']) { $HostpciN.keys | ForEach-Object { $parameters['hostpci' + $_] = $HostpciN[$_] } }
-        if($PSBoundParameters.ContainsKey['IdeN']) { $IdeN.keys | ForEach-Object { $parameters['ide' + $_] = $IdeN[$_] } }
-        if($PSBoundParameters.ContainsKey['IpconfigN']) { $IpconfigN.keys | ForEach-Object { $parameters['ipconfig' + $_] = $IpconfigN[$_] } }
-        if($PSBoundParameters.ContainsKey['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
-        if($PSBoundParameters.ContainsKey['NumaN']) { $NumaN.keys | ForEach-Object { $parameters['numa' + $_] = $NumaN[$_] } }
-        if($PSBoundParameters.ContainsKey['ParallelN']) { $ParallelN.keys | ForEach-Object { $parameters['parallel' + $_] = $ParallelN[$_] } }
-        if($PSBoundParameters.ContainsKey['SataN']) { $SataN.keys | ForEach-Object { $parameters['sata' + $_] = $SataN[$_] } }
-        if($PSBoundParameters.ContainsKey['ScsiN']) { $ScsiN.keys | ForEach-Object { $parameters['scsi' + $_] = $ScsiN[$_] } }
-        if($PSBoundParameters.ContainsKey['SerialN']) { $SerialN.keys | ForEach-Object { $parameters['serial' + $_] = $SerialN[$_] } }
-        if($PSBoundParameters.ContainsKey['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
-        if($PSBoundParameters.ContainsKey['UsbN']) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
-        if($PSBoundParameters.ContainsKey['VirtioN']) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
+        if($PSBoundParameters.ContainsKey('HostpciN')) { $HostpciN.keys | ForEach-Object { $parameters['hostpci' + $_] = $HostpciN[$_] } }
+        if($PSBoundParameters.ContainsKey('IdeN')) { $IdeN.keys | ForEach-Object { $parameters['ide' + $_] = $IdeN[$_] } }
+        if($PSBoundParameters.ContainsKey('IpconfigN')) { $IpconfigN.keys | ForEach-Object { $parameters['ipconfig' + $_] = $IpconfigN[$_] } }
+        if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
+        if($PSBoundParameters.ContainsKey('NumaN')) { $NumaN.keys | ForEach-Object { $parameters['numa' + $_] = $NumaN[$_] } }
+        if($PSBoundParameters.ContainsKey('ParallelN')) { $ParallelN.keys | ForEach-Object { $parameters['parallel' + $_] = $ParallelN[$_] } }
+        if($PSBoundParameters.ContainsKey('SataN')) { $SataN.keys | ForEach-Object { $parameters['sata' + $_] = $SataN[$_] } }
+        if($PSBoundParameters.ContainsKey('ScsiN')) { $ScsiN.keys | ForEach-Object { $parameters['scsi' + $_] = $ScsiN[$_] } }
+        if($PSBoundParameters.ContainsKey('SerialN')) { $SerialN.keys | ForEach-Object { $parameters['serial' + $_] = $SerialN[$_] } }
+        if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
+        if($PSBoundParameters.ContainsKey('UsbN')) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
+        if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
     }
@@ -14646,7 +14646,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/cloudinit/dump" -Parameters $parameters
     }
@@ -14691,8 +14691,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Idlist']) { $parameters['idlist'] = $Idlist }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Idlist')) { $parameters['idlist'] = $Idlist }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/unlink" -Parameters $parameters
     }
@@ -14737,8 +14737,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['GeneratePassword']) { $parameters['generate-password'] = $GeneratePassword }
-        if($PSBoundParameters.ContainsKey['Websocket']) { $parameters['websocket'] = $Websocket }
+        if($PSBoundParameters.ContainsKey('GeneratePassword')) { $parameters['generate-password'] = $GeneratePassword }
+        if($PSBoundParameters.ContainsKey('Websocket')) { $parameters['websocket'] = $Websocket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/vncproxy" -Parameters $parameters
     }
@@ -14779,7 +14779,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Serial']) { $parameters['serial'] = $Serial }
+        if($PSBoundParameters.ContainsKey('Serial')) { $parameters['serial'] = $Serial }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/termproxy" -Parameters $parameters
     }
@@ -14824,8 +14824,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Vncticket']) { $parameters['vncticket'] = $Vncticket }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Vncticket')) { $parameters['vncticket'] = $Vncticket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/vncwebsocket" -Parameters $parameters
     }
@@ -14865,7 +14865,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Proxy']) { $parameters['proxy'] = $Proxy }
+        if($PSBoundParameters.ContainsKey('Proxy')) { $parameters['proxy'] = $Proxy }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/spiceproxy" -Parameters $parameters
     }
@@ -15010,15 +15010,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ForceCpu']) { $parameters['force-cpu'] = $ForceCpu }
-        if($PSBoundParameters.ContainsKey['Machine']) { $parameters['machine'] = $Machine }
-        if($PSBoundParameters.ContainsKey['Migratedfrom']) { $parameters['migratedfrom'] = $Migratedfrom }
-        if($PSBoundParameters.ContainsKey['MigrationNetwork']) { $parameters['migration_network'] = $MigrationNetwork }
-        if($PSBoundParameters.ContainsKey['MigrationType']) { $parameters['migration_type'] = $MigrationType }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
-        if($PSBoundParameters.ContainsKey['Stateuri']) { $parameters['stateuri'] = $Stateuri }
-        if($PSBoundParameters.ContainsKey['Targetstorage']) { $parameters['targetstorage'] = $Targetstorage }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('ForceCpu')) { $parameters['force-cpu'] = $ForceCpu }
+        if($PSBoundParameters.ContainsKey('Machine')) { $parameters['machine'] = $Machine }
+        if($PSBoundParameters.ContainsKey('Migratedfrom')) { $parameters['migratedfrom'] = $Migratedfrom }
+        if($PSBoundParameters.ContainsKey('MigrationNetwork')) { $parameters['migration_network'] = $MigrationNetwork }
+        if($PSBoundParameters.ContainsKey('MigrationType')) { $parameters['migration_type'] = $MigrationType }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Stateuri')) { $parameters['stateuri'] = $Stateuri }
+        if($PSBoundParameters.ContainsKey('Targetstorage')) { $parameters['targetstorage'] = $Targetstorage }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/start" -Parameters $parameters
     }
@@ -15078,11 +15078,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Keepactive']) { $parameters['keepActive'] = $Keepactive }
-        if($PSBoundParameters.ContainsKey['Migratedfrom']) { $parameters['migratedfrom'] = $Migratedfrom }
-        if($PSBoundParameters.ContainsKey['OverruleShutdown']) { $parameters['overrule-shutdown'] = $OverruleShutdown }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Keepactive')) { $parameters['keepActive'] = $Keepactive }
+        if($PSBoundParameters.ContainsKey('Migratedfrom')) { $parameters['migratedfrom'] = $Migratedfrom }
+        if($PSBoundParameters.ContainsKey('OverruleShutdown')) { $parameters['overrule-shutdown'] = $OverruleShutdown }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/stop" -Parameters $parameters
     }
@@ -15122,7 +15122,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/reset" -Parameters $parameters
     }
@@ -15177,10 +15177,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Forcestop']) { $parameters['forceStop'] = $Forcestop }
-        if($PSBoundParameters.ContainsKey['Keepactive']) { $parameters['keepActive'] = $Keepactive }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Forcestop')) { $parameters['forceStop'] = $Forcestop }
+        if($PSBoundParameters.ContainsKey('Keepactive')) { $parameters['keepActive'] = $Keepactive }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/shutdown" -Parameters $parameters
     }
@@ -15220,7 +15220,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/reboot" -Parameters $parameters
     }
@@ -15270,9 +15270,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
-        if($PSBoundParameters.ContainsKey['Statestorage']) { $parameters['statestorage'] = $Statestorage }
-        if($PSBoundParameters.ContainsKey['Todisk']) { $parameters['todisk'] = $Todisk }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Statestorage')) { $parameters['statestorage'] = $Statestorage }
+        if($PSBoundParameters.ContainsKey('Todisk')) { $parameters['todisk'] = $Todisk }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/suspend" -Parameters $parameters
     }
@@ -15317,8 +15317,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Nocheck']) { $parameters['nocheck'] = $Nocheck }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Nocheck')) { $parameters['nocheck'] = $Nocheck }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/resume" -Parameters $parameters
     }
@@ -15363,8 +15363,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Key']) { $parameters['key'] = $Key }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/sendkey" -Parameters $parameters
     }
@@ -15410,8 +15410,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Feature']) { $parameters['feature'] = $Feature }
-        if($PSBoundParameters.ContainsKey['Snapname']) { $parameters['snapname'] = $Snapname }
+        if($PSBoundParameters.ContainsKey('Feature')) { $parameters['feature'] = $Feature }
+        if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/feature" -Parameters $parameters
     }
@@ -15497,16 +15497,16 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Format']) { $parameters['format'] = $Format }
-        if($PSBoundParameters.ContainsKey['Full']) { $parameters['full'] = $Full }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Newid']) { $parameters['newid'] = $Newid }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Snapname']) { $parameters['snapname'] = $Snapname }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Format')) { $parameters['format'] = $Format }
+        if($PSBoundParameters.ContainsKey('Full')) { $parameters['full'] = $Full }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Newid')) { $parameters['newid'] = $Newid }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/clone" -Parameters $parameters
     }
@@ -15589,15 +15589,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
-        if($PSBoundParameters.ContainsKey['Format']) { $parameters['format'] = $Format }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['TargetDigest']) { $parameters['target-digest'] = $TargetDigest }
-        if($PSBoundParameters.ContainsKey['TargetDisk']) { $parameters['target-disk'] = $TargetDisk }
-        if($PSBoundParameters.ContainsKey['TargetVmid']) { $parameters['target-vmid'] = $TargetVmid }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Format')) { $parameters['format'] = $Format }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('TargetDigest')) { $parameters['target-digest'] = $TargetDigest }
+        if($PSBoundParameters.ContainsKey('TargetDisk')) { $parameters['target-disk'] = $TargetDisk }
+        if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/move_disk" -Parameters $parameters
     }
@@ -15637,7 +15637,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/migrate" -Parameters $parameters
     }
@@ -15713,14 +15713,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['MigrationNetwork']) { $parameters['migration_network'] = $MigrationNetwork }
-        if($PSBoundParameters.ContainsKey['MigrationType']) { $parameters['migration_type'] = $MigrationType }
-        if($PSBoundParameters.ContainsKey['Online']) { $parameters['online'] = $Online }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
-        if($PSBoundParameters.ContainsKey['Targetstorage']) { $parameters['targetstorage'] = $Targetstorage }
-        if($PSBoundParameters.ContainsKey['WithLocalDisks']) { $parameters['with-local-disks'] = $WithLocalDisks }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('MigrationNetwork')) { $parameters['migration_network'] = $MigrationNetwork }
+        if($PSBoundParameters.ContainsKey('MigrationType')) { $parameters['migration_type'] = $MigrationType }
+        if($PSBoundParameters.ContainsKey('Online')) { $parameters['online'] = $Online }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Targetstorage')) { $parameters['targetstorage'] = $Targetstorage }
+        if($PSBoundParameters.ContainsKey('WithLocalDisks')) { $parameters['with-local-disks'] = $WithLocalDisks }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/migrate" -Parameters $parameters
     }
@@ -15790,13 +15790,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Online']) { $parameters['online'] = $Online }
-        if($PSBoundParameters.ContainsKey['TargetBridge']) { $parameters['target-bridge'] = $TargetBridge }
-        if($PSBoundParameters.ContainsKey['TargetEndpoint']) { $parameters['target-endpoint'] = $TargetEndpoint }
-        if($PSBoundParameters.ContainsKey['TargetStorage']) { $parameters['target-storage'] = $TargetStorage }
-        if($PSBoundParameters.ContainsKey['TargetVmid']) { $parameters['target-vmid'] = $TargetVmid }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Online')) { $parameters['online'] = $Online }
+        if($PSBoundParameters.ContainsKey('TargetBridge')) { $parameters['target-bridge'] = $TargetBridge }
+        if($PSBoundParameters.ContainsKey('TargetEndpoint')) { $parameters['target-endpoint'] = $TargetEndpoint }
+        if($PSBoundParameters.ContainsKey('TargetStorage')) { $parameters['target-storage'] = $TargetStorage }
+        if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/remote_migrate" -Parameters $parameters
     }
@@ -15836,7 +15836,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Command']) { $parameters['command'] = $Command }
+        if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/monitor" -Parameters $parameters
     }
@@ -15892,10 +15892,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
-        if($PSBoundParameters.ContainsKey['Size']) { $parameters['size'] = $Size }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters
     }
@@ -15977,9 +15977,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Snapname']) { $parameters['snapname'] = $Snapname }
-        if($PSBoundParameters.ContainsKey['Vmstate']) { $parameters['vmstate'] = $Vmstate }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
+        if($PSBoundParameters.ContainsKey('Vmstate')) { $parameters['vmstate'] = $Vmstate }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot" -Parameters $parameters
     }
@@ -16024,7 +16024,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname" -Parameters $parameters
     }
@@ -16143,7 +16143,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/config" -Parameters $parameters
     }
@@ -16188,7 +16188,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters
     }
@@ -16229,7 +16229,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/template" -Parameters $parameters
     }
@@ -16274,8 +16274,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bridges']) { $parameters['bridges'] = $Bridges }
-        if($PSBoundParameters.ContainsKey['Storages']) { $parameters['storages'] = $Storages }
+        if($PSBoundParameters.ContainsKey('Bridges')) { $parameters['bridges'] = $Bridges }
+        if($PSBoundParameters.ContainsKey('Storages')) { $parameters['storages'] = $Storages }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/mtunnel" -Parameters $parameters
     }
@@ -16320,8 +16320,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Socket']) { $parameters['socket'] = $Socket }
-        if($PSBoundParameters.ContainsKey['Ticket']) { $parameters['ticket'] = $Ticket }
+        if($PSBoundParameters.ContainsKey('Socket')) { $parameters['socket'] = $Socket }
+        if($PSBoundParameters.ContainsKey('Ticket')) { $parameters['ticket'] = $Ticket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/qemu/$Vmid/mtunnelwebsocket" -Parameters $parameters
     }
@@ -16592,49 +16592,49 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Arch']) { $parameters['arch'] = $Arch }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Cmode']) { $parameters['cmode'] = $Cmode }
-        if($PSBoundParameters.ContainsKey['Console']) { $parameters['console'] = $Console }
-        if($PSBoundParameters.ContainsKey['Cores']) { $parameters['cores'] = $Cores }
-        if($PSBoundParameters.ContainsKey['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
-        if($PSBoundParameters.ContainsKey['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters.ContainsKey['Debug_']) { $parameters['debug'] = $Debug_ }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Features']) { $parameters['features'] = $Features }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Hookscript']) { $parameters['hookscript'] = $Hookscript }
-        if($PSBoundParameters.ContainsKey['Hostname']) { $parameters['hostname'] = $Hostname }
-        if($PSBoundParameters.ContainsKey['IgnoreUnpackErrors']) { $parameters['ignore-unpack-errors'] = $IgnoreUnpackErrors }
-        if($PSBoundParameters.ContainsKey['Lock']) { $parameters['lock'] = $Lock }
-        if($PSBoundParameters.ContainsKey['Memory']) { $parameters['memory'] = $Memory }
-        if($PSBoundParameters.ContainsKey['Nameserver']) { $parameters['nameserver'] = $Nameserver }
-        if($PSBoundParameters.ContainsKey['Onboot']) { $parameters['onboot'] = $Onboot }
-        if($PSBoundParameters.ContainsKey['Ostemplate']) { $parameters['ostemplate'] = $Ostemplate }
-        if($PSBoundParameters.ContainsKey['Ostype']) { $parameters['ostype'] = $Ostype }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Protection']) { $parameters['protection'] = $Protection }
-        if($PSBoundParameters.ContainsKey['Restore']) { $parameters['restore'] = $Restore }
-        if($PSBoundParameters.ContainsKey['Rootfs']) { $parameters['rootfs'] = $Rootfs }
-        if($PSBoundParameters.ContainsKey['Searchdomain']) { $parameters['searchdomain'] = $Searchdomain }
-        if($PSBoundParameters.ContainsKey['SshPublicKeys']) { $parameters['ssh-public-keys'] = $SshPublicKeys }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Startup']) { $parameters['startup'] = $Startup }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Swap']) { $parameters['swap'] = $Swap }
-        if($PSBoundParameters.ContainsKey['Tags']) { $parameters['tags'] = $Tags }
-        if($PSBoundParameters.ContainsKey['Template']) { $parameters['template'] = $Template }
-        if($PSBoundParameters.ContainsKey['Timezone']) { $parameters['timezone'] = $Timezone }
-        if($PSBoundParameters.ContainsKey['Tty']) { $parameters['tty'] = $Tty }
-        if($PSBoundParameters.ContainsKey['Unique']) { $parameters['unique'] = $Unique }
-        if($PSBoundParameters.ContainsKey['Unprivileged']) { $parameters['unprivileged'] = $Unprivileged }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Arch')) { $parameters['arch'] = $Arch }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Cmode')) { $parameters['cmode'] = $Cmode }
+        if($PSBoundParameters.ContainsKey('Console')) { $parameters['console'] = $Console }
+        if($PSBoundParameters.ContainsKey('Cores')) { $parameters['cores'] = $Cores }
+        if($PSBoundParameters.ContainsKey('Cpulimit')) { $parameters['cpulimit'] = $Cpulimit }
+        if($PSBoundParameters.ContainsKey('Cpuunits')) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters.ContainsKey('Debug_')) { $parameters['debug'] = $Debug_ }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Features')) { $parameters['features'] = $Features }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Hookscript')) { $parameters['hookscript'] = $Hookscript }
+        if($PSBoundParameters.ContainsKey('Hostname')) { $parameters['hostname'] = $Hostname }
+        if($PSBoundParameters.ContainsKey('IgnoreUnpackErrors')) { $parameters['ignore-unpack-errors'] = $IgnoreUnpackErrors }
+        if($PSBoundParameters.ContainsKey('Lock')) { $parameters['lock'] = $Lock }
+        if($PSBoundParameters.ContainsKey('Memory')) { $parameters['memory'] = $Memory }
+        if($PSBoundParameters.ContainsKey('Nameserver')) { $parameters['nameserver'] = $Nameserver }
+        if($PSBoundParameters.ContainsKey('Onboot')) { $parameters['onboot'] = $Onboot }
+        if($PSBoundParameters.ContainsKey('Ostemplate')) { $parameters['ostemplate'] = $Ostemplate }
+        if($PSBoundParameters.ContainsKey('Ostype')) { $parameters['ostype'] = $Ostype }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Protection')) { $parameters['protection'] = $Protection }
+        if($PSBoundParameters.ContainsKey('Restore')) { $parameters['restore'] = $Restore }
+        if($PSBoundParameters.ContainsKey('Rootfs')) { $parameters['rootfs'] = $Rootfs }
+        if($PSBoundParameters.ContainsKey('Searchdomain')) { $parameters['searchdomain'] = $Searchdomain }
+        if($PSBoundParameters.ContainsKey('SshPublicKeys')) { $parameters['ssh-public-keys'] = $SshPublicKeys }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Startup')) { $parameters['startup'] = $Startup }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Swap')) { $parameters['swap'] = $Swap }
+        if($PSBoundParameters.ContainsKey('Tags')) { $parameters['tags'] = $Tags }
+        if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
+        if($PSBoundParameters.ContainsKey('Timezone')) { $parameters['timezone'] = $Timezone }
+        if($PSBoundParameters.ContainsKey('Tty')) { $parameters['tty'] = $Tty }
+        if($PSBoundParameters.ContainsKey('Unique')) { $parameters['unique'] = $Unique }
+        if($PSBoundParameters.ContainsKey('Unprivileged')) { $parameters['unprivileged'] = $Unprivileged }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
-        if($PSBoundParameters.ContainsKey['DevN']) { $DevN.keys | ForEach-Object { $parameters['dev' + $_] = $DevN[$_] } }
-        if($PSBoundParameters.ContainsKey['MpN']) { $MpN.keys | ForEach-Object { $parameters['mp' + $_] = $MpN[$_] } }
-        if($PSBoundParameters.ContainsKey['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
-        if($PSBoundParameters.ContainsKey['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
+        if($PSBoundParameters.ContainsKey('DevN')) { $DevN.keys | ForEach-Object { $parameters['dev' + $_] = $DevN[$_] } }
+        if($PSBoundParameters.ContainsKey('MpN')) { $MpN.keys | ForEach-Object { $parameters['mp' + $_] = $MpN[$_] } }
+        if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
+        if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc" -Parameters $parameters
     }
@@ -16684,9 +16684,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['DestroyUnreferencedDisks']) { $parameters['destroy-unreferenced-disks'] = $DestroyUnreferencedDisks }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Purge']) { $parameters['purge'] = $Purge }
+        if($PSBoundParameters.ContainsKey('DestroyUnreferencedDisks')) { $parameters['destroy-unreferenced-disks'] = $DestroyUnreferencedDisks }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Purge')) { $parameters['purge'] = $Purge }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid" -Parameters $parameters
     }
@@ -16763,8 +16763,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Current']) { $parameters['current'] = $Current }
-        if($PSBoundParameters.ContainsKey['Snapshot']) { $parameters['snapshot'] = $Snapshot }
+        if($PSBoundParameters.ContainsKey('Current')) { $parameters['current'] = $Current }
+        if($PSBoundParameters.ContainsKey('Snapshot')) { $parameters['snapshot'] = $Snapshot }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/config" -Parameters $parameters
     }
@@ -16968,40 +16968,40 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Arch']) { $parameters['arch'] = $Arch }
-        if($PSBoundParameters.ContainsKey['Cmode']) { $parameters['cmode'] = $Cmode }
-        if($PSBoundParameters.ContainsKey['Console']) { $parameters['console'] = $Console }
-        if($PSBoundParameters.ContainsKey['Cores']) { $parameters['cores'] = $Cores }
-        if($PSBoundParameters.ContainsKey['Cpulimit']) { $parameters['cpulimit'] = $Cpulimit }
-        if($PSBoundParameters.ContainsKey['Cpuunits']) { $parameters['cpuunits'] = $Cpuunits }
-        if($PSBoundParameters.ContainsKey['Debug_']) { $parameters['debug'] = $Debug_ }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Features']) { $parameters['features'] = $Features }
-        if($PSBoundParameters.ContainsKey['Hookscript']) { $parameters['hookscript'] = $Hookscript }
-        if($PSBoundParameters.ContainsKey['Hostname']) { $parameters['hostname'] = $Hostname }
-        if($PSBoundParameters.ContainsKey['Lock']) { $parameters['lock'] = $Lock }
-        if($PSBoundParameters.ContainsKey['Memory']) { $parameters['memory'] = $Memory }
-        if($PSBoundParameters.ContainsKey['Nameserver']) { $parameters['nameserver'] = $Nameserver }
-        if($PSBoundParameters.ContainsKey['Onboot']) { $parameters['onboot'] = $Onboot }
-        if($PSBoundParameters.ContainsKey['Ostype']) { $parameters['ostype'] = $Ostype }
-        if($PSBoundParameters.ContainsKey['Protection']) { $parameters['protection'] = $Protection }
-        if($PSBoundParameters.ContainsKey['Revert']) { $parameters['revert'] = $Revert }
-        if($PSBoundParameters.ContainsKey['Rootfs']) { $parameters['rootfs'] = $Rootfs }
-        if($PSBoundParameters.ContainsKey['Searchdomain']) { $parameters['searchdomain'] = $Searchdomain }
-        if($PSBoundParameters.ContainsKey['Startup']) { $parameters['startup'] = $Startup }
-        if($PSBoundParameters.ContainsKey['Swap']) { $parameters['swap'] = $Swap }
-        if($PSBoundParameters.ContainsKey['Tags']) { $parameters['tags'] = $Tags }
-        if($PSBoundParameters.ContainsKey['Template']) { $parameters['template'] = $Template }
-        if($PSBoundParameters.ContainsKey['Timezone']) { $parameters['timezone'] = $Timezone }
-        if($PSBoundParameters.ContainsKey['Tty']) { $parameters['tty'] = $Tty }
-        if($PSBoundParameters.ContainsKey['Unprivileged']) { $parameters['unprivileged'] = $Unprivileged }
+        if($PSBoundParameters.ContainsKey('Arch')) { $parameters['arch'] = $Arch }
+        if($PSBoundParameters.ContainsKey('Cmode')) { $parameters['cmode'] = $Cmode }
+        if($PSBoundParameters.ContainsKey('Console')) { $parameters['console'] = $Console }
+        if($PSBoundParameters.ContainsKey('Cores')) { $parameters['cores'] = $Cores }
+        if($PSBoundParameters.ContainsKey('Cpulimit')) { $parameters['cpulimit'] = $Cpulimit }
+        if($PSBoundParameters.ContainsKey('Cpuunits')) { $parameters['cpuunits'] = $Cpuunits }
+        if($PSBoundParameters.ContainsKey('Debug_')) { $parameters['debug'] = $Debug_ }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Features')) { $parameters['features'] = $Features }
+        if($PSBoundParameters.ContainsKey('Hookscript')) { $parameters['hookscript'] = $Hookscript }
+        if($PSBoundParameters.ContainsKey('Hostname')) { $parameters['hostname'] = $Hostname }
+        if($PSBoundParameters.ContainsKey('Lock')) { $parameters['lock'] = $Lock }
+        if($PSBoundParameters.ContainsKey('Memory')) { $parameters['memory'] = $Memory }
+        if($PSBoundParameters.ContainsKey('Nameserver')) { $parameters['nameserver'] = $Nameserver }
+        if($PSBoundParameters.ContainsKey('Onboot')) { $parameters['onboot'] = $Onboot }
+        if($PSBoundParameters.ContainsKey('Ostype')) { $parameters['ostype'] = $Ostype }
+        if($PSBoundParameters.ContainsKey('Protection')) { $parameters['protection'] = $Protection }
+        if($PSBoundParameters.ContainsKey('Revert')) { $parameters['revert'] = $Revert }
+        if($PSBoundParameters.ContainsKey('Rootfs')) { $parameters['rootfs'] = $Rootfs }
+        if($PSBoundParameters.ContainsKey('Searchdomain')) { $parameters['searchdomain'] = $Searchdomain }
+        if($PSBoundParameters.ContainsKey('Startup')) { $parameters['startup'] = $Startup }
+        if($PSBoundParameters.ContainsKey('Swap')) { $parameters['swap'] = $Swap }
+        if($PSBoundParameters.ContainsKey('Tags')) { $parameters['tags'] = $Tags }
+        if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
+        if($PSBoundParameters.ContainsKey('Timezone')) { $parameters['timezone'] = $Timezone }
+        if($PSBoundParameters.ContainsKey('Tty')) { $parameters['tty'] = $Tty }
+        if($PSBoundParameters.ContainsKey('Unprivileged')) { $parameters['unprivileged'] = $Unprivileged }
 
-        if($PSBoundParameters.ContainsKey['DevN']) { $DevN.keys | ForEach-Object { $parameters['dev' + $_] = $DevN[$_] } }
-        if($PSBoundParameters.ContainsKey['MpN']) { $MpN.keys | ForEach-Object { $parameters['mp' + $_] = $MpN[$_] } }
-        if($PSBoundParameters.ContainsKey['NetN']) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
-        if($PSBoundParameters.ContainsKey['UnusedN']) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
+        if($PSBoundParameters.ContainsKey('DevN')) { $DevN.keys | ForEach-Object { $parameters['dev' + $_] = $DevN[$_] } }
+        if($PSBoundParameters.ContainsKey('MpN')) { $MpN.keys | ForEach-Object { $parameters['mp' + $_] = $MpN[$_] } }
+        if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
+        if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/config" -Parameters $parameters
     }
@@ -17110,8 +17110,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Debug_']) { $parameters['debug'] = $Debug_ }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('Debug_')) { $parameters['debug'] = $Debug_ }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/start" -Parameters $parameters
     }
@@ -17156,8 +17156,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['OverruleShutdown']) { $parameters['overrule-shutdown'] = $OverruleShutdown }
-        if($PSBoundParameters.ContainsKey['Skiplock']) { $parameters['skiplock'] = $Skiplock }
+        if($PSBoundParameters.ContainsKey('OverruleShutdown')) { $parameters['overrule-shutdown'] = $OverruleShutdown }
+        if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/stop" -Parameters $parameters
     }
@@ -17202,8 +17202,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Forcestop']) { $parameters['forceStop'] = $Forcestop }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Forcestop')) { $parameters['forceStop'] = $Forcestop }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/shutdown" -Parameters $parameters
     }
@@ -17307,7 +17307,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/reboot" -Parameters $parameters
     }
@@ -17384,8 +17384,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Snapname']) { $parameters['snapname'] = $Snapname }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot" -Parameters $parameters
     }
@@ -17430,7 +17430,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname" -Parameters $parameters
     }
@@ -17512,7 +17512,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters
     }
@@ -17594,7 +17594,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/config" -Parameters $parameters
     }
@@ -17770,21 +17770,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Pos']) { $parameters['pos'] = $Pos }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Pos')) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules" -Parameters $parameters
     }
@@ -17829,7 +17829,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -17988,22 +17988,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Moveto']) { $parameters['moveto'] = $Moveto }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Moveto')) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -18085,9 +18085,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases" -Parameters $parameters
     }
@@ -18132,7 +18132,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name" -Parameters $parameters
     }
@@ -18229,10 +18229,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name" -Parameters $parameters
     }
@@ -18319,10 +18319,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Rename']) { $parameters['rename'] = $Rename }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset" -Parameters $parameters
     }
@@ -18367,7 +18367,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters
     }
@@ -18459,9 +18459,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Nomatch']) { $parameters['nomatch'] = $Nomatch }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters
     }
@@ -18511,7 +18511,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
     }
@@ -18613,9 +18613,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Nomatch']) { $parameters['nomatch'] = $Nomatch }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
     }
@@ -18746,18 +18746,18 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dhcp']) { $parameters['dhcp'] = $Dhcp }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['Ipfilter']) { $parameters['ipfilter'] = $Ipfilter }
-        if($PSBoundParameters.ContainsKey['LogLevelIn']) { $parameters['log_level_in'] = $LogLevelIn }
-        if($PSBoundParameters.ContainsKey['LogLevelOut']) { $parameters['log_level_out'] = $LogLevelOut }
-        if($PSBoundParameters.ContainsKey['Macfilter']) { $parameters['macfilter'] = $Macfilter }
-        if($PSBoundParameters.ContainsKey['Ndp']) { $parameters['ndp'] = $Ndp }
-        if($PSBoundParameters.ContainsKey['PolicyIn']) { $parameters['policy_in'] = $PolicyIn }
-        if($PSBoundParameters.ContainsKey['PolicyOut']) { $parameters['policy_out'] = $PolicyOut }
-        if($PSBoundParameters.ContainsKey['Radv']) { $parameters['radv'] = $Radv }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dhcp')) { $parameters['dhcp'] = $Dhcp }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('Ipfilter')) { $parameters['ipfilter'] = $Ipfilter }
+        if($PSBoundParameters.ContainsKey('LogLevelIn')) { $parameters['log_level_in'] = $LogLevelIn }
+        if($PSBoundParameters.ContainsKey('LogLevelOut')) { $parameters['log_level_out'] = $LogLevelOut }
+        if($PSBoundParameters.ContainsKey('Macfilter')) { $parameters['macfilter'] = $Macfilter }
+        if($PSBoundParameters.ContainsKey('Ndp')) { $parameters['ndp'] = $Ndp }
+        if($PSBoundParameters.ContainsKey('PolicyIn')) { $parameters['policy_in'] = $PolicyIn }
+        if($PSBoundParameters.ContainsKey('PolicyOut')) { $parameters['policy_out'] = $PolicyOut }
+        if($PSBoundParameters.ContainsKey('Radv')) { $parameters['radv'] = $Radv }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/options" -Parameters $parameters
     }
@@ -18812,10 +18812,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Since']) { $parameters['since'] = $Since }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Until']) { $parameters['until'] = $Until }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/firewall/log" -Parameters $parameters
     }
@@ -18856,7 +18856,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/firewall/refs" -Parameters $parameters
     }
@@ -18908,9 +18908,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Ds']) { $parameters['ds'] = $Ds }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Ds')) { $parameters['ds'] = $Ds }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/rrd" -Parameters $parameters
     }
@@ -18957,8 +18957,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/rrddata" -Parameters $parameters
     }
@@ -19008,9 +19008,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Height']) { $parameters['height'] = $Height }
-        if($PSBoundParameters.ContainsKey['Websocket']) { $parameters['websocket'] = $Websocket }
-        if($PSBoundParameters.ContainsKey['Width']) { $parameters['width'] = $Width }
+        if($PSBoundParameters.ContainsKey('Height')) { $parameters['height'] = $Height }
+        if($PSBoundParameters.ContainsKey('Websocket')) { $parameters['websocket'] = $Websocket }
+        if($PSBoundParameters.ContainsKey('Width')) { $parameters['width'] = $Width }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/vncproxy" -Parameters $parameters
     }
@@ -19087,8 +19087,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Vncticket']) { $parameters['vncticket'] = $Vncticket }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Vncticket')) { $parameters['vncticket'] = $Vncticket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/vncwebsocket" -Parameters $parameters
     }
@@ -19128,7 +19128,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Proxy']) { $parameters['proxy'] = $Proxy }
+        if($PSBoundParameters.ContainsKey('Proxy')) { $parameters['proxy'] = $Proxy }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/spiceproxy" -Parameters $parameters
     }
@@ -19208,15 +19208,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Online']) { $parameters['online'] = $Online }
-        if($PSBoundParameters.ContainsKey['Restart']) { $parameters['restart'] = $Restart }
-        if($PSBoundParameters.ContainsKey['TargetBridge']) { $parameters['target-bridge'] = $TargetBridge }
-        if($PSBoundParameters.ContainsKey['TargetEndpoint']) { $parameters['target-endpoint'] = $TargetEndpoint }
-        if($PSBoundParameters.ContainsKey['TargetStorage']) { $parameters['target-storage'] = $TargetStorage }
-        if($PSBoundParameters.ContainsKey['TargetVmid']) { $parameters['target-vmid'] = $TargetVmid }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Online')) { $parameters['online'] = $Online }
+        if($PSBoundParameters.ContainsKey('Restart')) { $parameters['restart'] = $Restart }
+        if($PSBoundParameters.ContainsKey('TargetBridge')) { $parameters['target-bridge'] = $TargetBridge }
+        if($PSBoundParameters.ContainsKey('TargetEndpoint')) { $parameters['target-endpoint'] = $TargetEndpoint }
+        if($PSBoundParameters.ContainsKey('TargetStorage')) { $parameters['target-storage'] = $TargetStorage }
+        if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/remote_migrate" -Parameters $parameters
     }
@@ -19281,12 +19281,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Online']) { $parameters['online'] = $Online }
-        if($PSBoundParameters.ContainsKey['Restart']) { $parameters['restart'] = $Restart }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
-        if($PSBoundParameters.ContainsKey['TargetStorage']) { $parameters['target-storage'] = $TargetStorage }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Online')) { $parameters['online'] = $Online }
+        if($PSBoundParameters.ContainsKey('Restart')) { $parameters['restart'] = $Restart }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('TargetStorage')) { $parameters['target-storage'] = $TargetStorage }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/migrate" -Parameters $parameters
     }
@@ -19332,8 +19332,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Feature']) { $parameters['feature'] = $Feature }
-        if($PSBoundParameters.ContainsKey['Snapname']) { $parameters['snapname'] = $Snapname }
+        if($PSBoundParameters.ContainsKey('Feature')) { $parameters['feature'] = $Feature }
+        if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/feature" -Parameters $parameters
     }
@@ -19445,15 +19445,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Full']) { $parameters['full'] = $Full }
-        if($PSBoundParameters.ContainsKey['Hostname']) { $parameters['hostname'] = $Hostname }
-        if($PSBoundParameters.ContainsKey['Newid']) { $parameters['newid'] = $Newid }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Snapname']) { $parameters['snapname'] = $Snapname }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Full')) { $parameters['full'] = $Full }
+        if($PSBoundParameters.ContainsKey('Hostname')) { $parameters['hostname'] = $Hostname }
+        if($PSBoundParameters.ContainsKey('Newid')) { $parameters['newid'] = $Newid }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/clone" -Parameters $parameters
     }
@@ -19504,9 +19504,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
-        if($PSBoundParameters.ContainsKey['Size']) { $parameters['size'] = $Size }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/resize" -Parameters $parameters
     }
@@ -19583,14 +19583,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['TargetDigest']) { $parameters['target-digest'] = $TargetDigest }
-        if($PSBoundParameters.ContainsKey['TargetVmid']) { $parameters['target-vmid'] = $TargetVmid }
-        if($PSBoundParameters.ContainsKey['TargetVolume']) { $parameters['target-volume'] = $TargetVolume }
-        if($PSBoundParameters.ContainsKey['Volume']) { $parameters['volume'] = $Volume }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('TargetDigest')) { $parameters['target-digest'] = $TargetDigest }
+        if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
+        if($PSBoundParameters.ContainsKey('TargetVolume')) { $parameters['target-volume'] = $TargetVolume }
+        if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/move_volume" -Parameters $parameters
     }
@@ -19699,8 +19699,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Bridges']) { $parameters['bridges'] = $Bridges }
-        if($PSBoundParameters.ContainsKey['Storages']) { $parameters['storages'] = $Storages }
+        if($PSBoundParameters.ContainsKey('Bridges')) { $parameters['bridges'] = $Bridges }
+        if($PSBoundParameters.ContainsKey('Storages')) { $parameters['storages'] = $Storages }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/mtunnel" -Parameters $parameters
     }
@@ -19745,8 +19745,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Socket']) { $parameters['socket'] = $Socket }
-        if($PSBoundParameters.ContainsKey['Ticket']) { $parameters['ticket'] = $Ticket }
+        if($PSBoundParameters.ContainsKey('Socket')) { $parameters['socket'] = $Socket }
+        if($PSBoundParameters.ContainsKey('Ticket')) { $parameters['ticket'] = $Ticket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/lxc/$Vmid/mtunnelwebsocket" -Parameters $parameters
     }
@@ -19889,7 +19889,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ConfigKeys']) { $parameters['config-keys'] = $ConfigKeys }
+        if($PSBoundParameters.ContainsKey('ConfigKeys')) { $parameters['config-keys'] = $ConfigKeys }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cfg/value" -Parameters $parameters
     }
@@ -19986,14 +19986,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CrushDeviceClass']) { $parameters['crush-device-class'] = $CrushDeviceClass }
-        if($PSBoundParameters.ContainsKey['DbDev']) { $parameters['db_dev'] = $DbDev }
-        if($PSBoundParameters.ContainsKey['DbDevSize']) { $parameters['db_dev_size'] = $DbDevSize }
-        if($PSBoundParameters.ContainsKey['Dev']) { $parameters['dev'] = $Dev }
-        if($PSBoundParameters.ContainsKey['Encrypted']) { $parameters['encrypted'] = $Encrypted }
-        if($PSBoundParameters.ContainsKey['OsdsPerDevice']) { $parameters['osds-per-device'] = $OsdsPerDevice }
-        if($PSBoundParameters.ContainsKey['WalDev']) { $parameters['wal_dev'] = $WalDev }
-        if($PSBoundParameters.ContainsKey['WalDevSize']) { $parameters['wal_dev_size'] = $WalDevSize }
+        if($PSBoundParameters.ContainsKey('CrushDeviceClass')) { $parameters['crush-device-class'] = $CrushDeviceClass }
+        if($PSBoundParameters.ContainsKey('DbDev')) { $parameters['db_dev'] = $DbDev }
+        if($PSBoundParameters.ContainsKey('DbDevSize')) { $parameters['db_dev_size'] = $DbDevSize }
+        if($PSBoundParameters.ContainsKey('Dev')) { $parameters['dev'] = $Dev }
+        if($PSBoundParameters.ContainsKey('Encrypted')) { $parameters['encrypted'] = $Encrypted }
+        if($PSBoundParameters.ContainsKey('OsdsPerDevice')) { $parameters['osds-per-device'] = $OsdsPerDevice }
+        if($PSBoundParameters.ContainsKey('WalDev')) { $parameters['wal_dev'] = $WalDev }
+        if($PSBoundParameters.ContainsKey('WalDevSize')) { $parameters['wal_dev_size'] = $WalDevSize }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd" -Parameters $parameters
     }
@@ -20033,7 +20033,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cleanup']) { $parameters['cleanup'] = $Cleanup }
+        if($PSBoundParameters.ContainsKey('Cleanup')) { $parameters['cleanup'] = $Cleanup }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/osd/$Osdid" -Parameters $parameters
     }
@@ -20138,7 +20138,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/osd/$Osdid/lv-info" -Parameters $parameters
     }
@@ -20242,7 +20242,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Deep']) { $parameters['deep'] = $Deep }
+        if($PSBoundParameters.ContainsKey('Deep')) { $parameters['deep'] = $Deep }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/scrub" -Parameters $parameters
     }
@@ -20341,7 +20341,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Hotstandby']) { $parameters['hotstandby'] = $Hotstandby }
+        if($PSBoundParameters.ContainsKey('Hotstandby')) { $parameters['hotstandby'] = $Hotstandby }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mds/$Name" -Parameters $parameters
     }
@@ -20531,7 +20531,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['MonAddress']) { $parameters['mon-address'] = $MonAddress }
+        if($PSBoundParameters.ContainsKey('MonAddress')) { $parameters['mon-address'] = $MonAddress }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mon/$Monid" -Parameters $parameters
     }
@@ -20603,8 +20603,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AddStorage']) { $parameters['add-storage'] = $AddStorage }
-        if($PSBoundParameters.ContainsKey['PgNum']) { $parameters['pg_num'] = $PgNum }
+        if($PSBoundParameters.ContainsKey('AddStorage')) { $parameters['add-storage'] = $AddStorage }
+        if($PSBoundParameters.ContainsKey('PgNum')) { $parameters['pg_num'] = $PgNum }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/fs/$Name" -Parameters $parameters
     }
@@ -20723,18 +20723,18 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AddStorages']) { $parameters['add_storages'] = $AddStorages }
-        if($PSBoundParameters.ContainsKey['Application']) { $parameters['application'] = $Application }
-        if($PSBoundParameters.ContainsKey['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
-        if($PSBoundParameters.ContainsKey['ErasureCoding']) { $parameters['erasure-coding'] = $ErasureCoding }
-        if($PSBoundParameters.ContainsKey['MinSize']) { $parameters['min_size'] = $MinSize }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
-        if($PSBoundParameters.ContainsKey['PgNum']) { $parameters['pg_num'] = $PgNum }
-        if($PSBoundParameters.ContainsKey['PgNumMin']) { $parameters['pg_num_min'] = $PgNumMin }
-        if($PSBoundParameters.ContainsKey['Size']) { $parameters['size'] = $Size }
-        if($PSBoundParameters.ContainsKey['TargetSize']) { $parameters['target_size'] = $TargetSize }
-        if($PSBoundParameters.ContainsKey['TargetSizeRatio']) { $parameters['target_size_ratio'] = $TargetSizeRatio }
+        if($PSBoundParameters.ContainsKey('AddStorages')) { $parameters['add_storages'] = $AddStorages }
+        if($PSBoundParameters.ContainsKey('Application')) { $parameters['application'] = $Application }
+        if($PSBoundParameters.ContainsKey('CrushRule')) { $parameters['crush_rule'] = $CrushRule }
+        if($PSBoundParameters.ContainsKey('ErasureCoding')) { $parameters['erasure-coding'] = $ErasureCoding }
+        if($PSBoundParameters.ContainsKey('MinSize')) { $parameters['min_size'] = $MinSize }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('PgAutoscaleMode')) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
+        if($PSBoundParameters.ContainsKey('PgNum')) { $parameters['pg_num'] = $PgNum }
+        if($PSBoundParameters.ContainsKey('PgNumMin')) { $parameters['pg_num_min'] = $PgNumMin }
+        if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
+        if($PSBoundParameters.ContainsKey('TargetSize')) { $parameters['target_size'] = $TargetSize }
+        if($PSBoundParameters.ContainsKey('TargetSizeRatio')) { $parameters['target_size_ratio'] = $TargetSizeRatio }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/pool" -Parameters $parameters
     }
@@ -20784,9 +20784,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['RemoveEcprofile']) { $parameters['remove_ecprofile'] = $RemoveEcprofile }
-        if($PSBoundParameters.ContainsKey['RemoveStorages']) { $parameters['remove_storages'] = $RemoveStorages }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('RemoveEcprofile')) { $parameters['remove_ecprofile'] = $RemoveEcprofile }
+        if($PSBoundParameters.ContainsKey('RemoveStorages')) { $parameters['remove_storages'] = $RemoveStorages }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters
     }
@@ -20900,15 +20900,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Application']) { $parameters['application'] = $Application }
-        if($PSBoundParameters.ContainsKey['CrushRule']) { $parameters['crush_rule'] = $CrushRule }
-        if($PSBoundParameters.ContainsKey['MinSize']) { $parameters['min_size'] = $MinSize }
-        if($PSBoundParameters.ContainsKey['PgAutoscaleMode']) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
-        if($PSBoundParameters.ContainsKey['PgNum']) { $parameters['pg_num'] = $PgNum }
-        if($PSBoundParameters.ContainsKey['PgNumMin']) { $parameters['pg_num_min'] = $PgNumMin }
-        if($PSBoundParameters.ContainsKey['Size']) { $parameters['size'] = $Size }
-        if($PSBoundParameters.ContainsKey['TargetSize']) { $parameters['target_size'] = $TargetSize }
-        if($PSBoundParameters.ContainsKey['TargetSizeRatio']) { $parameters['target_size_ratio'] = $TargetSizeRatio }
+        if($PSBoundParameters.ContainsKey('Application')) { $parameters['application'] = $Application }
+        if($PSBoundParameters.ContainsKey('CrushRule')) { $parameters['crush_rule'] = $CrushRule }
+        if($PSBoundParameters.ContainsKey('MinSize')) { $parameters['min_size'] = $MinSize }
+        if($PSBoundParameters.ContainsKey('PgAutoscaleMode')) { $parameters['pg_autoscale_mode'] = $PgAutoscaleMode }
+        if($PSBoundParameters.ContainsKey('PgNum')) { $parameters['pg_num'] = $PgNum }
+        if($PSBoundParameters.ContainsKey('PgNumMin')) { $parameters['pg_num_min'] = $PgNumMin }
+        if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
+        if($PSBoundParameters.ContainsKey('TargetSize')) { $parameters['target_size'] = $TargetSize }
+        if($PSBoundParameters.ContainsKey('TargetSizeRatio')) { $parameters['target_size_ratio'] = $TargetSizeRatio }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters
     }
@@ -20948,7 +20948,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Verbose_']) { $parameters['verbose'] = $Verbose_ }
+        if($PSBoundParameters.ContainsKey('Verbose_')) { $parameters['verbose'] = $Verbose_ }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/pool/$Name/status" -Parameters $parameters
     }
@@ -21008,12 +21008,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ClusterNetwork']) { $parameters['cluster-network'] = $ClusterNetwork }
-        if($PSBoundParameters.ContainsKey['DisableCephx']) { $parameters['disable_cephx'] = $DisableCephx }
-        if($PSBoundParameters.ContainsKey['MinSize']) { $parameters['min_size'] = $MinSize }
-        if($PSBoundParameters.ContainsKey['Network']) { $parameters['network'] = $Network }
-        if($PSBoundParameters.ContainsKey['PgBits']) { $parameters['pg_bits'] = $PgBits }
-        if($PSBoundParameters.ContainsKey['Size']) { $parameters['size'] = $Size }
+        if($PSBoundParameters.ContainsKey('ClusterNetwork')) { $parameters['cluster-network'] = $ClusterNetwork }
+        if($PSBoundParameters.ContainsKey('DisableCephx')) { $parameters['disable_cephx'] = $DisableCephx }
+        if($PSBoundParameters.ContainsKey('MinSize')) { $parameters['min_size'] = $MinSize }
+        if($PSBoundParameters.ContainsKey('Network')) { $parameters['network'] = $Network }
+        if($PSBoundParameters.ContainsKey('PgBits')) { $parameters['pg_bits'] = $PgBits }
+        if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/init" -Parameters $parameters
     }
@@ -21048,7 +21048,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Service']) { $parameters['service'] = $Service }
+        if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/stop" -Parameters $parameters
     }
@@ -21083,7 +21083,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Service']) { $parameters['service'] = $Service }
+        if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/start" -Parameters $parameters
     }
@@ -21118,7 +21118,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Service']) { $parameters['service'] = $Service }
+        if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/restart" -Parameters $parameters
     }
@@ -21212,8 +21212,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/log" -Parameters $parameters
     }
@@ -21287,9 +21287,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Id']) { $parameters['id'] = $Id }
-        if($PSBoundParameters.ContainsKey['Service']) { $parameters['service'] = $Service }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/cmd-safety" -Parameters $parameters
     }
@@ -21500,41 +21500,41 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['All']) { $parameters['all'] = $All }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['Compress']) { $parameters['compress'] = $Compress }
-        if($PSBoundParameters.ContainsKey['Dumpdir']) { $parameters['dumpdir'] = $Dumpdir }
-        if($PSBoundParameters.ContainsKey['Exclude']) { $parameters['exclude'] = $Exclude }
-        if($PSBoundParameters.ContainsKey['ExcludePath']) { $parameters['exclude-path'] = $ExcludePath }
-        if($PSBoundParameters.ContainsKey['Fleecing']) { $parameters['fleecing'] = $Fleecing }
-        if($PSBoundParameters.ContainsKey['Ionice']) { $parameters['ionice'] = $Ionice }
-        if($PSBoundParameters.ContainsKey['JobId']) { $parameters['job-id'] = $JobId }
-        if($PSBoundParameters.ContainsKey['Lockwait']) { $parameters['lockwait'] = $Lockwait }
-        if($PSBoundParameters.ContainsKey['Mailnotification']) { $parameters['mailnotification'] = $Mailnotification }
-        if($PSBoundParameters.ContainsKey['Mailto']) { $parameters['mailto'] = $Mailto }
-        if($PSBoundParameters.ContainsKey['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['NotesTemplate']) { $parameters['notes-template'] = $NotesTemplate }
-        if($PSBoundParameters.ContainsKey['NotificationMode']) { $parameters['notification-mode'] = $NotificationMode }
-        if($PSBoundParameters.ContainsKey['NotificationPolicy']) { $parameters['notification-policy'] = $NotificationPolicy }
-        if($PSBoundParameters.ContainsKey['NotificationTarget']) { $parameters['notification-target'] = $NotificationTarget }
-        if($PSBoundParameters.ContainsKey['PbsChangeDetectionMode']) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
-        if($PSBoundParameters.ContainsKey['Performance']) { $parameters['performance'] = $Performance }
-        if($PSBoundParameters.ContainsKey['Pigz']) { $parameters['pigz'] = $Pigz }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Protected']) { $parameters['protected'] = $Protected }
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Quiet']) { $parameters['quiet'] = $Quiet }
-        if($PSBoundParameters.ContainsKey['Remove']) { $parameters['remove'] = $Remove }
-        if($PSBoundParameters.ContainsKey['Script']) { $parameters['script'] = $Script }
-        if($PSBoundParameters.ContainsKey['Stdexcludes']) { $parameters['stdexcludes'] = $Stdexcludes }
-        if($PSBoundParameters.ContainsKey['Stdout']) { $parameters['stdout'] = $Stdout }
-        if($PSBoundParameters.ContainsKey['Stop']) { $parameters['stop'] = $Stop }
-        if($PSBoundParameters.ContainsKey['Stopwait']) { $parameters['stopwait'] = $Stopwait }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Tmpdir']) { $parameters['tmpdir'] = $Tmpdir }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
-        if($PSBoundParameters.ContainsKey['Zstd']) { $parameters['zstd'] = $Zstd }
+        if($PSBoundParameters.ContainsKey('All')) { $parameters['all'] = $All }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('Compress')) { $parameters['compress'] = $Compress }
+        if($PSBoundParameters.ContainsKey('Dumpdir')) { $parameters['dumpdir'] = $Dumpdir }
+        if($PSBoundParameters.ContainsKey('Exclude')) { $parameters['exclude'] = $Exclude }
+        if($PSBoundParameters.ContainsKey('ExcludePath')) { $parameters['exclude-path'] = $ExcludePath }
+        if($PSBoundParameters.ContainsKey('Fleecing')) { $parameters['fleecing'] = $Fleecing }
+        if($PSBoundParameters.ContainsKey('Ionice')) { $parameters['ionice'] = $Ionice }
+        if($PSBoundParameters.ContainsKey('JobId')) { $parameters['job-id'] = $JobId }
+        if($PSBoundParameters.ContainsKey('Lockwait')) { $parameters['lockwait'] = $Lockwait }
+        if($PSBoundParameters.ContainsKey('Mailnotification')) { $parameters['mailnotification'] = $Mailnotification }
+        if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
+        if($PSBoundParameters.ContainsKey('Maxfiles')) { $parameters['maxfiles'] = $Maxfiles }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('NotesTemplate')) { $parameters['notes-template'] = $NotesTemplate }
+        if($PSBoundParameters.ContainsKey('NotificationMode')) { $parameters['notification-mode'] = $NotificationMode }
+        if($PSBoundParameters.ContainsKey('NotificationPolicy')) { $parameters['notification-policy'] = $NotificationPolicy }
+        if($PSBoundParameters.ContainsKey('NotificationTarget')) { $parameters['notification-target'] = $NotificationTarget }
+        if($PSBoundParameters.ContainsKey('PbsChangeDetectionMode')) { $parameters['pbs-change-detection-mode'] = $PbsChangeDetectionMode }
+        if($PSBoundParameters.ContainsKey('Performance')) { $parameters['performance'] = $Performance }
+        if($PSBoundParameters.ContainsKey('Pigz')) { $parameters['pigz'] = $Pigz }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Protected')) { $parameters['protected'] = $Protected }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Quiet')) { $parameters['quiet'] = $Quiet }
+        if($PSBoundParameters.ContainsKey('Remove')) { $parameters['remove'] = $Remove }
+        if($PSBoundParameters.ContainsKey('Script')) { $parameters['script'] = $Script }
+        if($PSBoundParameters.ContainsKey('Stdexcludes')) { $parameters['stdexcludes'] = $Stdexcludes }
+        if($PSBoundParameters.ContainsKey('Stdout')) { $parameters['stdout'] = $Stdout }
+        if($PSBoundParameters.ContainsKey('Stop')) { $parameters['stop'] = $Stop }
+        if($PSBoundParameters.ContainsKey('Stopwait')) { $parameters['stopwait'] = $Stopwait }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Tmpdir')) { $parameters['tmpdir'] = $Tmpdir }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Zstd')) { $parameters['zstd'] = $Zstd }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/vzdump" -Parameters $parameters
     }
@@ -21569,7 +21569,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/vzdump/defaults" -Parameters $parameters
     }
@@ -21604,7 +21604,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Volume']) { $parameters['volume'] = $Volume }
+        if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/vzdump/extractconfig" -Parameters $parameters
     }
@@ -21918,7 +21918,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/subscription" -Parameters $parameters
     }
@@ -21953,7 +21953,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Key']) { $parameters['key'] = $Key }
+        if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/subscription" -Parameters $parameters
     }
@@ -22016,7 +22016,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/network" -Parameters $parameters
     }
@@ -22189,34 +22189,34 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Address']) { $parameters['address'] = $Address }
-        if($PSBoundParameters.ContainsKey['Address6']) { $parameters['address6'] = $Address6 }
-        if($PSBoundParameters.ContainsKey['Autostart']) { $parameters['autostart'] = $Autostart }
-        if($PSBoundParameters.ContainsKey['BondPrimary']) { $parameters['bond-primary'] = $BondPrimary }
-        if($PSBoundParameters.ContainsKey['BondMode']) { $parameters['bond_mode'] = $BondMode }
-        if($PSBoundParameters.ContainsKey['BondXmitHashPolicy']) { $parameters['bond_xmit_hash_policy'] = $BondXmitHashPolicy }
-        if($PSBoundParameters.ContainsKey['BridgePorts']) { $parameters['bridge_ports'] = $BridgePorts }
-        if($PSBoundParameters.ContainsKey['BridgeVids']) { $parameters['bridge_vids'] = $BridgeVids }
-        if($PSBoundParameters.ContainsKey['BridgeVlanAware']) { $parameters['bridge_vlan_aware'] = $BridgeVlanAware }
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Cidr6']) { $parameters['cidr6'] = $Cidr6 }
-        if($PSBoundParameters.ContainsKey['Comments']) { $parameters['comments'] = $Comments }
-        if($PSBoundParameters.ContainsKey['Comments6']) { $parameters['comments6'] = $Comments6 }
-        if($PSBoundParameters.ContainsKey['Gateway']) { $parameters['gateway'] = $Gateway }
-        if($PSBoundParameters.ContainsKey['Gateway6']) { $parameters['gateway6'] = $Gateway6 }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Mtu']) { $parameters['mtu'] = $Mtu }
-        if($PSBoundParameters.ContainsKey['Netmask']) { $parameters['netmask'] = $Netmask }
-        if($PSBoundParameters.ContainsKey['Netmask6']) { $parameters['netmask6'] = $Netmask6 }
-        if($PSBoundParameters.ContainsKey['OvsBonds']) { $parameters['ovs_bonds'] = $OvsBonds }
-        if($PSBoundParameters.ContainsKey['OvsBridge']) { $parameters['ovs_bridge'] = $OvsBridge }
-        if($PSBoundParameters.ContainsKey['OvsOptions']) { $parameters['ovs_options'] = $OvsOptions }
-        if($PSBoundParameters.ContainsKey['OvsPorts']) { $parameters['ovs_ports'] = $OvsPorts }
-        if($PSBoundParameters.ContainsKey['OvsTag']) { $parameters['ovs_tag'] = $OvsTag }
-        if($PSBoundParameters.ContainsKey['Slaves']) { $parameters['slaves'] = $Slaves }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['VlanId']) { $parameters['vlan-id'] = $VlanId }
-        if($PSBoundParameters.ContainsKey['VlanRawDevice']) { $parameters['vlan-raw-device'] = $VlanRawDevice }
+        if($PSBoundParameters.ContainsKey('Address')) { $parameters['address'] = $Address }
+        if($PSBoundParameters.ContainsKey('Address6')) { $parameters['address6'] = $Address6 }
+        if($PSBoundParameters.ContainsKey('Autostart')) { $parameters['autostart'] = $Autostart }
+        if($PSBoundParameters.ContainsKey('BondPrimary')) { $parameters['bond-primary'] = $BondPrimary }
+        if($PSBoundParameters.ContainsKey('BondMode')) { $parameters['bond_mode'] = $BondMode }
+        if($PSBoundParameters.ContainsKey('BondXmitHashPolicy')) { $parameters['bond_xmit_hash_policy'] = $BondXmitHashPolicy }
+        if($PSBoundParameters.ContainsKey('BridgePorts')) { $parameters['bridge_ports'] = $BridgePorts }
+        if($PSBoundParameters.ContainsKey('BridgeVids')) { $parameters['bridge_vids'] = $BridgeVids }
+        if($PSBoundParameters.ContainsKey('BridgeVlanAware')) { $parameters['bridge_vlan_aware'] = $BridgeVlanAware }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Cidr6')) { $parameters['cidr6'] = $Cidr6 }
+        if($PSBoundParameters.ContainsKey('Comments')) { $parameters['comments'] = $Comments }
+        if($PSBoundParameters.ContainsKey('Comments6')) { $parameters['comments6'] = $Comments6 }
+        if($PSBoundParameters.ContainsKey('Gateway')) { $parameters['gateway'] = $Gateway }
+        if($PSBoundParameters.ContainsKey('Gateway6')) { $parameters['gateway6'] = $Gateway6 }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Mtu')) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters.ContainsKey('Netmask')) { $parameters['netmask'] = $Netmask }
+        if($PSBoundParameters.ContainsKey('Netmask6')) { $parameters['netmask6'] = $Netmask6 }
+        if($PSBoundParameters.ContainsKey('OvsBonds')) { $parameters['ovs_bonds'] = $OvsBonds }
+        if($PSBoundParameters.ContainsKey('OvsBridge')) { $parameters['ovs_bridge'] = $OvsBridge }
+        if($PSBoundParameters.ContainsKey('OvsOptions')) { $parameters['ovs_options'] = $OvsOptions }
+        if($PSBoundParameters.ContainsKey('OvsPorts')) { $parameters['ovs_ports'] = $OvsPorts }
+        if($PSBoundParameters.ContainsKey('OvsTag')) { $parameters['ovs_tag'] = $OvsTag }
+        if($PSBoundParameters.ContainsKey('Slaves')) { $parameters['slaves'] = $Slaves }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('VlanId')) { $parameters['vlan-id'] = $VlanId }
+        if($PSBoundParameters.ContainsKey('VlanRawDevice')) { $parameters['vlan-raw-device'] = $VlanRawDevice }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/network" -Parameters $parameters
     }
@@ -22485,34 +22485,34 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Address']) { $parameters['address'] = $Address }
-        if($PSBoundParameters.ContainsKey['Address6']) { $parameters['address6'] = $Address6 }
-        if($PSBoundParameters.ContainsKey['Autostart']) { $parameters['autostart'] = $Autostart }
-        if($PSBoundParameters.ContainsKey['BondPrimary']) { $parameters['bond-primary'] = $BondPrimary }
-        if($PSBoundParameters.ContainsKey['BondMode']) { $parameters['bond_mode'] = $BondMode }
-        if($PSBoundParameters.ContainsKey['BondXmitHashPolicy']) { $parameters['bond_xmit_hash_policy'] = $BondXmitHashPolicy }
-        if($PSBoundParameters.ContainsKey['BridgePorts']) { $parameters['bridge_ports'] = $BridgePorts }
-        if($PSBoundParameters.ContainsKey['BridgeVids']) { $parameters['bridge_vids'] = $BridgeVids }
-        if($PSBoundParameters.ContainsKey['BridgeVlanAware']) { $parameters['bridge_vlan_aware'] = $BridgeVlanAware }
-        if($PSBoundParameters.ContainsKey['Cidr']) { $parameters['cidr'] = $Cidr }
-        if($PSBoundParameters.ContainsKey['Cidr6']) { $parameters['cidr6'] = $Cidr6 }
-        if($PSBoundParameters.ContainsKey['Comments']) { $parameters['comments'] = $Comments }
-        if($PSBoundParameters.ContainsKey['Comments6']) { $parameters['comments6'] = $Comments6 }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Gateway']) { $parameters['gateway'] = $Gateway }
-        if($PSBoundParameters.ContainsKey['Gateway6']) { $parameters['gateway6'] = $Gateway6 }
-        if($PSBoundParameters.ContainsKey['Mtu']) { $parameters['mtu'] = $Mtu }
-        if($PSBoundParameters.ContainsKey['Netmask']) { $parameters['netmask'] = $Netmask }
-        if($PSBoundParameters.ContainsKey['Netmask6']) { $parameters['netmask6'] = $Netmask6 }
-        if($PSBoundParameters.ContainsKey['OvsBonds']) { $parameters['ovs_bonds'] = $OvsBonds }
-        if($PSBoundParameters.ContainsKey['OvsBridge']) { $parameters['ovs_bridge'] = $OvsBridge }
-        if($PSBoundParameters.ContainsKey['OvsOptions']) { $parameters['ovs_options'] = $OvsOptions }
-        if($PSBoundParameters.ContainsKey['OvsPorts']) { $parameters['ovs_ports'] = $OvsPorts }
-        if($PSBoundParameters.ContainsKey['OvsTag']) { $parameters['ovs_tag'] = $OvsTag }
-        if($PSBoundParameters.ContainsKey['Slaves']) { $parameters['slaves'] = $Slaves }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['VlanId']) { $parameters['vlan-id'] = $VlanId }
-        if($PSBoundParameters.ContainsKey['VlanRawDevice']) { $parameters['vlan-raw-device'] = $VlanRawDevice }
+        if($PSBoundParameters.ContainsKey('Address')) { $parameters['address'] = $Address }
+        if($PSBoundParameters.ContainsKey('Address6')) { $parameters['address6'] = $Address6 }
+        if($PSBoundParameters.ContainsKey('Autostart')) { $parameters['autostart'] = $Autostart }
+        if($PSBoundParameters.ContainsKey('BondPrimary')) { $parameters['bond-primary'] = $BondPrimary }
+        if($PSBoundParameters.ContainsKey('BondMode')) { $parameters['bond_mode'] = $BondMode }
+        if($PSBoundParameters.ContainsKey('BondXmitHashPolicy')) { $parameters['bond_xmit_hash_policy'] = $BondXmitHashPolicy }
+        if($PSBoundParameters.ContainsKey('BridgePorts')) { $parameters['bridge_ports'] = $BridgePorts }
+        if($PSBoundParameters.ContainsKey('BridgeVids')) { $parameters['bridge_vids'] = $BridgeVids }
+        if($PSBoundParameters.ContainsKey('BridgeVlanAware')) { $parameters['bridge_vlan_aware'] = $BridgeVlanAware }
+        if($PSBoundParameters.ContainsKey('Cidr')) { $parameters['cidr'] = $Cidr }
+        if($PSBoundParameters.ContainsKey('Cidr6')) { $parameters['cidr6'] = $Cidr6 }
+        if($PSBoundParameters.ContainsKey('Comments')) { $parameters['comments'] = $Comments }
+        if($PSBoundParameters.ContainsKey('Comments6')) { $parameters['comments6'] = $Comments6 }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Gateway')) { $parameters['gateway'] = $Gateway }
+        if($PSBoundParameters.ContainsKey('Gateway6')) { $parameters['gateway6'] = $Gateway6 }
+        if($PSBoundParameters.ContainsKey('Mtu')) { $parameters['mtu'] = $Mtu }
+        if($PSBoundParameters.ContainsKey('Netmask')) { $parameters['netmask'] = $Netmask }
+        if($PSBoundParameters.ContainsKey('Netmask6')) { $parameters['netmask6'] = $Netmask6 }
+        if($PSBoundParameters.ContainsKey('OvsBonds')) { $parameters['ovs_bonds'] = $OvsBonds }
+        if($PSBoundParameters.ContainsKey('OvsBridge')) { $parameters['ovs_bridge'] = $OvsBridge }
+        if($PSBoundParameters.ContainsKey('OvsOptions')) { $parameters['ovs_options'] = $OvsOptions }
+        if($PSBoundParameters.ContainsKey('OvsPorts')) { $parameters['ovs_ports'] = $OvsPorts }
+        if($PSBoundParameters.ContainsKey('OvsTag')) { $parameters['ovs_tag'] = $OvsTag }
+        if($PSBoundParameters.ContainsKey('Slaves')) { $parameters['slaves'] = $Slaves }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('VlanId')) { $parameters['vlan-id'] = $VlanId }
+        if($PSBoundParameters.ContainsKey('VlanRawDevice')) { $parameters['vlan-raw-device'] = $VlanRawDevice }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/network/$Iface" -Parameters $parameters
     }
@@ -22593,16 +22593,16 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Errors']) { $parameters['errors'] = $Errors }
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Since']) { $parameters['since'] = $Since }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Statusfilter']) { $parameters['statusfilter'] = $Statusfilter }
-        if($PSBoundParameters.ContainsKey['Typefilter']) { $parameters['typefilter'] = $Typefilter }
-        if($PSBoundParameters.ContainsKey['Until']) { $parameters['until'] = $Until }
-        if($PSBoundParameters.ContainsKey['Userfilter']) { $parameters['userfilter'] = $Userfilter }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Errors')) { $parameters['errors'] = $Errors }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Statusfilter')) { $parameters['statusfilter'] = $Statusfilter }
+        if($PSBoundParameters.ContainsKey('Typefilter')) { $parameters['typefilter'] = $Typefilter }
+        if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
+        if($PSBoundParameters.ContainsKey('Userfilter')) { $parameters['userfilter'] = $Userfilter }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/tasks" -Parameters $parameters
     }
@@ -22716,9 +22716,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Download']) { $parameters['download'] = $Download }
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Download')) { $parameters['download'] = $Download }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/tasks/$Upid/log" -Parameters $parameters
     }
@@ -22812,7 +22812,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/scan/nfs" -Parameters $parameters
     }
@@ -22862,10 +22862,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Domain']) { $parameters['domain'] = $Domain }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Domain')) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/scan/cifs" -Parameters $parameters
     }
@@ -22920,11 +22920,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Fingerprint']) { $parameters['fingerprint'] = $Fingerprint }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/scan/pbs" -Parameters $parameters
     }
@@ -22959,7 +22959,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/scan/glusterfs" -Parameters $parameters
     }
@@ -22994,7 +22994,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Portal']) { $parameters['portal'] = $Portal }
+        if($PSBoundParameters.ContainsKey('Portal')) { $parameters['portal'] = $Portal }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/scan/iscsi" -Parameters $parameters
     }
@@ -23056,7 +23056,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Vg']) { $parameters['vg'] = $Vg }
+        if($PSBoundParameters.ContainsKey('Vg')) { $parameters['vg'] = $Vg }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/scan/lvmthin" -Parameters $parameters
     }
@@ -23150,8 +23150,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['PciClassBlacklist']) { $parameters['pci-class-blacklist'] = $PciClassBlacklist }
-        if($PSBoundParameters.ContainsKey['Verbose_']) { $parameters['verbose'] = $Verbose_ }
+        if($PSBoundParameters.ContainsKey('PciClassBlacklist')) { $parameters['pci-class-blacklist'] = $PciClassBlacklist }
+        if($PSBoundParameters.ContainsKey('Verbose_')) { $parameters['verbose'] = $Verbose_ }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci" -Parameters $parameters
     }
@@ -23186,7 +23186,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['PciIdOrMapping']) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
+        if($PSBoundParameters.ContainsKey('PciIdOrMapping')) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/{pci_id_or_mapping}" -Parameters $parameters
     }
@@ -23221,7 +23221,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['PciIdOrMapping']) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
+        if($PSBoundParameters.ContainsKey('PciIdOrMapping')) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/{pci_id_or_mapping}/mdev" -Parameters $parameters
     }
@@ -23411,11 +23411,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['Format']) { $parameters['format'] = $Format }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('Format')) { $parameters['format'] = $Format }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage" -Parameters $parameters
     }
@@ -23498,9 +23498,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/prunebackups" -Parameters $parameters
     }
@@ -23551,9 +23551,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/prunebackups" -Parameters $parameters
     }
@@ -23598,8 +23598,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/content" -Parameters $parameters
     }
@@ -23655,10 +23655,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Filename']) { $parameters['filename'] = $Filename }
-        if($PSBoundParameters.ContainsKey['Format']) { $parameters['format'] = $Format }
-        if($PSBoundParameters.ContainsKey['Size']) { $parameters['size'] = $Size }
-        if($PSBoundParameters.ContainsKey['Vmid']) { $parameters['vmid'] = $Vmid }
+        if($PSBoundParameters.ContainsKey('Filename')) { $parameters['filename'] = $Filename }
+        if($PSBoundParameters.ContainsKey('Format')) { $parameters['format'] = $Format }
+        if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
+        if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content" -Parameters $parameters
     }
@@ -23703,7 +23703,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delay']) { $parameters['delay'] = $Delay }
+        if($PSBoundParameters.ContainsKey('Delay')) { $parameters['delay'] = $Delay }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
     }
@@ -23790,8 +23790,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
-        if($PSBoundParameters.ContainsKey['TargetNode']) { $parameters['target_node'] = $TargetNode }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('TargetNode')) { $parameters['target_node'] = $TargetNode }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
     }
@@ -23841,8 +23841,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Notes']) { $parameters['notes'] = $Notes }
-        if($PSBoundParameters.ContainsKey['Protected']) { $parameters['protected'] = $Protected }
+        if($PSBoundParameters.ContainsKey('Notes')) { $parameters['notes'] = $Notes }
+        if($PSBoundParameters.ContainsKey('Protected')) { $parameters['protected'] = $Protected }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
     }
@@ -23926,9 +23926,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Ds']) { $parameters['ds'] = $Ds }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Ds')) { $parameters['ds'] = $Ds }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/rrd" -Parameters $parameters
     }
@@ -23975,8 +23975,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/rrddata" -Parameters $parameters
     }
@@ -24038,11 +24038,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Checksum']) { $parameters['checksum'] = $Checksum }
-        if($PSBoundParameters.ContainsKey['ChecksumAlgorithm']) { $parameters['checksum-algorithm'] = $ChecksumAlgorithm }
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['Filename']) { $parameters['filename'] = $Filename }
-        if($PSBoundParameters.ContainsKey['Tmpfilename']) { $parameters['tmpfilename'] = $Tmpfilename }
+        if($PSBoundParameters.ContainsKey('Checksum')) { $parameters['checksum'] = $Checksum }
+        if($PSBoundParameters.ContainsKey('ChecksumAlgorithm')) { $parameters['checksum-algorithm'] = $ChecksumAlgorithm }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('Filename')) { $parameters['filename'] = $Filename }
+        if($PSBoundParameters.ContainsKey('Tmpfilename')) { $parameters['tmpfilename'] = $Tmpfilename }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/upload" -Parameters $parameters
     }
@@ -24114,13 +24114,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Checksum']) { $parameters['checksum'] = $Checksum }
-        if($PSBoundParameters.ContainsKey['ChecksumAlgorithm']) { $parameters['checksum-algorithm'] = $ChecksumAlgorithm }
-        if($PSBoundParameters.ContainsKey['Compression']) { $parameters['compression'] = $Compression }
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['Filename']) { $parameters['filename'] = $Filename }
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
-        if($PSBoundParameters.ContainsKey['VerifyCertificates']) { $parameters['verify-certificates'] = $VerifyCertificates }
+        if($PSBoundParameters.ContainsKey('Checksum')) { $parameters['checksum'] = $Checksum }
+        if($PSBoundParameters.ContainsKey('ChecksumAlgorithm')) { $parameters['checksum-algorithm'] = $ChecksumAlgorithm }
+        if($PSBoundParameters.ContainsKey('Compression')) { $parameters['compression'] = $Compression }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('Filename')) { $parameters['filename'] = $Filename }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('VerifyCertificates')) { $parameters['verify-certificates'] = $VerifyCertificates }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/download-url" -Parameters $parameters
     }
@@ -24160,7 +24160,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Volume']) { $parameters['volume'] = $Volume }
+        if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/import-metadata" -Parameters $parameters
     }
@@ -24259,9 +24259,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AddStorage']) { $parameters['add_storage'] = $AddStorage }
-        if($PSBoundParameters.ContainsKey['Device']) { $parameters['device'] = $Device }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('AddStorage')) { $parameters['add_storage'] = $AddStorage }
+        if($PSBoundParameters.ContainsKey('Device')) { $parameters['device'] = $Device }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/lvm" -Parameters $parameters
     }
@@ -24306,8 +24306,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CleanupConfig']) { $parameters['cleanup-config'] = $CleanupConfig }
-        if($PSBoundParameters.ContainsKey['CleanupDisks']) { $parameters['cleanup-disks'] = $CleanupDisks }
+        if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
+        if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/lvm/$Name" -Parameters $parameters
     }
@@ -24379,9 +24379,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AddStorage']) { $parameters['add_storage'] = $AddStorage }
-        if($PSBoundParameters.ContainsKey['Device']) { $parameters['device'] = $Device }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('AddStorage')) { $parameters['add_storage'] = $AddStorage }
+        if($PSBoundParameters.ContainsKey('Device')) { $parameters['device'] = $Device }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/lvmthin" -Parameters $parameters
     }
@@ -24431,9 +24431,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CleanupConfig']) { $parameters['cleanup-config'] = $CleanupConfig }
-        if($PSBoundParameters.ContainsKey['CleanupDisks']) { $parameters['cleanup-disks'] = $CleanupDisks }
-        if($PSBoundParameters.ContainsKey['VolumeGroup']) { $parameters['volume-group'] = $VolumeGroup }
+        if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
+        if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
+        if($PSBoundParameters.ContainsKey('VolumeGroup')) { $parameters['volume-group'] = $VolumeGroup }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/lvmthin/$Name" -Parameters $parameters
     }
@@ -24511,10 +24511,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AddStorage']) { $parameters['add_storage'] = $AddStorage }
-        if($PSBoundParameters.ContainsKey['Device']) { $parameters['device'] = $Device }
-        if($PSBoundParameters.ContainsKey['Filesystem']) { $parameters['filesystem'] = $Filesystem }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('AddStorage')) { $parameters['add_storage'] = $AddStorage }
+        if($PSBoundParameters.ContainsKey('Device')) { $parameters['device'] = $Device }
+        if($PSBoundParameters.ContainsKey('Filesystem')) { $parameters['filesystem'] = $Filesystem }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/directory" -Parameters $parameters
     }
@@ -24559,8 +24559,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CleanupConfig']) { $parameters['cleanup-config'] = $CleanupConfig }
-        if($PSBoundParameters.ContainsKey['CleanupDisks']) { $parameters['cleanup-disks'] = $CleanupDisks }
+        if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
+        if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/directory/$Name" -Parameters $parameters
     }
@@ -24654,13 +24654,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AddStorage']) { $parameters['add_storage'] = $AddStorage }
-        if($PSBoundParameters.ContainsKey['Ashift']) { $parameters['ashift'] = $Ashift }
-        if($PSBoundParameters.ContainsKey['Compression']) { $parameters['compression'] = $Compression }
-        if($PSBoundParameters.ContainsKey['Devices']) { $parameters['devices'] = $Devices }
-        if($PSBoundParameters.ContainsKey['DraidConfig']) { $parameters['draid-config'] = $DraidConfig }
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Raidlevel']) { $parameters['raidlevel'] = $Raidlevel }
+        if($PSBoundParameters.ContainsKey('AddStorage')) { $parameters['add_storage'] = $AddStorage }
+        if($PSBoundParameters.ContainsKey('Ashift')) { $parameters['ashift'] = $Ashift }
+        if($PSBoundParameters.ContainsKey('Compression')) { $parameters['compression'] = $Compression }
+        if($PSBoundParameters.ContainsKey('Devices')) { $parameters['devices'] = $Devices }
+        if($PSBoundParameters.ContainsKey('DraidConfig')) { $parameters['draid-config'] = $DraidConfig }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Raidlevel')) { $parameters['raidlevel'] = $Raidlevel }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/zfs" -Parameters $parameters
     }
@@ -24705,8 +24705,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['CleanupConfig']) { $parameters['cleanup-config'] = $CleanupConfig }
-        if($PSBoundParameters.ContainsKey['CleanupDisks']) { $parameters['cleanup-disks'] = $CleanupDisks }
+        if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
+        if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/zfs/$Name" -Parameters $parameters
     }
@@ -24784,9 +24784,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['IncludePartitions']) { $parameters['include-partitions'] = $IncludePartitions }
-        if($PSBoundParameters.ContainsKey['Skipsmart']) { $parameters['skipsmart'] = $Skipsmart }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('IncludePartitions')) { $parameters['include-partitions'] = $IncludePartitions }
+        if($PSBoundParameters.ContainsKey('Skipsmart')) { $parameters['skipsmart'] = $Skipsmart }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/disks/list" -Parameters $parameters
     }
@@ -24826,8 +24826,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
-        if($PSBoundParameters.ContainsKey['Healthonly']) { $parameters['healthonly'] = $Healthonly }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Healthonly')) { $parameters['healthonly'] = $Healthonly }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/disks/smart" -Parameters $parameters
     }
@@ -24867,8 +24867,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
-        if($PSBoundParameters.ContainsKey['Uuid']) { $parameters['uuid'] = $Uuid }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Uuid')) { $parameters['uuid'] = $Uuid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/initgpt" -Parameters $parameters
     }
@@ -24903,7 +24903,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Disk']) { $parameters['disk'] = $Disk }
+        if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/disks/wipedisk" -Parameters $parameters
     }
@@ -24997,8 +24997,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Notify']) { $parameters['notify'] = $Notify }
-        if($PSBoundParameters.ContainsKey['Quiet']) { $parameters['quiet'] = $Quiet }
+        if($PSBoundParameters.ContainsKey('Notify')) { $parameters['notify'] = $Notify }
+        if($PSBoundParameters.ContainsKey('Quiet')) { $parameters['quiet'] = $Quiet }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/apt/update" -Parameters $parameters
     }
@@ -25038,8 +25038,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Name']) { $parameters['name'] = $Name }
-        if($PSBoundParameters.ContainsKey['Version']) { $parameters['version'] = $Version }
+        if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
+        if($PSBoundParameters.ContainsKey('Version')) { $parameters['version'] = $Version }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/apt/changelog" -Parameters $parameters
     }
@@ -25116,10 +25116,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['Index']) { $parameters['index'] = $Index }
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('Index')) { $parameters['index'] = $Index }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/apt/repositories" -Parameters $parameters
     }
@@ -25159,8 +25159,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Handle']) { $parameters['handle'] = $Handle }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Handle')) { $parameters['handle'] = $Handle }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/apt/repositories" -Parameters $parameters
     }
@@ -25348,21 +25348,21 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Pos']) { $parameters['pos'] = $Pos }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Pos')) { $parameters['pos'] = $Pos }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/firewall/rules" -Parameters $parameters
     }
@@ -25402,7 +25402,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -25551,22 +25551,22 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Action']) { $parameters['action'] = $Action }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Dest']) { $parameters['dest'] = $Dest }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Dport']) { $parameters['dport'] = $Dport }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['IcmpType']) { $parameters['icmp-type'] = $IcmpType }
-        if($PSBoundParameters.ContainsKey['Iface']) { $parameters['iface'] = $Iface }
-        if($PSBoundParameters.ContainsKey['Log']) { $parameters['log'] = $Log }
-        if($PSBoundParameters.ContainsKey['Macro']) { $parameters['macro'] = $Macro }
-        if($PSBoundParameters.ContainsKey['Moveto']) { $parameters['moveto'] = $Moveto }
-        if($PSBoundParameters.ContainsKey['Proto']) { $parameters['proto'] = $Proto }
-        if($PSBoundParameters.ContainsKey['Source']) { $parameters['source'] = $Source }
-        if($PSBoundParameters.ContainsKey['Sport']) { $parameters['sport'] = $Sport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Dest')) { $parameters['dest'] = $Dest }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Dport')) { $parameters['dport'] = $Dport }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('IcmpType')) { $parameters['icmp-type'] = $IcmpType }
+        if($PSBoundParameters.ContainsKey('Iface')) { $parameters['iface'] = $Iface }
+        if($PSBoundParameters.ContainsKey('Log')) { $parameters['log'] = $Log }
+        if($PSBoundParameters.ContainsKey('Macro')) { $parameters['macro'] = $Macro }
+        if($PSBoundParameters.ContainsKey('Moveto')) { $parameters['moveto'] = $Moveto }
+        if($PSBoundParameters.ContainsKey('Proto')) { $parameters['proto'] = $Proto }
+        if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
+        if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/firewall/rules/$Pos" -Parameters $parameters
     }
@@ -25733,27 +25733,27 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['LogLevelForward']) { $parameters['log_level_forward'] = $LogLevelForward }
-        if($PSBoundParameters.ContainsKey['LogLevelIn']) { $parameters['log_level_in'] = $LogLevelIn }
-        if($PSBoundParameters.ContainsKey['LogLevelOut']) { $parameters['log_level_out'] = $LogLevelOut }
-        if($PSBoundParameters.ContainsKey['LogNfConntrack']) { $parameters['log_nf_conntrack'] = $LogNfConntrack }
-        if($PSBoundParameters.ContainsKey['Ndp']) { $parameters['ndp'] = $Ndp }
-        if($PSBoundParameters.ContainsKey['NfConntrackAllowInvalid']) { $parameters['nf_conntrack_allow_invalid'] = $NfConntrackAllowInvalid }
-        if($PSBoundParameters.ContainsKey['NfConntrackHelpers']) { $parameters['nf_conntrack_helpers'] = $NfConntrackHelpers }
-        if($PSBoundParameters.ContainsKey['NfConntrackMax']) { $parameters['nf_conntrack_max'] = $NfConntrackMax }
-        if($PSBoundParameters.ContainsKey['NfConntrackTcpTimeoutEstablished']) { $parameters['nf_conntrack_tcp_timeout_established'] = $NfConntrackTcpTimeoutEstablished }
-        if($PSBoundParameters.ContainsKey['NfConntrackTcpTimeoutSynRecv']) { $parameters['nf_conntrack_tcp_timeout_syn_recv'] = $NfConntrackTcpTimeoutSynRecv }
-        if($PSBoundParameters.ContainsKey['Nftables']) { $parameters['nftables'] = $Nftables }
-        if($PSBoundParameters.ContainsKey['Nosmurfs']) { $parameters['nosmurfs'] = $Nosmurfs }
-        if($PSBoundParameters.ContainsKey['ProtectionSynflood']) { $parameters['protection_synflood'] = $ProtectionSynflood }
-        if($PSBoundParameters.ContainsKey['ProtectionSynfloodBurst']) { $parameters['protection_synflood_burst'] = $ProtectionSynfloodBurst }
-        if($PSBoundParameters.ContainsKey['ProtectionSynfloodRate']) { $parameters['protection_synflood_rate'] = $ProtectionSynfloodRate }
-        if($PSBoundParameters.ContainsKey['SmurfLogLevel']) { $parameters['smurf_log_level'] = $SmurfLogLevel }
-        if($PSBoundParameters.ContainsKey['TcpFlagsLogLevel']) { $parameters['tcp_flags_log_level'] = $TcpFlagsLogLevel }
-        if($PSBoundParameters.ContainsKey['Tcpflags']) { $parameters['tcpflags'] = $Tcpflags }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('LogLevelForward')) { $parameters['log_level_forward'] = $LogLevelForward }
+        if($PSBoundParameters.ContainsKey('LogLevelIn')) { $parameters['log_level_in'] = $LogLevelIn }
+        if($PSBoundParameters.ContainsKey('LogLevelOut')) { $parameters['log_level_out'] = $LogLevelOut }
+        if($PSBoundParameters.ContainsKey('LogNfConntrack')) { $parameters['log_nf_conntrack'] = $LogNfConntrack }
+        if($PSBoundParameters.ContainsKey('Ndp')) { $parameters['ndp'] = $Ndp }
+        if($PSBoundParameters.ContainsKey('NfConntrackAllowInvalid')) { $parameters['nf_conntrack_allow_invalid'] = $NfConntrackAllowInvalid }
+        if($PSBoundParameters.ContainsKey('NfConntrackHelpers')) { $parameters['nf_conntrack_helpers'] = $NfConntrackHelpers }
+        if($PSBoundParameters.ContainsKey('NfConntrackMax')) { $parameters['nf_conntrack_max'] = $NfConntrackMax }
+        if($PSBoundParameters.ContainsKey('NfConntrackTcpTimeoutEstablished')) { $parameters['nf_conntrack_tcp_timeout_established'] = $NfConntrackTcpTimeoutEstablished }
+        if($PSBoundParameters.ContainsKey('NfConntrackTcpTimeoutSynRecv')) { $parameters['nf_conntrack_tcp_timeout_syn_recv'] = $NfConntrackTcpTimeoutSynRecv }
+        if($PSBoundParameters.ContainsKey('Nftables')) { $parameters['nftables'] = $Nftables }
+        if($PSBoundParameters.ContainsKey('Nosmurfs')) { $parameters['nosmurfs'] = $Nosmurfs }
+        if($PSBoundParameters.ContainsKey('ProtectionSynflood')) { $parameters['protection_synflood'] = $ProtectionSynflood }
+        if($PSBoundParameters.ContainsKey('ProtectionSynfloodBurst')) { $parameters['protection_synflood_burst'] = $ProtectionSynfloodBurst }
+        if($PSBoundParameters.ContainsKey('ProtectionSynfloodRate')) { $parameters['protection_synflood_rate'] = $ProtectionSynfloodRate }
+        if($PSBoundParameters.ContainsKey('SmurfLogLevel')) { $parameters['smurf_log_level'] = $SmurfLogLevel }
+        if($PSBoundParameters.ContainsKey('TcpFlagsLogLevel')) { $parameters['tcp_flags_log_level'] = $TcpFlagsLogLevel }
+        if($PSBoundParameters.ContainsKey('Tcpflags')) { $parameters['tcpflags'] = $Tcpflags }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/firewall/options" -Parameters $parameters
     }
@@ -25803,10 +25803,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Since']) { $parameters['since'] = $Since }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Until']) { $parameters['until'] = $Until }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/firewall/log" -Parameters $parameters
     }
@@ -25841,7 +25841,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Guest']) { $parameters['guest'] = $Guest }
+        if($PSBoundParameters.ContainsKey('Guest')) { $parameters['guest'] = $Guest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/replication" -Parameters $parameters
     }
@@ -25950,8 +25950,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/replication/$Id/log" -Parameters $parameters
     }
@@ -26099,7 +26099,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/certificates/acme/certificate" -Parameters $parameters
     }
@@ -26134,7 +26134,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/certificates/acme/certificate" -Parameters $parameters
     }
@@ -26196,7 +26196,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Restart']) { $parameters['restart'] = $Restart }
+        if($PSBoundParameters.ContainsKey('Restart')) { $parameters['restart'] = $Restart }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/certificates/custom" -Parameters $parameters
     }
@@ -26246,10 +26246,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Certificates']) { $parameters['certificates'] = $Certificates }
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Key']) { $parameters['key'] = $Key }
-        if($PSBoundParameters.ContainsKey['Restart']) { $parameters['restart'] = $Restart }
+        if($PSBoundParameters.ContainsKey('Certificates')) { $parameters['certificates'] = $Certificates }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
+        if($PSBoundParameters.ContainsKey('Restart')) { $parameters['restart'] = $Restart }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/certificates/custom" -Parameters $parameters
     }
@@ -26285,7 +26285,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Property']) { $parameters['property'] = $Property }
+        if($PSBoundParameters.ContainsKey('Property')) { $parameters['property'] = $Property }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/config" -Parameters $parameters
     }
@@ -26350,14 +26350,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Acme']) { $parameters['acme'] = $Acme }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['StartallOnbootDelay']) { $parameters['startall-onboot-delay'] = $StartallOnbootDelay }
-        if($PSBoundParameters.ContainsKey['Wakeonlan']) { $parameters['wakeonlan'] = $Wakeonlan }
+        if($PSBoundParameters.ContainsKey('Acme')) { $parameters['acme'] = $Acme }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('StartallOnbootDelay')) { $parameters['startall-onboot-delay'] = $StartallOnbootDelay }
+        if($PSBoundParameters.ContainsKey('Wakeonlan')) { $parameters['wakeonlan'] = $Wakeonlan }
 
-        if($PSBoundParameters.ContainsKey['AcmedomainN']) { $AcmedomainN.keys | ForEach-Object { $parameters['acmedomain' + $_] = $AcmedomainN[$_] } }
+        if($PSBoundParameters.ContainsKey('AcmedomainN')) { $AcmedomainN.keys | ForEach-Object { $parameters['acmedomain' + $_] = $AcmedomainN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/config" -Parameters $parameters
     }
@@ -26565,7 +26565,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Command']) { $parameters['command'] = $Command }
+        if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/status" -Parameters $parameters
     }
@@ -26627,7 +26627,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Commands']) { $parameters['commands'] = $Commands }
+        if($PSBoundParameters.ContainsKey('Commands')) { $parameters['commands'] = $Commands }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/execute" -Parameters $parameters
     }
@@ -26701,9 +26701,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Ds']) { $parameters['ds'] = $Ds }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Ds')) { $parameters['ds'] = $Ds }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/rrd" -Parameters $parameters
     }
@@ -26745,8 +26745,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cf']) { $parameters['cf'] = $Cf }
-        if($PSBoundParameters.ContainsKey['Timeframe']) { $parameters['timeframe'] = $Timeframe }
+        if($PSBoundParameters.ContainsKey('Cf')) { $parameters['cf'] = $Cf }
+        if($PSBoundParameters.ContainsKey('Timeframe')) { $parameters['timeframe'] = $Timeframe }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/rrddata" -Parameters $parameters
     }
@@ -26801,11 +26801,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Limit']) { $parameters['limit'] = $Limit }
-        if($PSBoundParameters.ContainsKey['Service']) { $parameters['service'] = $Service }
-        if($PSBoundParameters.ContainsKey['Since']) { $parameters['since'] = $Since }
-        if($PSBoundParameters.ContainsKey['Start']) { $parameters['start'] = $Start }
-        if($PSBoundParameters.ContainsKey['Until']) { $parameters['until'] = $Until }
+        if($PSBoundParameters.ContainsKey('Limit')) { $parameters['limit'] = $Limit }
+        if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
+        if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
+        if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
+        if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/syslog" -Parameters $parameters
     }
@@ -26860,11 +26860,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Endcursor']) { $parameters['endcursor'] = $Endcursor }
-        if($PSBoundParameters.ContainsKey['Lastentries']) { $parameters['lastentries'] = $Lastentries }
-        if($PSBoundParameters.ContainsKey['Since']) { $parameters['since'] = $Since }
-        if($PSBoundParameters.ContainsKey['Startcursor']) { $parameters['startcursor'] = $Startcursor }
-        if($PSBoundParameters.ContainsKey['Until']) { $parameters['until'] = $Until }
+        if($PSBoundParameters.ContainsKey('Endcursor')) { $parameters['endcursor'] = $Endcursor }
+        if($PSBoundParameters.ContainsKey('Lastentries')) { $parameters['lastentries'] = $Lastentries }
+        if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
+        if($PSBoundParameters.ContainsKey('Startcursor')) { $parameters['startcursor'] = $Startcursor }
+        if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/journal" -Parameters $parameters
     }
@@ -26920,11 +26920,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cmd']) { $parameters['cmd'] = $Cmd }
-        if($PSBoundParameters.ContainsKey['CmdOpts']) { $parameters['cmd-opts'] = $CmdOpts }
-        if($PSBoundParameters.ContainsKey['Height']) { $parameters['height'] = $Height }
-        if($PSBoundParameters.ContainsKey['Websocket']) { $parameters['websocket'] = $Websocket }
-        if($PSBoundParameters.ContainsKey['Width']) { $parameters['width'] = $Width }
+        if($PSBoundParameters.ContainsKey('Cmd')) { $parameters['cmd'] = $Cmd }
+        if($PSBoundParameters.ContainsKey('CmdOpts')) { $parameters['cmd-opts'] = $CmdOpts }
+        if($PSBoundParameters.ContainsKey('Height')) { $parameters['height'] = $Height }
+        if($PSBoundParameters.ContainsKey('Websocket')) { $parameters['websocket'] = $Websocket }
+        if($PSBoundParameters.ContainsKey('Width')) { $parameters['width'] = $Width }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/vncshell" -Parameters $parameters
     }
@@ -26965,8 +26965,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cmd']) { $parameters['cmd'] = $Cmd }
-        if($PSBoundParameters.ContainsKey['CmdOpts']) { $parameters['cmd-opts'] = $CmdOpts }
+        if($PSBoundParameters.ContainsKey('Cmd')) { $parameters['cmd'] = $Cmd }
+        if($PSBoundParameters.ContainsKey('CmdOpts')) { $parameters['cmd-opts'] = $CmdOpts }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/termproxy" -Parameters $parameters
     }
@@ -27006,8 +27006,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Vncticket']) { $parameters['vncticket'] = $Vncticket }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Vncticket')) { $parameters['vncticket'] = $Vncticket }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/vncwebsocket" -Parameters $parameters
     }
@@ -27053,9 +27053,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Cmd']) { $parameters['cmd'] = $Cmd }
-        if($PSBoundParameters.ContainsKey['CmdOpts']) { $parameters['cmd-opts'] = $CmdOpts }
-        if($PSBoundParameters.ContainsKey['Proxy']) { $parameters['proxy'] = $Proxy }
+        if($PSBoundParameters.ContainsKey('Cmd')) { $parameters['cmd'] = $Cmd }
+        if($PSBoundParameters.ContainsKey('CmdOpts')) { $parameters['cmd-opts'] = $CmdOpts }
+        if($PSBoundParameters.ContainsKey('Proxy')) { $parameters['proxy'] = $Proxy }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/spiceshell" -Parameters $parameters
     }
@@ -27132,10 +27132,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Dns1']) { $parameters['dns1'] = $Dns1 }
-        if($PSBoundParameters.ContainsKey['Dns2']) { $parameters['dns2'] = $Dns2 }
-        if($PSBoundParameters.ContainsKey['Dns3']) { $parameters['dns3'] = $Dns3 }
-        if($PSBoundParameters.ContainsKey['Search']) { $parameters['search'] = $Search }
+        if($PSBoundParameters.ContainsKey('Dns1')) { $parameters['dns1'] = $Dns1 }
+        if($PSBoundParameters.ContainsKey('Dns2')) { $parameters['dns2'] = $Dns2 }
+        if($PSBoundParameters.ContainsKey('Dns3')) { $parameters['dns3'] = $Dns3 }
+        if($PSBoundParameters.ContainsKey('Search')) { $parameters['search'] = $Search }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/dns" -Parameters $parameters
     }
@@ -27197,7 +27197,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Timezone']) { $parameters['timezone'] = $Timezone }
+        if($PSBoundParameters.ContainsKey('Timezone')) { $parameters['timezone'] = $Timezone }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/time" -Parameters $parameters
     }
@@ -27264,8 +27264,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Template']) { $parameters['template'] = $Template }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/aplinfo" -Parameters $parameters
     }
@@ -27305,8 +27305,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Url']) { $parameters['url'] = $Url }
-        if($PSBoundParameters.ContainsKey['VerifyCertificates']) { $parameters['verify-certificates'] = $VerifyCertificates }
+        if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
+        if($PSBoundParameters.ContainsKey('VerifyCertificates')) { $parameters['verify-certificates'] = $VerifyCertificates }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/query-url-metadata" -Parameters $parameters
     }
@@ -27373,8 +27373,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Force']) { $parameters['force'] = $Force }
-        if($PSBoundParameters.ContainsKey['Vms']) { $parameters['vms'] = $Vms }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/startall" -Parameters $parameters
     }
@@ -27419,9 +27419,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ForceStop']) { $parameters['force-stop'] = $ForceStop }
-        if($PSBoundParameters.ContainsKey['Timeout']) { $parameters['timeout'] = $Timeout }
-        if($PSBoundParameters.ContainsKey['Vms']) { $parameters['vms'] = $Vms }
+        if($PSBoundParameters.ContainsKey('ForceStop')) { $parameters['force-stop'] = $ForceStop }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
+        if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/stopall" -Parameters $parameters
     }
@@ -27456,7 +27456,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Vms']) { $parameters['vms'] = $Vms }
+        if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/suspendall" -Parameters $parameters
     }
@@ -27506,10 +27506,10 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Maxworkers']) { $parameters['maxworkers'] = $Maxworkers }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
-        if($PSBoundParameters.ContainsKey['Vms']) { $parameters['vms'] = $Vms }
-        if($PSBoundParameters.ContainsKey['WithLocalDisks']) { $parameters['with-local-disks'] = $WithLocalDisks }
+        if($PSBoundParameters.ContainsKey('Maxworkers')) { $parameters['maxworkers'] = $Maxworkers }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
+        if($PSBoundParameters.ContainsKey('WithLocalDisks')) { $parameters['with-local-disks'] = $WithLocalDisks }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/migrateall" -Parameters $parameters
     }
@@ -27576,8 +27576,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Data']) { $parameters['data'] = $Data }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Data')) { $parameters['data'] = $Data }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/hosts" -Parameters $parameters
     }
@@ -27608,7 +27608,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/storage" -Parameters $parameters
     }
@@ -27947,68 +27947,68 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Authsupported']) { $parameters['authsupported'] = $Authsupported }
-        if($PSBoundParameters.ContainsKey['Base']) { $parameters['base'] = $Base }
-        if($PSBoundParameters.ContainsKey['Blocksize']) { $parameters['blocksize'] = $Blocksize }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['ComstarHg']) { $parameters['comstar_hg'] = $ComstarHg }
-        if($PSBoundParameters.ContainsKey['ComstarTg']) { $parameters['comstar_tg'] = $ComstarTg }
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['ContentDirs']) { $parameters['content-dirs'] = $ContentDirs }
-        if($PSBoundParameters.ContainsKey['CreateBasePath']) { $parameters['create-base-path'] = $CreateBasePath }
-        if($PSBoundParameters.ContainsKey['CreateSubdirs']) { $parameters['create-subdirs'] = $CreateSubdirs }
-        if($PSBoundParameters.ContainsKey['DataPool']) { $parameters['data-pool'] = $DataPool }
-        if($PSBoundParameters.ContainsKey['Datastore']) { $parameters['datastore'] = $Datastore }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Domain']) { $parameters['domain'] = $Domain }
-        if($PSBoundParameters.ContainsKey['EncryptionKey']) { $parameters['encryption-key'] = $EncryptionKey }
-        if($PSBoundParameters.ContainsKey['Export']) { $parameters['export'] = $Export }
-        if($PSBoundParameters.ContainsKey['Fingerprint']) { $parameters['fingerprint'] = $Fingerprint }
-        if($PSBoundParameters.ContainsKey['Format']) { $parameters['format'] = $Format }
-        if($PSBoundParameters.ContainsKey['FsName']) { $parameters['fs-name'] = $FsName }
-        if($PSBoundParameters.ContainsKey['Fuse']) { $parameters['fuse'] = $Fuse }
-        if($PSBoundParameters.ContainsKey['IsMountpoint']) { $parameters['is_mountpoint'] = $IsMountpoint }
-        if($PSBoundParameters.ContainsKey['Iscsiprovider']) { $parameters['iscsiprovider'] = $Iscsiprovider }
-        if($PSBoundParameters.ContainsKey['Keyring']) { $parameters['keyring'] = $Keyring }
-        if($PSBoundParameters.ContainsKey['Krbd']) { $parameters['krbd'] = $Krbd }
-        if($PSBoundParameters.ContainsKey['LioTpg']) { $parameters['lio_tpg'] = $LioTpg }
-        if($PSBoundParameters.ContainsKey['MasterPubkey']) { $parameters['master-pubkey'] = $MasterPubkey }
-        if($PSBoundParameters.ContainsKey['MaxProtectedBackups']) { $parameters['max-protected-backups'] = $MaxProtectedBackups }
-        if($PSBoundParameters.ContainsKey['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
-        if($PSBoundParameters.ContainsKey['Mkdir']) { $parameters['mkdir'] = $Mkdir }
-        if($PSBoundParameters.ContainsKey['Monhost']) { $parameters['monhost'] = $Monhost }
-        if($PSBoundParameters.ContainsKey['Mountpoint']) { $parameters['mountpoint'] = $Mountpoint }
-        if($PSBoundParameters.ContainsKey['Namespace']) { $parameters['namespace'] = $Namespace }
-        if($PSBoundParameters.ContainsKey['Nocow']) { $parameters['nocow'] = $Nocow }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Nowritecache']) { $parameters['nowritecache'] = $Nowritecache }
-        if($PSBoundParameters.ContainsKey['Options']) { $parameters['options'] = $Options }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Portal']) { $parameters['portal'] = $Portal }
-        if($PSBoundParameters.ContainsKey['Preallocation']) { $parameters['preallocation'] = $Preallocation }
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Saferemove']) { $parameters['saferemove'] = $Saferemove }
-        if($PSBoundParameters.ContainsKey['SaferemoveThroughput']) { $parameters['saferemove_throughput'] = $SaferemoveThroughput }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Server2']) { $parameters['server2'] = $Server2 }
-        if($PSBoundParameters.ContainsKey['Share']) { $parameters['share'] = $Share }
-        if($PSBoundParameters.ContainsKey['Shared']) { $parameters['shared'] = $Shared }
-        if($PSBoundParameters.ContainsKey['SkipCertVerification']) { $parameters['skip-cert-verification'] = $SkipCertVerification }
-        if($PSBoundParameters.ContainsKey['Smbversion']) { $parameters['smbversion'] = $Smbversion }
-        if($PSBoundParameters.ContainsKey['Sparse']) { $parameters['sparse'] = $Sparse }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Subdir']) { $parameters['subdir'] = $Subdir }
-        if($PSBoundParameters.ContainsKey['TaggedOnly']) { $parameters['tagged_only'] = $TaggedOnly }
-        if($PSBoundParameters.ContainsKey['Target']) { $parameters['target'] = $Target }
-        if($PSBoundParameters.ContainsKey['Thinpool']) { $parameters['thinpool'] = $Thinpool }
-        if($PSBoundParameters.ContainsKey['Transport']) { $parameters['transport'] = $Transport }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
-        if($PSBoundParameters.ContainsKey['Vgname']) { $parameters['vgname'] = $Vgname }
-        if($PSBoundParameters.ContainsKey['Volume']) { $parameters['volume'] = $Volume }
+        if($PSBoundParameters.ContainsKey('Authsupported')) { $parameters['authsupported'] = $Authsupported }
+        if($PSBoundParameters.ContainsKey('Base')) { $parameters['base'] = $Base }
+        if($PSBoundParameters.ContainsKey('Blocksize')) { $parameters['blocksize'] = $Blocksize }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('ComstarHg')) { $parameters['comstar_hg'] = $ComstarHg }
+        if($PSBoundParameters.ContainsKey('ComstarTg')) { $parameters['comstar_tg'] = $ComstarTg }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('ContentDirs')) { $parameters['content-dirs'] = $ContentDirs }
+        if($PSBoundParameters.ContainsKey('CreateBasePath')) { $parameters['create-base-path'] = $CreateBasePath }
+        if($PSBoundParameters.ContainsKey('CreateSubdirs')) { $parameters['create-subdirs'] = $CreateSubdirs }
+        if($PSBoundParameters.ContainsKey('DataPool')) { $parameters['data-pool'] = $DataPool }
+        if($PSBoundParameters.ContainsKey('Datastore')) { $parameters['datastore'] = $Datastore }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Domain')) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters.ContainsKey('EncryptionKey')) { $parameters['encryption-key'] = $EncryptionKey }
+        if($PSBoundParameters.ContainsKey('Export')) { $parameters['export'] = $Export }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
+        if($PSBoundParameters.ContainsKey('Format')) { $parameters['format'] = $Format }
+        if($PSBoundParameters.ContainsKey('FsName')) { $parameters['fs-name'] = $FsName }
+        if($PSBoundParameters.ContainsKey('Fuse')) { $parameters['fuse'] = $Fuse }
+        if($PSBoundParameters.ContainsKey('IsMountpoint')) { $parameters['is_mountpoint'] = $IsMountpoint }
+        if($PSBoundParameters.ContainsKey('Iscsiprovider')) { $parameters['iscsiprovider'] = $Iscsiprovider }
+        if($PSBoundParameters.ContainsKey('Keyring')) { $parameters['keyring'] = $Keyring }
+        if($PSBoundParameters.ContainsKey('Krbd')) { $parameters['krbd'] = $Krbd }
+        if($PSBoundParameters.ContainsKey('LioTpg')) { $parameters['lio_tpg'] = $LioTpg }
+        if($PSBoundParameters.ContainsKey('MasterPubkey')) { $parameters['master-pubkey'] = $MasterPubkey }
+        if($PSBoundParameters.ContainsKey('MaxProtectedBackups')) { $parameters['max-protected-backups'] = $MaxProtectedBackups }
+        if($PSBoundParameters.ContainsKey('Maxfiles')) { $parameters['maxfiles'] = $Maxfiles }
+        if($PSBoundParameters.ContainsKey('Mkdir')) { $parameters['mkdir'] = $Mkdir }
+        if($PSBoundParameters.ContainsKey('Monhost')) { $parameters['monhost'] = $Monhost }
+        if($PSBoundParameters.ContainsKey('Mountpoint')) { $parameters['mountpoint'] = $Mountpoint }
+        if($PSBoundParameters.ContainsKey('Namespace')) { $parameters['namespace'] = $Namespace }
+        if($PSBoundParameters.ContainsKey('Nocow')) { $parameters['nocow'] = $Nocow }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Nowritecache')) { $parameters['nowritecache'] = $Nowritecache }
+        if($PSBoundParameters.ContainsKey('Options')) { $parameters['options'] = $Options }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Portal')) { $parameters['portal'] = $Portal }
+        if($PSBoundParameters.ContainsKey('Preallocation')) { $parameters['preallocation'] = $Preallocation }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Saferemove')) { $parameters['saferemove'] = $Saferemove }
+        if($PSBoundParameters.ContainsKey('SaferemoveThroughput')) { $parameters['saferemove_throughput'] = $SaferemoveThroughput }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Server2')) { $parameters['server2'] = $Server2 }
+        if($PSBoundParameters.ContainsKey('Share')) { $parameters['share'] = $Share }
+        if($PSBoundParameters.ContainsKey('Shared')) { $parameters['shared'] = $Shared }
+        if($PSBoundParameters.ContainsKey('SkipCertVerification')) { $parameters['skip-cert-verification'] = $SkipCertVerification }
+        if($PSBoundParameters.ContainsKey('Smbversion')) { $parameters['smbversion'] = $Smbversion }
+        if($PSBoundParameters.ContainsKey('Sparse')) { $parameters['sparse'] = $Sparse }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Subdir')) { $parameters['subdir'] = $Subdir }
+        if($PSBoundParameters.ContainsKey('TaggedOnly')) { $parameters['tagged_only'] = $TaggedOnly }
+        if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
+        if($PSBoundParameters.ContainsKey('Thinpool')) { $parameters['thinpool'] = $Thinpool }
+        if($PSBoundParameters.ContainsKey('Transport')) { $parameters['transport'] = $Transport }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Vgname')) { $parameters['vgname'] = $Vgname }
+        if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/storage" -Parameters $parameters
     }
@@ -28345,56 +28345,56 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Blocksize']) { $parameters['blocksize'] = $Blocksize }
-        if($PSBoundParameters.ContainsKey['Bwlimit']) { $parameters['bwlimit'] = $Bwlimit }
-        if($PSBoundParameters.ContainsKey['ComstarHg']) { $parameters['comstar_hg'] = $ComstarHg }
-        if($PSBoundParameters.ContainsKey['ComstarTg']) { $parameters['comstar_tg'] = $ComstarTg }
-        if($PSBoundParameters.ContainsKey['Content']) { $parameters['content'] = $Content }
-        if($PSBoundParameters.ContainsKey['ContentDirs']) { $parameters['content-dirs'] = $ContentDirs }
-        if($PSBoundParameters.ContainsKey['CreateBasePath']) { $parameters['create-base-path'] = $CreateBasePath }
-        if($PSBoundParameters.ContainsKey['CreateSubdirs']) { $parameters['create-subdirs'] = $CreateSubdirs }
-        if($PSBoundParameters.ContainsKey['DataPool']) { $parameters['data-pool'] = $DataPool }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Disable']) { $parameters['disable'] = $Disable }
-        if($PSBoundParameters.ContainsKey['Domain']) { $parameters['domain'] = $Domain }
-        if($PSBoundParameters.ContainsKey['EncryptionKey']) { $parameters['encryption-key'] = $EncryptionKey }
-        if($PSBoundParameters.ContainsKey['Fingerprint']) { $parameters['fingerprint'] = $Fingerprint }
-        if($PSBoundParameters.ContainsKey['Format']) { $parameters['format'] = $Format }
-        if($PSBoundParameters.ContainsKey['FsName']) { $parameters['fs-name'] = $FsName }
-        if($PSBoundParameters.ContainsKey['Fuse']) { $parameters['fuse'] = $Fuse }
-        if($PSBoundParameters.ContainsKey['IsMountpoint']) { $parameters['is_mountpoint'] = $IsMountpoint }
-        if($PSBoundParameters.ContainsKey['Keyring']) { $parameters['keyring'] = $Keyring }
-        if($PSBoundParameters.ContainsKey['Krbd']) { $parameters['krbd'] = $Krbd }
-        if($PSBoundParameters.ContainsKey['LioTpg']) { $parameters['lio_tpg'] = $LioTpg }
-        if($PSBoundParameters.ContainsKey['MasterPubkey']) { $parameters['master-pubkey'] = $MasterPubkey }
-        if($PSBoundParameters.ContainsKey['MaxProtectedBackups']) { $parameters['max-protected-backups'] = $MaxProtectedBackups }
-        if($PSBoundParameters.ContainsKey['Maxfiles']) { $parameters['maxfiles'] = $Maxfiles }
-        if($PSBoundParameters.ContainsKey['Mkdir']) { $parameters['mkdir'] = $Mkdir }
-        if($PSBoundParameters.ContainsKey['Monhost']) { $parameters['monhost'] = $Monhost }
-        if($PSBoundParameters.ContainsKey['Mountpoint']) { $parameters['mountpoint'] = $Mountpoint }
-        if($PSBoundParameters.ContainsKey['Namespace']) { $parameters['namespace'] = $Namespace }
-        if($PSBoundParameters.ContainsKey['Nocow']) { $parameters['nocow'] = $Nocow }
-        if($PSBoundParameters.ContainsKey['Nodes']) { $parameters['nodes'] = $Nodes }
-        if($PSBoundParameters.ContainsKey['Nowritecache']) { $parameters['nowritecache'] = $Nowritecache }
-        if($PSBoundParameters.ContainsKey['Options']) { $parameters['options'] = $Options }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Pool']) { $parameters['pool'] = $Pool }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Preallocation']) { $parameters['preallocation'] = $Preallocation }
-        if($PSBoundParameters.ContainsKey['PruneBackups']) { $parameters['prune-backups'] = $PruneBackups }
-        if($PSBoundParameters.ContainsKey['Saferemove']) { $parameters['saferemove'] = $Saferemove }
-        if($PSBoundParameters.ContainsKey['SaferemoveThroughput']) { $parameters['saferemove_throughput'] = $SaferemoveThroughput }
-        if($PSBoundParameters.ContainsKey['Server']) { $parameters['server'] = $Server }
-        if($PSBoundParameters.ContainsKey['Server2']) { $parameters['server2'] = $Server2 }
-        if($PSBoundParameters.ContainsKey['Shared']) { $parameters['shared'] = $Shared }
-        if($PSBoundParameters.ContainsKey['SkipCertVerification']) { $parameters['skip-cert-verification'] = $SkipCertVerification }
-        if($PSBoundParameters.ContainsKey['Smbversion']) { $parameters['smbversion'] = $Smbversion }
-        if($PSBoundParameters.ContainsKey['Sparse']) { $parameters['sparse'] = $Sparse }
-        if($PSBoundParameters.ContainsKey['Subdir']) { $parameters['subdir'] = $Subdir }
-        if($PSBoundParameters.ContainsKey['TaggedOnly']) { $parameters['tagged_only'] = $TaggedOnly }
-        if($PSBoundParameters.ContainsKey['Transport']) { $parameters['transport'] = $Transport }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('Blocksize')) { $parameters['blocksize'] = $Blocksize }
+        if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('ComstarHg')) { $parameters['comstar_hg'] = $ComstarHg }
+        if($PSBoundParameters.ContainsKey('ComstarTg')) { $parameters['comstar_tg'] = $ComstarTg }
+        if($PSBoundParameters.ContainsKey('Content')) { $parameters['content'] = $Content }
+        if($PSBoundParameters.ContainsKey('ContentDirs')) { $parameters['content-dirs'] = $ContentDirs }
+        if($PSBoundParameters.ContainsKey('CreateBasePath')) { $parameters['create-base-path'] = $CreateBasePath }
+        if($PSBoundParameters.ContainsKey('CreateSubdirs')) { $parameters['create-subdirs'] = $CreateSubdirs }
+        if($PSBoundParameters.ContainsKey('DataPool')) { $parameters['data-pool'] = $DataPool }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
+        if($PSBoundParameters.ContainsKey('Domain')) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters.ContainsKey('EncryptionKey')) { $parameters['encryption-key'] = $EncryptionKey }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
+        if($PSBoundParameters.ContainsKey('Format')) { $parameters['format'] = $Format }
+        if($PSBoundParameters.ContainsKey('FsName')) { $parameters['fs-name'] = $FsName }
+        if($PSBoundParameters.ContainsKey('Fuse')) { $parameters['fuse'] = $Fuse }
+        if($PSBoundParameters.ContainsKey('IsMountpoint')) { $parameters['is_mountpoint'] = $IsMountpoint }
+        if($PSBoundParameters.ContainsKey('Keyring')) { $parameters['keyring'] = $Keyring }
+        if($PSBoundParameters.ContainsKey('Krbd')) { $parameters['krbd'] = $Krbd }
+        if($PSBoundParameters.ContainsKey('LioTpg')) { $parameters['lio_tpg'] = $LioTpg }
+        if($PSBoundParameters.ContainsKey('MasterPubkey')) { $parameters['master-pubkey'] = $MasterPubkey }
+        if($PSBoundParameters.ContainsKey('MaxProtectedBackups')) { $parameters['max-protected-backups'] = $MaxProtectedBackups }
+        if($PSBoundParameters.ContainsKey('Maxfiles')) { $parameters['maxfiles'] = $Maxfiles }
+        if($PSBoundParameters.ContainsKey('Mkdir')) { $parameters['mkdir'] = $Mkdir }
+        if($PSBoundParameters.ContainsKey('Monhost')) { $parameters['monhost'] = $Monhost }
+        if($PSBoundParameters.ContainsKey('Mountpoint')) { $parameters['mountpoint'] = $Mountpoint }
+        if($PSBoundParameters.ContainsKey('Namespace')) { $parameters['namespace'] = $Namespace }
+        if($PSBoundParameters.ContainsKey('Nocow')) { $parameters['nocow'] = $Nocow }
+        if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
+        if($PSBoundParameters.ContainsKey('Nowritecache')) { $parameters['nowritecache'] = $Nowritecache }
+        if($PSBoundParameters.ContainsKey('Options')) { $parameters['options'] = $Options }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Pool')) { $parameters['pool'] = $Pool }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Preallocation')) { $parameters['preallocation'] = $Preallocation }
+        if($PSBoundParameters.ContainsKey('PruneBackups')) { $parameters['prune-backups'] = $PruneBackups }
+        if($PSBoundParameters.ContainsKey('Saferemove')) { $parameters['saferemove'] = $Saferemove }
+        if($PSBoundParameters.ContainsKey('SaferemoveThroughput')) { $parameters['saferemove_throughput'] = $SaferemoveThroughput }
+        if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
+        if($PSBoundParameters.ContainsKey('Server2')) { $parameters['server2'] = $Server2 }
+        if($PSBoundParameters.ContainsKey('Shared')) { $parameters['shared'] = $Shared }
+        if($PSBoundParameters.ContainsKey('SkipCertVerification')) { $parameters['skip-cert-verification'] = $SkipCertVerification }
+        if($PSBoundParameters.ContainsKey('Smbversion')) { $parameters['smbversion'] = $Smbversion }
+        if($PSBoundParameters.ContainsKey('Sparse')) { $parameters['sparse'] = $Sparse }
+        if($PSBoundParameters.ContainsKey('Subdir')) { $parameters['subdir'] = $Subdir }
+        if($PSBoundParameters.ContainsKey('TaggedOnly')) { $parameters['tagged_only'] = $TaggedOnly }
+        if($PSBoundParameters.ContainsKey('Transport')) { $parameters['transport'] = $Transport }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/storage/$Storage" -Parameters $parameters
     }
@@ -28451,8 +28451,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Enabled']) { $parameters['enabled'] = $Enabled }
-        if($PSBoundParameters.ContainsKey['Full']) { $parameters['full'] = $Full }
+        if($PSBoundParameters.ContainsKey('Enabled')) { $parameters['enabled'] = $Enabled }
+        if($PSBoundParameters.ContainsKey('Full')) { $parameters['full'] = $Full }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/access/users" -Parameters $parameters
     }
@@ -28527,16 +28527,16 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Email']) { $parameters['email'] = $Email }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['Expire']) { $parameters['expire'] = $Expire }
-        if($PSBoundParameters.ContainsKey['Firstname']) { $parameters['firstname'] = $Firstname }
-        if($PSBoundParameters.ContainsKey['Groups']) { $parameters['groups'] = $Groups }
-        if($PSBoundParameters.ContainsKey['Keys']) { $parameters['keys'] = $Keys }
-        if($PSBoundParameters.ContainsKey['Lastname']) { $parameters['lastname'] = $Lastname }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Userid']) { $parameters['userid'] = $Userid }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Email')) { $parameters['email'] = $Email }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('Expire')) { $parameters['expire'] = $Expire }
+        if($PSBoundParameters.ContainsKey('Firstname')) { $parameters['firstname'] = $Firstname }
+        if($PSBoundParameters.ContainsKey('Groups')) { $parameters['groups'] = $Groups }
+        if($PSBoundParameters.ContainsKey('Keys')) { $parameters['keys'] = $Keys }
+        if($PSBoundParameters.ContainsKey('Lastname')) { $parameters['lastname'] = $Lastname }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Userid')) { $parameters['userid'] = $Userid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/users" -Parameters $parameters
     }
@@ -28665,15 +28665,15 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Append']) { $parameters['append'] = $Append }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Email']) { $parameters['email'] = $Email }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['Expire']) { $parameters['expire'] = $Expire }
-        if($PSBoundParameters.ContainsKey['Firstname']) { $parameters['firstname'] = $Firstname }
-        if($PSBoundParameters.ContainsKey['Groups']) { $parameters['groups'] = $Groups }
-        if($PSBoundParameters.ContainsKey['Keys']) { $parameters['keys'] = $Keys }
-        if($PSBoundParameters.ContainsKey['Lastname']) { $parameters['lastname'] = $Lastname }
+        if($PSBoundParameters.ContainsKey('Append')) { $parameters['append'] = $Append }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Email')) { $parameters['email'] = $Email }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('Expire')) { $parameters['expire'] = $Expire }
+        if($PSBoundParameters.ContainsKey('Firstname')) { $parameters['firstname'] = $Firstname }
+        if($PSBoundParameters.ContainsKey('Groups')) { $parameters['groups'] = $Groups }
+        if($PSBoundParameters.ContainsKey('Keys')) { $parameters['keys'] = $Keys }
+        if($PSBoundParameters.ContainsKey('Lastname')) { $parameters['lastname'] = $Lastname }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid" -Parameters $parameters
     }
@@ -28708,7 +28708,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Multiple']) { $parameters['multiple'] = $Multiple }
+        if($PSBoundParameters.ContainsKey('Multiple')) { $parameters['multiple'] = $Multiple }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/access/users/$Userid/tfa" -Parameters $parameters
     }
@@ -28876,9 +28876,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Expire']) { $parameters['expire'] = $Expire }
-        if($PSBoundParameters.ContainsKey['Privsep']) { $parameters['privsep'] = $Privsep }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Expire')) { $parameters['expire'] = $Expire }
+        if($PSBoundParameters.ContainsKey('Privsep')) { $parameters['privsep'] = $Privsep }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/users/$Userid/token/$Tokenid" -Parameters $parameters
     }
@@ -28928,9 +28928,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Expire']) { $parameters['expire'] = $Expire }
-        if($PSBoundParameters.ContainsKey['Privsep']) { $parameters['privsep'] = $Privsep }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Expire')) { $parameters['expire'] = $Expire }
+        if($PSBoundParameters.ContainsKey('Privsep')) { $parameters['privsep'] = $Privsep }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid/token/$Tokenid" -Parameters $parameters
     }
@@ -28987,8 +28987,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Groupid']) { $parameters['groupid'] = $Groupid }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Groupid')) { $parameters['groupid'] = $Groupid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/groups" -Parameters $parameters
     }
@@ -29077,7 +29077,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/groups/$Groupid" -Parameters $parameters
     }
@@ -29134,8 +29134,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Privs']) { $parameters['privs'] = $Privs }
-        if($PSBoundParameters.ContainsKey['Roleid']) { $parameters['roleid'] = $Roleid }
+        if($PSBoundParameters.ContainsKey('Privs')) { $parameters['privs'] = $Privs }
+        if($PSBoundParameters.ContainsKey('Roleid')) { $parameters['roleid'] = $Roleid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/roles" -Parameters $parameters
     }
@@ -29229,8 +29229,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Append']) { $parameters['append'] = $Append }
-        if($PSBoundParameters.ContainsKey['Privs']) { $parameters['privs'] = $Privs }
+        if($PSBoundParameters.ContainsKey('Append')) { $parameters['append'] = $Append }
+        if($PSBoundParameters.ContainsKey('Privs')) { $parameters['privs'] = $Privs }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/roles/$Roleid" -Parameters $parameters
     }
@@ -29312,13 +29312,13 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Groups']) { $parameters['groups'] = $Groups }
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
-        if($PSBoundParameters.ContainsKey['Propagate']) { $parameters['propagate'] = $Propagate }
-        if($PSBoundParameters.ContainsKey['Roles']) { $parameters['roles'] = $Roles }
-        if($PSBoundParameters.ContainsKey['Tokens']) { $parameters['tokens'] = $Tokens }
-        if($PSBoundParameters.ContainsKey['Users']) { $parameters['users'] = $Users }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Groups')) { $parameters['groups'] = $Groups }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Propagate')) { $parameters['propagate'] = $Propagate }
+        if($PSBoundParameters.ContainsKey('Roles')) { $parameters['roles'] = $Roles }
+        if($PSBoundParameters.ContainsKey('Tokens')) { $parameters['tokens'] = $Tokens }
+        if($PSBoundParameters.ContainsKey('Users')) { $parameters['users'] = $Users }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/acl" -Parameters $parameters
     }
@@ -29558,44 +29558,44 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AcrValues']) { $parameters['acr-values'] = $AcrValues }
-        if($PSBoundParameters.ContainsKey['Autocreate']) { $parameters['autocreate'] = $Autocreate }
-        if($PSBoundParameters.ContainsKey['BaseDn']) { $parameters['base_dn'] = $BaseDn }
-        if($PSBoundParameters.ContainsKey['BindDn']) { $parameters['bind_dn'] = $BindDn }
-        if($PSBoundParameters.ContainsKey['Capath']) { $parameters['capath'] = $Capath }
-        if($PSBoundParameters.ContainsKey['CaseSensitive']) { $parameters['case-sensitive'] = $CaseSensitive }
-        if($PSBoundParameters.ContainsKey['Cert']) { $parameters['cert'] = $Cert }
-        if($PSBoundParameters.ContainsKey['Certkey']) { $parameters['certkey'] = $Certkey }
-        if($PSBoundParameters.ContainsKey['CheckConnection']) { $parameters['check-connection'] = $CheckConnection }
-        if($PSBoundParameters.ContainsKey['ClientId']) { $parameters['client-id'] = $ClientId }
-        if($PSBoundParameters.ContainsKey['ClientKey']) { $parameters['client-key'] = $ClientKey }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Default']) { $parameters['default'] = $Default }
-        if($PSBoundParameters.ContainsKey['Domain']) { $parameters['domain'] = $Domain }
-        if($PSBoundParameters.ContainsKey['Filter']) { $parameters['filter'] = $Filter }
-        if($PSBoundParameters.ContainsKey['GroupClasses']) { $parameters['group_classes'] = $GroupClasses }
-        if($PSBoundParameters.ContainsKey['GroupDn']) { $parameters['group_dn'] = $GroupDn }
-        if($PSBoundParameters.ContainsKey['GroupFilter']) { $parameters['group_filter'] = $GroupFilter }
-        if($PSBoundParameters.ContainsKey['GroupNameAttr']) { $parameters['group_name_attr'] = $GroupNameAttr }
-        if($PSBoundParameters.ContainsKey['IssuerUrl']) { $parameters['issuer-url'] = $IssuerUrl }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Prompt']) { $parameters['prompt'] = $Prompt }
-        if($PSBoundParameters.ContainsKey['Realm']) { $parameters['realm'] = $Realm }
-        if($PSBoundParameters.ContainsKey['Scopes']) { $parameters['scopes'] = $Scopes }
-        if($PSBoundParameters.ContainsKey['Secure']) { $parameters['secure'] = $Secure }
-        if($PSBoundParameters.ContainsKey['Server1']) { $parameters['server1'] = $Server1 }
-        if($PSBoundParameters.ContainsKey['Server2']) { $parameters['server2'] = $Server2 }
-        if($PSBoundParameters.ContainsKey['Sslversion']) { $parameters['sslversion'] = $Sslversion }
-        if($PSBoundParameters.ContainsKey['SyncDefaultsOptions']) { $parameters['sync-defaults-options'] = $SyncDefaultsOptions }
-        if($PSBoundParameters.ContainsKey['SyncAttributes']) { $parameters['sync_attributes'] = $SyncAttributes }
-        if($PSBoundParameters.ContainsKey['Tfa']) { $parameters['tfa'] = $Tfa }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['UserAttr']) { $parameters['user_attr'] = $UserAttr }
-        if($PSBoundParameters.ContainsKey['UserClasses']) { $parameters['user_classes'] = $UserClasses }
-        if($PSBoundParameters.ContainsKey['UsernameClaim']) { $parameters['username-claim'] = $UsernameClaim }
-        if($PSBoundParameters.ContainsKey['Verify']) { $parameters['verify'] = $Verify }
+        if($PSBoundParameters.ContainsKey('AcrValues')) { $parameters['acr-values'] = $AcrValues }
+        if($PSBoundParameters.ContainsKey('Autocreate')) { $parameters['autocreate'] = $Autocreate }
+        if($PSBoundParameters.ContainsKey('BaseDn')) { $parameters['base_dn'] = $BaseDn }
+        if($PSBoundParameters.ContainsKey('BindDn')) { $parameters['bind_dn'] = $BindDn }
+        if($PSBoundParameters.ContainsKey('Capath')) { $parameters['capath'] = $Capath }
+        if($PSBoundParameters.ContainsKey('CaseSensitive')) { $parameters['case-sensitive'] = $CaseSensitive }
+        if($PSBoundParameters.ContainsKey('Cert')) { $parameters['cert'] = $Cert }
+        if($PSBoundParameters.ContainsKey('Certkey')) { $parameters['certkey'] = $Certkey }
+        if($PSBoundParameters.ContainsKey('CheckConnection')) { $parameters['check-connection'] = $CheckConnection }
+        if($PSBoundParameters.ContainsKey('ClientId')) { $parameters['client-id'] = $ClientId }
+        if($PSBoundParameters.ContainsKey('ClientKey')) { $parameters['client-key'] = $ClientKey }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Default')) { $parameters['default'] = $Default }
+        if($PSBoundParameters.ContainsKey('Domain')) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters.ContainsKey('Filter')) { $parameters['filter'] = $Filter }
+        if($PSBoundParameters.ContainsKey('GroupClasses')) { $parameters['group_classes'] = $GroupClasses }
+        if($PSBoundParameters.ContainsKey('GroupDn')) { $parameters['group_dn'] = $GroupDn }
+        if($PSBoundParameters.ContainsKey('GroupFilter')) { $parameters['group_filter'] = $GroupFilter }
+        if($PSBoundParameters.ContainsKey('GroupNameAttr')) { $parameters['group_name_attr'] = $GroupNameAttr }
+        if($PSBoundParameters.ContainsKey('IssuerUrl')) { $parameters['issuer-url'] = $IssuerUrl }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Prompt')) { $parameters['prompt'] = $Prompt }
+        if($PSBoundParameters.ContainsKey('Realm')) { $parameters['realm'] = $Realm }
+        if($PSBoundParameters.ContainsKey('Scopes')) { $parameters['scopes'] = $Scopes }
+        if($PSBoundParameters.ContainsKey('Secure')) { $parameters['secure'] = $Secure }
+        if($PSBoundParameters.ContainsKey('Server1')) { $parameters['server1'] = $Server1 }
+        if($PSBoundParameters.ContainsKey('Server2')) { $parameters['server2'] = $Server2 }
+        if($PSBoundParameters.ContainsKey('Sslversion')) { $parameters['sslversion'] = $Sslversion }
+        if($PSBoundParameters.ContainsKey('SyncDefaultsOptions')) { $parameters['sync-defaults-options'] = $SyncDefaultsOptions }
+        if($PSBoundParameters.ContainsKey('SyncAttributes')) { $parameters['sync_attributes'] = $SyncAttributes }
+        if($PSBoundParameters.ContainsKey('Tfa')) { $parameters['tfa'] = $Tfa }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('UserAttr')) { $parameters['user_attr'] = $UserAttr }
+        if($PSBoundParameters.ContainsKey('UserClasses')) { $parameters['user_classes'] = $UserClasses }
+        if($PSBoundParameters.ContainsKey('UsernameClaim')) { $parameters['username-claim'] = $UsernameClaim }
+        if($PSBoundParameters.ContainsKey('Verify')) { $parameters['verify'] = $Verify }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains" -Parameters $parameters
     }
@@ -29866,43 +29866,43 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AcrValues']) { $parameters['acr-values'] = $AcrValues }
-        if($PSBoundParameters.ContainsKey['Autocreate']) { $parameters['autocreate'] = $Autocreate }
-        if($PSBoundParameters.ContainsKey['BaseDn']) { $parameters['base_dn'] = $BaseDn }
-        if($PSBoundParameters.ContainsKey['BindDn']) { $parameters['bind_dn'] = $BindDn }
-        if($PSBoundParameters.ContainsKey['Capath']) { $parameters['capath'] = $Capath }
-        if($PSBoundParameters.ContainsKey['CaseSensitive']) { $parameters['case-sensitive'] = $CaseSensitive }
-        if($PSBoundParameters.ContainsKey['Cert']) { $parameters['cert'] = $Cert }
-        if($PSBoundParameters.ContainsKey['Certkey']) { $parameters['certkey'] = $Certkey }
-        if($PSBoundParameters.ContainsKey['CheckConnection']) { $parameters['check-connection'] = $CheckConnection }
-        if($PSBoundParameters.ContainsKey['ClientId']) { $parameters['client-id'] = $ClientId }
-        if($PSBoundParameters.ContainsKey['ClientKey']) { $parameters['client-key'] = $ClientKey }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Default']) { $parameters['default'] = $Default }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Digest']) { $parameters['digest'] = $Digest }
-        if($PSBoundParameters.ContainsKey['Domain']) { $parameters['domain'] = $Domain }
-        if($PSBoundParameters.ContainsKey['Filter']) { $parameters['filter'] = $Filter }
-        if($PSBoundParameters.ContainsKey['GroupClasses']) { $parameters['group_classes'] = $GroupClasses }
-        if($PSBoundParameters.ContainsKey['GroupDn']) { $parameters['group_dn'] = $GroupDn }
-        if($PSBoundParameters.ContainsKey['GroupFilter']) { $parameters['group_filter'] = $GroupFilter }
-        if($PSBoundParameters.ContainsKey['GroupNameAttr']) { $parameters['group_name_attr'] = $GroupNameAttr }
-        if($PSBoundParameters.ContainsKey['IssuerUrl']) { $parameters['issuer-url'] = $IssuerUrl }
-        if($PSBoundParameters.ContainsKey['Mode']) { $parameters['mode'] = $Mode }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Port']) { $parameters['port'] = $Port }
-        if($PSBoundParameters.ContainsKey['Prompt']) { $parameters['prompt'] = $Prompt }
-        if($PSBoundParameters.ContainsKey['Scopes']) { $parameters['scopes'] = $Scopes }
-        if($PSBoundParameters.ContainsKey['Secure']) { $parameters['secure'] = $Secure }
-        if($PSBoundParameters.ContainsKey['Server1']) { $parameters['server1'] = $Server1 }
-        if($PSBoundParameters.ContainsKey['Server2']) { $parameters['server2'] = $Server2 }
-        if($PSBoundParameters.ContainsKey['Sslversion']) { $parameters['sslversion'] = $Sslversion }
-        if($PSBoundParameters.ContainsKey['SyncDefaultsOptions']) { $parameters['sync-defaults-options'] = $SyncDefaultsOptions }
-        if($PSBoundParameters.ContainsKey['SyncAttributes']) { $parameters['sync_attributes'] = $SyncAttributes }
-        if($PSBoundParameters.ContainsKey['Tfa']) { $parameters['tfa'] = $Tfa }
-        if($PSBoundParameters.ContainsKey['UserAttr']) { $parameters['user_attr'] = $UserAttr }
-        if($PSBoundParameters.ContainsKey['UserClasses']) { $parameters['user_classes'] = $UserClasses }
-        if($PSBoundParameters.ContainsKey['Verify']) { $parameters['verify'] = $Verify }
+        if($PSBoundParameters.ContainsKey('AcrValues')) { $parameters['acr-values'] = $AcrValues }
+        if($PSBoundParameters.ContainsKey('Autocreate')) { $parameters['autocreate'] = $Autocreate }
+        if($PSBoundParameters.ContainsKey('BaseDn')) { $parameters['base_dn'] = $BaseDn }
+        if($PSBoundParameters.ContainsKey('BindDn')) { $parameters['bind_dn'] = $BindDn }
+        if($PSBoundParameters.ContainsKey('Capath')) { $parameters['capath'] = $Capath }
+        if($PSBoundParameters.ContainsKey('CaseSensitive')) { $parameters['case-sensitive'] = $CaseSensitive }
+        if($PSBoundParameters.ContainsKey('Cert')) { $parameters['cert'] = $Cert }
+        if($PSBoundParameters.ContainsKey('Certkey')) { $parameters['certkey'] = $Certkey }
+        if($PSBoundParameters.ContainsKey('CheckConnection')) { $parameters['check-connection'] = $CheckConnection }
+        if($PSBoundParameters.ContainsKey('ClientId')) { $parameters['client-id'] = $ClientId }
+        if($PSBoundParameters.ContainsKey('ClientKey')) { $parameters['client-key'] = $ClientKey }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Default')) { $parameters['default'] = $Default }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Domain')) { $parameters['domain'] = $Domain }
+        if($PSBoundParameters.ContainsKey('Filter')) { $parameters['filter'] = $Filter }
+        if($PSBoundParameters.ContainsKey('GroupClasses')) { $parameters['group_classes'] = $GroupClasses }
+        if($PSBoundParameters.ContainsKey('GroupDn')) { $parameters['group_dn'] = $GroupDn }
+        if($PSBoundParameters.ContainsKey('GroupFilter')) { $parameters['group_filter'] = $GroupFilter }
+        if($PSBoundParameters.ContainsKey('GroupNameAttr')) { $parameters['group_name_attr'] = $GroupNameAttr }
+        if($PSBoundParameters.ContainsKey('IssuerUrl')) { $parameters['issuer-url'] = $IssuerUrl }
+        if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
+        if($PSBoundParameters.ContainsKey('Prompt')) { $parameters['prompt'] = $Prompt }
+        if($PSBoundParameters.ContainsKey('Scopes')) { $parameters['scopes'] = $Scopes }
+        if($PSBoundParameters.ContainsKey('Secure')) { $parameters['secure'] = $Secure }
+        if($PSBoundParameters.ContainsKey('Server1')) { $parameters['server1'] = $Server1 }
+        if($PSBoundParameters.ContainsKey('Server2')) { $parameters['server2'] = $Server2 }
+        if($PSBoundParameters.ContainsKey('Sslversion')) { $parameters['sslversion'] = $Sslversion }
+        if($PSBoundParameters.ContainsKey('SyncDefaultsOptions')) { $parameters['sync-defaults-options'] = $SyncDefaultsOptions }
+        if($PSBoundParameters.ContainsKey('SyncAttributes')) { $parameters['sync_attributes'] = $SyncAttributes }
+        if($PSBoundParameters.ContainsKey('Tfa')) { $parameters['tfa'] = $Tfa }
+        if($PSBoundParameters.ContainsKey('UserAttr')) { $parameters['user_attr'] = $UserAttr }
+        if($PSBoundParameters.ContainsKey('UserClasses')) { $parameters['user_classes'] = $UserClasses }
+        if($PSBoundParameters.ContainsKey('Verify')) { $parameters['verify'] = $Verify }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/domains/$Realm" -Parameters $parameters
     }
@@ -29963,12 +29963,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['DryRun']) { $parameters['dry-run'] = $DryRun }
-        if($PSBoundParameters.ContainsKey['EnableNew']) { $parameters['enable-new'] = $EnableNew }
-        if($PSBoundParameters.ContainsKey['Full']) { $parameters['full'] = $Full }
-        if($PSBoundParameters.ContainsKey['Purge']) { $parameters['purge'] = $Purge }
-        if($PSBoundParameters.ContainsKey['RemoveVanished']) { $parameters['remove-vanished'] = $RemoveVanished }
-        if($PSBoundParameters.ContainsKey['Scope']) { $parameters['scope'] = $Scope }
+        if($PSBoundParameters.ContainsKey('DryRun')) { $parameters['dry-run'] = $DryRun }
+        if($PSBoundParameters.ContainsKey('EnableNew')) { $parameters['enable-new'] = $EnableNew }
+        if($PSBoundParameters.ContainsKey('Full')) { $parameters['full'] = $Full }
+        if($PSBoundParameters.ContainsKey('Purge')) { $parameters['purge'] = $Purge }
+        if($PSBoundParameters.ContainsKey('RemoveVanished')) { $parameters['remove-vanished'] = $RemoveVanished }
+        if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains/$Realm/sync" -Parameters $parameters
     }
@@ -30025,8 +30025,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Realm']) { $parameters['realm'] = $Realm }
-        if($PSBoundParameters.ContainsKey['RedirectUrl']) { $parameters['redirect-url'] = $RedirectUrl }
+        if($PSBoundParameters.ContainsKey('Realm')) { $parameters['realm'] = $Realm }
+        if($PSBoundParameters.ContainsKey('RedirectUrl')) { $parameters['redirect-url'] = $RedirectUrl }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/openid/auth-url" -Parameters $parameters
     }
@@ -30066,9 +30066,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Code']) { $parameters['code'] = $Code }
-        if($PSBoundParameters.ContainsKey['RedirectUrl']) { $parameters['redirect-url'] = $RedirectUrl }
-        if($PSBoundParameters.ContainsKey['State']) { $parameters['state'] = $State }
+        if($PSBoundParameters.ContainsKey('Code')) { $parameters['code'] = $Code }
+        if($PSBoundParameters.ContainsKey('RedirectUrl')) { $parameters['redirect-url'] = $RedirectUrl }
+        if($PSBoundParameters.ContainsKey('State')) { $parameters['state'] = $State }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/openid/login" -Parameters $parameters
     }
@@ -30178,12 +30178,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Challenge']) { $parameters['challenge'] = $Challenge }
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Totp']) { $parameters['totp'] = $Totp }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
-        if($PSBoundParameters.ContainsKey['Value']) { $parameters['value'] = $Value }
+        if($PSBoundParameters.ContainsKey('Challenge')) { $parameters['challenge'] = $Challenge }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Totp')) { $parameters['totp'] = $Totp }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Value')) { $parameters['value'] = $Value }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/tfa/$Userid" -Parameters $parameters
     }
@@ -30223,7 +30223,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/tfa/$Userid/$Id" -Parameters $parameters
     }
@@ -30305,9 +30305,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Description']) { $parameters['description'] = $Description }
-        if($PSBoundParameters.ContainsKey['Enable']) { $parameters['enable'] = $Enable }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/tfa/$Userid/$Id" -Parameters $parameters
     }
@@ -30394,14 +30394,14 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['NewFormat']) { $parameters['new-format'] = $NewFormat }
-        if($PSBoundParameters.ContainsKey['Otp']) { $parameters['otp'] = $Otp }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
-        if($PSBoundParameters.ContainsKey['Privs']) { $parameters['privs'] = $Privs }
-        if($PSBoundParameters.ContainsKey['Realm']) { $parameters['realm'] = $Realm }
-        if($PSBoundParameters.ContainsKey['TfaChallenge']) { $parameters['tfa-challenge'] = $TfaChallenge }
-        if($PSBoundParameters.ContainsKey['Username']) { $parameters['username'] = $Username }
+        if($PSBoundParameters.ContainsKey('NewFormat')) { $parameters['new-format'] = $NewFormat }
+        if($PSBoundParameters.ContainsKey('Otp')) { $parameters['otp'] = $Otp }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Privs')) { $parameters['privs'] = $Privs }
+        if($PSBoundParameters.ContainsKey('Realm')) { $parameters['realm'] = $Realm }
+        if($PSBoundParameters.ContainsKey('TfaChallenge')) { $parameters['tfa-challenge'] = $TfaChallenge }
+        if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/ticket" -Parameters $parameters
     }
@@ -30441,9 +30441,9 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['ConfirmationPassword']) { $parameters['confirmation-password'] = (ConvertFrom-SecureString -SecureString $ConfirmationPassword -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Password']) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
-        if($PSBoundParameters.ContainsKey['Userid']) { $parameters['userid'] = $Userid }
+        if($PSBoundParameters.ContainsKey('ConfirmationPassword')) { $parameters['confirmation-password'] = (ConvertFrom-SecureString -SecureString $ConfirmationPassword -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
+        if($PSBoundParameters.ContainsKey('Userid')) { $parameters['userid'] = $Userid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/password" -Parameters $parameters
     }
@@ -30478,8 +30478,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Path']) { $parameters['path'] = $Path }
-        if($PSBoundParameters.ContainsKey['Userid']) { $parameters['userid'] = $Userid }
+        if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
+        if($PSBoundParameters.ContainsKey('Userid')) { $parameters['userid'] = $Userid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/access/permissions" -Parameters $parameters
     }
@@ -30509,7 +30509,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Poolid']) { $parameters['poolid'] = $Poolid }
+        if($PSBoundParameters.ContainsKey('Poolid')) { $parameters['poolid'] = $Poolid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/pools" -Parameters $parameters
     }
@@ -30545,8 +30545,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Poolid']) { $parameters['poolid'] = $Poolid }
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Poolid')) { $parameters['poolid'] = $Poolid }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/pools" -Parameters $parameters
     }
@@ -30581,8 +30581,8 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Poolid']) { $parameters['poolid'] = $Poolid }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Poolid')) { $parameters['poolid'] = $Poolid }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/pools" -Parameters $parameters
     }
@@ -30637,12 +30637,12 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AllowMove']) { $parameters['allow-move'] = $AllowMove }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Poolid']) { $parameters['poolid'] = $Poolid }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Vms']) { $parameters['vms'] = $Vms }
+        if($PSBoundParameters.ContainsKey('AllowMove')) { $parameters['allow-move'] = $AllowMove }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Poolid')) { $parameters['poolid'] = $Poolid }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools" -Parameters $parameters
     }
@@ -30705,7 +30705,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['Type']) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/pools/$Poolid" -Parameters $parameters
     }
@@ -30760,11 +30760,11 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey['AllowMove']) { $parameters['allow-move'] = $AllowMove }
-        if($PSBoundParameters.ContainsKey['Comment']) { $parameters['comment'] = $Comment }
-        if($PSBoundParameters.ContainsKey['Delete']) { $parameters['delete'] = $Delete }
-        if($PSBoundParameters.ContainsKey['Storage']) { $parameters['storage'] = $Storage }
-        if($PSBoundParameters.ContainsKey['Vms']) { $parameters['vms'] = $Vms }
+        if($PSBoundParameters.ContainsKey('AllowMove')) { $parameters['allow-move'] = $AllowMove }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
+        if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools/$Poolid" -Parameters $parameters
     }
