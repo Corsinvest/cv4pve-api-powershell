@@ -17,7 +17,9 @@ function Invoke-PveAction {
             Get-ChildItem -Path Corsinvest.ProxmoxVE.Api -Filter "*.psm1" -Recurse | Invoke-ScriptAnalyzer -ExcludeRule PSUseSingularNouns
         }
         elseif ($Action -eq 'build-doc') {
+            Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psd1 -Verbose -Force
             Build-PveDocumentation -OutputFile .\doc\index.html -TemplateFile .\help-out-html.ps1
+            Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psm1 -Verbose -Force
         }
         elseif ($Action -eq 'update-manifest') {
             [System.Collections.ArrayList] $functions = Get-Command -Module Corsinvest.ProxmoxVE.Api -Type Function | Select-Object -ExpandProperty Name
