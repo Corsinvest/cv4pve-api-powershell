@@ -3768,7 +3768,7 @@ PveResponse. Return response.
     }
 }
 
-function Get-PveClusterFirewallGroupsIdx
+function Get-PveClusterFirewallGroupsIdx1
 {
 <#
 .DESCRIPTION
@@ -4478,7 +4478,7 @@ PveResponse. Return response.
     }
 }
 
-function Get-PveClusterFirewallIpsetIdx
+function Get-PveClusterFirewallIpsetIdx1
 {
 <#
 .DESCRIPTION
@@ -11985,7 +11985,7 @@ PveResponse. Return response.
     }
 }
 
-function Get-PveNodesQemuFirewallIpsetIdx
+function Get-PveNodesQemuFirewallIpsetIdx1
 {
 <#
 .DESCRIPTION
@@ -18517,7 +18517,7 @@ PveResponse. Return response.
     }
 }
 
-function Get-PveNodesLxcFirewallIpsetIdx
+function Get-PveNodesLxcFirewallIpsetIdx1
 {
 <#
 .DESCRIPTION
@@ -30229,7 +30229,7 @@ PveResponse. Return response.
     }
 }
 
-function Get-PveAccessTfaIdx
+function Get-PveAccessTfaIdx1
 {
 <#
 .DESCRIPTION
