@@ -1252,7 +1252,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -1317,13 +1317,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Keep
+        [bool]$Keep
     )
 
     process {
@@ -1406,7 +1406,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -1593,7 +1593,7 @@ PveResponse. Return response.
         [string]$Bucket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -1635,7 +1635,7 @@ PveResponse. Return response.
         [string]$Type,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$VerifyCertificate
+        [bool]$VerifyCertificate
     )
 
     process {
@@ -1723,7 +1723,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -1761,7 +1761,7 @@ PveResponse. Return response.
         [string]$Token,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$VerifyCertificate
+        [bool]$VerifyCertificate
     )
 
     process {
@@ -1810,10 +1810,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$History,
+        [bool]$History,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$LocalOnly,
+        [bool]$LocalOnly,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$StartTime
@@ -1976,7 +1976,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FromAddress,
@@ -2106,7 +2106,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FromAddress,
@@ -2188,7 +2188,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -2306,7 +2306,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -2400,7 +2400,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$FromAddress,
@@ -2561,7 +2561,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FromAddress,
@@ -2673,7 +2673,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [array]$Header,
@@ -2810,7 +2810,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [array]$Header,
@@ -2927,10 +2927,10 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$InvertMatch,
+        [bool]$InvertMatch,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [array]$MatchCalendar,
@@ -3070,10 +3070,10 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$InvertMatch,
+        [bool]$InvertMatch,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [array]$MatchCalendar,
@@ -3288,7 +3288,7 @@ PveResponse. Return response.
         [int]$Apiversion,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$LinkN,
@@ -3384,7 +3384,7 @@ PveResponse. Return response.
         [string]$Fingerprint,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Hostname,
@@ -4350,7 +4350,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name
@@ -4425,7 +4425,7 @@ PveResponse. Return response.
         [string]$Name,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nomatch
+        [bool]$Nomatch
     )
 
     process {
@@ -4549,7 +4549,7 @@ PveResponse. Return response.
         [string]$Name,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nomatch
+        [bool]$Nomatch
     )
 
     process {
@@ -4802,7 +4802,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ebtables,
+        [bool]$Ebtables,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Enable,
@@ -5012,7 +5012,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$All,
+        [bool]$All,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
@@ -5031,7 +5031,7 @@ PveResponse. Return response.
         [string]$Dumpdir,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exclude,
@@ -5096,19 +5096,19 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protected,
+        [bool]$Protected,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Quiet,
+        [bool]$Quiet,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Remove,
+        [bool]$Remove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$RepeatMissed,
+        [bool]$RepeatMissed,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Schedule,
@@ -5120,10 +5120,10 @@ PveResponse. Return response.
         [string]$Starttime,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stdexcludes,
+        [bool]$Stdexcludes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stop,
+        [bool]$Stop,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Stopwait,
@@ -5344,7 +5344,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$All,
+        [bool]$All,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
@@ -5366,7 +5366,7 @@ PveResponse. Return response.
         [string]$Dumpdir,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Exclude,
@@ -5431,19 +5431,19 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protected,
+        [bool]$Protected,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Quiet,
+        [bool]$Quiet,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Remove,
+        [bool]$Remove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$RepeatMissed,
+        [bool]$RepeatMissed,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Schedule,
@@ -5455,10 +5455,10 @@ PveResponse. Return response.
         [string]$Starttime,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stdexcludes,
+        [bool]$Stdexcludes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stop,
+        [bool]$Stop,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Stopwait,
@@ -5972,10 +5972,10 @@ PveResponse. Return response.
         [string]$Nodes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nofailback,
+        [bool]$Nofailback,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restricted,
+        [bool]$Restricted,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('group')]
@@ -6095,10 +6095,10 @@ PveResponse. Return response.
         [string]$Nodes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nofailback,
+        [bool]$Nofailback,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restricted
+        [bool]$Restricted
     )
 
     process {
@@ -6241,7 +6241,7 @@ Add ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,artfiles,arvan,aurora,autodns,aws,azion,azure,bookmyname,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnsexit,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,tencent,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
+API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,alviy,anx,artfiles,arvan,aurora,autodns,aws,azion,azure,bookmyname,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnsexit,dnshome,dnsimple,dnsservices,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ionos_cloud,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,limacity,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,omglol,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,technitium,tele3,tencent,timeweb,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,west_cn,world4you,yandex360,yc,zilore,zone,zoneedit,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Disable
@@ -6264,14 +6264,14 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','artfiles','arvan','aurora','autodns','aws','azion','azure','bookmyname','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnsexit','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','tencent','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
+        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','alviy','anx','artfiles','arvan','aurora','autodns','aws','azion','azure','bookmyname','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnsexit','dnshome','dnsimple','dnsservices','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ionos_cloud','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','limacity','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','omglol','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','technitium','tele3','tencent','timeweb','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','west_cn','world4you','yandex360','yc','zilore','zone','zoneedit','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Data,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -6363,7 +6363,7 @@ Update ACME plugin configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Api
-API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,anx,artfiles,arvan,aurora,autodns,aws,azion,azure,bookmyname,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnsexit,dnshome,dnsimple,dnsservices,do,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,tele3,tencent,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,world4you,yandex,yc,zilore,zone,zonomi
+API plugin name Enum: 1984hosting,acmedns,acmeproxy,active24,ad,ali,alviy,anx,artfiles,arvan,aurora,autodns,aws,azion,azure,bookmyname,bunny,cf,clouddns,cloudns,cn,conoha,constellix,cpanel,curanet,cyon,da,ddnss,desec,df,dgon,dnsexit,dnshome,dnsimple,dnsservices,doapi,domeneshop,dp,dpi,dreamhost,duckdns,durabledns,dyn,dynu,dynv6,easydns,edgedns,euserv,exoscale,fornex,freedns,gandi_livedns,gcloud,gcore,gd,geoscaling,googledomains,he,hetzner,hexonet,hostingde,huaweicloud,infoblox,infomaniak,internetbs,inwx,ionos,ionos_cloud,ipv64,ispconfig,jd,joker,kappernet,kas,kinghost,knot,la,leaseweb,lexicon,limacity,linode,linode_v4,loopia,lua,maradns,me,miab,misaka,myapi,mydevil,mydnsjp,mythic_beasts,namecheap,namecom,namesilo,nanelo,nederhost,neodigit,netcup,netlify,nic,njalla,nm,nsd,nsone,nsupdate,nw,oci,omglol,one,online,openprovider,openstack,opnsense,ovh,pdns,pleskxml,pointhq,porkbun,rackcorp,rackspace,rage4,rcode0,regru,scaleway,schlundtech,selectel,selfhost,servercow,simply,technitium,tele3,tencent,timeweb,transip,udr,ultra,unoeuro,variomedia,veesp,vercel,vscale,vultr,websupport,west_cn,world4you,yandex360,yc,zilore,zone,zoneedit,zonomi
 .PARAMETER Data
 DNS plugin data. (base64 encoded)
 .PARAMETER Delete
@@ -6388,7 +6388,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','anx','artfiles','arvan','aurora','autodns','aws','azion','azure','bookmyname','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnsexit','dnshome','dnsimple','dnsservices','do','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','tele3','tencent','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','world4you','yandex','yc','zilore','zone','zonomi')]
+        [ValidateSet('1984hosting','acmedns','acmeproxy','active24','ad','ali','alviy','anx','artfiles','arvan','aurora','autodns','aws','azion','azure','bookmyname','bunny','cf','clouddns','cloudns','cn','conoha','constellix','cpanel','curanet','cyon','da','ddnss','desec','df','dgon','dnsexit','dnshome','dnsimple','dnsservices','doapi','domeneshop','dp','dpi','dreamhost','duckdns','durabledns','dyn','dynu','dynv6','easydns','edgedns','euserv','exoscale','fornex','freedns','gandi_livedns','gcloud','gcore','gd','geoscaling','googledomains','he','hetzner','hexonet','hostingde','huaweicloud','infoblox','infomaniak','internetbs','inwx','ionos','ionos_cloud','ipv64','ispconfig','jd','joker','kappernet','kas','kinghost','knot','la','leaseweb','lexicon','limacity','linode','linode_v4','loopia','lua','maradns','me','miab','misaka','myapi','mydevil','mydnsjp','mythic_beasts','namecheap','namecom','namesilo','nanelo','nederhost','neodigit','netcup','netlify','nic','njalla','nm','nsd','nsone','nsupdate','nw','oci','omglol','one','online','openprovider','openstack','opnsense','ovh','pdns','pleskxml','pointhq','porkbun','rackcorp','rackspace','rage4','rcode0','regru','scaleway','schlundtech','selectel','selfhost','servercow','simply','technitium','tele3','tencent','timeweb','transip','udr','ultra','unoeuro','variomedia','veesp','vercel','vscale','vultr','websupport','west_cn','world4you','yandex360','yc','zilore','zone','zoneedit','zonomi')]
         [string]$Api,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -6401,7 +6401,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -6838,37 +6838,37 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nobackfill,
+        [bool]$Nobackfill,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$NodeepScrub,
+        [bool]$NodeepScrub,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nodown,
+        [bool]$Nodown,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Noin,
+        [bool]$Noin,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Noout,
+        [bool]$Noout,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Norebalance,
+        [bool]$Norebalance,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Norecover,
+        [bool]$Norecover,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Noscrub,
+        [bool]$Noscrub,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Notieragent,
+        [bool]$Notieragent,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Noup,
+        [bool]$Noup,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pause
+        [bool]$Pause
     )
 
     process {
@@ -6942,7 +6942,7 @@ PveResponse. Return response.
         [string]$Flag,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [switch]$Value
+        [bool]$Value
     )
 
     process {
@@ -7069,7 +7069,7 @@ The ID of the job.
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER RemoveVanished
-A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
+A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Schedule
 Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Scope
@@ -7087,10 +7087,10 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$EnableNew,
+        [bool]$EnableNew,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -7141,7 +7141,7 @@ Determines if the job is enabled.
 .PARAMETER Id
 The ID of the job.
 .PARAMETER RemoveVanished
-A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
+A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Schedule
 Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Scope
@@ -7162,10 +7162,10 @@ PveResponse. Return response.
         [string]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$EnableNew,
+        [bool]$EnableNew,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -7259,6 +7259,185 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveClusterMappingDir
+{
+<#
+.DESCRIPTION
+List directory mapping
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER CheckNode
+If given, checks the configurations on the given node for correctness, and adds relevant diagnostics for the directory to the response.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$CheckNode
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('CheckNode')) { $parameters['check-node'] = $CheckNode }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/mapping/dir" -Parameters $parameters
+    }
+}
+
+function New-PveClusterMappingDir
+{
+<#
+.DESCRIPTION
+Create a new directory mapping.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Description
+Description of the directory mapping
+.PARAMETER Id
+The ID of the directory mapping
+.PARAMETER Map
+A list of maps for the cluster nodes.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Description,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Id,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [array]$Map
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/dir" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterMappingDir
+{
+<#
+.DESCRIPTION
+Remove directory mapping.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Id
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Id
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/dir/$Id"
+    }
+}
+
+function Get-PveClusterMappingDirIdx
+{
+<#
+.DESCRIPTION
+Get directory mapping.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Id
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Id
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/mapping/dir/$Id"
+    }
+}
+
+function Set-PveClusterMappingDir
+{
+<#
+.DESCRIPTION
+Update a directory mapping.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Delete
+A list of settings you want to delete.
+.PARAMETER Description
+Description of the directory mapping
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Id
+The ID of the directory mapping
+.PARAMETER Map
+A list of maps for the cluster nodes.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Description,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Id,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Map
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/dir/$Id" -Parameters $parameters
+    }
+}
+
 function Get-PveClusterMappingPci
 {
 <#
@@ -7300,6 +7479,8 @@ Ticket data connection.
 Description of the logical PCI device.
 .PARAMETER Id
 The ID of the logical PCI mapping.
+.PARAMETER LiveMigrationCapable
+Marks the device(s) as being able to be live-migrated (Experimental). This needs hardware and driver support to work.
 .PARAMETER Map
 A list of maps for the cluster nodes.
 .PARAMETER Mdev
@@ -7319,17 +7500,21 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
 
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$LiveMigrationCapable,
+
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [array]$Map,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Mdev
+        [bool]$Mdev
     )
 
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
         if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
+        if($PSBoundParameters.ContainsKey('LiveMigrationCapable')) { $parameters['live-migration-capable'] = $LiveMigrationCapable }
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
         if($PSBoundParameters.ContainsKey('Mdev')) { $parameters['mdev'] = $Mdev }
 
@@ -7406,6 +7591,8 @@ Description of the logical PCI device.
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Id
 The ID of the logical PCI mapping.
+.PARAMETER LiveMigrationCapable
+Marks the device(s) as being able to be live-migrated (Experimental). This needs hardware and driver support to work.
 .PARAMETER Map
 A list of maps for the cluster nodes.
 .PARAMETER Mdev
@@ -7432,10 +7619,13 @@ PveResponse. Return response.
         [string]$Id,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$LiveMigrationCapable,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [array]$Map,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Mdev
+        [bool]$Mdev
     )
 
     process {
@@ -7443,6 +7633,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
         if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('LiveMigrationCapable')) { $parameters['live-migration-capable'] = $LiveMigrationCapable }
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
         if($PSBoundParameters.ContainsKey('Mdev')) { $parameters['mdev'] = $Mdev }
 
@@ -7694,10 +7885,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running
+        [bool]$Running
     )
 
     process {
@@ -7743,7 +7934,7 @@ PveResponse. Return response.
         [string]$Alias,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$IsolatePorts,
+        [bool]$IsolatePorts,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
@@ -7753,7 +7944,7 @@ PveResponse. Return response.
         [string]$Type,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Vlanaware,
+        [bool]$Vlanaware,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet,
@@ -7826,10 +8017,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running,
+        [bool]$Running,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
@@ -7886,13 +8077,13 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$IsolatePorts,
+        [bool]$IsolatePorts,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Tag,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Vlanaware,
+        [bool]$Vlanaware,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet,
@@ -8356,7 +8547,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
@@ -8405,10 +8596,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running,
+        [bool]$Running,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Vnet
@@ -8468,7 +8659,7 @@ PveResponse. Return response.
         [string]$Gateway,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Snat,
+        [bool]$Snat,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
@@ -8552,10 +8743,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running,
+        [bool]$Running,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
@@ -8626,7 +8817,7 @@ PveResponse. Return response.
         [string]$Gateway,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Snat,
+        [bool]$Snat,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Subnet,
@@ -8819,10 +9010,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running,
+        [bool]$Running,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('evpn','faucet','qinq','simple','vlan','vxlan')]
@@ -8906,13 +9097,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AdvertiseSubnets,
+        [bool]$AdvertiseSubnets,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bridge,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$BridgeDisableMacLearning,
+        [bool]$BridgeDisableMacLearning,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Controller,
@@ -8922,7 +9113,7 @@ PveResponse. Return response.
         [string]$Dhcp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableArpNdSuppression,
+        [bool]$DisableArpNdSuppression,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns,
@@ -8937,7 +9128,7 @@ PveResponse. Return response.
         [string]$Exitnodes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$ExitnodesLocalRouting,
+        [bool]$ExitnodesLocalRouting,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ExitnodesPrimary,
@@ -9066,10 +9257,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running,
+        [bool]$Running,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Zone
@@ -9153,13 +9344,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AdvertiseSubnets,
+        [bool]$AdvertiseSubnets,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Bridge,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$BridgeDisableMacLearning,
+        [bool]$BridgeDisableMacLearning,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Controller,
@@ -9175,7 +9366,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableArpNdSuppression,
+        [bool]$DisableArpNdSuppression,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Dns,
@@ -9190,7 +9381,7 @@ PveResponse. Return response.
         [string]$Exitnodes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$ExitnodesLocalRouting,
+        [bool]$ExitnodesLocalRouting,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ExitnodesPrimary,
@@ -9288,10 +9479,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running,
+        [bool]$Running,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('bgp','evpn','faucet','isis')]
@@ -9352,13 +9543,13 @@ PveResponse. Return response.
         [int]$Asn,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$BgpMultipathAsPathRelax,
+        [bool]$BgpMultipathAsPathRelax,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Controller,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ebgp,
+        [bool]$Ebgp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$EbgpMultihop,
@@ -9458,10 +9649,10 @@ PveResponse. Return response.
         [string]$Controller,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Pending,
+        [bool]$Pending,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Running
+        [bool]$Running
     )
 
     process {
@@ -9519,7 +9710,7 @@ PveResponse. Return response.
         [int]$Asn,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$BgpMultipathAsPathRelax,
+        [bool]$BgpMultipathAsPathRelax,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Controller,
@@ -9531,7 +9722,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ebgp,
+        [bool]$Ebgp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$EbgpMultihop,
@@ -9612,6 +9803,8 @@ function New-PveClusterSdnIpams
 Create a new sdn ipam object.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Fingerprint
+Certificate SHA 256 fingerprint.
 .PARAMETER Ipam
 The SDN ipam object identifier.
 .PARAMETER Section
@@ -9630,6 +9823,9 @@ PveResponse. Return response.
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Fingerprint,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ipam,
@@ -9650,6 +9846,7 @@ PveResponse. Return response.
 
     process {
         $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
         if($PSBoundParameters.ContainsKey('Ipam')) { $parameters['ipam'] = $Ipam }
         if($PSBoundParameters.ContainsKey('Section')) { $parameters['section'] = $Section }
         if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
@@ -9725,6 +9922,8 @@ Ticket data connection.
 A list of settings you want to delete.
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Fingerprint
+Certificate SHA 256 fingerprint.
 .PARAMETER Ipam
 The SDN ipam object identifier.
 .PARAMETER Section
@@ -9748,6 +9947,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Fingerprint,
+
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ipam,
 
@@ -9765,6 +9967,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
         if($PSBoundParameters.ContainsKey('Section')) { $parameters['section'] = $Section }
         if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
@@ -9840,6 +10043,8 @@ Create a new sdn dns object.
 Ticket data connection.
 .PARAMETER Dns
 The SDN dns object identifier.
+.PARAMETER Fingerprint
+Certificate SHA 256 fingerprint.
 .PARAMETER Key
 --
 .PARAMETER Reversemaskv6
@@ -9864,6 +10069,9 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Dns,
 
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Fingerprint,
+
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Key,
 
@@ -9887,6 +10095,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Dns')) { $parameters['dns'] = $Dns }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
         if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
         if($PSBoundParameters.ContainsKey('Reversemaskv6')) { $parameters['reversemaskv6'] = $Reversemaskv6 }
         if($PSBoundParameters.ContainsKey('Reversev6mask')) { $parameters['reversev6mask'] = $Reversev6mask }
@@ -9965,6 +10174,8 @@ A list of settings you want to delete.
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dns
 The SDN dns object identifier.
+.PARAMETER Fingerprint
+Certificate SHA 256 fingerprint.
 .PARAMETER Key
 --
 .PARAMETER Reversemaskv6
@@ -9992,6 +10203,9 @@ PveResponse. Return response.
         [string]$Dns,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Fingerprint,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Key,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -10008,6 +10222,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Fingerprint')) { $parameters['fingerprint'] = $Fingerprint }
         if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
         if($PSBoundParameters.ContainsKey('Reversemaskv6')) { $parameters['reversemaskv6'] = $Reversemaskv6 }
         if($PSBoundParameters.ContainsKey('Ttl')) { $parameters['ttl'] = $Ttl }
@@ -10131,6 +10346,8 @@ Set datacenter options.
 Ticket data connection.
 .PARAMETER Bwlimit
 Set I/O bandwidth limit for various operations (in KiB/s).
+.PARAMETER ConsentText
+Consent text that is displayed before logging in.
 .PARAMETER Console
 Select the default Console viewer. You can either use the builtin java applet (VNC; deprecated and maps to html5), an external virt-viewer comtatible application (SPICE), an HTML5 based vnc viewer (noVNC), or an HTML5 based console client (xtermjs). If the selected viewer is not available (e.g. SPICE not activated for the VM), the fallback is noVNC. Enum: applet,vv,html5,xtermjs
 .PARAMETER Crs
@@ -10186,6 +10403,9 @@ PveResponse. Return response.
         [string]$Bwlimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$ConsentText,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('applet','vv','html5','xtermjs')]
         [string]$Console,
 
@@ -10229,7 +10449,7 @@ PveResponse. Return response.
         [string]$Migration,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$MigrationUnsecure,
+        [bool]$MigrationUnsecure,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NextId,
@@ -10256,6 +10476,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Bwlimit')) { $parameters['bwlimit'] = $Bwlimit }
+        if($PSBoundParameters.ContainsKey('ConsentText')) { $parameters['consent-text'] = $ConsentText }
         if($PSBoundParameters.ContainsKey('Console')) { $parameters['console'] = $Console }
         if($PSBoundParameters.ContainsKey('Crs')) { $parameters['crs'] = $Crs }
         if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
@@ -10404,7 +10625,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Full,
+        [bool]$Full,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
@@ -10595,6 +10816,8 @@ Number of hotplugged vcpus.
 Configure the VGA hardware.
 .PARAMETER VirtioN
 Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+.PARAMETER VirtiofsN
+Configuration for sharing a directory between host and guest using Virtio-fs.
 .PARAMETER Vmgenid
 Set VM Generation ID. Use '1' to autogenerate on create or update, pass '0' to disable explicitly.
 .PARAMETER Vmid
@@ -10613,7 +10836,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Acpi,
+        [bool]$Acpi,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Affinity,
@@ -10638,7 +10861,7 @@ PveResponse. Return response.
         [string]$Audio0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autostart,
+        [bool]$Autostart,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Balloon,
@@ -10670,7 +10893,7 @@ PveResponse. Return response.
         [string]$Citype,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ciupgrade,
+        [bool]$Ciupgrade,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ciuser,
@@ -10694,10 +10917,10 @@ PveResponse. Return response.
         [string]$Efidisk0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Freeze,
+        [bool]$Freeze,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
@@ -10725,20 +10948,20 @@ PveResponse. Return response.
         [string]$Ivshmem,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Keephugepages,
+        [bool]$Keephugepages,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Kvm,
+        [bool]$Kvm,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$LiveRestore,
+        [bool]$LiveRestore,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Localtime,
+        [bool]$Localtime,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','clone','create','migrate','rollback','snapshot','snapshot-delete','suspending','suspended')]
@@ -10769,13 +10992,13 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Numa,
+        [bool]$Numa,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NumaN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Onboot,
+        [bool]$Onboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('other','wxp','w2k','w2k3','w2k8','wvista','win7','win8','win10','win11','l24','l26','solaris')]
@@ -10788,10 +11011,10 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protection,
+        [bool]$Protection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Reboot,
+        [bool]$Reboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rng0,
@@ -10831,7 +11054,7 @@ PveResponse. Return response.
         [string]$Sshkeys,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Start,
+        [bool]$Start,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startdate,
@@ -10843,22 +11066,22 @@ PveResponse. Return response.
         [string]$Storage,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tablet,
+        [bool]$Tablet,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tdf,
+        [bool]$Tdf,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Template,
+        [bool]$Template,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tpmstate0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Unique,
+        [bool]$Unique,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
@@ -10874,6 +11097,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$VirtioN,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [hashtable]$VirtiofsN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmgenid,
@@ -10979,6 +11205,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
         if($PSBoundParameters.ContainsKey('UsbN')) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
         if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
+        if($PSBoundParameters.ContainsKey('VirtiofsN')) { $VirtiofsN.keys | ForEach-Object { $parameters['virtiofs' + $_] = $VirtiofsN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu" -Parameters $parameters
     }
@@ -11011,16 +11238,16 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DestroyUnreferencedDisks,
+        [bool]$DestroyUnreferencedDisks,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Purge,
+        [bool]$Purge,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -11821,7 +12048,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -11919,7 +12146,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nomatch,
+        [bool]$Nomatch,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -12073,7 +12300,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nomatch,
+        [bool]$Nomatch,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -12169,16 +12396,16 @@ PveResponse. Return response.
         [string]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Dhcp,
+        [bool]$Dhcp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ipfilter,
+        [bool]$Ipfilter,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
@@ -12189,10 +12416,10 @@ PveResponse. Return response.
         [string]$LogLevelOut,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Macfilter,
+        [bool]$Macfilter,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ndp,
+        [bool]$Ndp,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -12206,7 +12433,7 @@ PveResponse. Return response.
         [string]$PolicyOut,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Radv,
+        [bool]$Radv,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -13070,7 +13297,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Crypted,
+        [bool]$Crypted,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -13251,7 +13478,7 @@ PveResponse. Return response.
         [string]$Content,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Encode,
+        [bool]$Encode,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$File,
@@ -13400,7 +13627,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Current,
+        [bool]$Current,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -13594,6 +13821,8 @@ Number of hotplugged vcpus.
 Configure the VGA hardware.
 .PARAMETER VirtioN
 Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+.PARAMETER VirtiofsN
+Configuration for sharing a directory between host and guest using Virtio-fs.
 .PARAMETER Vmgenid
 Set VM Generation ID. Use '1' to autogenerate on create or update, pass '0' to disable explicitly.
 .PARAMETER Vmid
@@ -13612,7 +13841,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Acpi,
+        [bool]$Acpi,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Affinity,
@@ -13634,7 +13863,7 @@ PveResponse. Return response.
         [string]$Audio0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autostart,
+        [bool]$Autostart,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$BackgroundDelay,
@@ -13666,7 +13895,7 @@ PveResponse. Return response.
         [string]$Citype,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ciupgrade,
+        [bool]$Ciupgrade,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ciuser,
@@ -13696,10 +13925,10 @@ PveResponse. Return response.
         [string]$Efidisk0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Freeze,
+        [bool]$Freeze,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
@@ -13727,17 +13956,17 @@ PveResponse. Return response.
         [string]$Ivshmem,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Keephugepages,
+        [bool]$Keephugepages,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Kvm,
+        [bool]$Kvm,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Localtime,
+        [bool]$Localtime,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','clone','create','migrate','rollback','snapshot','snapshot-delete','suspending','suspended')]
@@ -13768,13 +13997,13 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Numa,
+        [bool]$Numa,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NumaN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Onboot,
+        [bool]$Onboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('other','wxp','w2k','w2k3','w2k8','wvista','win7','win8','win10','win11','l24','l26','solaris')]
@@ -13784,10 +14013,10 @@ PveResponse. Return response.
         [hashtable]$ParallelN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protection,
+        [bool]$Protection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Reboot,
+        [bool]$Reboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Revert,
@@ -13815,7 +14044,7 @@ PveResponse. Return response.
         [int]$Shares,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Smbios1,
@@ -13839,16 +14068,16 @@ PveResponse. Return response.
         [string]$Startup,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tablet,
+        [bool]$Tablet,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tdf,
+        [bool]$Tdf,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Template,
+        [bool]$Template,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tpmstate0,
@@ -13867,6 +14096,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$VirtioN,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [hashtable]$VirtiofsN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmgenid,
@@ -13969,6 +14201,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
         if($PSBoundParameters.ContainsKey('UsbN')) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
         if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
+        if($PSBoundParameters.ContainsKey('VirtiofsN')) { $VirtiofsN.keys | ForEach-Object { $parameters['virtiofs' + $_] = $VirtiofsN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
     }
@@ -14143,6 +14376,8 @@ Number of hotplugged vcpus.
 Configure the VGA hardware.
 .PARAMETER VirtioN
 Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+.PARAMETER VirtiofsN
+Configuration for sharing a directory between host and guest using Virtio-fs.
 .PARAMETER Vmgenid
 Set VM Generation ID. Use '1' to autogenerate on create or update, pass '0' to disable explicitly.
 .PARAMETER Vmid
@@ -14161,7 +14396,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Acpi,
+        [bool]$Acpi,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Affinity,
@@ -14183,7 +14418,7 @@ PveResponse. Return response.
         [string]$Audio0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autostart,
+        [bool]$Autostart,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Balloon,
@@ -14212,7 +14447,7 @@ PveResponse. Return response.
         [string]$Citype,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ciupgrade,
+        [bool]$Ciupgrade,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Ciuser,
@@ -14242,10 +14477,10 @@ PveResponse. Return response.
         [string]$Efidisk0,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Freeze,
+        [bool]$Freeze,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
@@ -14270,17 +14505,17 @@ PveResponse. Return response.
         [string]$Ivshmem,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Keephugepages,
+        [bool]$Keephugepages,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('de','de-ch','da','en-gb','en-us','es','fi','fr','fr-be','fr-ca','fr-ch','hu','is','it','ja','lt','mk','nl','no','pl','pt','pt-br','sv','sl','tr')]
         [string]$Keyboard,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Kvm,
+        [bool]$Kvm,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Localtime,
+        [bool]$Localtime,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','clone','create','migrate','rollback','snapshot','snapshot-delete','suspending','suspended')]
@@ -14311,13 +14546,13 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Numa,
+        [bool]$Numa,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$NumaN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Onboot,
+        [bool]$Onboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('other','wxp','w2k','w2k3','w2k8','wvista','win7','win8','win10','win11','l24','l26','solaris')]
@@ -14327,10 +14562,10 @@ PveResponse. Return response.
         [hashtable]$ParallelN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protection,
+        [bool]$Protection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Reboot,
+        [bool]$Reboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Revert,
@@ -14358,7 +14593,7 @@ PveResponse. Return response.
         [int]$Shares,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Smbios1,
@@ -14382,16 +14617,16 @@ PveResponse. Return response.
         [string]$Startup,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tablet,
+        [bool]$Tablet,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tags,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tdf,
+        [bool]$Tdf,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Template,
+        [bool]$Template,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Tpmstate0,
@@ -14410,6 +14645,9 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$VirtioN,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [hashtable]$VirtiofsN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Vmgenid,
@@ -14510,6 +14748,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
         if($PSBoundParameters.ContainsKey('UsbN')) { $UsbN.keys | ForEach-Object { $parameters['usb' + $_] = $UsbN[$_] } }
         if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
+        if($PSBoundParameters.ContainsKey('VirtiofsN')) { $VirtiofsN.keys | ForEach-Object { $parameters['virtiofs' + $_] = $VirtiofsN[$_] } }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
     }
@@ -14677,7 +14916,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Idlist,
@@ -14723,7 +14962,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$GeneratePassword,
+        [bool]$GeneratePassword,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -14732,7 +14971,7 @@ PveResponse. Return response.
         [int]$Vmid,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Websocket
+        [bool]$Websocket
     )
 
     process {
@@ -14993,7 +15232,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Stateuri,
@@ -15055,7 +15294,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Keepactive,
+        [bool]$Keepactive,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Migratedfrom,
@@ -15064,10 +15303,10 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$OverruleShutdown,
+        [bool]$OverruleShutdown,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
@@ -15114,7 +15353,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -15157,16 +15396,16 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Forcestop,
+        [bool]$Forcestop,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Keepactive,
+        [bool]$Keepactive,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout,
@@ -15256,13 +15495,13 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Statestorage,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Todisk,
+        [bool]$Todisk,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -15303,13 +15542,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nocheck,
+        [bool]$Nocheck,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -15355,7 +15594,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -15468,7 +15707,7 @@ PveResponse. Return response.
         [string]$Format,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Full,
+        [bool]$Full,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -15554,7 +15793,7 @@ PveResponse. Return response.
         [int]$Bwlimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
@@ -15683,7 +15922,7 @@ PveResponse. Return response.
         [int]$Bwlimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$MigrationNetwork,
@@ -15696,7 +15935,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Online,
+        [bool]$Online,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
@@ -15708,7 +15947,7 @@ PveResponse. Return response.
         [int]$Vmid,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$WithLocalDisks
+        [bool]$WithLocalDisks
     )
 
     process {
@@ -15764,13 +16003,13 @@ PveResponse. Return response.
         [int]$Bwlimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Online,
+        [bool]$Online,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetBridge,
@@ -15884,7 +16123,7 @@ PveResponse. Return response.
         [string]$Size,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -15972,7 +16211,7 @@ PveResponse. Return response.
         [int]$Vmid,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Vmstate
+        [bool]$Vmstate
     )
 
     process {
@@ -16010,7 +16249,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -16180,7 +16419,7 @@ PveResponse. Return response.
         [string]$Snapname,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Start,
+        [bool]$Start,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -16468,7 +16707,7 @@ PveResponse. Return response.
         [string]$Cmode,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Console,
+        [bool]$Console,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
@@ -16480,7 +16719,7 @@ PveResponse. Return response.
         [int]$Cpuunits,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Debug_,
+        [bool]$Debug_,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Description,
@@ -16492,7 +16731,7 @@ PveResponse. Return response.
         [string]$Features,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hookscript,
@@ -16501,7 +16740,7 @@ PveResponse. Return response.
         [string]$Hostname,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$IgnoreUnpackErrors,
+        [bool]$IgnoreUnpackErrors,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('backup','create','destroyed','disk','fstrim','migrate','mounted','rollback','snapshot','snapshot-delete')]
@@ -16523,7 +16762,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Onboot,
+        [bool]$Onboot,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Ostemplate,
@@ -16539,10 +16778,10 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protection,
+        [bool]$Protection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restore,
+        [bool]$Restore,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Rootfs,
@@ -16554,7 +16793,7 @@ PveResponse. Return response.
         [string]$SshPublicKeys,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Start,
+        [bool]$Start,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Startup,
@@ -16569,7 +16808,7 @@ PveResponse. Return response.
         [string]$Tags,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Template,
+        [bool]$Template,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Timezone,
@@ -16578,10 +16817,10 @@ PveResponse. Return response.
         [int]$Tty,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Unique,
+        [bool]$Unique,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Unprivileged,
+        [bool]$Unprivileged,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
@@ -16667,16 +16906,16 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DestroyUnreferencedDisks,
+        [bool]$DestroyUnreferencedDisks,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Purge,
+        [bool]$Purge,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -16749,7 +16988,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Current,
+        [bool]$Current,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -16865,7 +17104,7 @@ PveResponse. Return response.
         [string]$Cmode,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Console,
+        [bool]$Console,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Cores,
@@ -16877,7 +17116,7 @@ PveResponse. Return response.
         [int]$Cpuunits,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Debug_,
+        [bool]$Debug_,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
@@ -16920,14 +17159,14 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Onboot,
+        [bool]$Onboot,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('debian','devuan','ubuntu','centos','fedora','opensuse','archlinux','alpine','gentoo','nixos','unmanaged')]
         [string]$Ostype,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protection,
+        [bool]$Protection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Revert,
@@ -16948,7 +17187,7 @@ PveResponse. Return response.
         [string]$Tags,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Template,
+        [bool]$Template,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Timezone,
@@ -16957,7 +17196,7 @@ PveResponse. Return response.
         [int]$Tty,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Unprivileged,
+        [bool]$Unprivileged,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [hashtable]$UnusedN,
@@ -17096,13 +17335,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Debug_,
+        [bool]$Debug_,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -17145,10 +17384,10 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$OverruleShutdown,
+        [bool]$OverruleShutdown,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skiplock,
+        [bool]$Skiplock,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -17188,7 +17427,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Forcestop,
+        [bool]$Forcestop,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -17416,7 +17655,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -17504,7 +17743,7 @@ PveResponse. Return response.
         [string]$Snapname,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Start,
+        [bool]$Start,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -18353,7 +18592,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -18451,7 +18690,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nomatch,
+        [bool]$Nomatch,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -18605,7 +18844,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nomatch,
+        [bool]$Nomatch,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -18701,16 +18940,16 @@ PveResponse. Return response.
         [string]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Dhcp,
+        [bool]$Dhcp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ipfilter,
+        [bool]$Ipfilter,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
@@ -18721,10 +18960,10 @@ PveResponse. Return response.
         [string]$LogLevelOut,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Macfilter,
+        [bool]$Macfilter,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ndp,
+        [bool]$Ndp,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -18738,7 +18977,7 @@ PveResponse. Return response.
         [string]$PolicyOut,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Radv,
+        [bool]$Radv,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Vmid
@@ -19000,7 +19239,7 @@ PveResponse. Return response.
         [int]$Vmid,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Websocket,
+        [bool]$Websocket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Width
@@ -19176,16 +19415,16 @@ PveResponse. Return response.
         [float]$Bwlimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Online,
+        [bool]$Online,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restart,
+        [bool]$Restart,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$TargetBridge,
@@ -19261,10 +19500,10 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Online,
+        [bool]$Online,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restart,
+        [bool]$Restart,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Target,
@@ -19416,7 +19655,7 @@ PveResponse. Return response.
         [string]$Description,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Full,
+        [bool]$Full,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Hostname,
@@ -19552,7 +19791,7 @@ PveResponse. Return response.
         [float]$Bwlimit,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Digest,
@@ -19969,7 +20208,7 @@ PveResponse. Return response.
         [string]$Dev,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Encrypted,
+        [bool]$Encrypted,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -20022,7 +20261,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Cleanup,
+        [bool]$Cleanup,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -20231,7 +20470,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Deep,
+        [bool]$Deep,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -20330,7 +20569,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Hotstandby,
+        [bool]$Hotstandby,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -20589,7 +20828,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AddStorage,
+        [bool]$AddStorage,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -20680,7 +20919,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AddStorages,
+        [bool]$AddStorages,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('rbd','cephfs','rgw')]
@@ -20767,7 +21006,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -20776,10 +21015,10 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$RemoveEcprofile,
+        [bool]$RemoveEcprofile,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$RemoveStorages
+        [bool]$RemoveStorages
     )
 
     process {
@@ -20943,7 +21182,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Verbose_
+        [bool]$Verbose_
     )
 
     process {
@@ -20988,7 +21227,7 @@ PveResponse. Return response.
         [string]$ClusterNetwork,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DisableCephx,
+        [bool]$DisableCephx,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$MinSize,
@@ -21384,7 +21623,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$All,
+        [bool]$All,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Bwlimit,
@@ -21459,28 +21698,28 @@ PveResponse. Return response.
         [string]$Pool,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protected,
+        [bool]$Protected,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PruneBackups,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Quiet,
+        [bool]$Quiet,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Remove,
+        [bool]$Remove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Script,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stdexcludes,
+        [bool]$Stdexcludes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stdout,
+        [bool]$Stdout,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Stop,
+        [bool]$Stop,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Stopwait,
@@ -21910,7 +22149,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
@@ -21996,7 +22235,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Type
-Only list specific interface types. Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,any_bridge,any_local_bridge
+Only list specific interface types. Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,any_bridge,any_local_bridge
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -22010,7 +22249,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','any_bridge','any_local_bridge')]
+        [ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','vnet','any_bridge','any_local_bridge')]
         [string]$Type
     )
 
@@ -22082,7 +22321,7 @@ Specify a VLan tag (used by OVSPort, OVSIntPort, OVSBond)
 .PARAMETER Slaves
 Specify the interfaces used by the bonding device.
 .PARAMETER Type
-Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,unknown
+Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,unknown
 .PARAMETER VlanId
 vlan-id for a custom named vlan interface (ifupdown2 only).
 .PARAMETER VlanRawDevice
@@ -22103,7 +22342,7 @@ PveResponse. Return response.
         [string]$Address6,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autostart,
+        [bool]$Autostart,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BondPrimary,
@@ -22123,7 +22362,7 @@ PveResponse. Return response.
         [string]$BridgeVids,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$BridgeVlanAware,
+        [bool]$BridgeVlanAware,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cidr,
@@ -22177,7 +22416,7 @@ PveResponse. Return response.
         [string]$Slaves,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','unknown')]
+        [ValidateNotNullOrEmpty()][ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','vnet','unknown')]
         [string]$Type,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -22375,7 +22614,7 @@ Specify a VLan tag (used by OVSPort, OVSIntPort, OVSBond)
 .PARAMETER Slaves
 Specify the interfaces used by the bonding device.
 .PARAMETER Type
-Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,unknown
+Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,unknown
 .PARAMETER VlanId
 vlan-id for a custom named vlan interface (ifupdown2 only).
 .PARAMETER VlanRawDevice
@@ -22396,7 +22635,7 @@ PveResponse. Return response.
         [string]$Address6,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autostart,
+        [bool]$Autostart,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BondPrimary,
@@ -22416,7 +22655,7 @@ PveResponse. Return response.
         [string]$BridgeVids,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$BridgeVlanAware,
+        [bool]$BridgeVlanAware,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cidr,
@@ -22473,7 +22712,7 @@ PveResponse. Return response.
         [string]$Slaves,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','unknown')]
+        [ValidateNotNullOrEmpty()][ValidateSet('bridge','bond','eth','alias','vlan','OVSBridge','OVSBond','OVSPort','OVSIntPort','vnet','unknown')]
         [string]$Type,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -22557,7 +22796,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Errors,
+        [bool]$Errors,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
@@ -22699,7 +22938,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Download,
+        [bool]$Download,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Limit,
@@ -23145,7 +23384,7 @@ PveResponse. Return response.
         [string]$PciClassBlacklist,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Verbose_
+        [bool]$Verbose_
     )
 
     process {
@@ -23394,10 +23633,10 @@ PveResponse. Return response.
         [string]$Content,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Format,
+        [bool]$Format,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -23615,7 +23854,7 @@ Ticket data connection.
 .PARAMETER Filename
 The name of the file to create.
 .PARAMETER Format
--- Enum: raw,qcow2,subvol
+Format of the image. Enum: raw,qcow2,subvol,vmdk
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Size
@@ -23637,7 +23876,7 @@ PveResponse. Return response.
         [string]$Filename,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('raw','qcow2','subvol')]
+        [ValidateSet('raw','qcow2','subvol','vmdk')]
         [string]$Format,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
@@ -23830,7 +24069,7 @@ PveResponse. Return response.
         [string]$Notes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Protected,
+        [bool]$Protected,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Storage,
@@ -23986,7 +24225,7 @@ function New-PveNodesStorageUpload
 {
 <#
 .DESCRIPTION
-Upload templates, ISO images and OVAs.
+Upload templates, ISO images, OVAs and VM images.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Checksum
@@ -24052,7 +24291,7 @@ function New-PveNodesStorageDownloadUrl
 {
 <#
 .DESCRIPTION
-Download templates, ISO images and OVAs by using an URL.
+Download templates, ISO images, OVAs and VM images by using an URL.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Checksum
@@ -24109,7 +24348,7 @@ PveResponse. Return response.
         [string]$Url,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$VerifyCertificates
+        [bool]$VerifyCertificates
     )
 
     process {
@@ -24245,7 +24484,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AddStorage,
+        [bool]$AddStorage,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Device,
@@ -24292,10 +24531,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupConfig,
+        [bool]$CleanupConfig,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupDisks,
+        [bool]$CleanupDisks,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -24365,7 +24604,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AddStorage,
+        [bool]$AddStorage,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Device,
@@ -24414,10 +24653,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupConfig,
+        [bool]$CleanupConfig,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupDisks,
+        [bool]$CleanupDisks,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -24493,7 +24732,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AddStorage,
+        [bool]$AddStorage,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Device,
@@ -24545,10 +24784,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupConfig,
+        [bool]$CleanupConfig,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupDisks,
+        [bool]$CleanupDisks,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -24626,7 +24865,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AddStorage,
+        [bool]$AddStorage,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Ashift,
@@ -24691,10 +24930,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupConfig,
+        [bool]$CleanupConfig,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CleanupDisks,
+        [bool]$CleanupDisks,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Name,
@@ -24769,13 +25008,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$IncludePartitions,
+        [bool]$IncludePartitions,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Skipsmart,
+        [bool]$Skipsmart,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('unused','journal_disks')]
@@ -24818,7 +25057,7 @@ PveResponse. Return response.
         [string]$Disk,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Healthonly,
+        [bool]$Healthonly,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
@@ -24989,10 +25228,10 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Notify,
+        [bool]$Notify,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Quiet
+        [bool]$Quiet
     )
 
     process {
@@ -25102,7 +25341,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [int]$Index,
@@ -25666,7 +25905,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('emerg','alert','crit','err','warning','notice','info','debug','nolog')]
@@ -25681,13 +25920,13 @@ PveResponse. Return response.
         [string]$LogLevelOut,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$LogNfConntrack,
+        [bool]$LogNfConntrack,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Ndp,
+        [bool]$Ndp,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$NfConntrackAllowInvalid,
+        [bool]$NfConntrackAllowInvalid,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$NfConntrackHelpers,
@@ -25702,16 +25941,16 @@ PveResponse. Return response.
         [int]$NfConntrackTcpTimeoutSynRecv,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nftables,
+        [bool]$Nftables,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nosmurfs,
+        [bool]$Nosmurfs,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$ProtectionSynflood,
+        [bool]$ProtectionSynflood,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$ProtectionSynfloodBurst,
@@ -25728,7 +25967,7 @@ PveResponse. Return response.
         [string]$TcpFlagsLogLevel,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Tcpflags
+        [bool]$Tcpflags
     )
 
     process {
@@ -26091,7 +26330,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
@@ -26126,7 +26365,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node
@@ -26191,7 +26430,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restart
+        [bool]$Restart
     )
 
     process {
@@ -26232,7 +26471,7 @@ PveResponse. Return response.
         [string]$Certificates,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Key,
@@ -26241,7 +26480,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Restart
+        [bool]$Restart
     )
 
     process {
@@ -26265,7 +26504,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Property
-Return only a specific property from the node configuration. Enum: acme,acmedomain0,acmedomain1,acmedomain2,acmedomain3,acmedomain4,acmedomain5,description,startall-onboot-delay,wakeonlan
+Return only a specific property from the node configuration. Enum: acme,acmedomain0,acmedomain1,acmedomain2,acmedomain3,acmedomain4,acmedomain5,ballooning-target,description,startall-onboot-delay,wakeonlan
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -26279,7 +26518,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('acme','acmedomain0','acmedomain1','acmedomain2','acmedomain3','acmedomain4','acmedomain5','description','startall-onboot-delay','wakeonlan')]
+        [ValidateSet('acme','acmedomain0','acmedomain1','acmedomain2','acmedomain3','acmedomain4','acmedomain5','ballooning-target','description','startall-onboot-delay','wakeonlan')]
         [string]$Property
     )
 
@@ -26302,6 +26541,8 @@ Ticket data connection.
 Node specific ACME settings.
 .PARAMETER AcmedomainN
 ACME domain and validation plugin
+.PARAMETER BallooningTarget
+RAM usage target for ballooning (in percent of total memory)
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Description
@@ -26330,6 +26571,9 @@ PveResponse. Return response.
         [hashtable]$AcmedomainN,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$BallooningTarget,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -26351,6 +26595,7 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Acme')) { $parameters['acme'] = $Acme }
+        if($PSBoundParameters.ContainsKey('BallooningTarget')) { $parameters['ballooning-target'] = $BallooningTarget }
         if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
         if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
@@ -26878,7 +27123,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login (requires 'root@pam') Enum: upgrade,ceph_install,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,upgrade,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Height
@@ -26899,7 +27144,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('ceph_install','upgrade','login')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -26912,7 +27157,7 @@ PveResponse. Return response.
         [string]$Node,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Websocket,
+        [bool]$Websocket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Width
@@ -26938,7 +27183,7 @@ Creates a VNC Shell proxy.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login (requires 'root@pam') Enum: upgrade,ceph_install,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,upgrade,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -26953,7 +27198,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('ceph_install','upgrade','login')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -27021,7 +27266,7 @@ Creates a SPICE shell.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Cmd
-Run specific command or default to login (requires 'root@pam') Enum: upgrade,ceph_install,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,upgrade,login
 .PARAMETER CmdOpts
 Add parameters to a command. Encoded as null terminated strings.
 .PARAMETER Node
@@ -27038,7 +27283,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [ValidateSet('upgrade','ceph_install','login')]
+        [ValidateSet('ceph_install','upgrade','login')]
         [string]$Cmd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -27300,7 +27545,7 @@ PveResponse. Return response.
         [string]$Url,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$VerifyCertificates
+        [bool]$VerifyCertificates
     )
 
     process {
@@ -27362,7 +27607,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Force,
+        [bool]$Force,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -27405,7 +27650,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$ForceStop,
+        [bool]$ForceStop,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
@@ -27501,7 +27746,7 @@ PveResponse. Return response.
         [string]$Vms,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$WithLocalDisks
+        [bool]$WithLocalDisks
     )
 
     process {
@@ -27656,7 +27901,7 @@ NFS export path.
 .PARAMETER Fingerprint
 Certificate SHA 256 fingerprint.
 .PARAMETER Format
-Default image format.
+Default image format. Enum: raw,qcow2,subvol,vmdk
 .PARAMETER FsName
 The Ceph filesystem name.
 .PARAMETER Fuse
@@ -27779,10 +28024,10 @@ PveResponse. Return response.
         [string]$ContentDirs,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CreateBasePath,
+        [bool]$CreateBasePath,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CreateSubdirs,
+        [bool]$CreateSubdirs,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$DataPool,
@@ -27791,7 +28036,7 @@ PveResponse. Return response.
         [string]$Datastore,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
@@ -27806,13 +28051,14 @@ PveResponse. Return response.
         [string]$Fingerprint,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('raw','qcow2','subvol','vmdk')]
         [string]$Format,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FsName,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Fuse,
+        [bool]$Fuse,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IsMountpoint,
@@ -27824,7 +28070,7 @@ PveResponse. Return response.
         [string]$Keyring,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Krbd,
+        [bool]$Krbd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$LioTpg,
@@ -27839,7 +28085,7 @@ PveResponse. Return response.
         [int]$Maxfiles,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Mkdir,
+        [bool]$Mkdir,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Monhost,
@@ -27851,13 +28097,13 @@ PveResponse. Return response.
         [string]$Namespace,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nocow,
+        [bool]$Nocow,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nowritecache,
+        [bool]$Nowritecache,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Options,
@@ -27885,7 +28131,7 @@ PveResponse. Return response.
         [string]$PruneBackups,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Saferemove,
+        [bool]$Saferemove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SaferemoveThroughput,
@@ -27900,17 +28146,17 @@ PveResponse. Return response.
         [string]$Share,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Shared,
+        [bool]$Shared,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$SkipCertVerification,
+        [bool]$SkipCertVerification,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('default','2.0','2.1','3','3.0','3.11')]
         [string]$Smbversion,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Sparse,
+        [bool]$Sparse,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
@@ -27919,7 +28165,7 @@ PveResponse. Return response.
         [string]$Subdir,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$TaggedOnly,
+        [bool]$TaggedOnly,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Target,
@@ -28106,7 +28352,7 @@ Encryption key. Use 'autogen' to generate one automatically without passphrase.
 .PARAMETER Fingerprint
 Certificate SHA 256 fingerprint.
 .PARAMETER Format
-Default image format.
+Default image format. Enum: raw,qcow2,subvol,vmdk
 .PARAMETER FsName
 The Ceph filesystem name.
 .PARAMETER Fuse
@@ -28205,10 +28451,10 @@ PveResponse. Return response.
         [string]$ContentDirs,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CreateBasePath,
+        [bool]$CreateBasePath,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CreateSubdirs,
+        [bool]$CreateSubdirs,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$DataPool,
@@ -28220,7 +28466,7 @@ PveResponse. Return response.
         [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Disable,
+        [bool]$Disable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
@@ -28232,13 +28478,14 @@ PveResponse. Return response.
         [string]$Fingerprint,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('raw','qcow2','subvol','vmdk')]
         [string]$Format,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$FsName,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Fuse,
+        [bool]$Fuse,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IsMountpoint,
@@ -28247,7 +28494,7 @@ PveResponse. Return response.
         [string]$Keyring,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Krbd,
+        [bool]$Krbd,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$LioTpg,
@@ -28262,7 +28509,7 @@ PveResponse. Return response.
         [int]$Maxfiles,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Mkdir,
+        [bool]$Mkdir,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Monhost,
@@ -28274,13 +28521,13 @@ PveResponse. Return response.
         [string]$Namespace,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nocow,
+        [bool]$Nocow,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Nodes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Nowritecache,
+        [bool]$Nowritecache,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Options,
@@ -28302,7 +28549,7 @@ PveResponse. Return response.
         [string]$PruneBackups,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Saferemove,
+        [bool]$Saferemove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$SaferemoveThroughput,
@@ -28314,17 +28561,17 @@ PveResponse. Return response.
         [string]$Server2,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Shared,
+        [bool]$Shared,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$SkipCertVerification,
+        [bool]$SkipCertVerification,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('default','2.0','2.1','3','3.0','3.11')]
         [string]$Smbversion,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Sparse,
+        [bool]$Sparse,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Storage,
@@ -28333,7 +28580,7 @@ PveResponse. Return response.
         [string]$Subdir,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$TaggedOnly,
+        [bool]$TaggedOnly,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('tcp','rdma','unix')]
@@ -28443,10 +28690,10 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enabled,
+        [bool]$Enabled,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Full
+        [bool]$Full
     )
 
     process {
@@ -28501,7 +28748,7 @@ PveResponse. Return response.
         [string]$Email,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Expire,
@@ -28633,7 +28880,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Append,
+        [bool]$Append,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
@@ -28642,7 +28889,7 @@ PveResponse. Return response.
         [string]$Email,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Expire,
@@ -28700,7 +28947,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Multiple,
+        [bool]$Multiple,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Userid
@@ -28865,7 +29112,7 @@ PveResponse. Return response.
         [int]$Expire,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Privsep,
+        [bool]$Privsep,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Tokenid,
@@ -28917,7 +29164,7 @@ PveResponse. Return response.
         [int]$Expire,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Privsep,
+        [bool]$Privsep,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Tokenid,
@@ -29218,7 +29465,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Append,
+        [bool]$Append,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Privs,
@@ -29289,7 +29536,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Groups,
@@ -29298,7 +29545,7 @@ PveResponse. Return response.
         [string]$Path,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Propagate,
+        [bool]$Propagate,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Roles,
@@ -29391,6 +29638,12 @@ LDAP base domain name for group sync. If not set, the base_dn will be used.
 LDAP filter for group sync.
 .PARAMETER GroupNameAttr
 LDAP attribute representing a groups name. If not set or found, the first value of the DN will be used as name.
+.PARAMETER GroupsAutocreate
+Automatically create groups if they do not exist.
+.PARAMETER GroupsClaim
+OpenID claim used to retrieve groups with.
+.PARAMETER GroupsOverwrite
+All groups will be overwritten for the user on login.
 .PARAMETER IssuerUrl
 OpenID Issuer Url
 .PARAMETER Mode
@@ -29401,6 +29654,8 @@ LDAP bind password. Will be stored in '/etc/pve/priv/realm/<REALM>.pw'.
 Server port.
 .PARAMETER Prompt
 Specifies whether the Authorization Server prompts the End-User for reauthentication and consent.
+.PARAMETER QueryUserinfo
+Enables querying the userinfo endpoint for claims values.
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER Scopes
@@ -29442,7 +29697,7 @@ PveResponse. Return response.
         [string]$AcrValues,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autocreate,
+        [bool]$Autocreate,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BaseDn,
@@ -29454,7 +29709,7 @@ PveResponse. Return response.
         [string]$Capath,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CaseSensitive,
+        [bool]$CaseSensitive,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cert,
@@ -29463,7 +29718,7 @@ PveResponse. Return response.
         [string]$Certkey,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CheckConnection,
+        [bool]$CheckConnection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientId,
@@ -29475,7 +29730,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Default,
+        [bool]$Default,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Domain,
@@ -29496,6 +29751,15 @@ PveResponse. Return response.
         [string]$GroupNameAttr,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$GroupsAutocreate,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$GroupsClaim,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$GroupsOverwrite,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IssuerUrl,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -29511,6 +29775,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Prompt,
 
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$QueryUserinfo,
+
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
@@ -29518,7 +29785,7 @@ PveResponse. Return response.
         [string]$Scopes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Secure,
+        [bool]$Secure,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server1,
@@ -29553,7 +29820,7 @@ PveResponse. Return response.
         [string]$UsernameClaim,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Verify
+        [bool]$Verify
     )
 
     process {
@@ -29577,11 +29844,15 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('GroupDn')) { $parameters['group_dn'] = $GroupDn }
         if($PSBoundParameters.ContainsKey('GroupFilter')) { $parameters['group_filter'] = $GroupFilter }
         if($PSBoundParameters.ContainsKey('GroupNameAttr')) { $parameters['group_name_attr'] = $GroupNameAttr }
+        if($PSBoundParameters.ContainsKey('GroupsAutocreate')) { $parameters['groups-autocreate'] = $GroupsAutocreate }
+        if($PSBoundParameters.ContainsKey('GroupsClaim')) { $parameters['groups-claim'] = $GroupsClaim }
+        if($PSBoundParameters.ContainsKey('GroupsOverwrite')) { $parameters['groups-overwrite'] = $GroupsOverwrite }
         if($PSBoundParameters.ContainsKey('IssuerUrl')) { $parameters['issuer-url'] = $IssuerUrl }
         if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
         if($PSBoundParameters.ContainsKey('Prompt')) { $parameters['prompt'] = $Prompt }
+        if($PSBoundParameters.ContainsKey('QueryUserinfo')) { $parameters['query-userinfo'] = $QueryUserinfo }
         if($PSBoundParameters.ContainsKey('Realm')) { $parameters['realm'] = $Realm }
         if($PSBoundParameters.ContainsKey('Scopes')) { $parameters['scopes'] = $Scopes }
         if($PSBoundParameters.ContainsKey('Secure')) { $parameters['secure'] = $Secure }
@@ -29704,6 +29975,12 @@ LDAP base domain name for group sync. If not set, the base_dn will be used.
 LDAP filter for group sync.
 .PARAMETER GroupNameAttr
 LDAP attribute representing a groups name. If not set or found, the first value of the DN will be used as name.
+.PARAMETER GroupsAutocreate
+Automatically create groups if they do not exist.
+.PARAMETER GroupsClaim
+OpenID claim used to retrieve groups with.
+.PARAMETER GroupsOverwrite
+All groups will be overwritten for the user on login.
 .PARAMETER IssuerUrl
 OpenID Issuer Url
 .PARAMETER Mode
@@ -29714,6 +29991,8 @@ LDAP bind password. Will be stored in '/etc/pve/priv/realm/<REALM>.pw'.
 Server port.
 .PARAMETER Prompt
 Specifies whether the Authorization Server prompts the End-User for reauthentication and consent.
+.PARAMETER QueryUserinfo
+Enables querying the userinfo endpoint for claims values.
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER Scopes
@@ -29751,7 +30030,7 @@ PveResponse. Return response.
         [string]$AcrValues,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Autocreate,
+        [bool]$Autocreate,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$BaseDn,
@@ -29763,7 +30042,7 @@ PveResponse. Return response.
         [string]$Capath,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CaseSensitive,
+        [bool]$CaseSensitive,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Cert,
@@ -29772,7 +30051,7 @@ PveResponse. Return response.
         [string]$Certkey,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$CheckConnection,
+        [bool]$CheckConnection,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ClientId,
@@ -29784,7 +30063,7 @@ PveResponse. Return response.
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Default,
+        [bool]$Default,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Delete,
@@ -29811,6 +30090,15 @@ PveResponse. Return response.
         [string]$GroupNameAttr,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$GroupsAutocreate,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$GroupsClaim,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$GroupsOverwrite,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$IssuerUrl,
 
         [Parameter(ValueFromPipelineByPropertyName)]
@@ -29826,6 +30114,9 @@ PveResponse. Return response.
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Prompt,
 
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$QueryUserinfo,
+
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
 
@@ -29833,7 +30124,7 @@ PveResponse. Return response.
         [string]$Scopes,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Secure,
+        [bool]$Secure,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Server1,
@@ -29861,7 +30152,7 @@ PveResponse. Return response.
         [string]$UserClasses,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Verify
+        [bool]$Verify
     )
 
     process {
@@ -29887,11 +30178,15 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('GroupDn')) { $parameters['group_dn'] = $GroupDn }
         if($PSBoundParameters.ContainsKey('GroupFilter')) { $parameters['group_filter'] = $GroupFilter }
         if($PSBoundParameters.ContainsKey('GroupNameAttr')) { $parameters['group_name_attr'] = $GroupNameAttr }
+        if($PSBoundParameters.ContainsKey('GroupsAutocreate')) { $parameters['groups-autocreate'] = $GroupsAutocreate }
+        if($PSBoundParameters.ContainsKey('GroupsClaim')) { $parameters['groups-claim'] = $GroupsClaim }
+        if($PSBoundParameters.ContainsKey('GroupsOverwrite')) { $parameters['groups-overwrite'] = $GroupsOverwrite }
         if($PSBoundParameters.ContainsKey('IssuerUrl')) { $parameters['issuer-url'] = $IssuerUrl }
         if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters.ContainsKey('Port')) { $parameters['port'] = $Port }
         if($PSBoundParameters.ContainsKey('Prompt')) { $parameters['prompt'] = $Prompt }
+        if($PSBoundParameters.ContainsKey('QueryUserinfo')) { $parameters['query-userinfo'] = $QueryUserinfo }
         if($PSBoundParameters.ContainsKey('Scopes')) { $parameters['scopes'] = $Scopes }
         if($PSBoundParameters.ContainsKey('Secure')) { $parameters['secure'] = $Secure }
         if($PSBoundParameters.ContainsKey('Server1')) { $parameters['server1'] = $Server1 }
@@ -29926,7 +30221,7 @@ DEPRECATED':' use 'remove-vanished' instead. Remove ACLs for users or groups whi
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER RemoveVanished
-A semicolon-seperated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
+A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Scope
 Select what to sync. Enum: users,groups,both
 .OUTPUTS
@@ -29939,16 +30234,16 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$DryRun,
+        [bool]$DryRun,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$EnableNew,
+        [bool]$EnableNew,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Full,
+        [bool]$Full,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Purge,
+        [bool]$Purge,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Realm,
@@ -30291,7 +30586,7 @@ PveResponse. Return response.
         [string]$Description,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Enable,
+        [bool]$Enable,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Id,
@@ -30353,7 +30648,7 @@ Verify ticket, and check if user have access 'privs' on 'path'
 .PARAMETER Privs
 Verify ticket, and check if user have access 'privs' on 'path'
 .PARAMETER Realm
-You can optionally pass the realm using this parameter. Normally the realm is simply added to the username <username>@<relam>.
+You can optionally pass the realm using this parameter. Normally the realm is simply added to the username <username>@<realm>.
 .PARAMETER TfaChallenge
 The signed TFA challenge string the user wants to respond to.
 .PARAMETER Username
@@ -30368,7 +30663,7 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$NewFormat,
+        [bool]$NewFormat,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Otp,
@@ -30617,13 +30912,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AllowMove,
+        [bool]$AllowMove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Poolid,
@@ -30740,13 +31035,13 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$AllowMove,
+        [bool]$AllowMove,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [switch]$Delete,
+        [bool]$Delete,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Poolid,
