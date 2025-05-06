@@ -7,7 +7,7 @@ function Invoke-PveAction {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory, ValueFromPipelineByPropertyName)]
-        [ValidateSet('analyzer', 'build-doc', 'update-manifest', 'import', 'publish', 'build-cast')]
+        [ValidateSet('analyzer', 'build-doc-html', 'build-doc-md', 'update-manifest', 'import', 'publish', 'build-cast')]
         [string]$Action
     )
 
@@ -16,10 +16,14 @@ function Invoke-PveAction {
             Import-Module PSScriptAnalyzer
             Get-ChildItem -Path Corsinvest.ProxmoxVE.Api -Filter "*.psm1" -Recurse | Invoke-ScriptAnalyzer -ExcludeRule PSUseSingularNouns
         }
-        elseif ($Action -eq 'build-doc') {
+        elseif ($Action -eq 'build-doc-html') {
             Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psd1 -Verbose -Force
             Build-PveDocumentation -OutputFile .\doc\index.html -TemplateFile .\help-out-html.ps1
-            Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psm1 -Verbose -Force
+        }
+        elseif ($Action -eq 'build-doc-md') {
+            Install-Module -Name platyPS -Force -Scope CurrentUser
+            Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psd1 -Verbose -Force
+            New-MarkdownHelp -Module Corsinvest.ProxmoxVE.Api -OutputFolder .\doc\markdown -Force
         }
         elseif ($Action -eq 'update-manifest') {
             [System.Collections.ArrayList] $functions = Get-Command -Module Corsinvest.ProxmoxVE.Api -Type Function | Select-Object -ExpandProperty Name

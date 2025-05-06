@@ -1109,6 +1109,11 @@ PveResponse. Return response.
 Set-Alias -Name Show-PveSpice -Value Invoke-PveSpice -PassThru
 Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus -PassThru
 
+#MONITORING
+Set-Alias -Name Get-PveQemuMonitoring -Value Get-PveNodesQemuRrddata -PassThru
+Set-Alias -Name Get-PveQemuMonitoring -Value Get-PveNodesQemuRrddata -PassThru
+Set-Alias -Name Get-PveLxcMonitoring -Value Get-PveNodesLxcRrddata -PassThru
+
 #QEMU
 
 ## status

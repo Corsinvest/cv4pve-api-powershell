@@ -14,7 +14,7 @@
  / /___/ /_/ / /  (__  ) / / / / |/ /  __(__  ) /_
  \____/\____/_/  /____/_/_/ /_/|___/\___/____/\__/
 
-powerShell for Proxmox VE         (Made in Italy)
+PowerShell for Proxmox VE         (Made in Italy)
 
 cv4pve-api-powershell is a part of suite cv4pve.
 For more information visit https://www.corsinvest.it/cv4pve
@@ -31,7 +31,13 @@ This software is part of a suite of tools called cv4pve. If you want commercial 
 
 ## Introduction
 
-PowerShell for Proxmox VE.
+The `cv4pve-api-powershell` module enables system administrators and developers to manage and automate Proxmox VE environments using PowerShell.
+
+It provides a comprehensive set of cmdlets that wrap the Proxmox REST API, allowing operations such as VM and container management, node monitoring, backup handling, and storage inspection—all from PowerShell.
+
+This module serves as the **PowerCLI equivalent for Proxmox VE**:
+- While PowerCLI facilitates VMware vSphere automation via PowerShell,
+- `cv4pve-api-powershell` offers similar capabilities for Proxmox VE environments.
 
 ![PowerShell for Proxmox VE](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/images/powershell.png)
 
@@ -61,6 +67,9 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
   * Suspend-PveVm (from id or name)
   * Resume-PveVm (from id or name)
   * Reset-PveVm (from id or name)
+  * Get-PveNodeMonitoring (Get rrddata from Node)
+  * Get-PveQemuMonitoring (Get rrddata from Qemu)
+  * Get-PveLxcMonitoring (Get rrddata from Lxc)
   * And More
 * Method direct access using Invoke-PveRestApi return PveResponse
 * Connect-PveCluster accept multiple hosts for HA
@@ -77,7 +86,8 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 
 ## 📙 Documentation
 
-[Documentation](https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html)
+[Documentation HTML](https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html)
+[Documentation Markdown](https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/index.html)
 
 ## Tutorial
 

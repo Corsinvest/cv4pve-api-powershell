@@ -243,6 +243,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterStatus'>Get-PveClusterStatus</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveClusterTasks'>Get-PveClusterTasks</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesLxcConfig'>Get-PveNodesLxcConfig</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveNodesLxcRrddata'>Get-PveNodesLxcRrddata</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesLxcSnapshot'>Get-PveNodesLxcSnapshot</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesLxcSnapshotConfig'>Get-PveNodesLxcSnapshotConfig</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNode'>Get-PveNode</a></li>
@@ -423,6 +424,7 @@ SPDX-License-Identifier: GPL-3.0-only
 <li class='nav-item'><a class='nav-link' href='#Get-PvePools'>Get-PvePools</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PvePoolsIdx'>Get-PvePoolsIdx</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesQemuConfig'>Get-PveNodesQemuConfig</a></li>
+<li class='nav-item'><a class='nav-link' href='#Get-PveNodesQemuRrddata'>Get-PveNodesQemuRrddata</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesQemuSnapshot'>Get-PveNodesQemuSnapshot</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveNodesQemuSnapshotConfig'>Get-PveNodesQemuSnapshotConfig</a></li>
 <li class='nav-item'><a class='nav-link' href='#Get-PveStorage'>Get-PveStorage</a></li>
@@ -8388,6 +8390,83 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
             <ul><li>PveResponse. Return response.</li></ul>
         </div>
     </div>
+        <div id="Get-PveNodesLxcRrddata" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveNodesLxcRrddata </h2>
+<p></p>
+                <p class='searchable'>Read VM RRD statistics</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveNodesLxcRrddata [[-PveTicket] &lt;PveTicket&gt;] [[-Cf] &lt;String&gt;] [-Node] &lt;String&gt; [-Timeframe] &lt;String&gt; [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Cf</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The RRD consolidation function Enum: AVERAGE,MAX</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Node</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The cluster node name.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Timeframe</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Specify the time frame you are interested in. Enum: hour,day,week,month,year</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vmid</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The (unique) ID of the VM.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
         <div id="Get-PveNodesLxcSnapshot" class="toggle_container">
             <div class="page-header">
                 <h2> Get-PveNodesLxcSnapshot </h2>
@@ -13244,6 +13323,16 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
 <p></p>
                 <p class='searchable'>Read VM RRD statistics</p>
             </div>
+            <div class='panel panel-default'>
+                <div class='panel-heading'>
+                    <h3 class='panel-title'> Aliases </h3>
+                </div>
+                <div class='panel-body'>
+                    <ul>
+<li class='searchable'>Get-PveLxcMonitoring</li>
+                    </ul>
+                </div>
+            </div>
 <div>
             <h3> Syntax </h3>
         </div>
@@ -16242,6 +16331,16 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <h2> Get-PveNodesQemuRrddata </h2>
 <p></p>
                 <p class='searchable'>Read VM RRD statistics</p>
+            </div>
+            <div class='panel panel-default'>
+                <div class='panel-heading'>
+                    <h3 class='panel-title'> Aliases </h3>
+                </div>
+                <div class='panel-body'>
+                    <ul>
+<li class='searchable'>Get-PveQemuMonitoring</li>
+                    </ul>
+                </div>
             </div>
 <div>
             <h3> Syntax </h3>
@@ -19946,6 +20045,83 @@ The default <a href="https://raw.githubusercontent.com/corsinvest/cv4pve-api-pow
                 <td class='visible-lg visible-md searchable'></td>
                 <td class='searchable'>Fetch config values from given snapshot.</td>
                 <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Vmid</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The (unique) ID of the VM.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'>0</td>
+            </tr>
+                    </tbody>
+                </table>
+            </div>
+<div>
+            <h3> Outputs </h3>
+            <p>The output type is the type of the objects that the cmdlet emits.</p>
+            <ul><li>PveResponse. Return response.</li></ul>
+        </div>
+    </div>
+        <div id="Get-PveNodesQemuRrddata" class="toggle_container">
+            <div class="page-header">
+                <h2> Get-PveNodesQemuRrddata </h2>
+<p></p>
+                <p class='searchable'>Read VM RRD statistics</p>
+            </div>
+<div>
+            <h3> Syntax </h3>
+        </div>
+        <div class='panel panel-default'>
+            <div class='panel-body'>
+                <code class='powershell'>Get-PveNodesQemuRrddata [[-PveTicket] &lt;PveTicket&gt;] [[-Cf] &lt;String&gt;] [-Node] &lt;String&gt; [-Timeframe] &lt;String&gt; [-Vmid] &lt;Int32&gt; [&lt;CommonParameters&gt;]</code>
+            </div>
+        </div>
+            <div>
+                <h3> Parameters </h3>
+                <table class="table table-striped table-bordered table-condensed visible-on">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th class="visible-lg visible-md">Alias</th>
+                            <th>Description</th>
+                            <th class="visible-lg visible-md">Required?</th>
+                            <th class="visible-lg">Pipeline Input</th>
+                            <th class="visible-lg">Default Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+<tr>
+                <td class='searchable'><nobr>-PveTicket</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Ticket data connection.</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Cf</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The RRD consolidation function Enum: AVERAGE,MAX</td>
+                <td class='visible-lg visible-md'>false</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Node</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>The cluster node name.</td>
+                <td class='visible-lg visible-md'>true</td>
+                <td class='visible-lg'>true (ByPropertyName)</td>
+                <td class='visible-lg'></td>
+            </tr>
+<tr>
+                <td class='searchable'><nobr>-Timeframe</nobr></td>
+                <td class='visible-lg visible-md searchable'></td>
+                <td class='searchable'>Specify the time frame you are interested in. Enum: hour,day,week,month,year</td>
+                <td class='visible-lg visible-md'>true</td>
                 <td class='visible-lg'>true (ByPropertyName)</td>
                 <td class='visible-lg'></td>
             </tr>
