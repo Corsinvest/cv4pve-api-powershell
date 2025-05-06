@@ -87,7 +87,8 @@ this is a CmdLet for PowerShell to manage Proxmox VE.
 ## 📙 Documentation
 
 [Documentation HTML](https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html)
-[Documentation Markdown](https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/index.html)
+
+[Documentation Markdown](https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/about_cv4pve-api-powershell.md)
 
 ## Tutorial
 
