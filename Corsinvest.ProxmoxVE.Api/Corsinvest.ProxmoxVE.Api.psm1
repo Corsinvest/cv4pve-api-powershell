@@ -467,6 +467,8 @@ The (unique) ID or Name of the VM.
 Path of Spice remove viewer.
 - Linux /usr/bin/remote-viewer
 - Windows C:\Program Files\VirtViewer v?.?-???\bin\remote-viewer.exe
+.PARAMETER AdditonalArgs
+Additional arguments that should be passed to the remote viewer application
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -482,7 +484,10 @@ PveResponse. Return response.
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
-        [string]$Viewer
+        [string]$Viewer,
+
+        [ValidateNotNullOrEmpty()]
+        [string]$AdditionalArgs
     )
 
     process {
@@ -504,7 +509,7 @@ PveResponse. Return response.
             $tmp = New-TemporaryFile
             $ret.Response | Out-File $tmp.FullName
 
-            Start-Process -FilePath $Viewer -Args $tmp.FullName
+            Start-Process -FilePath $Viewer -Args "$($tmp.FullName) $AdditionalArgs"
         }
     }
 }
