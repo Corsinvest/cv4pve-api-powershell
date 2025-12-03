@@ -33,7 +33,7 @@ For licensing details please visit [LICENSE](LICENSE)
 This software is part of a suite of tools called cv4pve-api-powershell.
 If you require commercial support, please visit the [Corsinvest website](https://www.corsinvest.it/cv4pve)
 
-## 📚 Overview
+## Overview
 
 The **cv4pve-api-powershell** module enables system administrators and developers to manage and automate Proxmox VE environments using PowerShell.
 
@@ -82,7 +82,7 @@ This module serves as the **PowerCLI equivalent for Proxmox VE**:
 * **Interactive Tutorials** - VSCode notebook tutorials available
 * **Open Source** - Full source code available on GitHub
 
-## 🛠️ Utility Functions
+## Utility Functions
 
 The module includes a rich set of utility cmdlets to simplify common operations:
 
@@ -123,7 +123,7 @@ Comprehensive documentation is available in multiple formats:
 * **[HTML Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)** - Full API reference in HTML format
 * **[Markdown Documentation](https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/about_cv4pve-api-powershell.md)** - Documentation in Markdown format
 
-## 🎓 Tutorial & Learning Resources
+## Tutorial & Learning Resources
 
 * **[Interactive VSCode Notebook Tutorial](https://tinyurl.com/cv4pve-api-pwsh-learn)** - Learn by doing with interactive examples
 * **[Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html)** - Practical solutions to common problems and advanced examples
@@ -162,7 +162,7 @@ To view your module paths:
 $env:PSModulePath -split [IO.Path]::PathSeparator
 ```
 
-##  Documentation
+## Documentation
 
 **Need help getting started or troubleshooting issues?**
 
@@ -329,7 +329,7 @@ $isRunning = Get-PveTaskIsRunning -Node pve1 -Upid $taskId
 # Output: True/False
 ```
 
-## 🔧 Advanced Features
+## Advanced Features
 
 ### PveResponse Class
 
