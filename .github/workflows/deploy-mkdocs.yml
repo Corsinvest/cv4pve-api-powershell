@@ -45,7 +45,7 @@ jobs:
           pip install mkdocs-minify-plugin
 
       - name: Setup PowerShell
-        uses: PowerShell/setup-powershell@v1
+        uses: actions/setup-powershell@v1
         with:
           pwsh-version: latest
 
