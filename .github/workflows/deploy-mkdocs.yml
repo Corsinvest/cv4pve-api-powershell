@@ -44,10 +44,10 @@ jobs:
           pip install mkdocs-material
           pip install mkdocs-minify-plugin
 
-      - name: Installa PowerShell Core 7.4
-        uses: PSModule/Install-PowerShell@v1
-        with:
-          Version: '7.4'
+      # - name: Installa PowerShell Core 7.4
+      #   uses: PSModule/Install-PowerShell@v1
+      #   with:
+      #     Version: '7.4'
 
       - name: Install PowerShell module dependencies
         shell: pwsh
