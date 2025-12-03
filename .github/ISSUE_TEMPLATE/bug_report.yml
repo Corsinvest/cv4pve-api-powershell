@@ -5,7 +5,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report. Note that this template is only for bug reports.
+        Thanks for taking the time to fill out this bug report.
+
+        **Before submitting**, please check:
+        - [Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html) - Your issue might already be solved!
+        - [Existing Issues](https://github.com/Corsinvest/cv4pve-api-powershell/issues) - Search for similar problems
+
+        Note that this template is only for bug reports.
   - type: textarea
     id: what-happened
     attributes:
@@ -41,9 +47,18 @@ body:
   - type: input
     id: bug-version
     attributes:
-      label: Version (bug)
-      description: With which version are you experiencing the issue?
+      label: Module Version
+      description: Which version of cv4pve-api-powershell are you using? Run Get-Module Corsinvest.ProxmoxVE.Api to check
       placeholder: 1.X.X
+    validations:
+      required: true
+
+  - type: input
+    id: powershell-version
+    attributes:
+      label: PowerShell Version
+      description: Which PowerShell version? Run $PSVersionTable.PSVersion to check
+      placeholder: 7.4.0
     validations:
       required: true
   - type: input
