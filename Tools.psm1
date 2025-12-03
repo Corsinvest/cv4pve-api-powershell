@@ -32,10 +32,10 @@ function Invoke-PveAction {
             New-MarkdownHelp -Module Corsinvest.ProxmoxVE.Api -OutputFolder $MarkdownSourcePath -Force
         }
         elseif ($Action -eq 'create-doc-mkdocs') {
-            Write-Host "🚀 Starting MkDocs documentation generation..." -ForegroundColor Cyan
+            Write-Host "Starting MkDocs documentation generation..." -ForegroundColor Cyan
 
             # Process PlatyPS markdown files (generate index only, no copy)
-            Write-Host "📚 Processing cmdlet documentation..." -ForegroundColor Cyan
+            Write-Host "Processing cmdlet documentation..." -ForegroundColor Cyan
             $markdownFiles = Get-ChildItem -Path $MarkdownSourcePath -Filter "*.md" | Where-Object { $_.Name -notlike "about_*" }
             $cmdletsByCategory = @{}
 
@@ -65,10 +65,10 @@ function Invoke-PveAction {
                 $cmdletsByCategory[$category] += $cmdletName
             }
 
-            Write-Host "✅ Analyzed $($markdownFiles.Count) cmdlet files" -ForegroundColor Green
+            Write-Host "Analyzed $($markdownFiles.Count) cmdlet files" -ForegroundColor Green
 
             # Generate cmdlets index with categories (pointing to markdown source)
-            Write-Host "📑 Generating cmdlets index..." -ForegroundColor Cyan
+            Write-Host "Generating cmdlets index..." -ForegroundColor Cyan
             $indexContent = @"
 # Cmdlet Reference
 
@@ -93,14 +93,14 @@ This page provides a complete reference of all cmdlets available in the cv4pve-a
 
             $cmdletsIndexPath = Join-Path $MkDocsOutputPath "cmdlets-index.md"
             $indexContent | Out-File $cmdletsIndexPath -Encoding utf8 -Force
-            Write-Host "✅ Generated cmdlets index at $cmdletsIndexPath" -ForegroundColor Green
+            Write-Host "Generated cmdlets index at $cmdletsIndexPath" -ForegroundColor Green
 
             # Note: mkdocs.yml navigation is static. With hundreds of cmdlets, dynamic navigation
 
-            Write-Host "`n✅ MkDocs documentation generation complete!" -ForegroundColor Green
-            Write-Host "📂 Output location: $MkDocsOutputPath" -ForegroundColor Cyan
+            Write-Host "`n MkDocs documentation generation complete!" -ForegroundColor Green
+            Write-Host "Output location: $MkDocsOutputPath" -ForegroundColor Cyan
 
-            Write-Host "`n📖 MkDocs documentation structure created!" -ForegroundColor Green
+            Write-Host "`n MkDocs documentation structure created!" -ForegroundColor Green
             Write-Host "To serve locally:" -ForegroundColor Cyan
             Write-Host "  Invoke-PveAction -Action serve-doc-mkdocs " -ForegroundColor White
             Write-Host "  Open http://127.0.0.1:8000" -ForegroundColor White
@@ -109,20 +109,20 @@ This page provides a complete reference of all cmdlets available in the cv4pve-a
             # Build static site
             Push-Location ".\doc\mkdocs"
             try {
-                Write-Host "🔨 Building MkDocs static site..." -ForegroundColor Cyan
+                Write-Host "Building MkDocs static site..." -ForegroundColor Cyan
                 & mkdocs build
-                Write-Host "✅ MkDocs site built successfully!" -ForegroundColor Green
-                Write-Host "📁 Site location: .\doc\mkdocs\site" -ForegroundColor Cyan
+                Write-Host "MkDocs site built successfully!" -ForegroundColor Green
+                Write-Host "Site location: .\doc\mkdocs\site" -ForegroundColor Cyan
             }
             finally {
                 Pop-Location
             }
         }
         elseif ($Action -eq 'serve-doc-mkdocs') {
-            Write-Host "🌐 Starting MkDocs server..." -ForegroundColor Cyan
+            Write-Host "Starting MkDocs server..." -ForegroundColor Cyan
             Push-Location ".\doc\mkdocs"
             try {
-                Write-Host "✅ Server starting at http://127.0.0.1:8000" -ForegroundColor Green
+                Write-Host "Server starting at http://127.0.0.1:8000" -ForegroundColor Green
                 Write-Host "Press Ctrl+C to stop the server" -ForegroundColor Yellow
                 & mkdocs serve
             }
