@@ -11,7 +11,8 @@ on:
       - 'doc/markdown/**'
       - 'doc/mkdocs/**'
       - '.github/workflows/deploy-mkdocs.yml'
-  workflow_dispatch:  # Allow manual trigger
+  workflow_dispatch:  
+    # Allow manual trigger
 
 permissions:
   contents: write
