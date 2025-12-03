@@ -19,6 +19,7 @@ New-PveClusterHaGroups [[-PveTicket] <PveTicket>] [[-Comment] <String>] [-Group]
 
 ## DESCRIPTION
 Create a new HA group.
+(deprecated in favor of HA rules)
 
 ## EXAMPLES
 

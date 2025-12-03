@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Service
-Service ID Enum: chrony,corosync,cron,ksmtuned,postfix,pve-cluster,pve-firewall,pve-ha-crm,pve-ha-lrm,pvedaemon,pvefw-logger,pveproxy,pvescheduler,pvestatd,spiceproxy,sshd,syslog,systemd-journald,systemd-timesyncd
+Service ID Enum: chrony,corosync,cron,ksmtuned,lxcfs,postfix,proxmox-firewall,pve-cluster,pve-firewall,pve-ha-crm,pve-ha-lrm,pve-lxc-syscalld,pvedaemon,pvefw-logger,pveproxy,pvescheduler,pvestatd,qmeventd,spiceproxy,sshd,syslog,systemd-journald,systemd-timesyncd
 
 ```yaml
 Type: String

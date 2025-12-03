@@ -18,14 +18,14 @@ Set-PveStorage [[-PveTicket] <PveTicket>] [[-Blocksize] <String>] [[-Bwlimit] <S
  [[-Disable] <Boolean>] [[-Domain] <String>] [[-EncryptionKey] <String>] [[-Fingerprint] <String>]
  [[-Format] <String>] [[-FsName] <String>] [[-Fuse] <Boolean>] [[-IsMountpoint] <String>] [[-Keyring] <String>]
  [[-Krbd] <Boolean>] [[-LioTpg] <String>] [[-MasterPubkey] <String>] [[-MaxProtectedBackups] <Int32>]
- [[-Maxfiles] <Int32>] [[-Mkdir] <Boolean>] [[-Monhost] <String>] [[-Mountpoint] <String>]
- [[-Namespace] <String>] [[-Nocow] <Boolean>] [[-Nodes] <String>] [[-Nowritecache] <Boolean>]
- [[-Options] <String>] [[-Password] <SecureString>] [[-Pool] <String>] [[-Port] <Int32>]
- [[-Preallocation] <String>] [[-PruneBackups] <String>] [[-Saferemove] <Boolean>]
- [[-SaferemoveThroughput] <String>] [[-Server] <String>] [[-Server2] <String>] [[-Shared] <Boolean>]
- [[-SkipCertVerification] <Boolean>] [[-Smbversion] <String>] [[-Sparse] <Boolean>] [-Storage] <String>
- [[-Subdir] <String>] [[-TaggedOnly] <Boolean>] [[-Transport] <String>] [[-Username] <String>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Mkdir] <Boolean>] [[-Monhost] <String>] [[-Mountpoint] <String>] [[-Namespace] <String>]
+ [[-Nocow] <Boolean>] [[-Nodes] <String>] [[-Nowritecache] <Boolean>] [[-Options] <String>]
+ [[-Password] <SecureString>] [[-Pool] <String>] [[-Port] <Int32>] [[-Preallocation] <String>]
+ [[-PruneBackups] <String>] [[-Saferemove] <Boolean>] [[-SaferemoveStepsize] <Int32>]
+ [[-SaferemoveThroughput] <String>] [[-Server] <String>] [[-Shared] <Boolean>]
+ [[-SkipCertVerification] <Boolean>] [[-Smbversion] <String>] [[-SnapshotAsVolumeChain] <Boolean>]
+ [[-Sparse] <Boolean>] [-Storage] <String> [[-Subdir] <String>] [[-TaggedOnly] <Boolean>]
+ [[-Username] <String>] [[-ZfsBasePath] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -423,23 +423,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Maxfiles
-Deprecated':' use 'prune-backups' instead.
-Maximal number of backup files per VM.
-Use '0' for unlimited.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 26
-Default value: 0
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -Mkdir
 Create the directory if it doesn't exist and populate it with default sub-dirs.
 NOTE':' Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.
@@ -450,7 +433,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 27
+Position: 26
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -465,7 +448,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 28
+Position: 27
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -480,7 +463,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 29
+Position: 28
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -495,7 +478,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 30
+Position: 29
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -512,7 +495,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 31
+Position: 30
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -527,7 +510,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 32
+Position: 31
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -542,7 +525,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 33
+Position: 32
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -557,7 +540,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 34
+Position: 33
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -572,7 +555,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 35
+Position: 34
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -587,7 +570,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 36
+Position: 35
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -603,7 +586,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 37
+Position: 36
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -620,7 +603,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 38
+Position: 37
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -638,7 +621,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 39
+Position: 38
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -653,8 +636,25 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 40
+Position: 39
 Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -SaferemoveStepsize
+Wipe step size in MiB.
+It will be capped to the maximum supported by the storage.
+Enum: 1,2,4,8,16,32
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 40
+Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -689,21 +689,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Server2
-Backup volfile server IP or DNS name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 43
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -Shared
 Indicate that this is a single storage with the same contents on all nodes (or all listed in the 'nodes' option).
 It will not make the contents of a local storage automatically accessible to other nodes, it just marks an already shared storage as such!
@@ -714,7 +699,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 44
+Position: 43
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -729,7 +714,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 45
+Position: 44
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -746,8 +731,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 46
+Position: 45
 Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -SnapshotAsVolumeChain
+Enable support for creating storage-vendor agnostic snapshot through volume backing-chains.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 46
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
@@ -812,8 +812,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Transport
-Gluster transport':' tcp or rdma Enum: tcp,rdma,unix
+### -Username
+RBD Id.
 
 ```yaml
 Type: String
@@ -827,8 +827,10 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Username
-RBD Id.
+### -ZfsBasePath
+Base path where to look for the created ZFS block devices.
+Set automatically during creation if not specified.
+Usually '/dev/zvol'.
 
 ```yaml
 Type: String

@@ -13,8 +13,8 @@ schema: 2.0.0
 
 ```
 Set-PveClusterSdnIpams [[-PveTicket] <PveTicket>] [[-Delete] <String>] [[-Digest] <String>]
- [[-Fingerprint] <String>] [-Ipam] <String> [[-Section] <Int32>] [[-Token] <String>] [[-Url] <String>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Fingerprint] <String>] [-Ipam] <String> [[-LockToken] <String>] [[-Section] <Int32>] [[-Token] <String>]
+ [[-Url] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -107,6 +107,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -LockToken
+the token for unlocking the global SDN configuration
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Section
 --
 
@@ -116,7 +131,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -131,7 +146,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -146,7 +161,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

@@ -16,12 +16,11 @@ New-PveNodesVzdump [[-PveTicket] <PveTicket>] [[-All] <Boolean>] [[-Bwlimit] <In
  [[-Dumpdir] <String>] [[-Exclude] <String>] [[-ExcludePath] <Array>] [[-Fleecing] <String>]
  [[-Ionice] <Int32>] [[-JobId] <String>] [[-Lockwait] <Int32>] [[-Mailnotification] <String>]
  [[-Mailto] <String>] [[-Maxfiles] <Int32>] [[-Mode] <String>] [[-Node] <String>] [[-NotesTemplate] <String>]
- [[-NotificationMode] <String>] [[-NotificationPolicy] <String>] [[-NotificationTarget] <String>]
- [[-PbsChangeDetectionMode] <String>] [[-Performance] <String>] [[-Pigz] <Int32>] [[-Pool] <String>]
- [[-Protected] <Boolean>] [[-PruneBackups] <String>] [[-Quiet] <Boolean>] [[-Remove] <Boolean>]
- [[-Script] <String>] [[-Stdexcludes] <Boolean>] [[-Stdout] <Boolean>] [[-Stop] <Boolean>]
- [[-Stopwait] <Int32>] [[-Storage] <String>] [[-Tmpdir] <String>] [[-Vmid] <String>] [[-Zstd] <Int32>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-NotificationMode] <String>] [[-PbsChangeDetectionMode] <String>] [[-Performance] <String>]
+ [[-Pigz] <Int32>] [[-Pool] <String>] [[-Protected] <Boolean>] [[-PruneBackups] <String>] [[-Quiet] <Boolean>]
+ [[-Remove] <Boolean>] [[-Script] <String>] [[-Stdexcludes] <Boolean>] [[-Stdout] <Boolean>]
+ [[-Stop] <Boolean>] [[-Stopwait] <Int32>] [[-Storage] <String>] [[-Tmpdir] <String>] [[-Vmid] <String>]
+ [[-Zstd] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -325,36 +324,6 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -NotificationPolicy
-Deprecated':' Do not use Enum: always,failure,never
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 19
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -NotificationTarget
-Deprecated':' Do not use
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 20
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
 ### -PbsChangeDetectionMode
 PBS mode used to detect file changes and switch encoding format for container backups.
 Enum: legacy,data,metadata
@@ -365,7 +334,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 19
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -380,7 +349,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 22
+Position: 20
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -396,7 +365,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 23
+Position: 21
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -411,7 +380,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 24
+Position: 22
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -426,7 +395,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 25
+Position: 23
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -441,7 +410,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 26
+Position: 24
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -456,7 +425,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 27
+Position: 25
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -471,7 +440,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 28
+Position: 26
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -486,7 +455,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 29
+Position: 27
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -501,7 +470,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 30
+Position: 28
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -516,7 +485,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 31
+Position: 29
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -531,7 +500,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 32
+Position: 30
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -546,7 +515,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 33
+Position: 31
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -561,7 +530,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 34
+Position: 32
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -576,7 +545,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 35
+Position: 33
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -591,7 +560,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 36
+Position: 34
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -607,7 +576,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 37
+Position: 35
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

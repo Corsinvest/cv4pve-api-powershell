@@ -13,8 +13,8 @@ schema: 2.0.0
 
 ```
 Set-PveClusterSdnVnets [[-PveTicket] <PveTicket>] [[-Alias] <String>] [[-Delete] <String>] [[-Digest] <String>]
- [[-IsolatePorts] <Boolean>] [[-Tag] <Int32>] [[-Vlanaware] <Boolean>] [-Vnet] <String> [[-Zone] <String>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-IsolatePorts] <Boolean>] [[-LockToken] <String>] [[-Tag] <Int32>] [[-Vlanaware] <Boolean>] [-Vnet] <String>
+ [[-Zone] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -Alias
-alias name of the vnet
+Alias name of the VNet.
 
 ```yaml
 Type: String
@@ -93,7 +93,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsolatePorts
-If true, sets the isolated property for all members of this VNet
+If true, sets the isolated property for all interfaces on the bridge of this VNet.
 
 ```yaml
 Type: Boolean
@@ -107,8 +107,23 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -LockToken
+the token for unlocking the global SDN configuration
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Tag
-vlan or vxlan id
+VLAN Tag (for VLAN or QinQ zones) or VXLAN VNI (for VXLAN or EVPN zones).
 
 ```yaml
 Type: Int32
@@ -116,14 +131,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Vlanaware
-Allow vm VLANs to pass through this vnet.
+Allow VLANs to pass through this vnet.
 
 ```yaml
 Type: Boolean
@@ -131,7 +146,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -146,14 +161,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Zone
-zone id
+Name of the zone this VNet belongs to.
 
 ```yaml
 Type: String
@@ -161,7 +176,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

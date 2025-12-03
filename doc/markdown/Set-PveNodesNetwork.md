@@ -12,8 +12,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Set-PveNodesNetwork [[-PveTicket] <PveTicket>] [-Node] <String> [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Set-PveNodesNetwork [[-PveTicket] <PveTicket>] [-Node] <String> [[-RegenerateFrr] <Boolean>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -56,6 +56,21 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -RegenerateFrr
+Whether FRR config generation should get skipped or not.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

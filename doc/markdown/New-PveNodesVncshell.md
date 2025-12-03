@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -Cmd
-Run specific command or default to login (requires 'root@pam') Enum: ceph_install,upgrade,login
+Run specific command or default to login (requires 'root@pam') Enum: ceph_install,login,upgrade
 
 ```yaml
 Type: String

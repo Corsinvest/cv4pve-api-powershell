@@ -14,8 +14,8 @@ schema: 2.0.0
 ```
 New-PveNodesQemuMigrate [[-PveTicket] <PveTicket>] [[-Bwlimit] <Int32>] [[-Force] <Boolean>]
  [[-MigrationNetwork] <String>] [[-MigrationType] <String>] [-Node] <String> [[-Online] <Boolean>]
- [-Target] <String> [[-Targetstorage] <String>] [-Vmid] <Int32> [[-WithLocalDisks] <Boolean>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [-Target] <String> [[-Targetstorage] <String>] [-Vmid] <Int32> [[-WithConntrackState] <Boolean>]
+ [[-WithLocalDisks] <Boolean>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -189,6 +189,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -WithConntrackState
+Whether to migrate conntrack entries for running VMs.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -WithLocalDisks
 Enable live storage migration for local disk
 
@@ -198,7 +213,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

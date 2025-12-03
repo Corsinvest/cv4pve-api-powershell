@@ -63,7 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -Limit
-Only list this amount of tasks.
+Only list this number of tasks.
 
 ```yaml
 Type: Int32

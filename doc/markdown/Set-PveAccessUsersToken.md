@@ -12,9 +12,9 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Set-PveAccessUsersToken [[-PveTicket] <PveTicket>] [[-Comment] <String>] [[-Expire] <Int32>]
- [[-Privsep] <Boolean>] [-Tokenid] <String> [-Userid] <String> [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Set-PveAccessUsersToken [[-PveTicket] <PveTicket>] [[-Comment] <String>] [[-Delete] <String>]
+ [[-Expire] <Int32>] [[-Privsep] <Boolean>] [-Tokenid] <String> [-Userid] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,6 +61,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Delete
+A list of settings you want to delete.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Expire
 API token expiration date (seconds since epoch).
 '0' means no expiration date.
@@ -71,7 +86,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -86,7 +101,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -101,7 +116,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -116,7 +131,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

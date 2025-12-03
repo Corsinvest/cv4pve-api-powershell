@@ -17,7 +17,7 @@ Get-PveNodesQemuVncwebsocket [[-PveTicket] <PveTicket>] [-Node] <String> [-Port]
 ```
 
 ## DESCRIPTION
-Opens a weksocket for VNC traffic.
+Opens a websocket for VNC traffic.
 
 ## EXAMPLES
 

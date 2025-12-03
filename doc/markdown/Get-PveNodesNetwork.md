@@ -62,7 +62,7 @@ Accept wildcard characters: False
 
 ### -Type
 Only list specific interface types.
-Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,any_bridge,any_local_bridge
+Enum: bridge,bond,eth,alias,vlan,fabric,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,any_bridge,any_local_bridge,include_sdn
 
 ```yaml
 Type: String

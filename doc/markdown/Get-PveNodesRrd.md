@@ -92,7 +92,7 @@ Accept wildcard characters: False
 
 ### -Timeframe
 Specify the time frame you are interested in.
-Enum: hour,day,week,month,year
+Enum: hour,day,week,month,year,decade
 
 ```yaml
 Type: String

@@ -13,8 +13,9 @@ schema: 2.0.0
 
 ```
 Set-PveClusterHaResources [[-PveTicket] <PveTicket>] [[-Comment] <String>] [[-Delete] <String>]
- [[-Digest] <String>] [[-Group] <String>] [[-MaxRelocate] <Int32>] [[-MaxRestart] <Int32>] [-Sid] <String>
- [[-State] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Digest] <String>] [[-Failback] <Boolean>] [[-Group] <String>] [[-MaxRelocate] <Int32>]
+ [[-MaxRestart] <Int32>] [-Sid] <String> [[-State] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -92,6 +93,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Failback
+Automatically migrate HA resource to the node with the highest priority according to their node affinity  rules, if a node with a higher priority than the current node comes online.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Group
 The HA group identifier.
 
@@ -101,7 +117,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -116,7 +132,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -131,7 +147,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -148,7 +164,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -164,7 +180,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
