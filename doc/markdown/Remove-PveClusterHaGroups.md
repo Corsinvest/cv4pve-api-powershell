@@ -18,6 +18,7 @@ Remove-PveClusterHaGroups [[-PveTicket] <PveTicket>] [-Group] <String> [-Progres
 
 ## DESCRIPTION
 Delete ha group configuration.
+(deprecated in favor of HA rules)
 
 ## EXAMPLES
 

@@ -46,7 +46,7 @@ Accept wildcard characters: False
 ```
 
 ### -Type
-Only list storage of specific type Enum: btrfs,cephfs,cifs,dir,esxi,glusterfs,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool
+Only list storage of specific type Enum: btrfs,cephfs,cifs,dir,esxi,iscsi,iscsidirect,lvm,lvmthin,nfs,pbs,rbd,zfs,zfspool
 
 ```yaml
 Type: String

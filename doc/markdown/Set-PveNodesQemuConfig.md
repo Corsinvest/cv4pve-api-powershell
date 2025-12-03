@@ -13,19 +13,20 @@ schema: 2.0.0
 
 ```
 Set-PveNodesQemuConfig [[-PveTicket] <PveTicket>] [[-Acpi] <Boolean>] [[-Affinity] <String>]
- [[-Agent] <String>] [[-AmdSev] <String>] [[-Arch] <String>] [[-Args_] <String>] [[-Audio0] <String>]
- [[-Autostart] <Boolean>] [[-Balloon] <Int32>] [[-Bios] <String>] [[-Boot] <String>] [[-Bootdisk] <String>]
- [[-Cdrom] <String>] [[-Cicustom] <String>] [[-Cipassword] <SecureString>] [[-Citype] <String>]
- [[-Ciupgrade] <Boolean>] [[-Ciuser] <String>] [[-Cores] <Int32>] [[-Cpu] <String>] [[-Cpulimit] <Single>]
- [[-Cpuunits] <Int32>] [[-Delete] <String>] [[-Description] <String>] [[-Digest] <String>]
- [[-Efidisk0] <String>] [[-Force] <Boolean>] [[-Freeze] <Boolean>] [[-Hookscript] <String>]
- [[-HostpciN] <Hashtable>] [[-Hotplug] <String>] [[-Hugepages] <String>] [[-IdeN] <Hashtable>]
- [[-IpconfigN] <Hashtable>] [[-Ivshmem] <String>] [[-Keephugepages] <Boolean>] [[-Keyboard] <String>]
- [[-Kvm] <Boolean>] [[-Localtime] <Boolean>] [[-Lock] <String>] [[-Machine] <String>] [[-Memory] <String>]
- [[-MigrateDowntime] <Single>] [[-MigrateSpeed] <Int32>] [[-Name] <String>] [[-Nameserver] <String>]
- [[-NetN] <Hashtable>] [-Node] <String> [[-Numa] <Boolean>] [[-NumaN] <Hashtable>] [[-Onboot] <Boolean>]
- [[-Ostype] <String>] [[-ParallelN] <Hashtable>] [[-Protection] <Boolean>] [[-Reboot] <Boolean>]
- [[-Revert] <String>] [[-Rng0] <String>] [[-SataN] <Hashtable>] [[-ScsiN] <Hashtable>] [[-Scsihw] <String>]
+ [[-Agent] <String>] [[-AllowKsm] <Boolean>] [[-AmdSev] <String>] [[-Arch] <String>] [[-Args_] <String>]
+ [[-Audio0] <String>] [[-Autostart] <Boolean>] [[-Balloon] <Int32>] [[-Bios] <String>] [[-Boot] <String>]
+ [[-Bootdisk] <String>] [[-Cdrom] <String>] [[-Cicustom] <String>] [[-Cipassword] <SecureString>]
+ [[-Citype] <String>] [[-Ciupgrade] <Boolean>] [[-Ciuser] <String>] [[-Cores] <Int32>] [[-Cpu] <String>]
+ [[-Cpulimit] <Single>] [[-Cpuunits] <Int32>] [[-Delete] <String>] [[-Description] <String>]
+ [[-Digest] <String>] [[-Efidisk0] <String>] [[-Force] <Boolean>] [[-Freeze] <Boolean>]
+ [[-Hookscript] <String>] [[-HostpciN] <Hashtable>] [[-Hotplug] <String>] [[-Hugepages] <String>]
+ [[-IdeN] <Hashtable>] [[-IntelTdx] <String>] [[-IpconfigN] <Hashtable>] [[-Ivshmem] <String>]
+ [[-Keephugepages] <Boolean>] [[-Keyboard] <String>] [[-Kvm] <Boolean>] [[-Localtime] <Boolean>]
+ [[-Lock] <String>] [[-Machine] <String>] [[-Memory] <String>] [[-MigrateDowntime] <Single>]
+ [[-MigrateSpeed] <Int32>] [[-Name] <String>] [[-Nameserver] <String>] [[-NetN] <Hashtable>] [-Node] <String>
+ [[-Numa] <Boolean>] [[-NumaN] <Hashtable>] [[-Onboot] <Boolean>] [[-Ostype] <String>]
+ [[-ParallelN] <Hashtable>] [[-Protection] <Boolean>] [[-Reboot] <Boolean>] [[-Revert] <String>]
+ [[-Rng0] <String>] [[-SataN] <Hashtable>] [[-ScsiN] <Hashtable>] [[-Scsihw] <String>]
  [[-Searchdomain] <String>] [[-SerialN] <Hashtable>] [[-Shares] <Int32>] [[-Skiplock] <Boolean>]
  [[-Smbios1] <String>] [[-Smp] <Int32>] [[-Sockets] <Int32>] [[-SpiceEnhancements] <String>]
  [[-Sshkeys] <String>] [[-Startdate] <String>] [[-Startup] <String>] [[-Tablet] <Boolean>] [[-Tags] <String>]
@@ -109,6 +110,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -AllowKsm
+Allow memory pages of this guest to be merged via KSM (Kernel Samepage Merging).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -AmdSev
 Secure Encrypted Virtualization (SEV) features by AMD CPUs
 
@@ -118,7 +134,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -135,7 +151,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -150,7 +166,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -165,7 +181,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -180,7 +196,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -196,7 +212,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -212,7 +228,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -228,7 +244,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 13
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -244,7 +260,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 14
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -259,7 +275,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -274,7 +290,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -292,7 +308,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 17
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -310,7 +326,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 18
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -325,7 +341,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 19
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -340,7 +356,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 19
+Position: 20
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -355,7 +371,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 21
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -370,7 +386,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 22
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -385,7 +401,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 22
+Position: 23
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -400,7 +416,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 23
+Position: 24
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -415,7 +431,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 24
+Position: 25
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -432,7 +448,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 25
+Position: 26
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -448,7 +464,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 26
+Position: 27
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -466,7 +482,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 27
+Position: 28
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -483,7 +499,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 28
+Position: 29
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -498,7 +514,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 29
+Position: 30
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -513,7 +529,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 30
+Position: 31
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -528,7 +544,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 31
+Position: 32
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -547,14 +563,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 32
+Position: 33
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Hugepages
-Enable/disable hugepages memory.
+Enables hugepages memory.Sets the size of hugepages in MiB.
+If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB.
 Enum: any,2,1024
 
 ```yaml
@@ -563,7 +580,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 33
+Position: 34
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -580,7 +597,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 34
+Position: 35
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -IntelTdx
+Trusted Domain Extension (TDX) features by Intel CPUs
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 36
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -596,7 +628,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 35
+Position: 37
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -612,7 +644,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 36
+Position: 38
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -628,7 +660,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 37
+Position: 39
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -645,7 +677,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 38
+Position: 40
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -660,7 +692,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 39
+Position: 41
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -676,7 +708,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 40
+Position: 42
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -692,7 +724,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 41
+Position: 43
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -707,7 +739,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 42
+Position: 44
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -722,7 +754,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 43
+Position: 45
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -738,7 +770,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 44
+Position: 46
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -754,7 +786,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 45
+Position: 47
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -770,7 +802,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 46
+Position: 48
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -786,7 +818,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 47
+Position: 49
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -801,7 +833,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 48
+Position: 50
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -816,7 +848,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 49
+Position: 51
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -831,7 +863,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 50
+Position: 52
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -846,7 +878,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 51
+Position: 53
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -861,7 +893,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 52
+Position: 54
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -877,7 +909,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 53
+Position: 55
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -892,7 +924,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 54
+Position: 56
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -908,7 +940,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 55
+Position: 57
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -924,7 +956,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 56
+Position: 58
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -939,7 +971,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 57
+Position: 59
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -954,7 +986,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 58
+Position: 60
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -971,7 +1003,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 59
+Position: 61
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -988,7 +1020,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 60
+Position: 62
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1003,7 +1035,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 61
+Position: 63
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1019,7 +1051,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 62
+Position: 64
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1034,7 +1066,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 63
+Position: 65
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1053,7 +1085,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 64
+Position: 66
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1068,7 +1100,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 65
+Position: 67
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1083,7 +1115,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 66
+Position: 68
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1099,7 +1131,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 67
+Position: 69
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1114,7 +1146,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 68
+Position: 70
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1129,7 +1161,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 69
+Position: 71
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1144,7 +1176,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 70
+Position: 72
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1160,7 +1192,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 71
+Position: 73
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1178,7 +1210,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 72
+Position: 74
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1193,7 +1225,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 73
+Position: 75
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1209,7 +1241,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 74
+Position: 76
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1224,7 +1256,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 75
+Position: 77
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1239,7 +1271,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 76
+Position: 78
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1258,7 +1290,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 77
+Position: 79
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1274,7 +1306,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 78
+Position: 80
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1289,7 +1321,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 79
+Position: 81
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1304,7 +1336,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 80
+Position: 82
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1319,7 +1351,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 81
+Position: 83
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1336,7 +1368,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 82
+Position: 84
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1351,7 +1383,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 83
+Position: 85
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1367,7 +1399,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 84
+Position: 86
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1382,7 +1414,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 85
+Position: 87
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1397,7 +1429,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 86
+Position: 88
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -1412,7 +1444,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 87
+Position: 89
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

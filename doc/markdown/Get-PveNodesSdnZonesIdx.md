@@ -17,7 +17,7 @@ Get-PveNodesSdnZonesIdx [[-PveTicket] <PveTicket>] [-Node] <String> [-Zone] <Str
 ```
 
 ## DESCRIPTION
---
+Directory index for SDN zone status.
 
 ## EXAMPLES
 

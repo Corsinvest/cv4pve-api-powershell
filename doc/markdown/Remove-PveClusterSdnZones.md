@@ -12,8 +12,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Remove-PveClusterSdnZones [[-PveTicket] <PveTicket>] [-Zone] <String> [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Remove-PveClusterSdnZones [[-PveTicket] <PveTicket>] [[-LockToken] <String>] [-Zone] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +45,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -LockToken
+the token for unlocking the global SDN configuration
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Zone
 The SDN zone object identifier.
 
@@ -54,7 +69,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

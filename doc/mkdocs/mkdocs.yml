@@ -1,0 +1,85 @@
+# SPDX-FileCopyrightText: Copyright Corsinvest Srl
+# SPDX-License-Identifier: GPL-3.0-only
+
+site_name: cv4pve-api-powershell
+site_url: https://corsinvest.github.io/cv4pve-api-powershell/
+site_description: PowerShell Module for Proxmox VE API - Complete cmdlet documentation
+site_author: Corsinvest Srl
+repo_url: https://github.com/Corsinvest/cv4pve-api-powershell
+repo_name: Corsinvest/cv4pve-api-powershell
+edit_uri: edit/master/doc/mkdocs/docs/
+docs_dir: docs
+site_dir: ../_site
+use_directory_urls: false
+
+theme:
+  name: material
+  language: en
+  logo: icon.png
+  favicon: icon.png
+  palette:
+    # Light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    # Dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+  icon:
+    repo: fontawesome/brands/github
+
+plugins:
+  - search:
+      lang: en
+      separator: '[\s\-\.]+'
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - tables
+  - attr_list
+  - md_in_html
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Corsinvest/cv4pve-api-powershell
+    - icon: fontawesome/solid/globe
+      link: https://www.corsinvest.it/cv4pve
+
+nav:
+  - Home: index.md
+  - Cmdlet Reference:
+      - Overview: cmdlets-index.md
+
+copyright: Copyright &copy; Corsinvest Srl - Part of <a href="https://www.corsinvest.it/cv4pve" target="_blank">cv4pve suite</a>

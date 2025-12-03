@@ -14,8 +14,8 @@ schema: 2.0.0
 ```
 Set-PveClusterSdnVnetsSubnets [[-PveTicket] <PveTicket>] [[-Delete] <String>] [[-DhcpDnsServer] <String>]
  [[-DhcpRange] <Array>] [[-Digest] <String>] [[-Dnszoneprefix] <String>] [[-Gateway] <String>]
- [[-Snat] <Boolean>] [-Subnet] <String> [[-Vnet] <String>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [[-LockToken] <String>] [[-Snat] <Boolean>] [-Subnet] <String> [[-Vnet] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -138,6 +138,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -LockToken
+the token for unlocking the global SDN configuration
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Snat
 enable masquerade for this subnet if pve-firewall
 
@@ -147,7 +162,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -162,7 +177,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -177,7 +192,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

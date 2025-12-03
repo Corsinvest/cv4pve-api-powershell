@@ -19,7 +19,7 @@
 # Today we will see how to use PowerShell commands for Proxmox VE
 
 # Github https://github.com/Corsinvest/cv4pve-api-powershell
-# Documentation https://raw.githack.com/Corsinvest/cv4pve-api-powershell/master/doc/index.html
+# Documentation https://corsinvest.github.io/cv4pve-api-powershell
 
 # Install module from gallery https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api
 
@@ -87,8 +87,4 @@ Get-PveVm -VmIdOrName 100
 #TP-START
 # Get snapshots from Vm 102
 (Get-PveVm -VmIdOrName 102 | Get-PveNodesQemuSnapshot).ToTable()
-#TP-END
-
-#TP-START
-# For build documentation use command Build-PveDocumentation
 #TP-END

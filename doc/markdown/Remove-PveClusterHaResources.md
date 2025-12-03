@@ -12,8 +12,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Remove-PveClusterHaResources [[-PveTicket] <PveTicket>] [-Sid] <String> [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Remove-PveClusterHaResources [[-PveTicket] <PveTicket>] [[-Purge] <Boolean>] [-Sid] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -45,6 +45,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Purge
+Remove this resource from rules that reference it, deleting the rule if this resource is the only resource in the rule
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Sid
 HA resource ID.
 This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100).
@@ -56,7 +71,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

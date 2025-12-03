@@ -42,20 +42,6 @@ Get-Module -list -Name Corsinvest.ProxmoxVE.Api
 
 #!markdown
 
-# Documentation
-
-For build documentation use command **Build-PveDocumentation**
-
-#!pwsh
-
-#Generate documentation
-Build-PveDocumentation -OutputFile cv4pve-api-pwh-documentation.html
-
-#Open documentation
-Invoke-Expression  .\cv4pve-api-pwh-documentation.html
-
-#!markdown
-
 ## Connection Cluster
 
 #!pwsh

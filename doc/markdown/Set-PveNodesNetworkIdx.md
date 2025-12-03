@@ -462,7 +462,7 @@ Accept wildcard characters: False
 ```
 
 ### -Type
-Network interface type Enum: bridge,bond,eth,alias,vlan,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,unknown
+Network interface type Enum: bridge,bond,eth,alias,vlan,fabric,OVSBridge,OVSBond,OVSPort,OVSIntPort,vnet,unknown
 
 ```yaml
 Type: String

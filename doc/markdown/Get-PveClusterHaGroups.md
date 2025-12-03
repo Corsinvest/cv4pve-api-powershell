@@ -17,6 +17,7 @@ Get-PveClusterHaGroups [[-PveTicket] <PveTicket>] [-ProgressAction <ActionPrefer
 
 ## DESCRIPTION
 Get HA groups.
+(deprecated in favor of HA rules)
 
 ## EXAMPLES
 

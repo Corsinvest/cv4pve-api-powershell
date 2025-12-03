@@ -14,15 +14,16 @@ schema: 2.0.0
 ```
 New-PveNodesLxc [[-PveTicket] <PveTicket>] [[-Arch] <String>] [[-Bwlimit] <Single>] [[-Cmode] <String>]
  [[-Console] <Boolean>] [[-Cores] <Int32>] [[-Cpulimit] <Single>] [[-Cpuunits] <Int32>] [[-Debug_] <Boolean>]
- [[-Description] <String>] [[-DevN] <Hashtable>] [[-Features] <String>] [[-Force] <Boolean>]
- [[-Hookscript] <String>] [[-Hostname] <String>] [[-IgnoreUnpackErrors] <Boolean>] [[-Lock] <String>]
- [[-Memory] <Int32>] [[-MpN] <Hashtable>] [[-Nameserver] <String>] [[-NetN] <Hashtable>] [-Node] <String>
- [[-Onboot] <Boolean>] [-Ostemplate] <String> [[-Ostype] <String>] [[-Password] <SecureString>]
- [[-Pool] <String>] [[-Protection] <Boolean>] [[-Restore] <Boolean>] [[-Rootfs] <String>]
- [[-Searchdomain] <String>] [[-SshPublicKeys] <String>] [[-Start] <Boolean>] [[-Startup] <String>]
- [[-Storage] <String>] [[-Swap] <Int32>] [[-Tags] <String>] [[-Template] <Boolean>] [[-Timezone] <String>]
- [[-Tty] <Int32>] [[-Unique] <Boolean>] [[-Unprivileged] <Boolean>] [[-UnusedN] <Hashtable>] [-Vmid] <Int32>
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Description] <String>] [[-DevN] <Hashtable>] [[-Entrypoint] <String>] [[-Env] <String>]
+ [[-Features] <String>] [[-Force] <Boolean>] [[-HaManaged] <Boolean>] [[-Hookscript] <String>]
+ [[-Hostname] <String>] [[-IgnoreUnpackErrors] <Boolean>] [[-Lock] <String>] [[-Memory] <Int32>]
+ [[-MpN] <Hashtable>] [[-Nameserver] <String>] [[-NetN] <Hashtable>] [-Node] <String> [[-Onboot] <Boolean>]
+ [-Ostemplate] <String> [[-Ostype] <String>] [[-Password] <SecureString>] [[-Pool] <String>]
+ [[-Protection] <Boolean>] [[-Restore] <Boolean>] [[-Rootfs] <String>] [[-Searchdomain] <String>]
+ [[-SshPublicKeys] <String>] [[-Start] <Boolean>] [[-Startup] <String>] [[-Storage] <String>] [[-Swap] <Int32>]
+ [[-Tags] <String>] [[-Template] <Boolean>] [[-Timezone] <String>] [[-Tty] <Int32>] [[-Unique] <Boolean>]
+ [[-Unprivileged] <Boolean>] [[-UnusedN] <Hashtable>] [-Vmid] <Int32> [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -214,6 +215,37 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Entrypoint
+Command to run as init, optionally with arguments; may start with an absolute path, relative path, or a binary in $PATH.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Env
+The container runtime environment as NUL-separated list.
+Replaces any lxc.environment.runtime entries in the config.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Features
 Allow containers access to advanced features.
 
@@ -223,7 +255,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 14
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -238,7 +270,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 15
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -HaManaged
+Add the CT as a HA resource after it was created.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -253,7 +300,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 17
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -268,7 +315,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 18
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -283,7 +330,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 19
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -299,7 +346,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 20
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -314,7 +361,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 21
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -330,7 +377,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 19
+Position: 22
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -346,7 +393,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 23
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -361,7 +408,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 24
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -376,7 +423,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 22
+Position: 25
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -391,7 +438,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 23
+Position: 26
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -406,7 +453,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 24
+Position: 27
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -424,7 +471,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 25
+Position: 28
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -439,7 +486,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 26
+Position: 29
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -454,7 +501,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 27
+Position: 30
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -470,7 +517,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 28
+Position: 31
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -485,7 +532,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 29
+Position: 32
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -500,7 +547,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 30
+Position: 33
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -516,7 +563,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 31
+Position: 34
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -531,7 +578,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 32
+Position: 35
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -546,7 +593,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 33
+Position: 36
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -564,7 +611,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 34
+Position: 37
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -579,7 +626,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 35
+Position: 38
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -594,7 +641,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 36
+Position: 39
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -610,7 +657,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 37
+Position: 40
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -625,7 +672,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 38
+Position: 41
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -642,7 +689,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 39
+Position: 42
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -657,7 +704,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 40
+Position: 43
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -672,7 +719,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 41
+Position: 44
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -680,6 +727,8 @@ Accept wildcard characters: False
 
 ### -Unprivileged
 Makes the container run as unprivileged user.
+For creation, the default is 1.
+For restore, the default is the value from the backup.
 (Should not be modified manually.)
 
 ```yaml
@@ -688,7 +737,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 42
+Position: 45
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -704,7 +753,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 43
+Position: 46
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -719,7 +768,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 44
+Position: 47
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

@@ -13,8 +13,8 @@ schema: 2.0.0
 
 ```
 New-PveClusterSdnDns [[-PveTicket] <PveTicket>] [-Dns] <String> [[-Fingerprint] <String>] [-Key] <String>
- [[-Reversemaskv6] <Int32>] [[-Reversev6mask] <Int32>] [[-Ttl] <Int32>] [-Type] <String> [-Url] <String>
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-LockToken] <String>] [[-Reversemaskv6] <Int32>] [[-Reversev6mask] <Int32>] [[-Ttl] <Int32>]
+ [-Type] <String> [-Url] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -91,22 +91,22 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Reversemaskv6
---
+### -LockToken
+the token for unlocking the global SDN configuration
 
 ```yaml
-Type: Int32
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 5
-Default value: 0
+Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Reversev6mask
+### -Reversemaskv6
 --
 
 ```yaml
@@ -121,7 +121,7 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Ttl
+### -Reversev6mask
 --
 
 ```yaml
@@ -131,6 +131,21 @@ Aliases:
 
 Required: False
 Position: 7
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Ttl
+--
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -146,7 +161,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 8
+Position: 9
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -161,7 +176,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

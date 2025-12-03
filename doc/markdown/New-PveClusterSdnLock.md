@@ -5,19 +5,19 @@ online version:
 schema: 2.0.0
 ---
 
-# Get-PveNodesScanGlusterfs
+# New-PveClusterSdnLock
 
 ## SYNOPSIS
 
 ## SYNTAX
 
 ```
-Get-PveNodesScanGlusterfs [[-PveTicket] <PveTicket>] [-Node] <String> [-Server] <String>
+New-PveClusterSdnLock [[-PveTicket] <PveTicket>] [[-AllowPending] <Boolean>]
  [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Scan remote GlusterFS server.
+Acquire global lock for SDN configuration
 
 ## EXAMPLES
 
@@ -45,32 +45,17 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Node
-The cluster node name.
+### -AllowPending
+if true, allow acquiring lock even though there are pending changes
 
 ```yaml
-Type: String
+Type: Boolean
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Server
-The server address (name or IP).
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

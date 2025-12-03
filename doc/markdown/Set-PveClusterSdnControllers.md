@@ -14,8 +14,9 @@ schema: 2.0.0
 ```
 Set-PveClusterSdnControllers [[-PveTicket] <PveTicket>] [[-Asn] <Int32>] [[-BgpMultipathAsPathRelax] <Boolean>]
  [-Controller] <String> [[-Delete] <String>] [[-Digest] <String>] [[-Ebgp] <Boolean>] [[-EbgpMultihop] <Int32>]
- [[-IsisDomain] <String>] [[-IsisIfaces] <String>] [[-IsisNet] <String>] [[-Loopback] <String>]
- [[-Node] <String>] [[-Peers] <String>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Fabric] <String>] [[-IsisDomain] <String>] [[-IsisIfaces] <String>] [[-IsisNet] <String>]
+ [[-LockToken] <String>] [[-Loopback] <String>] [[-Node] <String>] [[-Peers] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -63,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -BgpMultipathAsPathRelax
---
+Consider different AS paths of equal length for multipath computation.
 
 ```yaml
 Type: Boolean
@@ -124,8 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -Ebgp
-Enable ebgp.
-(remote-as external)
+Enable eBGP (remote-as external).
 
 ```yaml
 Type: Boolean
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -EbgpMultihop
---
+Set maximum amount of hops for eBGP peers.
 
 ```yaml
 Type: Int32
@@ -154,8 +154,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IsisDomain
-ISIS domain.
+### -Fabric
+SDN fabric to use as underlay for this EVPN controller.
 
 ```yaml
 Type: String
@@ -169,8 +169,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IsisIfaces
-ISIS interface.
+### -IsisDomain
+Name of the IS-IS domain.
 
 ```yaml
 Type: String
@@ -184,8 +184,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -IsisNet
-ISIS network entity title.
+### -IsisIfaces
+Comma-separated list of interfaces where IS-IS should be active.
 
 ```yaml
 Type: String
@@ -199,8 +199,8 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Loopback
-source loopback interface.
+### -IsisNet
+Network Entity title for this node in the IS-IS network.
 
 ```yaml
 Type: String
@@ -209,6 +209,36 @@ Aliases:
 
 Required: False
 Position: 12
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -LockToken
+the token for unlocking the global SDN configuration
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Loopback
+Name of the loopback/dummy interface that provides the Router-IP.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -223,7 +253,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 13
+Position: 15
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -238,7 +268,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 16
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

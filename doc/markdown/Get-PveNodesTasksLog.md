@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Limit
-The amount of lines to read from the tasklog.
+The number of lines to read from the tasklog.
 
 ```yaml
 Type: Int32

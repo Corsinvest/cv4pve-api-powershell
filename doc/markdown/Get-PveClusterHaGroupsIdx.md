@@ -18,6 +18,7 @@ Get-PveClusterHaGroupsIdx [[-PveTicket] <PveTicket>] [-Group] <String> [-Progres
 
 ## DESCRIPTION
 Read ha group configuration.
+(deprecated in favor of HA rules)
 
 ## EXAMPLES
 

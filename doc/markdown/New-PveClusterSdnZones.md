@@ -15,10 +15,11 @@ schema: 2.0.0
 New-PveClusterSdnZones [[-PveTicket] <PveTicket>] [[-AdvertiseSubnets] <Boolean>] [[-Bridge] <String>]
  [[-BridgeDisableMacLearning] <Boolean>] [[-Controller] <String>] [[-Dhcp] <String>]
  [[-DisableArpNdSuppression] <Boolean>] [[-Dns] <String>] [[-Dnszone] <String>] [[-DpId] <Int32>]
- [[-Exitnodes] <String>] [[-ExitnodesLocalRouting] <Boolean>] [[-ExitnodesPrimary] <String>] [[-Ipam] <String>]
- [[-Mac] <String>] [[-Mtu] <Int32>] [[-Nodes] <String>] [[-Peers] <String>] [[-Reversedns] <String>]
- [[-RtImport] <String>] [[-Tag] <Int32>] [-Type] <String> [[-VlanProtocol] <String>] [[-VrfVxlan] <Int32>]
- [[-VxlanPort] <Int32>] [-Zone] <String> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Exitnodes] <String>] [[-ExitnodesLocalRouting] <Boolean>] [[-ExitnodesPrimary] <String>]
+ [[-Fabric] <String>] [[-Ipam] <String>] [[-LockToken] <String>] [[-Mac] <String>] [[-Mtu] <Int32>]
+ [[-Nodes] <String>] [[-Peers] <String>] [[-Reversedns] <String>] [[-RtImport] <String>] [[-Tag] <Int32>]
+ [-Type] <String> [[-VlanProtocol] <String>] [[-VrfVxlan] <Int32>] [[-VxlanPort] <Int32>] [-Zone] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -51,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -AdvertiseSubnets
-Advertise evpn subnets if you have silent hosts
+Advertise IP prefixes (Type-5 routes) instead of MAC/IP pairs (Type-2 routes).
 
 ```yaml
 Type: Boolean
@@ -66,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -Bridge
---
+The bridge for which VLANs should be managed.
 
 ```yaml
 Type: String
@@ -96,7 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -Controller
-Frr router name
+Controller for this zone.
 
 ```yaml
 Type: String
@@ -126,7 +127,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableArpNdSuppression
-Disable ipv4 arp && ipv6 neighbour discovery suppression
+Suppress IPv4 ARP && IPv6 Neighbour Discovery messages.
 
 ```yaml
 Type: Boolean
@@ -201,7 +202,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExitnodesLocalRouting
-Allow exitnodes to connect to evpn guests
+Allow exitnodes to connect to EVPN guests.
 
 ```yaml
 Type: Boolean
@@ -216,7 +217,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExitnodesPrimary
-Force traffic to this exitnode first.
+Force traffic through this exitnode first.
 
 ```yaml
 Type: String
@@ -225,6 +226,21 @@ Aliases:
 
 Required: False
 Position: 13
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Fabric
+SDN fabric to use as underlay for this VXLAN zone.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -239,14 +255,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 15
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -Mac
-Anycast logical router mac address
+### -LockToken
+the token for unlocking the global SDN configuration
 
 ```yaml
 Type: String
@@ -254,14 +270,29 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 16
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Mac
+Anycast logical router mac address.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Mtu
-MTU
+MTU of the zone, will be used for the created VNet bridges.
 
 ```yaml
 Type: Int32
@@ -269,7 +300,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 16
+Position: 18
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -284,14 +315,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 19
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Peers
-peers address list.
+Comma-separated list of peers, that are part of the VXLAN zone.
+Usually the IPs of the nodes.
 
 ```yaml
 Type: String
@@ -299,7 +331,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 18
+Position: 20
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -314,14 +346,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 19
+Position: 21
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -RtImport
-Route-Target import
+List of Route Targets that should be imported into the VRF of the zone.
 
 ```yaml
 Type: String
@@ -329,14 +361,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 20
+Position: 22
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -Tag
-Service-VLAN Tag
+Service-VLAN Tag (outer VLAN)
 
 ```yaml
 Type: Int32
@@ -344,7 +376,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 23
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -360,14 +392,15 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 22
+Position: 24
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -VlanProtocol
--- Enum: 802.1q,802.1ad
+Which VLAN protocol should be used for the creation of the QinQ zone.
+Enum: 802.1q,802.1ad
 
 ```yaml
 Type: String
@@ -375,14 +408,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 23
+Position: 25
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -VrfVxlan
-l3vni.
+VNI for the zone VRF.
 
 ```yaml
 Type: Int32
@@ -390,14 +423,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 24
+Position: 26
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
 ### -VxlanPort
-Vxlan tunnel udp port (default 4789).
+UDP port that should be used for the VXLAN tunnel (default 4789).
 
 ```yaml
 Type: Int32
@@ -405,7 +438,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 25
+Position: 27
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -420,7 +453,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 26
+Position: 28
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

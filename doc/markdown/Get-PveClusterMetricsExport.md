@@ -13,7 +13,7 @@ schema: 2.0.0
 
 ```
 Get-PveClusterMetricsExport [[-PveTicket] <PveTicket>] [[-History] <Boolean>] [[-LocalOnly] <Boolean>]
- [[-StartTime] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-NodeList] <String>] [[-StartTime] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -76,6 +76,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -NodeList
+Only return metrics from nodes passed as comma-separated list
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -StartTime
 Only include metrics with a timestamp \> start-time.
 
@@ -85,7 +100,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

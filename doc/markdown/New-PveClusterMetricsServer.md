@@ -14,9 +14,11 @@ schema: 2.0.0
 ```
 New-PveClusterMetricsServer [[-PveTicket] <PveTicket>] [[-ApiPathPrefix] <String>] [[-Bucket] <String>]
  [[-Disable] <Boolean>] [-Id] <String> [[-Influxdbproto] <String>] [[-MaxBodySize] <Int32>] [[-Mtu] <Int32>]
- [[-Organization] <String>] [[-Path] <String>] [-Port] <Int32> [[-Proto] <String>] [-Server] <String>
- [[-Timeout] <Int32>] [[-Token] <String>] [-Type] <String> [[-VerifyCertificate] <Boolean>]
- [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Organization] <String>] [[-OtelCompression] <String>] [[-OtelHeaders] <String>]
+ [[-OtelMaxBodySize] <Int32>] [[-OtelPath] <String>] [[-OtelProtocol] <String>]
+ [[-OtelResourceAttributes] <String>] [[-OtelTimeout] <Int32>] [[-OtelVerifySsl] <Boolean>] [[-Path] <String>]
+ [-Port] <Int32> [[-Proto] <String>] [-Server] <String> [[-Timeout] <Int32>] [[-Token] <String>]
+ [-Type] <String> [[-VerifyCertificate] <Boolean>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -173,6 +175,126 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -OtelCompression
+Compression algorithm for requests Enum: none,gzip
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 10
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelHeaders
+Custom HTTP headers (JSON format, base64 encoded)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelMaxBodySize
+Maximum request body size in bytes
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelPath
+OTLP endpoint path
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelProtocol
+HTTP protocol Enum: http,https
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelResourceAttributes
+Additional resource attributes as JSON, base64 encoded
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 15
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelTimeout
+HTTP request timeout in seconds
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 16
+Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -OtelVerifySsl
+Verify SSL certificates
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 17
+Default value: False
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Path
 root graphite path (ex':' proxmox.mycluster.mykey)
 
@@ -182,7 +304,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 18
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -197,7 +319,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 11
+Position: 19
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -213,7 +335,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 12
+Position: 20
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -228,7 +350,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 13
+Position: 21
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -243,7 +365,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 14
+Position: 22
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -260,7 +382,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 15
+Position: 23
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -268,7 +390,7 @@ Accept wildcard characters: False
 
 ### -Type
 Plugin type.
-Enum: graphite,influxdb
+Enum: graphite,influxdb,opentelemetry
 
 ```yaml
 Type: String
@@ -276,7 +398,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 16
+Position: 24
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -291,7 +413,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 17
+Position: 25
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

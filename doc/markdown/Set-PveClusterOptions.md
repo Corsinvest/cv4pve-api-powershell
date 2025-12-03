@@ -16,9 +16,9 @@ Set-PveClusterOptions [[-PveTicket] <PveTicket>] [[-Bwlimit] <String>] [[-Consen
  [[-Console] <String>] [[-Crs] <String>] [[-Delete] <String>] [[-Description] <String>] [[-EmailFrom] <String>]
  [[-Fencing] <String>] [[-Ha] <String>] [[-HttpProxy] <String>] [[-Keyboard] <String>] [[-Language] <String>]
  [[-MacPrefix] <String>] [[-MaxWorkers] <Int32>] [[-Migration] <String>] [[-MigrationUnsecure] <Boolean>]
- [[-NextId] <String>] [[-Notify] <String>] [[-RegisteredTags] <String>] [[-TagStyle] <String>]
- [[-U2f] <String>] [[-UserTagAccess] <String>] [[-Webauthn] <String>] [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+ [[-NextId] <String>] [[-Notify] <String>] [[-RegisteredTags] <String>] [[-Replication] <String>]
+ [[-TagStyle] <String>] [[-U2f] <String>] [[-UserTagAccess] <String>] [[-Webauthn] <String>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -350,6 +350,21 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -Replication
+For cluster wide replication settings.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 21
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -TagStyle
 Tag style options.
 
@@ -359,7 +374,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 21
+Position: 22
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -374,7 +389,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 22
+Position: 23
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -389,7 +404,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 23
+Position: 24
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -404,7 +419,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 24
+Position: 25
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False

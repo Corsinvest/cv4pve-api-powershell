@@ -12,7 +12,8 @@ schema: 2.0.0
 ## SYNTAX
 
 ```
-Set-PveClusterSdn [[-PveTicket] <PveTicket>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+Set-PveClusterSdn [[-PveTicket] <PveTicket>] [[-LockToken] <String>] [[-ReleaseLock] <Boolean>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +41,36 @@ Aliases:
 Required: False
 Position: 1
 Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -LockToken
+the token for unlocking the global SDN configuration
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ReleaseLock
+When lock-token has been provided and configuration successfully commited, release the lock automatically afterwards
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

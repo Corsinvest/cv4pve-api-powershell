@@ -19,6 +19,7 @@ Set-PveClusterHaGroups [[-PveTicket] <PveTicket>] [[-Comment] <String>] [[-Delet
 
 ## DESCRIPTION
 Update ha group configuration.
+(deprecated in favor of HA rules)
 
 ## EXAMPLES
 

@@ -13,9 +13,10 @@ schema: 2.0.0
 
 ```
 New-PveNodesQemuStatusStart [[-PveTicket] <PveTicket>] [[-ForceCpu] <String>] [[-Machine] <String>]
- [[-Migratedfrom] <String>] [[-MigrationNetwork] <String>] [[-MigrationType] <String>] [-Node] <String>
- [[-Skiplock] <Boolean>] [[-Stateuri] <String>] [[-Targetstorage] <String>] [[-Timeout] <Int32>]
- [-Vmid] <Int32> [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-Migratedfrom] <String>] [[-MigrationNetwork] <String>] [[-MigrationType] <String>]
+ [[-NetsHostMtu] <String>] [-Node] <String> [[-Skiplock] <Boolean>] [[-Stateuri] <String>]
+ [[-Targetstorage] <String>] [[-Timeout] <Int32>] [-Vmid] <Int32> [[-WithConntrackState] <Boolean>]
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -124,6 +125,23 @@ Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
+### -NetsHostMtu
+Used for migration compat.
+List of VirtIO network devices and their effective host_mtu setting according to the QEMU object model on the source side of the migration.
+A value of 0 means that the host_mtu parameter is to be avoided for the corresponding device.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
 ### -Node
 The cluster node name.
 
@@ -133,7 +151,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -148,7 +166,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 8
+Position: 9
 Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -163,7 +181,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 9
+Position: 10
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -180,7 +198,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 10
+Position: 11
 Default value: None
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -195,7 +213,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 11
+Position: 12
 Default value: 0
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
@@ -210,8 +228,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 12
+Position: 13
 Default value: 0
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -WithConntrackState
+Whether to migrate conntrack entries for running VMs.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 14
+Default value: False
 Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```

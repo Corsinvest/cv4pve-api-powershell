@@ -79,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -Digest
-Prevent changes if current configuration file has different SHA1"		    ." digest.
+Prevent changes if current configuration file has different SHA1 digest.
 This can be used to prevent concurrent modifications.
 
 ```yaml
@@ -157,7 +157,7 @@ Accept wildcard characters: False
 ```
 
 ### -TargetDigest
-Prevent changes if the current config file of the target VM has a"		    ." different SHA1 digest.
+Prevent changes if the current config file of the target VM has a different SHA1 digest.
 This can be used to detect concurrent modifications.
 
 ```yaml

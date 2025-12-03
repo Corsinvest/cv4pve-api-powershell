@@ -5,19 +5,20 @@ online version:
 schema: 2.0.0
 ---
 
-# Build-PveDocumentation
+# Get-PveNodesCapabilitiesQemuMigration
 
 ## SYNOPSIS
 
 ## SYNTAX
 
 ```
-Build-PveDocumentation [[-TemplateFile] <String>] [-OutputFile] <String> [-ProgressAction <ActionPreference>]
- [<CommonParameters>]
+Get-PveNodesCapabilitiesQemuMigration [[-PveTicket] <PveTicket>] [-Node] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Build documentation for Power Shell command For Proxmox VE
+Get node-specific QEMU migration capabilities of the node.
+Requires the 'Sys.Audit' permission on '/nodes/\<node\>'.
 
 ## EXAMPLES
 
@@ -30,23 +31,23 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -TemplateFile
-Template file for generation documentation
+### -PveTicket
+Ticket data connection.
 
 ```yaml
-Type: String
+Type: PveTicket
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 1
-Default value: Https://raw.githubusercontent.com/corsinvest/cv4pve-api-powershell/master/help-out-html.ps1
-Accept pipeline input: False
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
-### -OutputFile
-Output file
+### -Node
+The cluster node name.
 
 ```yaml
 Type: String
@@ -56,7 +57,7 @@ Aliases:
 Required: True
 Position: 2
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
@@ -82,7 +83,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### System.Void
+### PveResponse. Return response.
 ## NOTES
 
 ## RELATED LINKS
