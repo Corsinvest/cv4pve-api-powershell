@@ -1,0 +1,2040 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="PowerShell Module for Proxmox VE API - Complete cmdlet documentation">
+      
+      
+        <meta name="author" content="Corsinvest Srl">
+      
+      
+        <link rel="canonical" href="https://corsinvest.github.io/cv4pve-api-powershell/index.html">
+      
+      
+      
+        <link rel="next" href="cmdlets-index.html">
+      
+      
+        
+      
+      
+      <link rel="icon" href="icon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>cv4pve-api-powershell</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cv4pve-api-powershell" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="cv4pve-api-powershell" class="md-header__button md-logo" aria-label="cv4pve-api-powershell" data-md-component="logo">
+      
+  <img src="icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cv4pve-api-powershell
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Home
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Corsinvest/cv4pve-api-powershell" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Corsinvest/cv4pve-api-powershell
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    <li class="md-tabs__item md-tabs__item--active">
+      <a href="index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="cmdlets-index.html" class="md-tabs__link">
+          
+  
+  
+  Cmdlet Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="cv4pve-api-powershell" class="md-nav__button md-logo" aria-label="cv4pve-api-powershell" data-md-component="logo">
+      
+  <img src="icon.png" alt="logo">
+
+    </a>
+    cv4pve-api-powershell
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Corsinvest/cv4pve-api-powershell" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Corsinvest/cv4pve-api-powershell
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="index.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#copyright-and-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📰 Copyright and License
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commercial-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🦺 Commercial Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✨ Key Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Key Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication &amp; Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-machine-container-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Machine &amp; Container Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#developer-friendly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developer-Friendly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utility-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Utility Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Utility Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-operations-by-id-or-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VM Operations (by ID or Name)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring &amp; Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshot Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📙 Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-learning-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎓 Tutorial &amp; Learning Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📦 Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📦 Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-powershell-gallery-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From PowerShell Gallery (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connecting-to-your-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connecting to Your Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connecting to Your Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-username-and-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Username and Password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-api-token-proxmox-ve-62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using API Token (Proxmox VE 6.2+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💡 Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VM Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-management_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshot Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#working-with-indexed-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Indexed Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-management_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pveresponse-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PveResponse Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pveticket-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PveTicket Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#direct-api-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct API Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-availability-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High Availability Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤝 Contributing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Related Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📞 Support
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📞 Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#community-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Community Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commercial-support_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commercial Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#show-your-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⭐ Show Your Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cmdlet Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cmdlet Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cmdlets-index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#copyright-and-license" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📰 Copyright and License
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commercial-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🦺 Commercial Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📚 Overview
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ✨ Key Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="✨ Key Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#core-capabilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Capabilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Authentication &amp; Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-machine-container-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Machine &amp; Container Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#advanced-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Advanced Features
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#developer-friendly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Developer-Friendly
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#utility-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ Utility Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🛠️ Utility Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#time-conversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Time Conversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-operations-by-id-or-name" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VM Operations (by ID or Name)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-statistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring &amp; Statistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshot Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📙 Documentation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tutorial-learning-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎓 Tutorial &amp; Learning Resources
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 Requirements
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📦 Installation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📦 Installation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#from-powershell-gallery-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        From PowerShell Gallery (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#manual-installation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Manual Installation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quick-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚀 Quick Start
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🚀 Quick Start">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#connecting-to-your-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connecting to Your Cluster
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Connecting to Your Cluster">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-username-and-password" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using Username and Password
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-api-token-proxmox-ve-62" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using API Token (Proxmox VE 6.2+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#usage-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💡 Usage Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💡 Usage Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VM Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshot-management_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshot Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#working-with-indexed-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Working with Indexed Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#monitoring-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Monitoring Resources
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-management_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#advanced-features_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔧 Advanced Features
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔧 Advanced Features">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pveresponse-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PveResponse Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pveticket-class" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PveTicket Class
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#direct-api-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Direct API Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#high-availability-connections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        High Availability Connections
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🤝 Contributing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-projects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 Related Projects
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📞 Support
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="📞 Support">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#community-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Community Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commercial-support_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Commercial Support
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#show-your-support" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⭐ Show Your Support
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cv4pve-api-powershell">cv4pve-api-powershell<a class="headerlink" href="#cv4pve-api-powershell" title="Permanent link">&para;</a></h1>
+<p><a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/"><img alt="PowerShell for Proxmox VE" src="https://img.shields.io/badge/PowerShell-Proxmox%20VE-blue?style=for-the-badge" /></a>
+<a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/"><img alt="PowerShell Gallery Version" src="https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api?style=for-the-badge" /></a>
+<a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/"><img alt="Downloads" src="https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api?style=for-the-badge" /></a>
+<a href="LICENSE"><img alt="License" src="https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell?style=for-the-badge" /></a>
+<a href="https://github.com/Corsinvest/cv4pve-api-powershell/stargazers"><img alt="GitHub Stars" src="https://img.shields.io/github/stars/Corsinvest/cv4pve-api-powershell?style=for-the-badge" /></a></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    ______                _                      __
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>   / ____/___  __________(_)___ _   _____  _____/ /_
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  / /   / __ \/ ___/ ___/ / __ \ | / / _ \/ ___/ __/
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a> / /___/ /_/ / /  (__  ) / / / / |/ /  __(__  ) /_
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a> \____/\____/_/  /____/_/_/ /_/|___/\___/____/\__/
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>         Corsinvest - Proxmox VE API PowerShell
+</code></pre></div>
+<p>A comprehensive PowerShell module that provides everything you need to build powerful automation scripts that manage <a href="https://www.proxmox.com/en/proxmox-ve">Proxmox VE</a> infrastructure programmatically.</p>
+<p>Part of the <a href="https://www.corsinvest.it/cv4pve">cv4pve</a> suite of tools.</p>
+<p><strong>Quick Links:</strong> <a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/">PowerShell Gallery</a> | <a href="https://corsinvest.github.io/cv4pve-api-powershell/">Documentation</a> | <a href="https://pve.proxmox.com/pve-docs/api-viewer/">Proxmox VE API</a></p>
+<h2 id="copyright-and-license">📰 Copyright and License<a class="headerlink" href="#copyright-and-license" title="Permanent link">&para;</a></h2>
+<p>Copyright © 2020-2025 Corsinvest Srl</p>
+<p>For licensing details please visit <a href="LICENSE">LICENSE</a></p>
+<h2 id="commercial-support">🦺 Commercial Support<a class="headerlink" href="#commercial-support" title="Permanent link">&para;</a></h2>
+<p>This software is part of a suite of tools called cv4pve-api-powershell.
+If you require commercial support, please visit the <a href="https://www.corsinvest.it/cv4pve">Corsinvest website</a></p>
+<h2 id="overview">📚 Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<p>The <strong>cv4pve-api-powershell</strong> module enables system administrators and developers to manage and automate Proxmox VE environments using PowerShell.</p>
+<p>It provides a comprehensive set of cmdlets that wrap the Proxmox REST API, allowing operations such as VM and container management, node monitoring, backup handling, and storage inspection—all from PowerShell.</p>
+<p>This module serves as the <strong>PowerCLI equivalent for Proxmox VE</strong>:
+- While PowerCLI facilitates VMware vSphere automation via PowerShell
+- <strong>cv4pve-api-powershell</strong> offers similar capabilities for Proxmox VE environments</p>
+<p><img alt="PowerShell for Proxmox VE" src="https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/images/powershell.png" /></p>
+<h2 id="key-features">✨ Key Features<a class="headerlink" href="#key-features" title="Permanent link">&para;</a></h2>
+<h3 id="core-capabilities">Core Capabilities<a class="headerlink" href="#core-capabilities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Easy to Learn</strong> - Intuitive PowerShell cmdlet interface</li>
+<li><strong>Complete API Coverage</strong> - Automatically generated from official Proxmox VE API documentation</li>
+<li><strong>Multiple Response Types</strong> - Support for JSON, PNG, ExtJS, HTML, and text formats</li>
+<li><strong>Rich Response Objects</strong> - PveResponse class with detailed request/response information</li>
+<li><strong>Cross-Platform</strong> - Works on Windows, Linux, and macOS (PowerShell 6.0+)</li>
+<li><strong>No Remote Installation Required</strong> - Execute from any machine outside Proxmox VE</li>
+</ul>
+<h3 id="authentication-security">Authentication &amp; Security<a class="headerlink" href="#authentication-security" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>API Token Support</strong> - Proxmox VE 6.2+ API token authentication</li>
+<li><strong>Two-Factor Authentication</strong> - One-time password (OTP) support</li>
+<li><strong>Secure Connections</strong> - TLS/SSL support with certificate validation options</li>
+<li><strong>High Availability</strong> - Multi-host cluster connection for HA environments</li>
+</ul>
+<h3 id="virtual-machine-container-management">Virtual Machine &amp; Container Management<a class="headerlink" href="#virtual-machine-container-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>VM Operations</strong> - Start, stop, suspend, resume, reset, unlock</li>
+<li><strong>Container Support</strong> - Full LXC container lifecycle management</li>
+<li><strong>Snapshot Management</strong> - Create, list, rollback, and delete snapshots</li>
+<li><strong>Clone Operations</strong> - Clone VMs and containers</li>
+<li><strong>Resource Monitoring</strong> - RRD data collection from nodes, QEMU VMs, and LXC containers</li>
+</ul>
+<h3 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Direct API Access</strong> - Use <code>Invoke-PveRestApi</code> for custom API calls</li>
+<li><strong>Indexed Parameters</strong> - Support for indexed parameters (e.g., -NetN, -ScsiN, -IdeN)</li>
+<li><strong>Task Management</strong> - Wait for task completion, check task status</li>
+<li><strong>Utility Functions</strong> - Unix time conversion, VM lookup by ID or name, and more</li>
+<li><strong>SPICE Integration</strong> - Connect to VM consoles via <code>Invoke-PveSpice</code></li>
+<li><strong>Documentation Generation</strong> - Built-in help documentation builder</li>
+</ul>
+<h3 id="developer-friendly">Developer-Friendly<a class="headerlink" href="#developer-friendly" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>PowerShell Gallery</strong> - Simple installation via <code>Install-Module</code></li>
+<li><strong>Comprehensive Documentation</strong> - HTML and Markdown documentation included</li>
+<li><strong>Interactive Tutorials</strong> - VSCode notebook tutorials available</li>
+<li><strong>Open Source</strong> - Full source code available on GitHub</li>
+</ul>
+<h2 id="utility-functions">🛠️ Utility Functions<a class="headerlink" href="#utility-functions" title="Permanent link">&para;</a></h2>
+<p>The module includes a rich set of utility cmdlets to simplify common operations:</p>
+<h3 id="time-conversion">Time Conversion<a class="headerlink" href="#time-conversion" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>ConvertFrom-PveUnixTime</code> - Convert Unix timestamp to DateTime</li>
+<li><code>ConvertTo-PveUnixTime</code> - Convert DateTime to Unix timestamp</li>
+</ul>
+<h3 id="task-management">Task Management<a class="headerlink" href="#task-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>Wait-PveTaskIsFinish</code> - Wait for a task to complete</li>
+<li><code>Get-PveTaskIsRunning</code> - Check if a task is still running</li>
+</ul>
+<h3 id="vm-operations-by-id-or-name">VM Operations (by ID or Name)<a class="headerlink" href="#vm-operations-by-id-or-name" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>Get-PveVm</code> - Find VM by ID or name</li>
+<li><code>Start-PveVm</code> - Start a VM</li>
+<li><code>Stop-PveVm</code> - Stop a VM</li>
+<li><code>Suspend-PveVm</code> - Suspend a VM</li>
+<li><code>Resume-PveVm</code> - Resume a VM</li>
+<li><code>Reset-PveVm</code> - Reset a VM</li>
+<li><code>Unlock-PveVm</code> - Unlock a VM</li>
+</ul>
+<h3 id="monitoring-statistics">Monitoring &amp; Statistics<a class="headerlink" href="#monitoring-statistics" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>Get-PveNodeMonitoring</code> - Get RRD monitoring data from nodes</li>
+<li><code>Get-PveQemuMonitoring</code> - Get RRD monitoring data from QEMU VMs</li>
+<li><code>Get-PveLxcMonitoring</code> - Get RRD monitoring data from LXC containers</li>
+</ul>
+<h3 id="snapshot-management">Snapshot Management<a class="headerlink" href="#snapshot-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>Get-PveVmSnapshot</code> - Get snapshots for a VM</li>
+<li><code>New-PveVmSnapshot</code> - Create a new snapshot</li>
+<li><code>Undo-PveVmSnapshot</code> - Rollback to a snapshot</li>
+<li><code>Remove-PveVmSnapshot</code> - Delete a snapshot</li>
+</ul>
+<p>And many more! Explore the full cmdlet list with <code>Get-Command -Module Corsinvest.ProxmoxVE.Api</code></p>
+<h2 id="documentation">📙 Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
+<p>Comprehensive documentation is available in multiple formats:</p>
+<ul>
+<li><strong><a href="https://corsinvest.github.io/cv4pve-api-powershell/">HTML Documentation</a></strong> - Full API reference in HTML format</li>
+<li><strong><a href="https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/about_cv4pve-api-powershell.md">Markdown Documentation</a></strong> - Documentation in Markdown format</li>
+</ul>
+<h2 id="tutorial-learning-resources">🎓 Tutorial &amp; Learning Resources<a class="headerlink" href="#tutorial-learning-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong><a href="https://tinyurl.com/cv4pve-api-pwsh-learn">Interactive VSCode Notebook Tutorial</a></strong> - Learn by doing with interactive examples</li>
+<li><strong><a href="https://asciinema.org/a/656606">Video Demo</a></strong> - Watch a quick demonstration of the module in action</li>
+</ul>
+<p><a href="https://asciinema.org/a/656606" target="_blank"><img src="https://asciinema.org/a/656606.svg" /></a></p>
+<h2 id="requirements">📋 Requirements<a class="headerlink" href="#requirements" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>PowerShell 6.0 or higher</strong> (PowerShell Core)</li>
+<li><strong>Network access</strong> to your Proxmox VE cluster</li>
+<li><strong>Valid credentials</strong> or API token for Proxmox VE</li>
+</ul>
+<h2 id="installation">📦 Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h2>
+<h3 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h3>
+<p>First, ensure you have <a href="https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell">PowerShell</a> installed on your system (version 6.0 or later).</p>
+<h3 id="from-powershell-gallery-recommended">From PowerShell Gallery (Recommended)<a class="headerlink" href="#from-powershell-gallery-recommended" title="Permanent link">&para;</a></h3>
+<p>The easiest way to install is directly from the <a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/">PowerShell Gallery</a>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">Install-Module</span> <span class="n">-Name</span> <span class="n">Corsinvest</span><span class="p">.</span><span class="n">ProxmoxVE</span><span class="p">.</span><span class="n">Api</span>
+</code></pre></div>
+<h3 id="manual-installation">Manual Installation<a class="headerlink" href="#manual-installation" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Download the <code>Corsinvest.ProxmoxVE.Api</code> folder from the repository</li>
+<li>Copy it to one of your PowerShell module paths</li>
+</ol>
+<p>To view your module paths:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c"># Display module paths</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="nv">$env:PSModulePath</span> <span class="n">-split</span> <span class="no">[IO.Path]</span><span class="p">::</span><span class="n">PathSeparator</span>
+</code></pre></div></p>
+<h2 id="quick-start">🚀 Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="connecting-to-your-cluster">Connecting to Your Cluster<a class="headerlink" href="#connecting-to-your-cluster" title="Permanent link">&para;</a></h3>
+<p>Use <code>Connect-PveCluster</code> to establish a connection. This cmdlet supports both username/password and API token authentication.</p>
+<h4 id="using-username-and-password">Using Username and Password<a class="headerlink" href="#using-username-and-password" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># Connect with username and password</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="n">-SkipCertificateCheck</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c"># PowerShell will prompt for credentials</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c"># Username format: user@pam, user@pve, or user@yourdomain</span>
+</code></pre></div>
+<h4 id="using-api-token-proxmox-ve-62">Using API Token (Proxmox VE 6.2+)<a class="headerlink" href="#using-api-token-proxmox-ve-62" title="Permanent link">&para;</a></h4>
+<p>From Proxmox VE 6.2+, you can use <a href="https://pve.proxmox.com/pve-docs/pveum-plain.html">API tokens</a> for authentication without username/password.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Connect using API token</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="p">`</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                   <span class="n">-SkipCertificateCheck</span> <span class="p">`</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                   <span class="n">-ApiToken</span> <span class="s2">&quot;root@pam!mytoken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;</span>
+</code></pre></div>
+<p><strong>Note:</strong> API token format is <code>USER@REALM!TOKENID=UUID</code>. If using <strong>Privilege Separation</strong>, ensure proper permissions are configured.</p>
+<h3 id="connection-management">Connection Management<a class="headerlink" href="#connection-management" title="Permanent link">&para;</a></h3>
+<p>The <code>Connect-PveCluster</code> function creates a <code>PveTicket</code> object and stores it in <code>$Global:PveTicketLast</code>. All cmdlets use this ticket by default, or you can specify a different ticket with the <code>-PveTicket</code> parameter.</p>
+<h2 id="usage-examples">💡 Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
+<h3 id="basic-operations">Basic Operations<a class="headerlink" href="#basic-operations" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c"># Connect to cluster</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="n">-SkipCertificateCheck</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c"># Get Proxmox VE version</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nb">Get-PveVersion</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">data</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c"># Output: version : 8.2.0, release : 1, repoid : abc123...</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c"># List all VMs in the cluster</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">Get-PveClusterResources</span> <span class="n">-Type</span> <span class="n">vm</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">data</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c"># Output: vmid, name, status, node, uptime, etc.</span>
+</code></pre></div>
+<h3 id="vm-management">VM Management<a class="headerlink" href="#vm-management" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># Start a VM (by ID or name)</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">Start-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c"># Output: UPID:pve1:00001234:...</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c"># Stop a VM gracefully</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nb">Stop-PveVm</span> <span class="n">-VmIdOrName</span> <span class="s2">&quot;my-vm&quot;</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c"># Suspend/Resume a VM</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">Suspend-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nb">Resume-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c"># Reset a VM</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="nb">Reset-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="c"># Unlock a VM</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="nb">Unlock-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+</code></pre></div>
+<h3 id="snapshot-management_1">Snapshot Management<a class="headerlink" href="#snapshot-management_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c"># List snapshots for a VM</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">Get-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-Expand</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-Expand</span> <span class="n">data</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c"># Output: name, snaptime, description, vmstate...</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c"># Using Get-PveVm helper</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nb">Get-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span> <span class="p">|</span> <span class="nb">Get-PveNodesQemuSnapshot</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c"># Create a snapshot</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nb">New-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c"># Output: snapshot created successfully</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c"># Rollback to a snapshot</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">New-PveNodesQemuSnapshotRollback</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="c"># Delete a snapshot</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nb">Remove-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
+</code></pre></div>
+<h3 id="working-with-indexed-parameters">Working with Indexed Parameters<a class="headerlink" href="#working-with-indexed-parameters" title="Permanent link">&para;</a></h3>
+<p>When working with indexed parameters (e.g., <code>-ScsiN</code>, <code>-IdeN</code>, <code>-NetN</code>), use hashtables:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c"># Define configurations using hashtables</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">$networkConfig</span> <span class="p">=</span> <span class="p">@{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">1</span> <span class="p">=</span> <span class="no">[uri]</span><span class="p">::</span><span class="n">EscapeDataString</span><span class="p">(</span><span class="s2">&quot;model=virtio,bridge=vmbr0&quot;</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">}</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">$storageConfig</span> <span class="p">=</span> <span class="p">@{</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="n">1</span> <span class="p">=</span> <span class="s1">&#39;ssdpool:32&#39;</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="nv">$bootableIso</span> <span class="p">=</span> <span class="p">@{</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="n">1</span> <span class="p">=</span> <span class="s1">&#39;local:iso/ubuntu-22.04.iso&#39;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c"># Create a new VM with indexed parameters</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nb">New-PveNodesQemu</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="p">`</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>                 <span class="n">-Vmid</span> <span class="n">105</span> <span class="p">`</span>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>                 <span class="n">-Memory</span> <span class="n">2048</span> <span class="p">`</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>                 <span class="n">-ScsiN</span> <span class="nv">$storageConfig</span> <span class="p">`</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>                 <span class="n">-IdeN</span> <span class="nv">$bootableIso</span> <span class="p">`</span>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>                 <span class="n">-NetN</span> <span class="nv">$networkConfig</span>
+</code></pre></div>
+<p><strong>Note:</strong> Use <code>[uri]::EscapeDataString</code> to properly escape parameter values containing special characters.</p>
+<h3 id="monitoring-resources">Monitoring Resources<a class="headerlink" href="#monitoring-resources" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c"># Get node monitoring data (RRD data)</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">Get-PveNodeMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Timeframe</span> <span class="n">hour</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c"># Output: cpu, memory, network, disk usage statistics</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c"># Get QEMU VM monitoring data</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nb">Get-PveQemuMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Timeframe</span> <span class="n">day</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c"># Output: CPU usage, disk I/O, network traffic over time</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c"># Get LXC container monitoring data</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="nb">Get-PveLxcMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">200</span> <span class="n">-Timeframe</span> <span class="n">week</span>
+</code></pre></div>
+<h3 id="task-management_1">Task Management<a class="headerlink" href="#task-management_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c"># Execute a long-running task</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">$result</span> <span class="p">=</span> <span class="nb">New-PveNodesQemu</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">110</span> <span class="n">-Memory</span> <span class="n">4096</span> <span class="n">-Name</span> <span class="s2">&quot;new-vm&quot;</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nv">$taskId</span> <span class="p">=</span> <span class="nv">$result</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">data</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c"># Output: UPID:pve1:00001F40:...</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c"># Wait for task completion</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nb">Wait-PveTaskIsFinish</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Upid</span> <span class="nv">$taskId</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c"># Check if a task is still running</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nv">$isRunning</span> <span class="p">=</span> <span class="nb">Get-PveTaskIsRunning</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Upid</span> <span class="nv">$taskId</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c"># Output: True/False</span>
+</code></pre></div>
+<h2 id="advanced-features_1">🔧 Advanced Features<a class="headerlink" href="#advanced-features_1" title="Permanent link">&para;</a></h2>
+<h3 id="pveresponse-class">PveResponse Class<a class="headerlink" href="#pveresponse-class" title="Permanent link">&para;</a></h3>
+<p>All cmdlets return a <code>PveResponse</code> object with rich information:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">class</span> <span class="n">PveResponse</span> <span class="p">{</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="no">[PSCustomObject]</span> <span class="nv">$Response</span>           <span class="c"># The actual API response</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="no">[int]</span> <span class="nv">$StatusCode</span>                    <span class="c"># HTTP status code</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="no">[string]</span> <span class="nv">$ReasonPhrase</span>              <span class="c"># HTTP reason phrase</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="no">[bool]</span> <span class="nv">$IsSuccessStatusCode</span>         <span class="c"># Success indicator</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="no">[string]</span> <span class="nv">$RequestResource</span>           <span class="c"># API endpoint called</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="no">[hashtable]</span> <span class="nv">$Parameters</span>             <span class="c"># Request parameters</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="no">[string]</span> <span class="nv">$Method</span>                    <span class="c"># HTTP method used</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="no">[string]</span> <span class="nv">$ResponseType</span>              <span class="c"># Response format</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="c"># Helper methods</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="no">[bool]</span> <span class="n">ResponseInError</span><span class="p">()</span>            <span class="c"># Check for errors</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    <span class="no">[PSCustomObject]</span> <span class="n">ToTable</span><span class="p">()</span>          <span class="c"># Format as table</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="no">[PSCustomObject]</span> <span class="n">ToData</span><span class="p">()</span>           <span class="c"># Extract data only</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="no">[void]</span> <span class="n">ToCsv</span><span class="p">(</span><span class="no">[string]</span> <span class="nv">$filename</span><span class="p">)</span>    <span class="c"># Export to CSV</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="no">[void]</span> <span class="n">ToGridView</span><span class="p">()</span>                 <span class="c"># Display in grid view</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="pveticket-class">PveTicket Class<a class="headerlink" href="#pveticket-class" title="Permanent link">&para;</a></h3>
+<p>Connection information is stored in a <code>PveTicket</code> object:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">class</span> <span class="n">PveTicket</span> <span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="no">[string]</span> <span class="nv">$HostName</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="no">[int]</span> <span class="nv">$Port</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="no">[bool]</span> <span class="nv">$SkipCertificateCheck</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="no">[string]</span> <span class="nv">$Ticket</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="no">[string]</span> <span class="nv">$CSRFPreventionToken</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="no">[string]</span> <span class="nv">$ApiToken</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="direct-api-access">Direct API Access<a class="headerlink" href="#direct-api-access" title="Permanent link">&para;</a></h3>
+<p>For operations not covered by cmdlets, use <code>Invoke-PveRestApi</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c"># Make a custom API call</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nv">$result</span> <span class="p">=</span> <span class="nb">Invoke-PveRestApi</span> <span class="n">-Method</span> <span class="n">Get</span> <span class="p">`</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>                            <span class="n">-Resource</span> <span class="s2">&quot;/api2/json/nodes/pve1/status&quot;</span> <span class="p">`</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>                            <span class="n">-PveTicket</span> <span class="nv">$Global:PveTicketLast</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c"># Display results</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="nv">$result</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">data</span>
+</code></pre></div>
+<h3 id="high-availability-connections">High Availability Connections<a class="headerlink" href="#high-availability-connections" title="Permanent link">&para;</a></h3>
+<p>Connect to multiple hosts for HA failover:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c"># Connect to multiple nodes</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="s2">&quot;192.168.1.100:8006,192.168.1.101:8006,192.168.1.102:8006&quot;</span> <span class="p">`</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>                   <span class="n">-SkipCertificateCheck</span>
+</code></pre></div>
+<h2 id="contributing">🤝 Contributing<a class="headerlink" href="#contributing" title="Permanent link">&para;</a></h2>
+<p>We welcome contributions! Here's how you can help:</p>
+<ol>
+<li><strong>Report Issues</strong> - Found a bug? <a href="https://github.com/Corsinvest/cv4pve-api-powershell/issues">Open an issue</a></li>
+<li><strong>Suggest Features</strong> - Have an idea? Share it in the <a href="https://github.com/Corsinvest/cv4pve-api-powershell/discussions">discussions</a></li>
+<li><strong>Submit Pull Requests</strong> - Want to contribute code? Fork the repo and submit a PR</li>
+<li><strong>Improve Documentation</strong> - Help us make the docs better</li>
+</ol>
+<h2 id="related-projects">🔗 Related Projects<a class="headerlink" href="#related-projects" title="Permanent link">&para;</a></h2>
+<p>Part of the <strong>cv4pve</strong> suite of tools for Proxmox VE:</p>
+<ul>
+<li><strong><a href="https://github.com/Corsinvest/cv4pve-api-dotnet">cv4pve-api-dotnet</a></strong> - .NET library for Proxmox VE API</li>
+<li><strong><a href="https://github.com/Corsinvest/cv4pve-autosnap">cv4pve-autosnap</a></strong> - Automatic snapshot tool</li>
+<li><strong><a href="https://github.com/Corsinvest/cv4pve-barc">cv4pve-barc</a></strong> - Backup and restore Ceph</li>
+<li><strong><a href="https://github.com/Corsinvest/cv4pve-pepper">cv4pve-pepper</a></strong> - Launching SPICE remote-viewer</li>
+</ul>
+<p>Visit <a href="https://www.corsinvest.it/cv4pve">cv4pve.com</a> for the complete suite.</p>
+<h2 id="support">📞 Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
+<h3 id="community-support">Community Support<a class="headerlink" href="#community-support" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>GitHub Issues</strong>: <a href="https://github.com/Corsinvest/cv4pve-api-powershell/issues">Report bugs or request features</a></li>
+<li><strong>GitHub Discussions</strong>: <a href="https://github.com/Corsinvest/cv4pve-api-powershell/discussions">Ask questions and share ideas</a></li>
+<li><strong>Documentation</strong>: <a href="https://corsinvest.github.io/cv4pve-api-powershell">HTML</a> | <a href="https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/about_cv4pve-api-powershell.md">Markdown</a></li>
+</ul>
+<h3 id="commercial-support_1">Commercial Support<a class="headerlink" href="#commercial-support_1" title="Permanent link">&para;</a></h3>
+<p>For enterprise support, SLA, consulting, or custom development:
+* Visit <a href="https://www.corsinvest.it/cv4pve">Corsinvest</a>
+* Email: <a href="mailto:support@corsinvest.it">support@corsinvest.it</a></p>
+<h2 id="show-your-support">⭐ Show Your Support<a class="headerlink" href="#show-your-support" title="Permanent link">&para;</a></h2>
+<p>If you find this project useful, please consider:
+* ⭐ Starring the repository on GitHub
+* 📢 Sharing it with others
+* 🐛 Reporting issues you encounter
+* 💡 Contributing improvements</p>
+<hr />
+<p><strong>Made with ❤️ in Italy by <a href="https://www.corsinvest.it">Corsinvest Srl</a></strong></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Corsinvest Srl - Part of <a href="https://www.corsinvest.it/cv4pve" target="_blank">cv4pve suite</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Corsinvest/cv4pve-api-powershell" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.corsinvest.it/cv4pve" target="_blank" rel="noopener" title="www.corsinvest.it" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1613 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="PowerShell Module for Proxmox VE API - Complete cmdlet documentation">
+      
+      
+        <meta name="author" content="Corsinvest Srl">
+      
+      
+        <link rel="canonical" href="https://corsinvest.github.io/cv4pve-api-powershell/cmdlets-index.html">
+      
+      
+        <link rel="prev" href="index.html">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="icon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
+    
+    
+      
+        <title>Overview - cv4pve-api-powershell</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.618322db.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#cmdlet-reference" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="cv4pve-api-powershell" class="md-header__button md-logo" aria-label="cv4pve-api-powershell" data-md-component="logo">
+      
+  <img src="icon.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            cv4pve-api-powershell
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue" data-md-color-accent="blue"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="Share" aria-label="Share" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Corsinvest/cv4pve-api-powershell" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Corsinvest/cv4pve-api-powershell
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="index.html" class="md-tabs__link">
+        
+  
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="cmdlets-index.html" class="md-tabs__link">
+          
+  
+  
+  Cmdlet Reference
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="cv4pve-api-powershell" class="md-nav__button md-logo" aria-label="cv4pve-api-powershell" data-md-component="logo">
+      
+  <img src="icon.png" alt="logo">
+
+    </a>
+    cv4pve-api-powershell
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Corsinvest/cv4pve-api-powershell" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    Corsinvest/cv4pve-api-powershell
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cmdlet Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Cmdlet Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="cmdlets-index.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmdlets-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cmdlets by Category
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cmdlets by Category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#containers-lxc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containers (LXC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-machines-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Machines (QEMU)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VM Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Quick Links
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cmdlets-by-category" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cmdlets by Category
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Cmdlets by Category">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#api-access" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cluster
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Connection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#containers-lxc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containers (LXC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Other
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#snapshots" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Snapshots
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#task-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Task Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#utilities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Utilities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#virtual-machines-qemu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Virtual Machines (QEMU)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        VM Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="cmdlet-reference">Cmdlet Reference<a class="headerlink" href="#cmdlet-reference" title="Permanent link">&para;</a></h1>
+<p>This page provides a complete reference of all cmdlets available in the cv4pve-api-powershell module.</p>
+<h2 id="quick-links">Quick Links<a class="headerlink" href="#quick-links" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/">PowerShell Gallery</a></li>
+<li><a href="https://github.com/Corsinvest/cv4pve-api-powershell">GitHub Repository</a></li>
+</ul>
+<h2 id="cmdlets-by-category">Cmdlets by Category<a class="headerlink" href="#cmdlets-by-category" title="Permanent link">&para;</a></h2>
+<h3 id="api-access">API Access<a class="headerlink" href="#api-access" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Invoke-PveRestApi.html">Invoke-PveRestApi</a></li>
+<li><a href="markdown/Invoke-PveSpice.html">Invoke-PveSpice</a></li>
+</ul>
+<h3 id="cluster">Cluster<a class="headerlink" href="#cluster" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveAccess.html">Get-PveAccess</a></li>
+<li><a href="markdown/Get-PveAccessAcl.html">Get-PveAccessAcl</a></li>
+<li><a href="markdown/Get-PveAccessDomains.html">Get-PveAccessDomains</a></li>
+<li><a href="markdown/Get-PveAccessDomainsIdx.html">Get-PveAccessDomainsIdx</a></li>
+<li><a href="markdown/Get-PveAccessGroups.html">Get-PveAccessGroups</a></li>
+<li><a href="markdown/Get-PveAccessGroupsIdx.html">Get-PveAccessGroupsIdx</a></li>
+<li><a href="markdown/Get-PveAccessOpenid.html">Get-PveAccessOpenid</a></li>
+<li><a href="markdown/Get-PveAccessPermissions.html">Get-PveAccessPermissions</a></li>
+<li><a href="markdown/Get-PveAccessRoles.html">Get-PveAccessRoles</a></li>
+<li><a href="markdown/Get-PveAccessRolesIdx.html">Get-PveAccessRolesIdx</a></li>
+<li><a href="markdown/Get-PveAccessTfa.html">Get-PveAccessTfa</a></li>
+<li><a href="markdown/Get-PveAccessTfaIdx.html">Get-PveAccessTfaIdx</a></li>
+<li><a href="markdown/Get-PveAccessTfaIdx1.html">Get-PveAccessTfaIdx1</a></li>
+<li><a href="markdown/Get-PveAccessTicket.html">Get-PveAccessTicket</a></li>
+<li><a href="markdown/Get-PveAccessUsers.html">Get-PveAccessUsers</a></li>
+<li><a href="markdown/Get-PveAccessUsersIdx.html">Get-PveAccessUsersIdx</a></li>
+<li><a href="markdown/Get-PveAccessUsersTfa.html">Get-PveAccessUsersTfa</a></li>
+<li><a href="markdown/Get-PveAccessUsersToken.html">Get-PveAccessUsersToken</a></li>
+<li><a href="markdown/Get-PveAccessUsersTokenIdx.html">Get-PveAccessUsersTokenIdx</a></li>
+<li><a href="markdown/Get-PveCluster.html">Get-PveCluster</a></li>
+<li><a href="markdown/Get-PveClusterAcme.html">Get-PveClusterAcme</a></li>
+<li><a href="markdown/Get-PveClusterAcmeAccount.html">Get-PveClusterAcmeAccount</a></li>
+<li><a href="markdown/Get-PveClusterAcmeAccountIdx.html">Get-PveClusterAcmeAccountIdx</a></li>
+<li><a href="markdown/Get-PveClusterAcmeChallengeSchema.html">Get-PveClusterAcmeChallengeSchema</a></li>
+<li><a href="markdown/Get-PveClusterAcmeDirectories.html">Get-PveClusterAcmeDirectories</a></li>
+<li><a href="markdown/Get-PveClusterAcmeMeta.html">Get-PveClusterAcmeMeta</a></li>
+<li><a href="markdown/Get-PveClusterAcmePlugins.html">Get-PveClusterAcmePlugins</a></li>
+<li><a href="markdown/Get-PveClusterAcmePluginsIdx.html">Get-PveClusterAcmePluginsIdx</a></li>
+<li><a href="markdown/Get-PveClusterAcmeTos.html">Get-PveClusterAcmeTos</a></li>
+<li><a href="markdown/Get-PveClusterBackup.html">Get-PveClusterBackup</a></li>
+<li><a href="markdown/Get-PveClusterBackupIdx.html">Get-PveClusterBackupIdx</a></li>
+<li><a href="markdown/Get-PveClusterBackupIncludedVolumes.html">Get-PveClusterBackupIncludedVolumes</a></li>
+<li><a href="markdown/Get-PveClusterBackupInfo.html">Get-PveClusterBackupInfo</a></li>
+<li><a href="markdown/Get-PveClusterBackupInfoNotBackedUp.html">Get-PveClusterBackupInfoNotBackedUp</a></li>
+<li><a href="markdown/Get-PveClusterBulkAction.html">Get-PveClusterBulkAction</a></li>
+<li><a href="markdown/Get-PveClusterBulkActionGuest.html">Get-PveClusterBulkActionGuest</a></li>
+<li><a href="markdown/Get-PveClusterCeph.html">Get-PveClusterCeph</a></li>
+<li><a href="markdown/Get-PveClusterCephFlags.html">Get-PveClusterCephFlags</a></li>
+<li><a href="markdown/Get-PveClusterCephFlagsIdx.html">Get-PveClusterCephFlagsIdx</a></li>
+<li><a href="markdown/Get-PveClusterCephMetadata.html">Get-PveClusterCephMetadata</a></li>
+<li><a href="markdown/Get-PveClusterCephStatus.html">Get-PveClusterCephStatus</a></li>
+<li><a href="markdown/Get-PveClusterConfig.html">Get-PveClusterConfig</a></li>
+<li><a href="markdown/Get-PveClusterConfigApiversion.html">Get-PveClusterConfigApiversion</a></li>
+<li><a href="markdown/Get-PveClusterConfigJoin.html">Get-PveClusterConfigJoin</a></li>
+<li><a href="markdown/Get-PveClusterConfigNodes.html">Get-PveClusterConfigNodes</a></li>
+<li><a href="markdown/Get-PveClusterConfigQdevice.html">Get-PveClusterConfigQdevice</a></li>
+<li><a href="markdown/Get-PveClusterConfigTotem.html">Get-PveClusterConfigTotem</a></li>
+<li><a href="markdown/Get-PveClusterFirewall.html">Get-PveClusterFirewall</a></li>
+<li><a href="markdown/Get-PveClusterFirewallAliases.html">Get-PveClusterFirewallAliases</a></li>
+<li><a href="markdown/Get-PveClusterFirewallAliasesIdx.html">Get-PveClusterFirewallAliasesIdx</a></li>
+<li><a href="markdown/Get-PveClusterFirewallGroups.html">Get-PveClusterFirewallGroups</a></li>
+<li><a href="markdown/Get-PveClusterFirewallGroupsIdx.html">Get-PveClusterFirewallGroupsIdx</a></li>
+<li><a href="markdown/Get-PveClusterFirewallGroupsIdx1.html">Get-PveClusterFirewallGroupsIdx1</a></li>
+<li><a href="markdown/Get-PveClusterFirewallIpset.html">Get-PveClusterFirewallIpset</a></li>
+<li><a href="markdown/Get-PveClusterFirewallIpsetIdx.html">Get-PveClusterFirewallIpsetIdx</a></li>
+<li><a href="markdown/Get-PveClusterFirewallIpsetIdx1.html">Get-PveClusterFirewallIpsetIdx1</a></li>
+<li><a href="markdown/Get-PveClusterFirewallMacros.html">Get-PveClusterFirewallMacros</a></li>
+<li><a href="markdown/Get-PveClusterFirewallOptions.html">Get-PveClusterFirewallOptions</a></li>
+<li><a href="markdown/Get-PveClusterFirewallRefs.html">Get-PveClusterFirewallRefs</a></li>
+<li><a href="markdown/Get-PveClusterFirewallRules.html">Get-PveClusterFirewallRules</a></li>
+<li><a href="markdown/Get-PveClusterFirewallRulesIdx.html">Get-PveClusterFirewallRulesIdx</a></li>
+<li><a href="markdown/Get-PveClusterHa.html">Get-PveClusterHa</a></li>
+<li><a href="markdown/Get-PveClusterHaGroups.html">Get-PveClusterHaGroups</a></li>
+<li><a href="markdown/Get-PveClusterHaGroupsIdx.html">Get-PveClusterHaGroupsIdx</a></li>
+<li><a href="markdown/Get-PveClusterHaResources.html">Get-PveClusterHaResources</a></li>
+<li><a href="markdown/Get-PveClusterHaResourcesIdx.html">Get-PveClusterHaResourcesIdx</a></li>
+<li><a href="markdown/Get-PveClusterHaRules.html">Get-PveClusterHaRules</a></li>
+<li><a href="markdown/Get-PveClusterHaRulesIdx.html">Get-PveClusterHaRulesIdx</a></li>
+<li><a href="markdown/Get-PveClusterHaStatus.html">Get-PveClusterHaStatus</a></li>
+<li><a href="markdown/Get-PveClusterHaStatusCurrent.html">Get-PveClusterHaStatusCurrent</a></li>
+<li><a href="markdown/Get-PveClusterHaStatusManagerStatus.html">Get-PveClusterHaStatusManagerStatus</a></li>
+<li><a href="markdown/Get-PveClusterJobs.html">Get-PveClusterJobs</a></li>
+<li><a href="markdown/Get-PveClusterJobsRealmSync.html">Get-PveClusterJobsRealmSync</a></li>
+<li><a href="markdown/Get-PveClusterJobsRealmSyncIdx.html">Get-PveClusterJobsRealmSyncIdx</a></li>
+<li><a href="markdown/Get-PveClusterJobsScheduleAnalyze.html">Get-PveClusterJobsScheduleAnalyze</a></li>
+<li><a href="markdown/Get-PveClusterLog.html">Get-PveClusterLog</a></li>
+<li><a href="markdown/Get-PveClusterMapping.html">Get-PveClusterMapping</a></li>
+<li><a href="markdown/Get-PveClusterMappingDir.html">Get-PveClusterMappingDir</a></li>
+<li><a href="markdown/Get-PveClusterMappingDirIdx.html">Get-PveClusterMappingDirIdx</a></li>
+<li><a href="markdown/Get-PveClusterMappingPci.html">Get-PveClusterMappingPci</a></li>
+<li><a href="markdown/Get-PveClusterMappingPciIdx.html">Get-PveClusterMappingPciIdx</a></li>
+<li><a href="markdown/Get-PveClusterMappingUsb.html">Get-PveClusterMappingUsb</a></li>
+<li><a href="markdown/Get-PveClusterMappingUsbIdx.html">Get-PveClusterMappingUsbIdx</a></li>
+<li><a href="markdown/Get-PveClusterMetrics.html">Get-PveClusterMetrics</a></li>
+<li><a href="markdown/Get-PveClusterMetricsExport.html">Get-PveClusterMetricsExport</a></li>
+<li><a href="markdown/Get-PveClusterMetricsServer.html">Get-PveClusterMetricsServer</a></li>
+<li><a href="markdown/Get-PveClusterMetricsServerIdx.html">Get-PveClusterMetricsServerIdx</a></li>
+<li><a href="markdown/Get-PveClusterNextid.html">Get-PveClusterNextid</a></li>
+<li><a href="markdown/Get-PveClusterNotifications.html">Get-PveClusterNotifications</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpoints.html">Get-PveClusterNotificationsEndpoints</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsGotify.html">Get-PveClusterNotificationsEndpointsGotify</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsGotifyIdx.html">Get-PveClusterNotificationsEndpointsGotifyIdx</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsSendmail.html">Get-PveClusterNotificationsEndpointsSendmail</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsSendmailIdx.html">Get-PveClusterNotificationsEndpointsSendmailIdx</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsSmtp.html">Get-PveClusterNotificationsEndpointsSmtp</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsSmtpIdx.html">Get-PveClusterNotificationsEndpointsSmtpIdx</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsWebhook.html">Get-PveClusterNotificationsEndpointsWebhook</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsEndpointsWebhookIdx.html">Get-PveClusterNotificationsEndpointsWebhookIdx</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsMatcherFields.html">Get-PveClusterNotificationsMatcherFields</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsMatcherFieldValues.html">Get-PveClusterNotificationsMatcherFieldValues</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsMatchers.html">Get-PveClusterNotificationsMatchers</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsMatchersIdx.html">Get-PveClusterNotificationsMatchersIdx</a></li>
+<li><a href="markdown/Get-PveClusterNotificationsTargets.html">Get-PveClusterNotificationsTargets</a></li>
+<li><a href="markdown/Get-PveClusterOptions.html">Get-PveClusterOptions</a></li>
+<li><a href="markdown/Get-PveClusterReplication.html">Get-PveClusterReplication</a></li>
+<li><a href="markdown/Get-PveClusterReplicationIdx.html">Get-PveClusterReplicationIdx</a></li>
+<li><a href="markdown/Get-PveClusterResources.html">Get-PveClusterResources</a></li>
+<li><a href="markdown/Get-PveClusterSdn.html">Get-PveClusterSdn</a></li>
+<li><a href="markdown/Get-PveClusterSdnControllers.html">Get-PveClusterSdnControllers</a></li>
+<li><a href="markdown/Get-PveClusterSdnControllersIdx.html">Get-PveClusterSdnControllersIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnDns.html">Get-PveClusterSdnDns</a></li>
+<li><a href="markdown/Get-PveClusterSdnDnsIdx.html">Get-PveClusterSdnDnsIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabrics.html">Get-PveClusterSdnFabrics</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabricsAll.html">Get-PveClusterSdnFabricsAll</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabricsFabric.html">Get-PveClusterSdnFabricsFabric</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabricsFabricIdx.html">Get-PveClusterSdnFabricsFabricIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabricsNode.html">Get-PveClusterSdnFabricsNode</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabricsNodeIdx.html">Get-PveClusterSdnFabricsNodeIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnFabricsNodeIdx1.html">Get-PveClusterSdnFabricsNodeIdx1</a></li>
+<li><a href="markdown/Get-PveClusterSdnIpams.html">Get-PveClusterSdnIpams</a></li>
+<li><a href="markdown/Get-PveClusterSdnIpamsIdx.html">Get-PveClusterSdnIpamsIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnIpamsStatus.html">Get-PveClusterSdnIpamsStatus</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnets.html">Get-PveClusterSdnVnets</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsFirewall.html">Get-PveClusterSdnVnetsFirewall</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsFirewallOptions.html">Get-PveClusterSdnVnetsFirewallOptions</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsFirewallRules.html">Get-PveClusterSdnVnetsFirewallRules</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsFirewallRulesIdx.html">Get-PveClusterSdnVnetsFirewallRulesIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsIdx.html">Get-PveClusterSdnVnetsIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsSubnets.html">Get-PveClusterSdnVnetsSubnets</a></li>
+<li><a href="markdown/Get-PveClusterSdnVnetsSubnetsIdx.html">Get-PveClusterSdnVnetsSubnetsIdx</a></li>
+<li><a href="markdown/Get-PveClusterSdnZones.html">Get-PveClusterSdnZones</a></li>
+<li><a href="markdown/Get-PveClusterSdnZonesIdx.html">Get-PveClusterSdnZonesIdx</a></li>
+<li><a href="markdown/Get-PveClusterStatus.html">Get-PveClusterStatus</a></li>
+<li><a href="markdown/Get-PveClusterTasks.html">Get-PveClusterTasks</a></li>
+<li><a href="markdown/Get-PveVersion.html">Get-PveVersion</a></li>
+</ul>
+<h3 id="connection">Connection<a class="headerlink" href="#connection" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Connect-PveCluster.html">Connect-PveCluster</a></li>
+</ul>
+<h3 id="containers-lxc">Containers (LXC)<a class="headerlink" href="#containers-lxc" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveNodesLxc.html">Get-PveNodesLxc</a></li>
+<li><a href="markdown/Get-PveNodesLxcConfig.html">Get-PveNodesLxcConfig</a></li>
+<li><a href="markdown/Get-PveNodesLxcFeature.html">Get-PveNodesLxcFeature</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewall.html">Get-PveNodesLxcFirewall</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallAliases.html">Get-PveNodesLxcFirewallAliases</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallAliasesIdx.html">Get-PveNodesLxcFirewallAliasesIdx</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallIpset.html">Get-PveNodesLxcFirewallIpset</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallIpsetIdx.html">Get-PveNodesLxcFirewallIpsetIdx</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallIpsetIdx1.html">Get-PveNodesLxcFirewallIpsetIdx1</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallLog.html">Get-PveNodesLxcFirewallLog</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallOptions.html">Get-PveNodesLxcFirewallOptions</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallRefs.html">Get-PveNodesLxcFirewallRefs</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallRules.html">Get-PveNodesLxcFirewallRules</a></li>
+<li><a href="markdown/Get-PveNodesLxcFirewallRulesIdx.html">Get-PveNodesLxcFirewallRulesIdx</a></li>
+<li><a href="markdown/Get-PveNodesLxcIdx.html">Get-PveNodesLxcIdx</a></li>
+<li><a href="markdown/Get-PveNodesLxcInterfaces.html">Get-PveNodesLxcInterfaces</a></li>
+<li><a href="markdown/Get-PveNodesLxcMigrate.html">Get-PveNodesLxcMigrate</a></li>
+<li><a href="markdown/Get-PveNodesLxcMtunnelwebsocket.html">Get-PveNodesLxcMtunnelwebsocket</a></li>
+<li><a href="markdown/Get-PveNodesLxcPending.html">Get-PveNodesLxcPending</a></li>
+<li><a href="markdown/Get-PveNodesLxcRrd.html">Get-PveNodesLxcRrd</a></li>
+<li><a href="markdown/Get-PveNodesLxcRrddata.html">Get-PveNodesLxcRrddata</a></li>
+<li><a href="markdown/Get-PveNodesLxcStatus.html">Get-PveNodesLxcStatus</a></li>
+<li><a href="markdown/Get-PveNodesLxcStatusCurrent.html">Get-PveNodesLxcStatusCurrent</a></li>
+<li><a href="markdown/Get-PveNodesLxcVncwebsocket.html">Get-PveNodesLxcVncwebsocket</a></li>
+<li><a href="markdown/New-PveNodesLxc.html">New-PveNodesLxc</a></li>
+<li><a href="markdown/New-PveNodesLxcClone.html">New-PveNodesLxcClone</a></li>
+<li><a href="markdown/New-PveNodesLxcFirewallAliases.html">New-PveNodesLxcFirewallAliases</a></li>
+<li><a href="markdown/New-PveNodesLxcFirewallIpset.html">New-PveNodesLxcFirewallIpset</a></li>
+<li><a href="markdown/New-PveNodesLxcFirewallIpsetIdx.html">New-PveNodesLxcFirewallIpsetIdx</a></li>
+<li><a href="markdown/New-PveNodesLxcFirewallRules.html">New-PveNodesLxcFirewallRules</a></li>
+<li><a href="markdown/New-PveNodesLxcMigrate.html">New-PveNodesLxcMigrate</a></li>
+<li><a href="markdown/New-PveNodesLxcMoveVolume.html">New-PveNodesLxcMoveVolume</a></li>
+<li><a href="markdown/New-PveNodesLxcMtunnel.html">New-PveNodesLxcMtunnel</a></li>
+<li><a href="markdown/New-PveNodesLxcRemoteMigrate.html">New-PveNodesLxcRemoteMigrate</a></li>
+<li><a href="markdown/New-PveNodesLxcSpiceproxy.html">New-PveNodesLxcSpiceproxy</a></li>
+<li><a href="markdown/New-PveNodesLxcStatusReboot.html">New-PveNodesLxcStatusReboot</a></li>
+<li><a href="markdown/New-PveNodesLxcStatusResume.html">New-PveNodesLxcStatusResume</a></li>
+<li><a href="markdown/New-PveNodesLxcStatusShutdown.html">New-PveNodesLxcStatusShutdown</a></li>
+<li><a href="markdown/New-PveNodesLxcStatusStart.html">New-PveNodesLxcStatusStart</a></li>
+<li><a href="markdown/New-PveNodesLxcStatusStop.html">New-PveNodesLxcStatusStop</a></li>
+<li><a href="markdown/New-PveNodesLxcStatusSuspend.html">New-PveNodesLxcStatusSuspend</a></li>
+<li><a href="markdown/New-PveNodesLxcTemplate.html">New-PveNodesLxcTemplate</a></li>
+<li><a href="markdown/New-PveNodesLxcTermproxy.html">New-PveNodesLxcTermproxy</a></li>
+<li><a href="markdown/New-PveNodesLxcVncproxy.html">New-PveNodesLxcVncproxy</a></li>
+<li><a href="markdown/Remove-PveNodesLxc.html">Remove-PveNodesLxc</a></li>
+<li><a href="markdown/Remove-PveNodesLxcFirewallAliases.html">Remove-PveNodesLxcFirewallAliases</a></li>
+<li><a href="markdown/Remove-PveNodesLxcFirewallIpset.html">Remove-PveNodesLxcFirewallIpset</a></li>
+<li><a href="markdown/Remove-PveNodesLxcFirewallIpsetIdx.html">Remove-PveNodesLxcFirewallIpsetIdx</a></li>
+<li><a href="markdown/Remove-PveNodesLxcFirewallRules.html">Remove-PveNodesLxcFirewallRules</a></li>
+<li><a href="markdown/Set-PveNodesLxcConfig.html">Set-PveNodesLxcConfig</a></li>
+<li><a href="markdown/Set-PveNodesLxcFirewallAliases.html">Set-PveNodesLxcFirewallAliases</a></li>
+<li><a href="markdown/Set-PveNodesLxcFirewallIpset.html">Set-PveNodesLxcFirewallIpset</a></li>
+<li><a href="markdown/Set-PveNodesLxcFirewallOptions.html">Set-PveNodesLxcFirewallOptions</a></li>
+<li><a href="markdown/Set-PveNodesLxcFirewallRules.html">Set-PveNodesLxcFirewallRules</a></li>
+<li><a href="markdown/Set-PveNodesLxcResize.html">Set-PveNodesLxcResize</a></li>
+</ul>
+<h3 id="other">Other<a class="headerlink" href="#other" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveNode.html">Get-PveNode</a></li>
+<li><a href="markdown/Get-PveNodes.html">Get-PveNodes</a></li>
+<li><a href="markdown/Get-PveNodesAplinfo.html">Get-PveNodesAplinfo</a></li>
+<li><a href="markdown/Get-PveNodesApt.html">Get-PveNodesApt</a></li>
+<li><a href="markdown/Get-PveNodesAptChangelog.html">Get-PveNodesAptChangelog</a></li>
+<li><a href="markdown/Get-PveNodesAptRepositories.html">Get-PveNodesAptRepositories</a></li>
+<li><a href="markdown/Get-PveNodesAptUpdate.html">Get-PveNodesAptUpdate</a></li>
+<li><a href="markdown/Get-PveNodesAptVersions.html">Get-PveNodesAptVersions</a></li>
+<li><a href="markdown/Get-PveNodesCapabilities.html">Get-PveNodesCapabilities</a></li>
+<li><a href="markdown/Get-PveNodesCeph.html">Get-PveNodesCeph</a></li>
+<li><a href="markdown/Get-PveNodesCephCfg.html">Get-PveNodesCephCfg</a></li>
+<li><a href="markdown/Get-PveNodesCephCfgDb.html">Get-PveNodesCephCfgDb</a></li>
+<li><a href="markdown/Get-PveNodesCephCfgRaw.html">Get-PveNodesCephCfgRaw</a></li>
+<li><a href="markdown/Get-PveNodesCephCfgValue.html">Get-PveNodesCephCfgValue</a></li>
+<li><a href="markdown/Get-PveNodesCephCmdSafety.html">Get-PveNodesCephCmdSafety</a></li>
+<li><a href="markdown/Get-PveNodesCephCrush.html">Get-PveNodesCephCrush</a></li>
+<li><a href="markdown/Get-PveNodesCephFs.html">Get-PveNodesCephFs</a></li>
+<li><a href="markdown/Get-PveNodesCephLog.html">Get-PveNodesCephLog</a></li>
+<li><a href="markdown/Get-PveNodesCephMds.html">Get-PveNodesCephMds</a></li>
+<li><a href="markdown/Get-PveNodesCephMgr.html">Get-PveNodesCephMgr</a></li>
+<li><a href="markdown/Get-PveNodesCephMon.html">Get-PveNodesCephMon</a></li>
+<li><a href="markdown/Get-PveNodesCephOsd.html">Get-PveNodesCephOsd</a></li>
+<li><a href="markdown/Get-PveNodesCephOsdIdx.html">Get-PveNodesCephOsdIdx</a></li>
+<li><a href="markdown/Get-PveNodesCephOsdLvInfo.html">Get-PveNodesCephOsdLvInfo</a></li>
+<li><a href="markdown/Get-PveNodesCephOsdMetadata.html">Get-PveNodesCephOsdMetadata</a></li>
+<li><a href="markdown/Get-PveNodesCephPool.html">Get-PveNodesCephPool</a></li>
+<li><a href="markdown/Get-PveNodesCephPoolIdx.html">Get-PveNodesCephPoolIdx</a></li>
+<li><a href="markdown/Get-PveNodesCephPoolStatus.html">Get-PveNodesCephPoolStatus</a></li>
+<li><a href="markdown/Get-PveNodesCephRules.html">Get-PveNodesCephRules</a></li>
+<li><a href="markdown/Get-PveNodesCephStatus.html">Get-PveNodesCephStatus</a></li>
+<li><a href="markdown/Get-PveNodesCertificates.html">Get-PveNodesCertificates</a></li>
+<li><a href="markdown/Get-PveNodesCertificatesAcme.html">Get-PveNodesCertificatesAcme</a></li>
+<li><a href="markdown/Get-PveNodesCertificatesInfo.html">Get-PveNodesCertificatesInfo</a></li>
+<li><a href="markdown/Get-PveNodesConfig.html">Get-PveNodesConfig</a></li>
+<li><a href="markdown/Get-PveNodesDisks.html">Get-PveNodesDisks</a></li>
+<li><a href="markdown/Get-PveNodesDisksDirectory.html">Get-PveNodesDisksDirectory</a></li>
+<li><a href="markdown/Get-PveNodesDisksList.html">Get-PveNodesDisksList</a></li>
+<li><a href="markdown/Get-PveNodesDisksLvm.html">Get-PveNodesDisksLvm</a></li>
+<li><a href="markdown/Get-PveNodesDisksLvmthin.html">Get-PveNodesDisksLvmthin</a></li>
+<li><a href="markdown/Get-PveNodesDisksSmart.html">Get-PveNodesDisksSmart</a></li>
+<li><a href="markdown/Get-PveNodesDisksZfs.html">Get-PveNodesDisksZfs</a></li>
+<li><a href="markdown/Get-PveNodesDisksZfsIdx.html">Get-PveNodesDisksZfsIdx</a></li>
+<li><a href="markdown/Get-PveNodesDns.html">Get-PveNodesDns</a></li>
+<li><a href="markdown/Get-PveNodesFirewall.html">Get-PveNodesFirewall</a></li>
+<li><a href="markdown/Get-PveNodesFirewallLog.html">Get-PveNodesFirewallLog</a></li>
+<li><a href="markdown/Get-PveNodesFirewallOptions.html">Get-PveNodesFirewallOptions</a></li>
+<li><a href="markdown/Get-PveNodesFirewallRules.html">Get-PveNodesFirewallRules</a></li>
+<li><a href="markdown/Get-PveNodesFirewallRulesIdx.html">Get-PveNodesFirewallRulesIdx</a></li>
+<li><a href="markdown/Get-PveNodesHardware.html">Get-PveNodesHardware</a></li>
+<li><a href="markdown/Get-PveNodesHardwarePci.html">Get-PveNodesHardwarePci</a></li>
+<li><a href="markdown/Get-PveNodesHardwarePciIdx.html">Get-PveNodesHardwarePciIdx</a></li>
+<li><a href="markdown/Get-PveNodesHardwarePciMdev.html">Get-PveNodesHardwarePciMdev</a></li>
+<li><a href="markdown/Get-PveNodesHardwareUsb.html">Get-PveNodesHardwareUsb</a></li>
+<li><a href="markdown/Get-PveNodesHosts.html">Get-PveNodesHosts</a></li>
+<li><a href="markdown/Get-PveNodesIdx.html">Get-PveNodesIdx</a></li>
+<li><a href="markdown/Get-PveNodesJournal.html">Get-PveNodesJournal</a></li>
+<li><a href="markdown/Get-PveNodesNetstat.html">Get-PveNodesNetstat</a></li>
+<li><a href="markdown/Get-PveNodesNetwork.html">Get-PveNodesNetwork</a></li>
+<li><a href="markdown/Get-PveNodesNetworkIdx.html">Get-PveNodesNetworkIdx</a></li>
+<li><a href="markdown/Get-PveNodesQueryOciRepoTags.html">Get-PveNodesQueryOciRepoTags</a></li>
+<li><a href="markdown/Get-PveNodesQueryUrlMetadata.html">Get-PveNodesQueryUrlMetadata</a></li>
+<li><a href="markdown/Get-PveNodesReplication.html">Get-PveNodesReplication</a></li>
+<li><a href="markdown/Get-PveNodesReplicationIdx.html">Get-PveNodesReplicationIdx</a></li>
+<li><a href="markdown/Get-PveNodesReplicationLog.html">Get-PveNodesReplicationLog</a></li>
+<li><a href="markdown/Get-PveNodesReplicationStatus.html">Get-PveNodesReplicationStatus</a></li>
+<li><a href="markdown/Get-PveNodesReport.html">Get-PveNodesReport</a></li>
+<li><a href="markdown/Get-PveNodesRrd.html">Get-PveNodesRrd</a></li>
+<li><a href="markdown/Get-PveNodesRrddata.html">Get-PveNodesRrddata</a></li>
+<li><a href="markdown/Get-PveNodesScan.html">Get-PveNodesScan</a></li>
+<li><a href="markdown/Get-PveNodesScanCifs.html">Get-PveNodesScanCifs</a></li>
+<li><a href="markdown/Get-PveNodesScanIscsi.html">Get-PveNodesScanIscsi</a></li>
+<li><a href="markdown/Get-PveNodesScanLvm.html">Get-PveNodesScanLvm</a></li>
+<li><a href="markdown/Get-PveNodesScanLvmthin.html">Get-PveNodesScanLvmthin</a></li>
+<li><a href="markdown/Get-PveNodesScanNfs.html">Get-PveNodesScanNfs</a></li>
+<li><a href="markdown/Get-PveNodesScanPbs.html">Get-PveNodesScanPbs</a></li>
+<li><a href="markdown/Get-PveNodesScanZfs.html">Get-PveNodesScanZfs</a></li>
+<li><a href="markdown/Get-PveNodesSdn.html">Get-PveNodesSdn</a></li>
+<li><a href="markdown/Get-PveNodesSdnZones.html">Get-PveNodesSdnZones</a></li>
+<li><a href="markdown/Get-PveNodesSdnZonesBridges.html">Get-PveNodesSdnZonesBridges</a></li>
+<li><a href="markdown/Get-PveNodesSdnZonesContent.html">Get-PveNodesSdnZonesContent</a></li>
+<li><a href="markdown/Get-PveNodesSdnZonesIdx.html">Get-PveNodesSdnZonesIdx</a></li>
+<li><a href="markdown/Get-PveNodesSdnZonesIpVrf.html">Get-PveNodesSdnZonesIpVrf</a></li>
+<li><a href="markdown/Get-PveNodesServices.html">Get-PveNodesServices</a></li>
+<li><a href="markdown/Get-PveNodesServicesIdx.html">Get-PveNodesServicesIdx</a></li>
+<li><a href="markdown/Get-PveNodesServicesState.html">Get-PveNodesServicesState</a></li>
+<li><a href="markdown/Get-PveNodesStatus.html">Get-PveNodesStatus</a></li>
+<li><a href="markdown/Get-PveNodesSubscription.html">Get-PveNodesSubscription</a></li>
+<li><a href="markdown/Get-PveNodesSyslog.html">Get-PveNodesSyslog</a></li>
+<li><a href="markdown/Get-PveNodesTime.html">Get-PveNodesTime</a></li>
+<li><a href="markdown/Get-PveNodesVersion.html">Get-PveNodesVersion</a></li>
+<li><a href="markdown/Get-PveNodesVncwebsocket.html">Get-PveNodesVncwebsocket</a></li>
+<li><a href="markdown/Get-PveNodesVzdumpDefaults.html">Get-PveNodesVzdumpDefaults</a></li>
+<li><a href="markdown/Get-PveNodesVzdumpExtractconfig.html">Get-PveNodesVzdumpExtractconfig</a></li>
+<li><a href="markdown/Get-PvePools.html">Get-PvePools</a></li>
+<li><a href="markdown/Get-PvePoolsIdx.html">Get-PvePoolsIdx</a></li>
+<li><a href="markdown/Get-PveStorage.html">Get-PveStorage</a></li>
+<li><a href="markdown/Get-PveStorageIdx.html">Get-PveStorageIdx</a></li>
+<li><a href="markdown/Get-PveVm.html">Get-PveVm</a></li>
+<li><a href="markdown/New-PveAccessDomains.html">New-PveAccessDomains</a></li>
+<li><a href="markdown/New-PveAccessDomainsSync.html">New-PveAccessDomainsSync</a></li>
+<li><a href="markdown/New-PveAccessGroups.html">New-PveAccessGroups</a></li>
+<li><a href="markdown/New-PveAccessOpenidAuthUrl.html">New-PveAccessOpenidAuthUrl</a></li>
+<li><a href="markdown/New-PveAccessOpenidLogin.html">New-PveAccessOpenidLogin</a></li>
+<li><a href="markdown/New-PveAccessRoles.html">New-PveAccessRoles</a></li>
+<li><a href="markdown/New-PveAccessTfa.html">New-PveAccessTfa</a></li>
+<li><a href="markdown/New-PveAccessTicket.html">New-PveAccessTicket</a></li>
+<li><a href="markdown/New-PveAccessUsers.html">New-PveAccessUsers</a></li>
+<li><a href="markdown/New-PveAccessUsersToken.html">New-PveAccessUsersToken</a></li>
+<li><a href="markdown/New-PveAccessVncticket.html">New-PveAccessVncticket</a></li>
+<li><a href="markdown/New-PveClusterAcmeAccount.html">New-PveClusterAcmeAccount</a></li>
+<li><a href="markdown/New-PveClusterAcmePlugins.html">New-PveClusterAcmePlugins</a></li>
+<li><a href="markdown/New-PveClusterBackup.html">New-PveClusterBackup</a></li>
+<li><a href="markdown/New-PveClusterBulkActionGuestMigrate.html">New-PveClusterBulkActionGuestMigrate</a></li>
+<li><a href="markdown/New-PveClusterBulkActionGuestShutdown.html">New-PveClusterBulkActionGuestShutdown</a></li>
+<li><a href="markdown/New-PveClusterBulkActionGuestStart.html">New-PveClusterBulkActionGuestStart</a></li>
+<li><a href="markdown/New-PveClusterBulkActionGuestSuspend.html">New-PveClusterBulkActionGuestSuspend</a></li>
+<li><a href="markdown/New-PveClusterConfig.html">New-PveClusterConfig</a></li>
+<li><a href="markdown/New-PveClusterConfigJoin.html">New-PveClusterConfigJoin</a></li>
+<li><a href="markdown/New-PveClusterConfigNodes.html">New-PveClusterConfigNodes</a></li>
+<li><a href="markdown/New-PveClusterFirewallAliases.html">New-PveClusterFirewallAliases</a></li>
+<li><a href="markdown/New-PveClusterFirewallGroups.html">New-PveClusterFirewallGroups</a></li>
+<li><a href="markdown/New-PveClusterFirewallGroupsIdx.html">New-PveClusterFirewallGroupsIdx</a></li>
+<li><a href="markdown/New-PveClusterFirewallIpset.html">New-PveClusterFirewallIpset</a></li>
+<li><a href="markdown/New-PveClusterFirewallIpsetIdx.html">New-PveClusterFirewallIpsetIdx</a></li>
+<li><a href="markdown/New-PveClusterFirewallRules.html">New-PveClusterFirewallRules</a></li>
+<li><a href="markdown/New-PveClusterHaGroups.html">New-PveClusterHaGroups</a></li>
+<li><a href="markdown/New-PveClusterHaResources.html">New-PveClusterHaResources</a></li>
+<li><a href="markdown/New-PveClusterHaResourcesMigrate.html">New-PveClusterHaResourcesMigrate</a></li>
+<li><a href="markdown/New-PveClusterHaResourcesRelocate.html">New-PveClusterHaResourcesRelocate</a></li>
+<li><a href="markdown/New-PveClusterHaRules.html">New-PveClusterHaRules</a></li>
+<li><a href="markdown/New-PveClusterJobsRealmSync.html">New-PveClusterJobsRealmSync</a></li>
+<li><a href="markdown/New-PveClusterMappingDir.html">New-PveClusterMappingDir</a></li>
+<li><a href="markdown/New-PveClusterMappingPci.html">New-PveClusterMappingPci</a></li>
+<li><a href="markdown/New-PveClusterMappingUsb.html">New-PveClusterMappingUsb</a></li>
+<li><a href="markdown/New-PveClusterMetricsServer.html">New-PveClusterMetricsServer</a></li>
+<li><a href="markdown/New-PveClusterNotificationsEndpointsGotify.html">New-PveClusterNotificationsEndpointsGotify</a></li>
+<li><a href="markdown/New-PveClusterNotificationsEndpointsSendmail.html">New-PveClusterNotificationsEndpointsSendmail</a></li>
+<li><a href="markdown/New-PveClusterNotificationsEndpointsSmtp.html">New-PveClusterNotificationsEndpointsSmtp</a></li>
+<li><a href="markdown/New-PveClusterNotificationsEndpointsWebhook.html">New-PveClusterNotificationsEndpointsWebhook</a></li>
+<li><a href="markdown/New-PveClusterNotificationsMatchers.html">New-PveClusterNotificationsMatchers</a></li>
+<li><a href="markdown/New-PveClusterReplication.html">New-PveClusterReplication</a></li>
+<li><a href="markdown/New-PveClusterSdnControllers.html">New-PveClusterSdnControllers</a></li>
+<li><a href="markdown/New-PveClusterSdnDns.html">New-PveClusterSdnDns</a></li>
+<li><a href="markdown/New-PveClusterSdnFabricsFabric.html">New-PveClusterSdnFabricsFabric</a></li>
+<li><a href="markdown/New-PveClusterSdnFabricsNode.html">New-PveClusterSdnFabricsNode</a></li>
+<li><a href="markdown/New-PveClusterSdnIpams.html">New-PveClusterSdnIpams</a></li>
+<li><a href="markdown/New-PveClusterSdnLock.html">New-PveClusterSdnLock</a></li>
+<li><a href="markdown/New-PveClusterSdnRollback.html">New-PveClusterSdnRollback</a></li>
+<li><a href="markdown/New-PveClusterSdnVnets.html">New-PveClusterSdnVnets</a></li>
+<li><a href="markdown/New-PveClusterSdnVnetsFirewallRules.html">New-PveClusterSdnVnetsFirewallRules</a></li>
+<li><a href="markdown/New-PveClusterSdnVnetsIps.html">New-PveClusterSdnVnetsIps</a></li>
+<li><a href="markdown/New-PveClusterSdnVnetsSubnets.html">New-PveClusterSdnVnetsSubnets</a></li>
+<li><a href="markdown/New-PveClusterSdnZones.html">New-PveClusterSdnZones</a></li>
+<li><a href="markdown/New-PveNodesAplinfo.html">New-PveNodesAplinfo</a></li>
+<li><a href="markdown/New-PveNodesAptRepositories.html">New-PveNodesAptRepositories</a></li>
+<li><a href="markdown/New-PveNodesAptUpdate.html">New-PveNodesAptUpdate</a></li>
+<li><a href="markdown/New-PveNodesCephFs.html">New-PveNodesCephFs</a></li>
+<li><a href="markdown/New-PveNodesCephInit.html">New-PveNodesCephInit</a></li>
+<li><a href="markdown/New-PveNodesCephMds.html">New-PveNodesCephMds</a></li>
+<li><a href="markdown/New-PveNodesCephMgr.html">New-PveNodesCephMgr</a></li>
+<li><a href="markdown/New-PveNodesCephMon.html">New-PveNodesCephMon</a></li>
+<li><a href="markdown/New-PveNodesCephOsd.html">New-PveNodesCephOsd</a></li>
+<li><a href="markdown/New-PveNodesCephOsdIn.html">New-PveNodesCephOsdIn</a></li>
+<li><a href="markdown/New-PveNodesCephOsdOut.html">New-PveNodesCephOsdOut</a></li>
+<li><a href="markdown/New-PveNodesCephOsdScrub.html">New-PveNodesCephOsdScrub</a></li>
+<li><a href="markdown/New-PveNodesCephPool.html">New-PveNodesCephPool</a></li>
+<li><a href="markdown/New-PveNodesCephRestart.html">New-PveNodesCephRestart</a></li>
+<li><a href="markdown/New-PveNodesCephStart.html">New-PveNodesCephStart</a></li>
+<li><a href="markdown/New-PveNodesCephStop.html">New-PveNodesCephStop</a></li>
+<li><a href="markdown/New-PveNodesCertificatesAcmeCertificate.html">New-PveNodesCertificatesAcmeCertificate</a></li>
+<li><a href="markdown/New-PveNodesCertificatesCustom.html">New-PveNodesCertificatesCustom</a></li>
+<li><a href="markdown/New-PveNodesDisksDirectory.html">New-PveNodesDisksDirectory</a></li>
+<li><a href="markdown/New-PveNodesDisksInitgpt.html">New-PveNodesDisksInitgpt</a></li>
+<li><a href="markdown/New-PveNodesDisksLvm.html">New-PveNodesDisksLvm</a></li>
+<li><a href="markdown/New-PveNodesDisksLvmthin.html">New-PveNodesDisksLvmthin</a></li>
+<li><a href="markdown/New-PveNodesDisksZfs.html">New-PveNodesDisksZfs</a></li>
+<li><a href="markdown/New-PveNodesExecute.html">New-PveNodesExecute</a></li>
+<li><a href="markdown/New-PveNodesFirewallRules.html">New-PveNodesFirewallRules</a></li>
+<li><a href="markdown/New-PveNodesHosts.html">New-PveNodesHosts</a></li>
+<li><a href="markdown/New-PveNodesMigrateall.html">New-PveNodesMigrateall</a></li>
+<li><a href="markdown/New-PveNodesNetwork.html">New-PveNodesNetwork</a></li>
+<li><a href="markdown/New-PveNodesReplicationScheduleNow.html">New-PveNodesReplicationScheduleNow</a></li>
+<li><a href="markdown/New-PveNodesServicesReload.html">New-PveNodesServicesReload</a></li>
+<li><a href="markdown/New-PveNodesServicesRestart.html">New-PveNodesServicesRestart</a></li>
+<li><a href="markdown/New-PveNodesServicesStart.html">New-PveNodesServicesStart</a></li>
+<li><a href="markdown/New-PveNodesServicesStop.html">New-PveNodesServicesStop</a></li>
+<li><a href="markdown/New-PveNodesSpiceshell.html">New-PveNodesSpiceshell</a></li>
+<li><a href="markdown/New-PveNodesStartall.html">New-PveNodesStartall</a></li>
+<li><a href="markdown/New-PveNodesStatus.html">New-PveNodesStatus</a></li>
+<li><a href="markdown/New-PveNodesStopall.html">New-PveNodesStopall</a></li>
+<li><a href="markdown/New-PveNodesSubscription.html">New-PveNodesSubscription</a></li>
+<li><a href="markdown/New-PveNodesSuspendall.html">New-PveNodesSuspendall</a></li>
+<li><a href="markdown/New-PveNodesTermproxy.html">New-PveNodesTermproxy</a></li>
+<li><a href="markdown/New-PveNodesVncshell.html">New-PveNodesVncshell</a></li>
+<li><a href="markdown/New-PveNodesVzdump.html">New-PveNodesVzdump</a></li>
+<li><a href="markdown/New-PveNodesWakeonlan.html">New-PveNodesWakeonlan</a></li>
+<li><a href="markdown/New-PvePools.html">New-PvePools</a></li>
+<li><a href="markdown/New-PveStorage.html">New-PveStorage</a></li>
+<li><a href="markdown/Remove-PveAccessDomains.html">Remove-PveAccessDomains</a></li>
+<li><a href="markdown/Remove-PveAccessGroups.html">Remove-PveAccessGroups</a></li>
+<li><a href="markdown/Remove-PveAccessRoles.html">Remove-PveAccessRoles</a></li>
+<li><a href="markdown/Remove-PveAccessTfa.html">Remove-PveAccessTfa</a></li>
+<li><a href="markdown/Remove-PveAccessUsers.html">Remove-PveAccessUsers</a></li>
+<li><a href="markdown/Remove-PveAccessUsersToken.html">Remove-PveAccessUsersToken</a></li>
+<li><a href="markdown/Remove-PveClusterAcmeAccount.html">Remove-PveClusterAcmeAccount</a></li>
+<li><a href="markdown/Remove-PveClusterAcmePlugins.html">Remove-PveClusterAcmePlugins</a></li>
+<li><a href="markdown/Remove-PveClusterBackup.html">Remove-PveClusterBackup</a></li>
+<li><a href="markdown/Remove-PveClusterConfigNodes.html">Remove-PveClusterConfigNodes</a></li>
+<li><a href="markdown/Remove-PveClusterFirewallAliases.html">Remove-PveClusterFirewallAliases</a></li>
+<li><a href="markdown/Remove-PveClusterFirewallGroups.html">Remove-PveClusterFirewallGroups</a></li>
+<li><a href="markdown/Remove-PveClusterFirewallGroupsIdx.html">Remove-PveClusterFirewallGroupsIdx</a></li>
+<li><a href="markdown/Remove-PveClusterFirewallIpset.html">Remove-PveClusterFirewallIpset</a></li>
+<li><a href="markdown/Remove-PveClusterFirewallIpsetIdx.html">Remove-PveClusterFirewallIpsetIdx</a></li>
+<li><a href="markdown/Remove-PveClusterFirewallRules.html">Remove-PveClusterFirewallRules</a></li>
+<li><a href="markdown/Remove-PveClusterHaGroups.html">Remove-PveClusterHaGroups</a></li>
+<li><a href="markdown/Remove-PveClusterHaResources.html">Remove-PveClusterHaResources</a></li>
+<li><a href="markdown/Remove-PveClusterHaRules.html">Remove-PveClusterHaRules</a></li>
+<li><a href="markdown/Remove-PveClusterJobsRealmSync.html">Remove-PveClusterJobsRealmSync</a></li>
+<li><a href="markdown/Remove-PveClusterMappingDir.html">Remove-PveClusterMappingDir</a></li>
+<li><a href="markdown/Remove-PveClusterMappingPci.html">Remove-PveClusterMappingPci</a></li>
+<li><a href="markdown/Remove-PveClusterMappingUsb.html">Remove-PveClusterMappingUsb</a></li>
+<li><a href="markdown/Remove-PveClusterMetricsServer.html">Remove-PveClusterMetricsServer</a></li>
+<li><a href="markdown/Remove-PveClusterNotificationsEndpointsGotify.html">Remove-PveClusterNotificationsEndpointsGotify</a></li>
+<li><a href="markdown/Remove-PveClusterNotificationsEndpointsSendmail.html">Remove-PveClusterNotificationsEndpointsSendmail</a></li>
+<li><a href="markdown/Remove-PveClusterNotificationsEndpointsSmtp.html">Remove-PveClusterNotificationsEndpointsSmtp</a></li>
+<li><a href="markdown/Remove-PveClusterNotificationsEndpointsWebhook.html">Remove-PveClusterNotificationsEndpointsWebhook</a></li>
+<li><a href="markdown/Remove-PveClusterNotificationsMatchers.html">Remove-PveClusterNotificationsMatchers</a></li>
+<li><a href="markdown/Remove-PveClusterReplication.html">Remove-PveClusterReplication</a></li>
+<li><a href="markdown/Remove-PveClusterSdnControllers.html">Remove-PveClusterSdnControllers</a></li>
+<li><a href="markdown/Remove-PveClusterSdnDns.html">Remove-PveClusterSdnDns</a></li>
+<li><a href="markdown/Remove-PveClusterSdnFabricsFabric.html">Remove-PveClusterSdnFabricsFabric</a></li>
+<li><a href="markdown/Remove-PveClusterSdnFabricsNode.html">Remove-PveClusterSdnFabricsNode</a></li>
+<li><a href="markdown/Remove-PveClusterSdnIpams.html">Remove-PveClusterSdnIpams</a></li>
+<li><a href="markdown/Remove-PveClusterSdnLock.html">Remove-PveClusterSdnLock</a></li>
+<li><a href="markdown/Remove-PveClusterSdnVnets.html">Remove-PveClusterSdnVnets</a></li>
+<li><a href="markdown/Remove-PveClusterSdnVnetsFirewallRules.html">Remove-PveClusterSdnVnetsFirewallRules</a></li>
+<li><a href="markdown/Remove-PveClusterSdnVnetsIps.html">Remove-PveClusterSdnVnetsIps</a></li>
+<li><a href="markdown/Remove-PveClusterSdnVnetsSubnets.html">Remove-PveClusterSdnVnetsSubnets</a></li>
+<li><a href="markdown/Remove-PveClusterSdnZones.html">Remove-PveClusterSdnZones</a></li>
+<li><a href="markdown/Remove-PveNodesCephMds.html">Remove-PveNodesCephMds</a></li>
+<li><a href="markdown/Remove-PveNodesCephMgr.html">Remove-PveNodesCephMgr</a></li>
+<li><a href="markdown/Remove-PveNodesCephMon.html">Remove-PveNodesCephMon</a></li>
+<li><a href="markdown/Remove-PveNodesCephOsd.html">Remove-PveNodesCephOsd</a></li>
+<li><a href="markdown/Remove-PveNodesCephPool.html">Remove-PveNodesCephPool</a></li>
+<li><a href="markdown/Remove-PveNodesCertificatesAcmeCertificate.html">Remove-PveNodesCertificatesAcmeCertificate</a></li>
+<li><a href="markdown/Remove-PveNodesCertificatesCustom.html">Remove-PveNodesCertificatesCustom</a></li>
+<li><a href="markdown/Remove-PveNodesDisksDirectory.html">Remove-PveNodesDisksDirectory</a></li>
+<li><a href="markdown/Remove-PveNodesDisksLvm.html">Remove-PveNodesDisksLvm</a></li>
+<li><a href="markdown/Remove-PveNodesDisksLvmthin.html">Remove-PveNodesDisksLvmthin</a></li>
+<li><a href="markdown/Remove-PveNodesDisksZfs.html">Remove-PveNodesDisksZfs</a></li>
+<li><a href="markdown/Remove-PveNodesFirewallRules.html">Remove-PveNodesFirewallRules</a></li>
+<li><a href="markdown/Remove-PveNodesNetwork.html">Remove-PveNodesNetwork</a></li>
+<li><a href="markdown/Remove-PveNodesNetworkIdx.html">Remove-PveNodesNetworkIdx</a></li>
+<li><a href="markdown/Remove-PveNodesSubscription.html">Remove-PveNodesSubscription</a></li>
+<li><a href="markdown/Remove-PveNodesTasks.html">Remove-PveNodesTasks</a></li>
+<li><a href="markdown/Remove-PvePools.html">Remove-PvePools</a></li>
+<li><a href="markdown/Remove-PvePoolsIdx.html">Remove-PvePoolsIdx</a></li>
+<li><a href="markdown/Remove-PveStorage.html">Remove-PveStorage</a></li>
+<li><a href="markdown/Set-PveAccessAcl.html">Set-PveAccessAcl</a></li>
+<li><a href="markdown/Set-PveAccessDomains.html">Set-PveAccessDomains</a></li>
+<li><a href="markdown/Set-PveAccessGroups.html">Set-PveAccessGroups</a></li>
+<li><a href="markdown/Set-PveAccessPassword.html">Set-PveAccessPassword</a></li>
+<li><a href="markdown/Set-PveAccessRoles.html">Set-PveAccessRoles</a></li>
+<li><a href="markdown/Set-PveAccessTfa.html">Set-PveAccessTfa</a></li>
+<li><a href="markdown/Set-PveAccessUsers.html">Set-PveAccessUsers</a></li>
+<li><a href="markdown/Set-PveAccessUsersToken.html">Set-PveAccessUsersToken</a></li>
+<li><a href="markdown/Set-PveAccessUsersUnlockTfa.html">Set-PveAccessUsersUnlockTfa</a></li>
+<li><a href="markdown/Set-PveClusterAcmeAccount.html">Set-PveClusterAcmeAccount</a></li>
+<li><a href="markdown/Set-PveClusterAcmePlugins.html">Set-PveClusterAcmePlugins</a></li>
+<li><a href="markdown/Set-PveClusterBackup.html">Set-PveClusterBackup</a></li>
+<li><a href="markdown/Set-PveClusterCephFlags.html">Set-PveClusterCephFlags</a></li>
+<li><a href="markdown/Set-PveClusterCephFlagsIdx.html">Set-PveClusterCephFlagsIdx</a></li>
+<li><a href="markdown/Set-PveClusterFirewallAliases.html">Set-PveClusterFirewallAliases</a></li>
+<li><a href="markdown/Set-PveClusterFirewallGroups.html">Set-PveClusterFirewallGroups</a></li>
+<li><a href="markdown/Set-PveClusterFirewallIpset.html">Set-PveClusterFirewallIpset</a></li>
+<li><a href="markdown/Set-PveClusterFirewallOptions.html">Set-PveClusterFirewallOptions</a></li>
+<li><a href="markdown/Set-PveClusterFirewallRules.html">Set-PveClusterFirewallRules</a></li>
+<li><a href="markdown/Set-PveClusterHaGroups.html">Set-PveClusterHaGroups</a></li>
+<li><a href="markdown/Set-PveClusterHaResources.html">Set-PveClusterHaResources</a></li>
+<li><a href="markdown/Set-PveClusterHaRules.html">Set-PveClusterHaRules</a></li>
+<li><a href="markdown/Set-PveClusterJobsRealmSync.html">Set-PveClusterJobsRealmSync</a></li>
+<li><a href="markdown/Set-PveClusterMappingDir.html">Set-PveClusterMappingDir</a></li>
+<li><a href="markdown/Set-PveClusterMappingPci.html">Set-PveClusterMappingPci</a></li>
+<li><a href="markdown/Set-PveClusterMappingUsb.html">Set-PveClusterMappingUsb</a></li>
+<li><a href="markdown/Set-PveClusterMetricsServer.html">Set-PveClusterMetricsServer</a></li>
+<li><a href="markdown/Set-PveClusterNotificationsEndpointsGotify.html">Set-PveClusterNotificationsEndpointsGotify</a></li>
+<li><a href="markdown/Set-PveClusterNotificationsEndpointsSendmail.html">Set-PveClusterNotificationsEndpointsSendmail</a></li>
+<li><a href="markdown/Set-PveClusterNotificationsEndpointsSmtp.html">Set-PveClusterNotificationsEndpointsSmtp</a></li>
+<li><a href="markdown/Set-PveClusterNotificationsEndpointsWebhook.html">Set-PveClusterNotificationsEndpointsWebhook</a></li>
+<li><a href="markdown/Set-PveClusterNotificationsMatchers.html">Set-PveClusterNotificationsMatchers</a></li>
+<li><a href="markdown/Set-PveClusterOptions.html">Set-PveClusterOptions</a></li>
+<li><a href="markdown/Set-PveClusterReplication.html">Set-PveClusterReplication</a></li>
+<li><a href="markdown/Set-PveClusterSdn.html">Set-PveClusterSdn</a></li>
+<li><a href="markdown/Set-PveClusterSdnControllers.html">Set-PveClusterSdnControllers</a></li>
+<li><a href="markdown/Set-PveClusterSdnDns.html">Set-PveClusterSdnDns</a></li>
+<li><a href="markdown/Set-PveClusterSdnFabricsFabric.html">Set-PveClusterSdnFabricsFabric</a></li>
+<li><a href="markdown/Set-PveClusterSdnFabricsNode.html">Set-PveClusterSdnFabricsNode</a></li>
+<li><a href="markdown/Set-PveClusterSdnIpams.html">Set-PveClusterSdnIpams</a></li>
+<li><a href="markdown/Set-PveClusterSdnVnets.html">Set-PveClusterSdnVnets</a></li>
+<li><a href="markdown/Set-PveClusterSdnVnetsFirewallOptions.html">Set-PveClusterSdnVnetsFirewallOptions</a></li>
+<li><a href="markdown/Set-PveClusterSdnVnetsFirewallRules.html">Set-PveClusterSdnVnetsFirewallRules</a></li>
+<li><a href="markdown/Set-PveClusterSdnVnetsIps.html">Set-PveClusterSdnVnetsIps</a></li>
+<li><a href="markdown/Set-PveClusterSdnVnetsSubnets.html">Set-PveClusterSdnVnetsSubnets</a></li>
+<li><a href="markdown/Set-PveClusterSdnZones.html">Set-PveClusterSdnZones</a></li>
+<li><a href="markdown/Set-PveNodesAptRepositories.html">Set-PveNodesAptRepositories</a></li>
+<li><a href="markdown/Set-PveNodesCephPool.html">Set-PveNodesCephPool</a></li>
+<li><a href="markdown/Set-PveNodesCertificatesAcmeCertificate.html">Set-PveNodesCertificatesAcmeCertificate</a></li>
+<li><a href="markdown/Set-PveNodesConfig.html">Set-PveNodesConfig</a></li>
+<li><a href="markdown/Set-PveNodesDisksWipedisk.html">Set-PveNodesDisksWipedisk</a></li>
+<li><a href="markdown/Set-PveNodesDns.html">Set-PveNodesDns</a></li>
+<li><a href="markdown/Set-PveNodesFirewallOptions.html">Set-PveNodesFirewallOptions</a></li>
+<li><a href="markdown/Set-PveNodesFirewallRules.html">Set-PveNodesFirewallRules</a></li>
+<li><a href="markdown/Set-PveNodesNetwork.html">Set-PveNodesNetwork</a></li>
+<li><a href="markdown/Set-PveNodesNetworkIdx.html">Set-PveNodesNetworkIdx</a></li>
+<li><a href="markdown/Set-PveNodesSubscription.html">Set-PveNodesSubscription</a></li>
+<li><a href="markdown/Set-PveNodesTime.html">Set-PveNodesTime</a></li>
+<li><a href="markdown/Set-PvePools.html">Set-PvePools</a></li>
+<li><a href="markdown/Set-PvePoolsIdx.html">Set-PvePoolsIdx</a></li>
+<li><a href="markdown/Set-PveStorage.html">Set-PveStorage</a></li>
+<li><a href="markdown/Test-PortQuick.html">Test-PortQuick</a></li>
+<li><a href="markdown/VmCheckIdOrName.html">VmCheckIdOrName</a></li>
+</ul>
+<h3 id="snapshots">Snapshots<a class="headerlink" href="#snapshots" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveNodesLxcSnapshot.html">Get-PveNodesLxcSnapshot</a></li>
+<li><a href="markdown/Get-PveNodesLxcSnapshotConfig.html">Get-PveNodesLxcSnapshotConfig</a></li>
+<li><a href="markdown/Get-PveNodesLxcSnapshotIdx.html">Get-PveNodesLxcSnapshotIdx</a></li>
+<li><a href="markdown/Get-PveNodesQemuSnapshot.html">Get-PveNodesQemuSnapshot</a></li>
+<li><a href="markdown/Get-PveNodesQemuSnapshotConfig.html">Get-PveNodesQemuSnapshotConfig</a></li>
+<li><a href="markdown/Get-PveNodesQemuSnapshotIdx.html">Get-PveNodesQemuSnapshotIdx</a></li>
+<li><a href="markdown/Get-PveVmSnapshot.html">Get-PveVmSnapshot</a></li>
+<li><a href="markdown/New-PveNodesLxcSnapshot.html">New-PveNodesLxcSnapshot</a></li>
+<li><a href="markdown/New-PveNodesLxcSnapshotRollback.html">New-PveNodesLxcSnapshotRollback</a></li>
+<li><a href="markdown/New-PveNodesQemuSnapshot.html">New-PveNodesQemuSnapshot</a></li>
+<li><a href="markdown/New-PveNodesQemuSnapshotRollback.html">New-PveNodesQemuSnapshotRollback</a></li>
+<li><a href="markdown/New-PveVmSnapshot.html">New-PveVmSnapshot</a></li>
+<li><a href="markdown/Remove-PveNodesLxcSnapshot.html">Remove-PveNodesLxcSnapshot</a></li>
+<li><a href="markdown/Remove-PveNodesQemuSnapshot.html">Remove-PveNodesQemuSnapshot</a></li>
+<li><a href="markdown/Remove-PveVmSnapshot.html">Remove-PveVmSnapshot</a></li>
+<li><a href="markdown/Set-PveNodesLxcSnapshotConfig.html">Set-PveNodesLxcSnapshotConfig</a></li>
+<li><a href="markdown/Set-PveNodesQemuSnapshotConfig.html">Set-PveNodesQemuSnapshotConfig</a></li>
+<li><a href="markdown/Undo-PveVmSnapshot.html">Undo-PveVmSnapshot</a></li>
+</ul>
+<h3 id="storage">Storage<a class="headerlink" href="#storage" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveNodesStorage.html">Get-PveNodesStorage</a></li>
+<li><a href="markdown/Get-PveNodesStorageContent.html">Get-PveNodesStorageContent</a></li>
+<li><a href="markdown/Get-PveNodesStorageContentIdx.html">Get-PveNodesStorageContentIdx</a></li>
+<li><a href="markdown/Get-PveNodesStorageIdx.html">Get-PveNodesStorageIdx</a></li>
+<li><a href="markdown/Get-PveNodesStorageImportMetadata.html">Get-PveNodesStorageImportMetadata</a></li>
+<li><a href="markdown/Get-PveNodesStoragePrunebackups.html">Get-PveNodesStoragePrunebackups</a></li>
+<li><a href="markdown/Get-PveNodesStorageRrd.html">Get-PveNodesStorageRrd</a></li>
+<li><a href="markdown/Get-PveNodesStorageRrddata.html">Get-PveNodesStorageRrddata</a></li>
+<li><a href="markdown/Get-PveNodesStorageStatus.html">Get-PveNodesStorageStatus</a></li>
+<li><a href="markdown/New-PveNodesStorageContent.html">New-PveNodesStorageContent</a></li>
+<li><a href="markdown/New-PveNodesStorageContentIdx.html">New-PveNodesStorageContentIdx</a></li>
+<li><a href="markdown/New-PveNodesStorageDownloadUrl.html">New-PveNodesStorageDownloadUrl</a></li>
+<li><a href="markdown/New-PveNodesStorageOciRegistryPull.html">New-PveNodesStorageOciRegistryPull</a></li>
+<li><a href="markdown/New-PveNodesStorageUpload.html">New-PveNodesStorageUpload</a></li>
+<li><a href="markdown/Remove-PveNodesStorageContent.html">Remove-PveNodesStorageContent</a></li>
+<li><a href="markdown/Remove-PveNodesStoragePrunebackups.html">Remove-PveNodesStoragePrunebackups</a></li>
+<li><a href="markdown/Set-PveNodesStorageContent.html">Set-PveNodesStorageContent</a></li>
+</ul>
+<h3 id="task-management">Task Management<a class="headerlink" href="#task-management" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveNodesTasks.html">Get-PveNodesTasks</a></li>
+<li><a href="markdown/Get-PveNodesTasksIdx.html">Get-PveNodesTasksIdx</a></li>
+<li><a href="markdown/Get-PveNodesTasksLog.html">Get-PveNodesTasksLog</a></li>
+<li><a href="markdown/Get-PveNodesTasksStatus.html">Get-PveNodesTasksStatus</a></li>
+<li><a href="markdown/Get-PveTaskIsRunning.html">Get-PveTaskIsRunning</a></li>
+<li><a href="markdown/Wait-PveTaskIsFinish.html">Wait-PveTaskIsFinish</a></li>
+</ul>
+<h3 id="utilities">Utilities<a class="headerlink" href="#utilities" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/ConvertFrom-PveUnixTime.html">ConvertFrom-PveUnixTime</a></li>
+<li><a href="markdown/ConvertTo-PveUnixTime.html">ConvertTo-PveUnixTime</a></li>
+</ul>
+<h3 id="virtual-machines-qemu">Virtual Machines (QEMU)<a class="headerlink" href="#virtual-machines-qemu" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Get-PveNodesCapabilitiesQemu.html">Get-PveNodesCapabilitiesQemu</a></li>
+<li><a href="markdown/Get-PveNodesCapabilitiesQemuCpu.html">Get-PveNodesCapabilitiesQemuCpu</a></li>
+<li><a href="markdown/Get-PveNodesCapabilitiesQemuCpuFlags.html">Get-PveNodesCapabilitiesQemuCpuFlags</a></li>
+<li><a href="markdown/Get-PveNodesCapabilitiesQemuMachines.html">Get-PveNodesCapabilitiesQemuMachines</a></li>
+<li><a href="markdown/Get-PveNodesCapabilitiesQemuMigration.html">Get-PveNodesCapabilitiesQemuMigration</a></li>
+<li><a href="markdown/Get-PveNodesQemu.html">Get-PveNodesQemu</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgent.html">Get-PveNodesQemuAgent</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentExecStatus.html">Get-PveNodesQemuAgentExecStatus</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentFileRead.html">Get-PveNodesQemuAgentFileRead</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetFsinfo.html">Get-PveNodesQemuAgentGetFsinfo</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetHostName.html">Get-PveNodesQemuAgentGetHostName</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetMemoryBlockInfo.html">Get-PveNodesQemuAgentGetMemoryBlockInfo</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetMemoryBlocks.html">Get-PveNodesQemuAgentGetMemoryBlocks</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetOsinfo.html">Get-PveNodesQemuAgentGetOsinfo</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetTime.html">Get-PveNodesQemuAgentGetTime</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetTimezone.html">Get-PveNodesQemuAgentGetTimezone</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetUsers.html">Get-PveNodesQemuAgentGetUsers</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentGetVcpus.html">Get-PveNodesQemuAgentGetVcpus</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentInfo.html">Get-PveNodesQemuAgentInfo</a></li>
+<li><a href="markdown/Get-PveNodesQemuAgentNetworkGetInterfaces.html">Get-PveNodesQemuAgentNetworkGetInterfaces</a></li>
+<li><a href="markdown/Get-PveNodesQemuCloudinit.html">Get-PveNodesQemuCloudinit</a></li>
+<li><a href="markdown/Get-PveNodesQemuCloudinitDump.html">Get-PveNodesQemuCloudinitDump</a></li>
+<li><a href="markdown/Get-PveNodesQemuConfig.html">Get-PveNodesQemuConfig</a></li>
+<li><a href="markdown/Get-PveNodesQemuFeature.html">Get-PveNodesQemuFeature</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewall.html">Get-PveNodesQemuFirewall</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallAliases.html">Get-PveNodesQemuFirewallAliases</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallAliasesIdx.html">Get-PveNodesQemuFirewallAliasesIdx</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallIpset.html">Get-PveNodesQemuFirewallIpset</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallIpsetIdx.html">Get-PveNodesQemuFirewallIpsetIdx</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallIpsetIdx1.html">Get-PveNodesQemuFirewallIpsetIdx1</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallLog.html">Get-PveNodesQemuFirewallLog</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallOptions.html">Get-PveNodesQemuFirewallOptions</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallRefs.html">Get-PveNodesQemuFirewallRefs</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallRules.html">Get-PveNodesQemuFirewallRules</a></li>
+<li><a href="markdown/Get-PveNodesQemuFirewallRulesIdx.html">Get-PveNodesQemuFirewallRulesIdx</a></li>
+<li><a href="markdown/Get-PveNodesQemuIdx.html">Get-PveNodesQemuIdx</a></li>
+<li><a href="markdown/Get-PveNodesQemuMigrate.html">Get-PveNodesQemuMigrate</a></li>
+<li><a href="markdown/Get-PveNodesQemuMtunnelwebsocket.html">Get-PveNodesQemuMtunnelwebsocket</a></li>
+<li><a href="markdown/Get-PveNodesQemuPending.html">Get-PveNodesQemuPending</a></li>
+<li><a href="markdown/Get-PveNodesQemuRrd.html">Get-PveNodesQemuRrd</a></li>
+<li><a href="markdown/Get-PveNodesQemuRrddata.html">Get-PveNodesQemuRrddata</a></li>
+<li><a href="markdown/Get-PveNodesQemuStatus.html">Get-PveNodesQemuStatus</a></li>
+<li><a href="markdown/Get-PveNodesQemuStatusCurrent.html">Get-PveNodesQemuStatusCurrent</a></li>
+<li><a href="markdown/Get-PveNodesQemuVncwebsocket.html">Get-PveNodesQemuVncwebsocket</a></li>
+<li><a href="markdown/New-PveNodesQemu.html">New-PveNodesQemu</a></li>
+<li><a href="markdown/New-PveNodesQemuAgent.html">New-PveNodesQemuAgent</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentExec.html">New-PveNodesQemuAgentExec</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentFileWrite.html">New-PveNodesQemuAgentFileWrite</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentFsfreezeFreeze.html">New-PveNodesQemuAgentFsfreezeFreeze</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentFsfreezeStatus.html">New-PveNodesQemuAgentFsfreezeStatus</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentFsfreezeThaw.html">New-PveNodesQemuAgentFsfreezeThaw</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentFstrim.html">New-PveNodesQemuAgentFstrim</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentPing.html">New-PveNodesQemuAgentPing</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentSetUserPassword.html">New-PveNodesQemuAgentSetUserPassword</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentShutdown.html">New-PveNodesQemuAgentShutdown</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentSuspendDisk.html">New-PveNodesQemuAgentSuspendDisk</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentSuspendHybrid.html">New-PveNodesQemuAgentSuspendHybrid</a></li>
+<li><a href="markdown/New-PveNodesQemuAgentSuspendRam.html">New-PveNodesQemuAgentSuspendRam</a></li>
+<li><a href="markdown/New-PveNodesQemuClone.html">New-PveNodesQemuClone</a></li>
+<li><a href="markdown/New-PveNodesQemuConfig.html">New-PveNodesQemuConfig</a></li>
+<li><a href="markdown/New-PveNodesQemuDbusVmstate.html">New-PveNodesQemuDbusVmstate</a></li>
+<li><a href="markdown/New-PveNodesQemuFirewallAliases.html">New-PveNodesQemuFirewallAliases</a></li>
+<li><a href="markdown/New-PveNodesQemuFirewallIpset.html">New-PveNodesQemuFirewallIpset</a></li>
+<li><a href="markdown/New-PveNodesQemuFirewallIpsetIdx.html">New-PveNodesQemuFirewallIpsetIdx</a></li>
+<li><a href="markdown/New-PveNodesQemuFirewallRules.html">New-PveNodesQemuFirewallRules</a></li>
+<li><a href="markdown/New-PveNodesQemuMigrate.html">New-PveNodesQemuMigrate</a></li>
+<li><a href="markdown/New-PveNodesQemuMonitor.html">New-PveNodesQemuMonitor</a></li>
+<li><a href="markdown/New-PveNodesQemuMoveDisk.html">New-PveNodesQemuMoveDisk</a></li>
+<li><a href="markdown/New-PveNodesQemuMtunnel.html">New-PveNodesQemuMtunnel</a></li>
+<li><a href="markdown/New-PveNodesQemuRemoteMigrate.html">New-PveNodesQemuRemoteMigrate</a></li>
+<li><a href="markdown/New-PveNodesQemuSpiceproxy.html">New-PveNodesQemuSpiceproxy</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusReboot.html">New-PveNodesQemuStatusReboot</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusReset.html">New-PveNodesQemuStatusReset</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusResume.html">New-PveNodesQemuStatusResume</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusShutdown.html">New-PveNodesQemuStatusShutdown</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusStart.html">New-PveNodesQemuStatusStart</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusStop.html">New-PveNodesQemuStatusStop</a></li>
+<li><a href="markdown/New-PveNodesQemuStatusSuspend.html">New-PveNodesQemuStatusSuspend</a></li>
+<li><a href="markdown/New-PveNodesQemuTemplate.html">New-PveNodesQemuTemplate</a></li>
+<li><a href="markdown/New-PveNodesQemuTermproxy.html">New-PveNodesQemuTermproxy</a></li>
+<li><a href="markdown/New-PveNodesQemuVncproxy.html">New-PveNodesQemuVncproxy</a></li>
+<li><a href="markdown/Remove-PveNodesQemu.html">Remove-PveNodesQemu</a></li>
+<li><a href="markdown/Remove-PveNodesQemuFirewallAliases.html">Remove-PveNodesQemuFirewallAliases</a></li>
+<li><a href="markdown/Remove-PveNodesQemuFirewallIpset.html">Remove-PveNodesQemuFirewallIpset</a></li>
+<li><a href="markdown/Remove-PveNodesQemuFirewallIpsetIdx.html">Remove-PveNodesQemuFirewallIpsetIdx</a></li>
+<li><a href="markdown/Remove-PveNodesQemuFirewallRules.html">Remove-PveNodesQemuFirewallRules</a></li>
+<li><a href="markdown/Set-PveNodesQemuCloudinit.html">Set-PveNodesQemuCloudinit</a></li>
+<li><a href="markdown/Set-PveNodesQemuConfig.html">Set-PveNodesQemuConfig</a></li>
+<li><a href="markdown/Set-PveNodesQemuFirewallAliases.html">Set-PveNodesQemuFirewallAliases</a></li>
+<li><a href="markdown/Set-PveNodesQemuFirewallIpset.html">Set-PveNodesQemuFirewallIpset</a></li>
+<li><a href="markdown/Set-PveNodesQemuFirewallOptions.html">Set-PveNodesQemuFirewallOptions</a></li>
+<li><a href="markdown/Set-PveNodesQemuFirewallRules.html">Set-PveNodesQemuFirewallRules</a></li>
+<li><a href="markdown/Set-PveNodesQemuResize.html">Set-PveNodesQemuResize</a></li>
+<li><a href="markdown/Set-PveNodesQemuSendkey.html">Set-PveNodesQemuSendkey</a></li>
+<li><a href="markdown/Set-PveNodesQemuUnlink.html">Set-PveNodesQemuUnlink</a></li>
+</ul>
+<h3 id="vm-operations">VM Operations<a class="headerlink" href="#vm-operations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="markdown/Reset-PveVm.html">Reset-PveVm</a></li>
+<li><a href="markdown/Resume-PveVm.html">Resume-PveVm</a></li>
+<li><a href="markdown/Start-PveVm.html">Start-PveVm</a></li>
+<li><a href="markdown/Stop-PveVm.html">Stop-PveVm</a></li>
+<li><a href="markdown/Suspend-PveVm.html">Suspend-PveVm</a></li>
+<li><a href="markdown/Unlock-PveVm.html">Unlock-PveVm</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; Corsinvest Srl - Part of <a href="https://www.corsinvest.it/cv4pve" target="_blank">cv4pve suite</a>
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/Corsinvest/cv4pve-api-powershell" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.corsinvest.it/cv4pve" target="_blank" rel="noopener" title="www.corsinvest.it" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M351.9 280H161c2.9 64.5 17.2 123.9 37.5 167.4 11.4 24.5 23.7 41.8 35.1 52.4 11.2 10.5 18.9 12.2 22.9 12.2s11.7-1.7 22.9-12.2c11.4-10.6 23.7-28 35.1-52.4 20.3-43.5 34.6-102.9 37.5-167.4zm-191-48h190.9c-2.8-64.5-17.1-123.9-37.4-167.4-11.4-24.4-23.7-41.8-35.1-52.4C268.1 1.7 260.4 0 256.4 0s-11.7 1.7-22.9 12.2c-11.4 10.6-23.7 28-35.1 52.4-20.3 43.5-34.6 102.9-37.5 167.4m-48 0c3.5-85.6 25.6-165.1 57.9-217.3C78.7 47.3 10.9 131.2 1.5 232zM1.5 280c9.4 100.8 77.2 184.7 169.3 217.3-32.3-52.2-54.4-131.7-57.9-217.3zm398.4 0c-3.5 85.6-25.6 165.1-57.9 217.3 92.1-32.7 159.9-116.5 169.3-217.3zm111.4-48C501.9 131.2 434.1 47.3 342 14.7c32.3 52.2 54.4 131.7 57.9 217.3z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.top", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate"], "search": "assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="assets/javascripts/bundle.e71a0d61.min.js"></script>
+      
+    
+  </body>
+</html>
