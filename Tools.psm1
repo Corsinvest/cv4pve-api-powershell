@@ -32,9 +32,6 @@ function Invoke-PveAction {
             New-MarkdownHelp -Module Corsinvest.ProxmoxVE.Api -OutputFolder $MarkdownSourcePath -Force
         }
         elseif ($Action -eq 'create-doc-mkdocs') {
-            # Generate PlatyPS markdown first by calling the create-doc-md action
-            Invoke-PveAction -Action 'create-doc-md'
-
             Write-Host "🚀 Starting MkDocs documentation generation..." -ForegroundColor Cyan
 
             # Process PlatyPS markdown files (generate index only, no copy)
