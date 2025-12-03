@@ -79,6 +79,7 @@ extra:
 
 nav:
   - Home: index.md
+  - Common Issues & Examples: common-issues.md
   - Cmdlet Reference:
       - Overview: cmdlets-index.md
 
