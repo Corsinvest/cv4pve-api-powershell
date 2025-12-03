@@ -126,6 +126,7 @@ Comprehensive documentation is available in multiple formats:
 ## 🎓 Tutorial & Learning Resources
 
 * **[Interactive VSCode Notebook Tutorial](https://tinyurl.com/cv4pve-api-pwsh-learn)** - Learn by doing with interactive examples
+* **[Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html)** - Practical solutions to common problems and advanced examples
 * **[Video Demo](https://asciinema.org/a/656606)** - Watch a quick demonstration of the module in action
 
 <a href="https://asciinema.org/a/656606" target="_blank"><img src="https://asciinema.org/a/656606.svg" /></a>
@@ -160,6 +161,21 @@ To view your module paths:
 # Display module paths
 $env:PSModulePath -split [IO.Path]::PathSeparator
 ```
+
+##  Documentation
+
+**Need help getting started or troubleshooting issues?**
+
+- **[Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html)** - Practical examples and solutions to common problems:
+  - Hashtable parameters (NetN, SataN, ScsiN)
+  - Boolean vs Switch parameters
+  - Working with result objects
+  - Creating VMs with disks and network
+  - Guest agent commands
+  - And more!
+
+- **[Full Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)** - Complete reference with all cmdlets
+- **[Proxmox VE API Viewer](https://pve.proxmox.com/pve-docs/api-viewer/)** - Official Proxmox VE API documentation
 
 ## 🚀 Quick Start
 
@@ -280,6 +296,8 @@ New-PveNodesQemu -Node pve1 `
 
 **Note:** Use `[uri]::EscapeDataString` to properly escape parameter values containing special characters.
 
+For more detailed examples and common issues, see the [Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html) documentation.
+
 ### Monitoring Resources
 
 ```powershell
@@ -385,16 +403,6 @@ We welcome contributions! Here's how you can help:
 3. **Submit Pull Requests** - Want to contribute code? Fork the repo and submit a PR
 4. **Improve Documentation** - Help us make the docs better
 
-## 🔗 Related Projects
-
-Part of the **cv4pve** suite of tools for Proxmox VE:
-
-* **[cv4pve-api-dotnet](https://github.com/Corsinvest/cv4pve-api-dotnet)** - .NET library for Proxmox VE API
-* **[cv4pve-autosnap](https://github.com/Corsinvest/cv4pve-autosnap)** - Automatic snapshot tool
-* **[cv4pve-barc](https://github.com/Corsinvest/cv4pve-barc)** - Backup and restore Ceph
-* **[cv4pve-pepper](https://github.com/Corsinvest/cv4pve-pepper)** - Launching SPICE remote-viewer
-
-Visit [cv4pve.com](https://www.corsinvest.it/cv4pve) for the complete suite.
 
 ## 📞 Support
 
