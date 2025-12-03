@@ -1,3 +1,6 @@
 doc/PowerSession.exe
 doc/prep-video-commands.ps1
-_site/
+doc/_site/
+doc/mkdocs/docs/markdown/
+doc/mkdocs/docs/index.md
+doc/mkdocs/docs/LICENSE

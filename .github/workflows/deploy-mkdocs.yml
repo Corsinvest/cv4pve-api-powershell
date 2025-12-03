@@ -10,7 +10,6 @@ on:
     paths:
       - 'doc/markdown/**'
       - 'doc/mkdocs/**'
-      - 'README.md'
       - '.github/workflows/deploy-mkdocs.yml'
   workflow_dispatch:  # Allow manual trigger
 
@@ -42,23 +41,23 @@ jobs:
       - name: Install MkDocs and dependencies
         run: |
           pip install mkdocs-material
-          pip install mkdocs-minify-plugin
 
-      # - name: Installa PowerShell Core 7.4
-      #   uses: PSModule/Install-PowerShell@v1
-      #   with:
-      #     Version: '7.4'
-
-      - name: Install PowerShell module dependencies
+      - name: Install PowerShell dependencies
         shell: pwsh
         run: |
           Install-Module -Name platyPS -Force -Scope CurrentUser -SkipPublisherCheck
 
-      - name: Import Tools module and generate MkDocs structure
+      - name: Generate MkDocs documentation
         shell: pwsh
         run: |
           Import-Module ./Tools.psm1 -Force
           Invoke-PveAction -Action 'create-doc-mkdocs'
+
+      - name: Copy files for MkDocs (symlinks don't work in CI)
+        run: |
+          cp -r doc/markdown doc/mkdocs/docs/
+          cp README.md doc/mkdocs/docs/index.md
+          cp LICENSE doc/mkdocs/docs/LICENSE
 
       - name: Build MkDocs site
         run: |
@@ -69,7 +68,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./doc/mkdocs/site
+          publish_dir: ./doc/_site
           publish_branch: gh-pages
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
