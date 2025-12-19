@@ -726,8 +726,8 @@ PveResponse. Return response.
 
     process {
         $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | Set-PveNodesQemuConfig -PveTicket $PveTicket -Delete 'lock' -Skiplock }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | Set-PveNodesLxcConfig -PveTicket $PveTicket -Delete 'lock' }
+        if ($vm.type -eq 'qemu') { return Set-PveNodesQemuConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' -Skiplock:$true }
+        ElseIf ($vm.type -eq 'lxc') { return Set-PveNodesLxcConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' }
     }
 }
 
@@ -32858,4 +32858,5 @@ PveResponse. Return response.
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/version"
     }
 }
+
 
