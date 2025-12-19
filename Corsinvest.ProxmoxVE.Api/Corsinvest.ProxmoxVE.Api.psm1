@@ -240,7 +240,13 @@ Return object request
 
     process {
         #use last ticket
-        if ($null -eq $PveTicket) { $PveTicket = $Global:PveTicketLast }
+        if ($null -eq $PveTicket) {
+            if ($Global:PveTicketLast -ne $null) {
+                $PveTicket = $Global:PveTicketLast
+            } else {
+                throw 'No PveTicket - Cluster Connect missing?'
+            }
+        }
 
         #web method
         $restMethod = @{
@@ -32852,3 +32858,4 @@ PveResponse. Return response.
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/version"
     }
 }
+
