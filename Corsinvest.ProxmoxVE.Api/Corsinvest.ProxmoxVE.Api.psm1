@@ -75,7 +75,7 @@ function Test-PortQuick {
         }
     }
     catch {
-        #Write-Host "Port $Port on $HostName It is NOT reachable."
+        Write-Debug "Port $Port on $HostName It is NOT reachable."
     }
     finally {
         $tcpClient.Close() | Out-Null

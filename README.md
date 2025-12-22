@@ -22,17 +22,6 @@ Part of the [cv4pve](https://www.corsinvest.it/cv4pve) suite of tools.
 
 **Quick Links:** [PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/) | [Documentation](https://corsinvest.github.io/cv4pve-api-powershell/) | [Proxmox VE API](https://pve.proxmox.com/pve-docs/api-viewer/)
 
-## 📰 Copyright and License
-
-Copyright © 2020-2025 Corsinvest Srl
-
-For licensing details please visit [LICENSE](LICENSE)
-
-## 🦺 Commercial Support
-
-This software is part of a suite of tools called cv4pve-api-powershell.
-If you require commercial support, please visit the [Corsinvest website](https://www.corsinvest.it/cv4pve)
-
 ## Overview
 
 The **cv4pve-api-powershell** module enables system administrators and developers to manage and automate Proxmox VE environments using PowerShell.
@@ -45,7 +34,7 @@ This module serves as the **PowerCLI equivalent for Proxmox VE**:
 
 ![PowerShell for Proxmox VE](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/images/powershell.png)
 
-## ✨ Key Features
+## Key Features
 
 ### Core Capabilities
 * **Easy to Learn** - Intuitive PowerShell cmdlet interface
@@ -116,7 +105,7 @@ The module includes a rich set of utility cmdlets to simplify common operations:
 
 And many more! Explore the full cmdlet list with `Get-Command -Module Corsinvest.ProxmoxVE.Api`
 
-## 📙 Documentation
+## Documentation
 
 Comprehensive documentation is available in multiple formats:
 
@@ -131,13 +120,13 @@ Comprehensive documentation is available in multiple formats:
 
 <a href="https://asciinema.org/a/656606" target="_blank"><img src="https://asciinema.org/a/656606.svg" /></a>
 
-## 📋 Requirements
+## Requirements
 
 * **PowerShell 6.0 or higher** (PowerShell Core)
 * **Network access** to your Proxmox VE cluster
 * **Valid credentials** or API token for Proxmox VE
 
-## 📦 Installation
+## Installation
 
 ### Prerequisites
 
@@ -177,7 +166,7 @@ $env:PSModulePath -split [IO.Path]::PathSeparator
 - **[Full Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)** - Complete reference with all cmdlets
 - **[Proxmox VE API Viewer](https://pve.proxmox.com/pve-docs/api-viewer/)** - Official Proxmox VE API documentation
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Connecting to Your Cluster
 
@@ -394,38 +383,14 @@ Connect-PveCluster -HostsAndPorts "192.168.1.100:8006,192.168.1.101:8006,192.168
                    -SkipCertificateCheck
 ```
 
-## 🤝 Contributing
+---
 
-We welcome contributions! Here's how you can help:
+## Support
 
-1. **Report Issues** - Found a bug? [Open an issue](https://github.com/Corsinvest/cv4pve-api-powershell/issues)
-2. **Suggest Features** - Have an idea? Share it in the [discussions](https://github.com/Corsinvest/cv4pve-api-powershell/discussions)
-3. **Submit Pull Requests** - Want to contribute code? Fork the repo and submit a PR
-4. **Improve Documentation** - Help us make the docs better
-
-
-## 📞 Support
-
-### Community Support
-
-* **GitHub Issues**: [Report bugs or request features](https://github.com/Corsinvest/cv4pve-api-powershell/issues)
-* **GitHub Discussions**: [Ask questions and share ideas](https://github.com/Corsinvest/cv4pve-api-powershell/discussions)
-* **Documentation**: [HTML](https://corsinvest.github.io/cv4pve-api-powershell) | [Markdown](https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/about_cv4pve-api-powershell.md)
-
-### Commercial Support
-
-For enterprise support, SLA, consulting, or custom development:
-* Visit [Corsinvest](https://www.corsinvest.it/cv4pve)
-* Email: [support@corsinvest.it](mailto:support@corsinvest.it)
-
-## ⭐ Show Your Support
-
-If you find this project useful, please consider:
-* ⭐ Starring the repository on GitHub
-* 📢 Sharing it with others
-* 🐛 Reporting issues you encounter
-* 💡 Contributing improvements
+For professional consulting and enterprise support, visit [www.corsinvest.it](https://www.corsinvest.it)
 
 ---
 
-**Made with ❤️ in Italy by [Corsinvest Srl](https://www.corsinvest.it)**
+Part of [cv4pve](https://www.corsinvest.it/cv4pve) suite | Made with ❤️ in Italy by [Corsinvest](https://www.corsinvest.it)
+
+Copyright © Corsinvest Srl
