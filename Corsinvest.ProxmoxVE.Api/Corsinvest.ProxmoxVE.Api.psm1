@@ -241,7 +241,7 @@ Return object request
     process {
         #use last ticket
         if ($null -eq $PveTicket) {
-            if ($Global:PveTicketLast -ne $null) {
+            if ($null -ne $Global:PveTicketLast) {
                 $PveTicket = $Global:PveTicketLast
             } else {
                 throw 'No PveTicket - Cluster Connect missing?'
@@ -631,12 +631,7 @@ PSCustomObject. Return Vm/s data.
 }
 
 function IsNumeric([string]$x) {
-    try {
-        0 + $x | Out-Null
-        return $true
-    } catch {
-        return $false
-    }
+    return $null -ne ($x -as [double])
 }
 
 function VmCheckIdOrName
