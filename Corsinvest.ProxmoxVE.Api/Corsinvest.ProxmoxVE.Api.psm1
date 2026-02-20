@@ -493,6 +493,77 @@ Bool. $True Return task is done within Timeout, $False if not
     }
 }
 
+function Wait-PveTaskIsFinishedWithProgress {
+    <#
+.DESCRIPTION
+Wait for a task to finish, show Powershell Progressbar while waiting
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Upid
+Upid task e.g UPID:pve1:00004A1A:0964214C:5EECEF11:vzdump:134:root@pam:
+.PARAMETER Wait
+Millisecond wait next check
+.PARAMETER Timeout
+Millisecond timeout
+.PARAMETER ProgressActivityText
+Acitivity (Text) for Write-Progress, defaults to Upid when empty
+.PARAMETER ProgressActivityText
+Status-Text for Write-Progress, default is "Waiting...", is shown in front of remaining time and percent
+.PARAMETER ProgessActivityId
+Id for Write-Progress, change when other Write-Progress is already shown
+.OUTPUTS
+Bool. $True Return task is done within Timeout, $False if not
+#>
+    [OutputType([bool])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Upid,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Wait = 500,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$Timeout = 10000,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ProgressActivityText,
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$ProgressStatusText = "Waiting...",
+
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [int]$ProgessActivityId = 1
+    )
+
+    process {
+        $isRunning = $true;
+        if ($Wait -le 0) { $Wait = 500; }
+        if ($Timeout -lt $Wait) { $Timeout = $Wait + 5000; }
+        if ($ProgressActivityText -eq "" -OR $null -eq $ProgressActivityText) { $ProgressActivityText = $Upid; }
+        $timeStart = [DateTime]::Now
+        $waitTimeMs = $timeStart
+        $timePercent = 0
+
+        while ($isRunning -and ($timeStart - [DateTime]::Now).Milliseconds -lt $Timeout) {
+            $waitTimeMs = $([DateTime]::Now - $timeStart).TotalMilliseconds
+            $timePercent = $waitTimeMs * (100 / $Timeout)
+            Write-Progress -Id $ProgessActivityId -Activity $ProgressActivityText -Status "$($ProgressStatusText) ($([Math]::Round($waitTimeMs/1000))/$([Math]::Round($Timeout/1000)) Seconds)" -PercentComplete $timePercent
+            $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
+            Start-Sleep -Milliseconds $Wait
+        }
+
+        # end Write-Progress
+        Write-Progress -Id $ProgessActivityId -Activity $ProgressActivityText -Completed
+
+        #check timeout
+        return ($timeStart - [DateTime]::Now).Milliseconds -lt $Timeout
+    }
+}
+
 function Get-PveTaskIsRunning {
     <#
 .DESCRIPTION
@@ -32849,6 +32920,7 @@ PveResponse. Return response.
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/version"
     }
 }
+
 
 
 
