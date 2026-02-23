@@ -493,7 +493,7 @@ Bool. $True Return task is done within Timeout, $False if not
         }
 
         #check timeout
-        return ($timeStart - [DateTime]::Now).Milliseconds -lt $timeOut
+        return ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout
     }
 }
 
@@ -564,7 +564,7 @@ Bool. $True Return task is done within Timeout, $False if not
         Write-Progress -Id $ProgessActivityId -Activity $ProgressActivityText -Completed
 
         #check timeout
-        return ($timeStart - [DateTime]::Now).Milliseconds -lt $Timeout
+        return ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout
     }
 }
 
@@ -32924,6 +32924,7 @@ PveResponse. Return response.
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/version"
     }
 }
+
 
 
 
