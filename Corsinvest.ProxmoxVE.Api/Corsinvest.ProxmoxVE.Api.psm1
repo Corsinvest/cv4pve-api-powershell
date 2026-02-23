@@ -479,17 +479,21 @@ Bool. $True Return task is done within Timeout, $False if not
 
     process {
         $isRunning = $true;
-        if ($Wait -le 0) { $Wait = 500; }
-        if ($Timeout -lt $Wait) { $Timeout = $Wait + 5000; }
+        if ($wait -le 0) { $wait = 500; }
+        if ($timeOut -lt $wait) { $timeOut = $wait + 5000; }
         $timeStart = [DateTime]::Now
+        $waitTime = $timeStart
 
-        while ($isRunning -and ($timeStart - [DateTime]::Now).Milliseconds -lt $Timeout) {
-            $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
-            Start-Sleep -Milliseconds $Wait
+        while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
+            $now = [DateTime]::Now
+            if (($now - $waitTime).TotalMilliseconds -ge $wait) {
+                $waitTime = $now;
+                $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
+            }
         }
 
         #check timeout
-        return ($timeStart - [DateTime]::Now).Milliseconds -lt $Timeout
+        return ($timeStart - [DateTime]::Now).Milliseconds -lt $timeOut
     }
 }
 
@@ -507,7 +511,7 @@ Millisecond wait next check
 Millisecond timeout
 .PARAMETER ProgressActivityText
 Acitivity (Text) for Write-Progress, defaults to Upid when empty
-.PARAMETER ProgressActivityText
+.PARAMETER ProgressStatusText
 Status-Text for Write-Progress, default is "Waiting...", is shown in front of remaining time and percent
 .PARAMETER ProgessActivityId
 Id for Write-Progress, change when other Write-Progress is already shown
@@ -543,12 +547,12 @@ Bool. $True Return task is done within Timeout, $False if not
         $isRunning = $true;
         if ($Wait -le 0) { $Wait = 500; }
         if ($Timeout -lt $Wait) { $Timeout = $Wait + 5000; }
-        if ($ProgressActivityText -eq "" -OR $null -eq $ProgressActivityText) { $ProgressActivityText = $Upid; }
+        if ($null -eq $ProgressActivityText -OR $ProgressActivityText -eq "") { $ProgressActivityText = $Upid; }
         $timeStart = [DateTime]::Now
         $waitTimeMs = $timeStart
         $timePercent = 0
 
-        while ($isRunning -and ($timeStart - [DateTime]::Now).Milliseconds -lt $Timeout) {
+        while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
             $waitTimeMs = $([DateTime]::Now - $timeStart).TotalMilliseconds
             $timePercent = $waitTimeMs * (100 / $Timeout)
             Write-Progress -Id $ProgessActivityId -Activity $ProgressActivityText -Status "$($ProgressStatusText) ($([Math]::Round($waitTimeMs/1000))/$([Math]::Round($Timeout/1000)) Seconds)" -PercentComplete $timePercent
@@ -32920,6 +32924,7 @@ PveResponse. Return response.
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/version"
     }
 }
+
 
 
 
