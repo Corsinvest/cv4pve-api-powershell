@@ -49,6 +49,13 @@ jobs:
           Write-Host "Version validated: $moduleVersion"
           echo "version=$moduleVersion" >> $env:GITHUB_OUTPUT
 
+      - name: Publish module to PowerShell Gallery
+        shell: pwsh
+        env:
+          PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
+        run: |
+          Publish-Module -Path ./Corsinvest.ProxmoxVE.Api -NuGetApiKey $env:PSGALLERY_API_KEY -Verbose
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -56,10 +63,3 @@ jobs:
           name: v${{ steps.version.outputs.version }}
           generate_release_notes: true
           prerelease: ${{ contains(steps.version.outputs.version, '-') }}
-
-      - name: Publish module to PowerShell Gallery
-        shell: pwsh
-        env:
-          PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
-        run: |
-          Publish-Module -Path ./Corsinvest.ProxmoxVE.Api -NuGetApiKey $env:PSGALLERY_API_KEY -Verbose
