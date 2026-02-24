@@ -479,17 +479,13 @@ Bool. $True Return task is done within Timeout, $False if not
 
     process {
         $isRunning = $true;
-        if ($wait -le 0) { $wait = 500; }
-        if ($timeOut -lt $wait) { $timeOut = $wait + 5000; }
+        if ($Wait -le 0) { $Wait = 500; }
+        if ($Timeout -lt $Wait) { $Timeout = $Wait + 5000; }
         $timeStart = [DateTime]::Now
-        $waitTime = $timeStart
 
         while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
-            $now = [DateTime]::Now
-            if (($now - $waitTime).TotalMilliseconds -ge $wait) {
-                $waitTime = $now;
-                $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
-            }
+            $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
+            Start-Sleep -Milliseconds $Wait
         }
 
         #check timeout
@@ -32924,6 +32920,7 @@ PveResponse. Return response.
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/version"
     }
 }
+
 
 
 
