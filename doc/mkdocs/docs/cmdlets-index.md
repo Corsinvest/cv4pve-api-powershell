@@ -587,6 +587,7 @@ This page provides a complete reference of all cmdlets available in the cv4pve-a
 - [Get-PveNodesTasksStatus](markdown/Get-PveNodesTasksStatus.md)
 - [Get-PveTaskIsRunning](markdown/Get-PveTaskIsRunning.md)
 - [Wait-PveTaskIsFinish](markdown/Wait-PveTaskIsFinish.md)
+- [Wait-PveTaskIsFinishedWithProgress](markdown/Wait-PveTaskIsFinishedWithProgress.md)
 
 ### Utilities
 
