@@ -1,0 +1,65 @@
+# SPDX-FileCopyrightText: Copyright Corsinvest Srl
+# SPDX-License-Identifier: GPL-3.0-only
+
+name: Release and Publish to PowerShell Gallery
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to release (e.g. v9.1.3)'
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Extract and validate version
+        id: version
+        shell: pwsh
+        run: |
+          # Read version from module manifest
+          $manifest = Import-PowerShellDataFile ./Corsinvest.ProxmoxVE.Api/Corsinvest.ProxmoxVE.Api.psd1
+          $moduleVersion = $manifest.ModuleVersion
+          Write-Host "Module version: $moduleVersion"
+
+          # Get tag version
+          if ("${{ github.event_name }}" -eq "workflow_dispatch") {
+            $tagVersion = "${{ github.event.inputs.tag }}".TrimStart('v')
+          } else {
+            $tagVersion = "${{ github.ref }}".Replace('refs/tags/v', '')
+          }
+          Write-Host "Tag version: $tagVersion"
+
+          # Validate versions match
+          if ($moduleVersion -ne $tagVersion) {
+            Write-Host "ERROR: Version mismatch!"
+            Write-Host "   Module version : $moduleVersion"
+            Write-Host "   Git tag        : v$tagVersion"
+            exit 1
+          }
+
+          Write-Host "Version validated: $moduleVersion"
+          echo "version=$moduleVersion" >> $env:GITHUB_OUTPUT
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.version.outputs.version }}
+          name: v${{ steps.version.outputs.version }}
+          generate_release_notes: true
+          prerelease: ${{ contains(steps.version.outputs.version, '-') }}
+
+      - name: Publish module to PowerShell Gallery
+        shell: pwsh
+        env:
+          PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
+        run: |
+          Publish-Module -Path ./Corsinvest.ProxmoxVE.Api -NuGetApiKey $env:PSGALLERY_API_KEY -Verbose
