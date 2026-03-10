@@ -1,5 +1,5 @@
 # SPDX-FileCopyrightText: Copyright Corsinvest Srl
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MIT
 
 site_name: cv4pve-api-powershell
 site_url: https://corsinvest.github.io/cv4pve-api-powershell/
