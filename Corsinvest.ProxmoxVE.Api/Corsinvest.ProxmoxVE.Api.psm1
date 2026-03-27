@@ -273,7 +273,7 @@ Return object request
         if ($Parameters -and $Parameters.Count -gt 0 )
         {
              $Parameters.keys | ForEach-Object {
-                $parametersTmp[$_] = $Parameters[$_] -is [switch] `
+                $parametersTmp[$_] = ($Parameters[$_] -is [switch] -or $Parameters[$_] -is [bool]) `
                                          ? $Parameters[$_] ? 1 : 0 `
                                          : $Parameters[$_]
              }
