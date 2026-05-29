@@ -11,13 +11,8 @@ schema: 2.0.0
 
 ## SYNTAX
 
-```
-Get-PveNodesQueryUrlMetadata [[-PveTicket] <PveTicket>] [-Node] <String> [-Url] <String>
- [[-VerifyCertificates] <Boolean>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
 ## DESCRIPTION
-Query metadata of an URL':' file size, file name and mime type.
+Get nodes
 
 ## EXAMPLES
 
@@ -30,81 +25,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -PveTicket
-Ticket data connection.
-
-```yaml
-Type: PveTicket
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Node
-The cluster node name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Url
-The URL to query the metadata from.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -VerifyCertificates
-If false, no SSL/TLS certificates will be verified.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -112,7 +32,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PveResponse. Return response.
+### PSCustomObject. Return Node/s data.
 ## NOTES
 
 ## RELATED LINKS

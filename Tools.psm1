@@ -14,6 +14,7 @@ function Invoke-PveAction {
         $MkDocsOutputPath = ".\doc\mkdocs\docs"
         $MarkdownSourcePath = ".\doc\markdown"
         $modulePath = ".\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psd1"
+        $rootModulePath = ".\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psm1"
 
         if ($Action -eq 'analyzer') {
             Import-Module PSScriptAnalyzer
@@ -131,6 +132,11 @@ This page provides a complete reference of all cmdlets available in the cv4pve-a
             }
         }
         elseif ($Action -eq 'update-manifest') {
+            # Import the .psm1 directly (not the .psd1): the manifest's FunctionsToExport
+            # would otherwise filter out any newly generated function, leaving the list stale.
+            Remove-Module Corsinvest.ProxmoxVE.Api -Force -ErrorAction SilentlyContinue
+            Import-Module $rootModulePath -Force
+
             [System.Collections.ArrayList] $functions = Get-Command -Module Corsinvest.ProxmoxVE.Api -Type Function | Select-Object -ExpandProperty Name
             $functions.Remove("IsNumeric")
 
@@ -138,7 +144,8 @@ This page provides a complete reference of all cmdlets available in the cv4pve-a
             Update-ModuleManifest -Path $modulePath -FunctionsToExport $functions -AliasesToExport $alias
         }
         elseif ($Action -eq 'import') {
-            Import-Module .\Corsinvest.ProxmoxVE.Api\Corsinvest.ProxmoxVE.Api.psm1 -Verbose -Force
+            Remove-Module Corsinvest.ProxmoxVE.Api -Force -ErrorAction SilentlyContinue
+            Import-Module $modulePath -Verbose -Force
         }
         elseif ($Action -eq 'build-cast') {
             Build-AsciinemaFromPs1 -InputFile .\doc\video-commands.ps1 -OutputFile .\doc\video.cast
