@@ -11,13 +11,8 @@ schema: 2.0.0
 
 ## SYNTAX
 
-```
-Get-PveNodesQemuFirewallIpsetIdx1 [[-PveTicket] <PveTicket>] [-Cidr] <String> [-Name] <String> [-Node] <String>
- [-Vmid] <Int32> [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
 ## DESCRIPTION
-Read IP or Network settings from IPSet.
+Get nodes
 
 ## EXAMPLES
 
@@ -30,96 +25,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -PveTicket
-Ticket data connection.
-
-```yaml
-Type: PveTicket
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Cidr
-Network/IP specification in CIDR format.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Name
-IP set name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Node
-The cluster node name.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Vmid
-The (unique) ID of the VM.
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 5
-Default value: 0
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -127,7 +32,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PveResponse. Return response.
+### PSCustomObject. Return Node/s data.
 ## NOTES
 
 ## RELATED LINKS

@@ -8,16 +8,12 @@ schema: 2.0.0
 # Get-PveClusterSdnControllersIdx
 
 ## SYNOPSIS
+Convert datetime objects to UNIX time.
 
 ## SYNTAX
 
-```
-Get-PveClusterSdnControllersIdx [[-PveTicket] <PveTicket>] [-Controller] <String> [[-Pending] <Boolean>]
- [[-Running] <Boolean>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
-```
-
 ## DESCRIPTION
-Read sdn controller configuration.
+Convert System.DateTime objects to UNIX time.
 
 ## EXAMPLES
 
@@ -30,81 +26,6 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
-### -PveTicket
-Ticket data connection.
-
-```yaml
-Type: PveTicket
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Controller
-The SDN controller object identifier.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Pending
-Display pending config.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -Running
-Display running config.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: False
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-```
-
-### -ProgressAction
-{{ Fill ProgressAction Description }}
-
-```yaml
-Type: ActionPreference
-Parameter Sets: (All)
-Aliases: proga
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -112,7 +33,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### PveResponse. Return response.
+### [Int32]. Return Unix Time.
 ## NOTES
 
 ## RELATED LINKS
