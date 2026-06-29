@@ -506,10 +506,10 @@ Millisecond wait next check
 .PARAMETER Timeout
 Millisecond timeout
 .PARAMETER ProgressActivityText
-Acitivity (Text) for Write-Progress, defaults to Upid when empty
+Activity (Text) for Write-Progress, defaults to Upid when empty
 .PARAMETER ProgressStatusText
 Status-Text for Write-Progress, default is "Waiting...", is shown in front of remaining time and percent
-.PARAMETER ProgessActivityId
+.PARAMETER ProgressActivityId
 Id for Write-Progress, change when other Write-Progress is already shown
 .OUTPUTS
 Bool. $True Return task is done within Timeout, $False if not
@@ -536,7 +536,7 @@ Bool. $True Return task is done within Timeout, $False if not
         [string]$ProgressStatusText = "Waiting...",
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [int]$ProgessActivityId = 1
+        [int]$ProgressActivityId = 1
     )
 
     process {
@@ -551,13 +551,13 @@ Bool. $True Return task is done within Timeout, $False if not
         while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
             $waitTimeMs = $([DateTime]::Now - $timeStart).TotalMilliseconds
             $timePercent = $waitTimeMs * (100 / $Timeout)
-            Write-Progress -Id $ProgessActivityId -Activity $ProgressActivityText -Status "$($ProgressStatusText) ($([Math]::Round($waitTimeMs/1000))/$([Math]::Round($Timeout/1000)) Seconds)" -PercentComplete $timePercent
+            Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Status "$($ProgressStatusText) ($([Math]::Round($waitTimeMs/1000))/$([Math]::Round($Timeout/1000)) Seconds)" -PercentComplete $timePercent
             $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
             Start-Sleep -Milliseconds $Wait
         }
 
         # end Write-Progress
-        Write-Progress -Id $ProgessActivityId -Activity $ProgressActivityText -Completed
+        Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Completed
 
         #check timeout
         return ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout
@@ -1116,7 +1116,7 @@ Set-Alias -Name Get-PveLxcMonitoring -Value Get-PveNodesLxcRrddata -PassThru
 
 ## status
 Set-Alias -Name Start-PveQemu -Value New-PveNodesQemuStatusStart -PassThru
-Set-Alias -Name Stop-PveQemu -Value New-PveNodesQeumStatusStop -PassThru
+Set-Alias -Name Stop-PveQemu -Value New-PveNodesQemuStatusStop -PassThru
 Set-Alias -Name Suspend-PveQemu -Value New-PveNodesQemuStatusSuspend -PassThru
 Set-Alias -Name Resume-PveQemu -Value New-PveNodesQemuStatusResume -PassThru
 Set-Alias -Name Reset-PveQemu -Value New-PveNodesQemuStatusReset -PassThru
