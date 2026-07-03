@@ -168,6 +168,18 @@ $env:PSModulePath -split [IO.Path]::PathSeparator
 
 ## Quick Start
 
+### Importing the Module
+
+This module defines PowerShell classes (such as `PveResponse` and `PveTicket`). `Import-Module` does **not** load class and enum definitions into the caller's scope, so importing the module with `Import-Module` can lead to errors like `Unable to find type [PveResponse]`.
+
+To make the classes available, use the `using module` statement instead:
+
+```powershell
+using module Corsinvest.ProxmoxVE.Api
+```
+
+> **Note:** `using module` must be the first statement in a script (only comments and `#Requires` may precede it). For this reason it works reliably inside a `.ps1` script file, but cannot be typed line-by-line in an interactive session. In an interactive session use `Import-Module Corsinvest.ProxmoxVE.Api` — the cmdlets still work; only direct use of the class types (e.g. `[PveResponse]`) requires `using module`.
+
 ### Connecting to Your Cluster
 
 Use `Connect-PveCluster` to establish a connection. This cmdlet supports both username/password and API token authentication.
