@@ -11831,7 +11831,7 @@ Set I/O bandwidth limit for various operations (in KiB/s).
 .PARAMETER ConsentText
 Consent text that is displayed before logging in.
 .PARAMETER Console
-Select the default Console viewer. You can either use the builtin java applet (VNC; deprecated and maps to html5), an external virt-viewer compatible application (SPICE), an HTML5 based vnc viewer (noVNC), or an HTML5 based console client (xtermjs). If the selected viewer is not available (e.g. SPICE not activated for the VM), the fallback is noVNC. Enum: applet,vv,html5,xtermjs
+Select the default Console viewer. You can either use the builtin java applet (VNC; deprecated and maps to html5), an external virt-viewer comtatible application (SPICE), an HTML5 based vnc viewer (noVNC), or an HTML5 based console client (xtermjs). If the selected viewer is not available (e.g. SPICE not activated for the VM), the fallback is noVNC. Enum: applet,vv,html5,xtermjs
 .PARAMETER Crs
 Cluster resource scheduling settings.
 .PARAMETER Delete
@@ -11847,7 +11847,7 @@ Cluster wide HA settings.
 .PARAMETER HttpProxy
 Specify external http proxy which is used for downloads (example':' 'http':'//username':'password@host':'port/')
 .PARAMETER Keyboard
-Default keyboard layout for vnc server. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
+Default keybord layout for vnc server. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Language
 Default GUI language. Enum: ar,ca,da,de,en,es,eu,fa,fr,hr,he,it,ja,ka,kr,nb,nl,nn,pl,pt_BR,ru,sl,sv,tr,ukr,zh_CN,zh_TW
 .PARAMETER Location
@@ -12215,7 +12215,7 @@ A file-based storage with 'images' content-type enabled, which is used as an int
 .PARAMETER IntelTdx
 Trusted Domain Extension (TDX) features by Intel CPUs
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
+cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keephugepages
@@ -15260,7 +15260,7 @@ A file-based storage with 'images' content-type enabled, which is used as an int
 .PARAMETER IntelTdx
 Trusted Domain Extension (TDX) features by Intel CPUs
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
+cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keephugepages
@@ -15827,7 +15827,7 @@ Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STOR
 .PARAMETER IntelTdx
 Trusted Domain Extension (TDX) features by Intel CPUs
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
+cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keephugepages
