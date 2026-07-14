@@ -14,7 +14,7 @@ schema: 2.0.0
 ```
 Wait-PveTaskIsFinishedWithProgress [[-PveTicket] <PveTicket>] [-Upid] <String> [[-Wait] <Int32>]
  [[-Timeout] <Int32>] [[-ProgressActivityText] <String>] [[-ProgressStatusText] <String>]
- [[-ProgessActivityId] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
+ [[-ProgressActivityId] <Int32>] [-ProgressAction <ActionPreference>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -ProgressActivityText
-Acitivity (Text) for Write-Progress, defaults to Upid when empty
+Activity (Text) for Write-Progress, defaults to Upid when empty
 
 ```yaml
 Type: String
@@ -121,7 +121,7 @@ Accept pipeline input: True (ByPropertyName, ByValue)
 Accept wildcard characters: False
 ```
 
-### -ProgessActivityId
+### -ProgressActivityId
 Id for Write-Progress, change when other Write-Progress is already shown
 
 ```yaml
