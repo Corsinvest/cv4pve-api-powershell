@@ -8,12 +8,16 @@ schema: 2.0.0
 # Get-PveClusterSdnFabricsNodeIdx1
 
 ## SYNOPSIS
-Convert datetime objects to UNIX time.
 
 ## SYNTAX
 
+```
+Get-PveClusterSdnFabricsNodeIdx1 [[-PveTicket] <PveTicket>] [-FabricId] <String> [-NodeId] <String>
+ [-ProgressAction <ActionPreference>] [<CommonParameters>]
+```
+
 ## DESCRIPTION
-Convert System.DateTime objects to UNIX time.
+Get a node
 
 ## EXAMPLES
 
@@ -26,6 +30,66 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -PveTicket
+Ticket data connection.
+
+```yaml
+Type: PveTicket
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -FabricId
+Identifier for SDN fabrics
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -NodeId
+Identifier for nodes in an SDN fabric
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 3
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -33,7 +97,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### [Int32]. Return Unix Time.
+### PveResponse. Return response.
 ## NOTES
 
 ## RELATED LINKS

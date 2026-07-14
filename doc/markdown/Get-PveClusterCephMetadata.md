@@ -8,12 +8,16 @@ schema: 2.0.0
 # Get-PveClusterCephMetadata
 
 ## SYNOPSIS
-Convert datetime objects to UNIX time.
 
 ## SYNTAX
 
+```
+Get-PveClusterCephMetadata [[-PveTicket] <PveTicket>] [[-Scope] <String>] [-ProgressAction <ActionPreference>]
+ [<CommonParameters>]
+```
+
 ## DESCRIPTION
-Convert System.DateTime objects to UNIX time.
+Get ceph metadata.
 
 ## EXAMPLES
 
@@ -26,6 +30,52 @@ PS C:\> {{ Add example code here }}
 
 ## PARAMETERS
 
+### -PveTicket
+Ticket data connection.
+
+```yaml
+Type: PveTicket
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -Scope
+Which metadata facet to return':' 'all' enriches the per-daemon metadata with the PVE-side service state (presence of unit, data directory), 'versions' collects only per-node Ceph binary version data.
+Enum: all,versions
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: True (ByPropertyName)
+Accept wildcard characters: False
+```
+
+### -ProgressAction
+{{ Fill ProgressAction Description }}
+
+```yaml
+Type: ActionPreference
+Parameter Sets: (All)
+Aliases: proga
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -33,7 +83,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ## OUTPUTS
 
-### [Int32]. Return Unix Time.
+### PveResponse. Return response.
 ## NOTES
 
 ## RELATED LINKS
