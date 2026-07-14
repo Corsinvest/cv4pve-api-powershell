@@ -22,6 +22,7 @@ function Invoke-PveAction {
         }
         elseif ($Action -eq 'create-doc-md') {
             Install-Module -Name platyPS -Force -Scope CurrentUser
+            Import-Module $modulePath -Verbose -Force -GLobal
 
             # Clear existing markdown directory contents to ensure clean state
             if (Test-Path $MarkdownSourcePath) {
@@ -29,20 +30,7 @@ function Invoke-PveAction {
                 Write-Host "🗑️  Cleared markdown directory contents" -ForegroundColor Yellow
             }
 
-            # New-MarkdownHelp reads [OutputType([PveResponse])] via Get-Help. Since
-            # Import-Module does not load class/enum definitions into the caller's
-            # scope, Get-Help cannot resolve [PveResponse] and emits broken markdown
-            # ("Unable to find type [PveResponse]"). 'using module' resolves classes
-            # at parse time, but it must be the first statement in a script, so the
-            # generation runs in a child pwsh process.
-            $moduleFullPath = (Resolve-Path $modulePath).Path
-            $outputFullPath = (Resolve-Path $MarkdownSourcePath).Path
-            $script = @"
-using module $moduleFullPath
-Import-Module platyPS -Force
-New-MarkdownHelp -Module Corsinvest.ProxmoxVE.Api -OutputFolder '$outputFullPath' -Force
-"@
-            pwsh -NoProfile -Command $script
+            New-MarkdownHelp -Module Corsinvest.ProxmoxVE.Api -OutputFolder $MarkdownSourcePath -Force
         }
         elseif ($Action -eq 'create-doc-mkdocs') {
             Write-Host "Starting MkDocs documentation generation..." -ForegroundColor Cyan
