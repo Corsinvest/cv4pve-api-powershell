@@ -655,6 +655,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#importing-the-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Importing the Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#connecting-to-your-cluster" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1276,6 +1287,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#importing-the-module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Importing the Module
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#connecting-to-your-cluster" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1659,169 +1681,177 @@
 <li><strong><a href="https://pve.proxmox.com/pve-docs/api-viewer/">Proxmox VE API Viewer</a></strong> - Official Proxmox VE API documentation</li>
 </ul>
 <h2 id="quick-start">Quick Start<a class="headerlink" href="#quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="importing-the-module">Importing the Module<a class="headerlink" href="#importing-the-module" title="Permanent link">&para;</a></h3>
+<p>This module defines PowerShell classes (such as <code>PveResponse</code> and <code>PveTicket</code>). <code>Import-Module</code> does <strong>not</strong> load class and enum definitions into the caller's scope, so importing the module with <code>Import-Module</code> can lead to errors like <code>Unable to find type [PveResponse]</code>.</p>
+<p>To make the classes available, use the <code>using module</code> statement instead:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">using</span> <span class="n">module</span> <span class="n">Corsinvest</span><span class="p">.</span><span class="n">ProxmoxVE</span><span class="p">.</span><span class="n">Api</span>
+</code></pre></div>
+<blockquote>
+<p><strong>Note:</strong> <code>using module</code> must be the first statement in a script (only comments and <code>#Requires</code> may precede it). For this reason it works reliably inside a <code>.ps1</code> script file, but cannot be typed line-by-line in an interactive session. In an interactive session use <code>Import-Module Corsinvest.ProxmoxVE.Api</code> — the cmdlets still work; only direct use of the class types (e.g. <code>[PveResponse]</code>) requires <code>using module</code>.</p>
+</blockquote>
 <h3 id="connecting-to-your-cluster">Connecting to Your Cluster<a class="headerlink" href="#connecting-to-your-cluster" title="Permanent link">&para;</a></h3>
 <p>Use <code>Connect-PveCluster</code> to establish a connection. This cmdlet supports both username/password and API token authentication.</p>
 <h4 id="using-username-and-password">Using Username and Password<a class="headerlink" href="#using-username-and-password" title="Permanent link">&para;</a></h4>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c"># Connect with username and password</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="n">-SkipCertificateCheck</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c"># PowerShell will prompt for credentials</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c"># Username format: user@pam, user@pve, or user@yourdomain</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Connect with username and password</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="n">-SkipCertificateCheck</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c"># PowerShell will prompt for credentials</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c"># Username format: user@pam, user@pve, or user@yourdomain</span>
 </code></pre></div>
 <h4 id="using-api-token-proxmox-ve-62">Using API Token (Proxmox VE 6.2+)<a class="headerlink" href="#using-api-token-proxmox-ve-62" title="Permanent link">&para;</a></h4>
 <p>From Proxmox VE 6.2+, you can use <a href="https://pve.proxmox.com/pve-docs/pveum-plain.html">API tokens</a> for authentication without username/password.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c"># Connect using API token</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="p">`</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>                   <span class="n">-SkipCertificateCheck</span> <span class="p">`</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>                   <span class="n">-ApiToken</span> <span class="s2">&quot;root@pam!mytoken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c"># Connect using API token</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="p">`</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>                   <span class="n">-SkipCertificateCheck</span> <span class="p">`</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>                   <span class="n">-ApiToken</span> <span class="s2">&quot;root@pam!mytoken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;</span>
 </code></pre></div>
 <p><strong>Note:</strong> API token format is <code>USER@REALM!TOKENID=UUID</code>. If using <strong>Privilege Separation</strong>, ensure proper permissions are configured.</p>
 <h3 id="connection-management">Connection Management<a class="headerlink" href="#connection-management" title="Permanent link">&para;</a></h3>
 <p>The <code>Connect-PveCluster</code> function creates a <code>PveTicket</code> object and stores it in <code>$Global:PveTicketLast</code>. All cmdlets use this ticket by default, or you can specify a different ticket with the <code>-PveTicket</code> parameter.</p>
 <h2 id="usage-examples">💡 Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h2>
 <h3 id="basic-operations">Basic Operations<a class="headerlink" href="#basic-operations" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c"># Connect to cluster</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="n">-SkipCertificateCheck</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c"># Get Proxmox VE version</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="nb">Get-PveVersion</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">data</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c"># Output: version : 8.2.0, release : 1, repoid : abc123...</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="c"># List all VMs in the cluster</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="nb">Get-PveClusterResources</span> <span class="n">-Type</span> <span class="n">vm</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">data</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c"># Output: vmid, name, status, node, uptime, etc.</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># Connect to cluster</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="n">192</span><span class="p">.</span><span class="n">168</span><span class="p">.</span><span class="n">1</span><span class="p">.</span><span class="n">100</span><span class="p">:</span><span class="n">8006</span> <span class="n">-SkipCertificateCheck</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c"># Get Proxmox VE version</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="nb">Get-PveVersion</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">data</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c"># Output: version : 8.2.0, release : 1, repoid : abc123...</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c"># List all VMs in the cluster</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">Get-PveClusterResources</span> <span class="n">-Type</span> <span class="n">vm</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-ExpandProperty</span> <span class="n">data</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c"># Output: vmid, name, status, node, uptime, etc.</span>
 </code></pre></div>
 <h3 id="vm-management">VM Management<a class="headerlink" href="#vm-management" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c"># Start a VM (by ID or name)</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="nb">Start-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c"># Output: UPID:pve1:00001234:...</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c"># Stop a VM gracefully</span>
-<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="nb">Stop-PveVm</span> <span class="n">-VmIdOrName</span> <span class="s2">&quot;my-vm&quot;</span>
-<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
-<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c"># Suspend/Resume a VM</span>
-<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="nb">Suspend-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
-<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nb">Resume-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
-<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>
-<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c"># Reset a VM</span>
-<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="nb">Reset-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
-<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
-<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="c"># Unlock a VM</span>
-<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="nb">Unlock-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c"># Start a VM (by ID or name)</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">Start-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c"># Output: UPID:pve1:00001234:...</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c"># Stop a VM gracefully</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nb">Stop-PveVm</span> <span class="n">-VmIdOrName</span> <span class="s2">&quot;my-vm&quot;</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c"># Suspend/Resume a VM</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nb">Suspend-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="nb">Resume-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c"># Reset a VM</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">Reset-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="c"># Unlock a VM</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nb">Unlock-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span>
 </code></pre></div>
 <h3 id="snapshot-management_1">Snapshot Management<a class="headerlink" href="#snapshot-management_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c"># List snapshots for a VM</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="nb">Get-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-Expand</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-Expand</span> <span class="n">data</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c"># Output: name, snaptime, description, vmstate...</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c"># Using Get-PveVm helper</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="nb">Get-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span> <span class="p">|</span> <span class="nb">Get-PveNodesQemuSnapshot</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="c"># Create a snapshot</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="nb">New-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c"># Output: snapshot created successfully</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="c"># Rollback to a snapshot</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="nb">New-PveNodesQemuSnapshotRollback</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="c"># Delete a snapshot</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="nb">Remove-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c"># List snapshots for a VM</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">Get-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-Expand</span> <span class="n">Response</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">-Expand</span> <span class="n">data</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c"># Output: name, snaptime, description, vmstate...</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c"># Using Get-PveVm helper</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="nb">Get-PveVm</span> <span class="n">-VmIdOrName</span> <span class="n">100</span> <span class="p">|</span> <span class="nb">Get-PveNodesQemuSnapshot</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="c"># Create a snapshot</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="nb">New-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c"># Output: snapshot created successfully</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c"># Rollback to a snapshot</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nb">New-PveNodesQemuSnapshotRollback</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c"># Delete a snapshot</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="nb">Remove-PveNodesQemuSnapshot</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Snapname</span> <span class="s2">&quot;backup-2024-01-15&quot;</span>
 </code></pre></div>
 <h3 id="working-with-indexed-parameters">Working with Indexed Parameters<a class="headerlink" href="#working-with-indexed-parameters" title="Permanent link">&para;</a></h3>
 <p>When working with indexed parameters (e.g., <code>-ScsiN</code>, <code>-IdeN</code>, <code>-NetN</code>), use hashtables:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c"># Define configurations using hashtables</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nv">$networkConfig</span> <span class="p">=</span> <span class="p">@{</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">1</span> <span class="p">=</span> <span class="no">[uri]</span><span class="p">::</span><span class="n">EscapeDataString</span><span class="p">(</span><span class="s2">&quot;model=virtio,bridge=vmbr0&quot;</span><span class="p">)</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">}</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="nv">$storageConfig</span> <span class="p">=</span> <span class="p">@{</span>
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="n">1</span> <span class="p">=</span> <span class="s1">&#39;ssdpool:32&#39;</span>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="p">}</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="nv">$bootableIso</span> <span class="p">=</span> <span class="p">@{</span>
-<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="n">1</span> <span class="p">=</span> <span class="s1">&#39;local:iso/ubuntu-22.04.iso&#39;</span>
-<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="p">}</span>
-<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>
-<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="c"># Create a new VM with indexed parameters</span>
-<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="nb">New-PveNodesQemu</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="p">`</span>
-<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>                 <span class="n">-Vmid</span> <span class="n">105</span> <span class="p">`</span>
-<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a>                 <span class="n">-Memory</span> <span class="n">2048</span> <span class="p">`</span>
-<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a>                 <span class="n">-ScsiN</span> <span class="nv">$storageConfig</span> <span class="p">`</span>
-<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>                 <span class="n">-IdeN</span> <span class="nv">$bootableIso</span> <span class="p">`</span>
-<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a>                 <span class="n">-NetN</span> <span class="nv">$networkConfig</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c"># Define configurations using hashtables</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nv">$networkConfig</span> <span class="p">=</span> <span class="p">@{</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="n">1</span> <span class="p">=</span> <span class="no">[uri]</span><span class="p">::</span><span class="n">EscapeDataString</span><span class="p">(</span><span class="s2">&quot;model=virtio,bridge=vmbr0&quot;</span><span class="p">)</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">}</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="nv">$storageConfig</span> <span class="p">=</span> <span class="p">@{</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="n">1</span> <span class="p">=</span> <span class="s1">&#39;ssdpool:32&#39;</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="p">}</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="nv">$bootableIso</span> <span class="p">=</span> <span class="p">@{</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="n">1</span> <span class="p">=</span> <span class="s1">&#39;local:iso/ubuntu-22.04.iso&#39;</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">}</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="c"># Create a new VM with indexed parameters</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="nb">New-PveNodesQemu</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="p">`</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>                 <span class="n">-Vmid</span> <span class="n">105</span> <span class="p">`</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>                 <span class="n">-Memory</span> <span class="n">2048</span> <span class="p">`</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>                 <span class="n">-ScsiN</span> <span class="nv">$storageConfig</span> <span class="p">`</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>                 <span class="n">-IdeN</span> <span class="nv">$bootableIso</span> <span class="p">`</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>                 <span class="n">-NetN</span> <span class="nv">$networkConfig</span>
 </code></pre></div>
 <p><strong>Note:</strong> Use <code>[uri]::EscapeDataString</code> to properly escape parameter values containing special characters.</p>
 <p>For more detailed examples and common issues, see the <a href="https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html">Common Issues &amp; Examples</a> documentation.</p>
 <h3 id="monitoring-resources">Monitoring Resources<a class="headerlink" href="#monitoring-resources" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c"># Get node monitoring data (RRD data)</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nb">Get-PveNodeMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Timeframe</span> <span class="n">hour</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="c"># Output: cpu, memory, network, disk usage statistics</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="c"># Get QEMU VM monitoring data</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="nb">Get-PveQemuMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Timeframe</span> <span class="n">day</span>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c"># Output: CPU usage, disk I/O, network traffic over time</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="c"># Get LXC container monitoring data</span>
-<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="nb">Get-PveLxcMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">200</span> <span class="n">-Timeframe</span> <span class="n">week</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c"># Get node monitoring data (RRD data)</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nb">Get-PveNodeMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Timeframe</span> <span class="n">hour</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c"># Output: cpu, memory, network, disk usage statistics</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c"># Get QEMU VM monitoring data</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="nb">Get-PveQemuMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">100</span> <span class="n">-Timeframe</span> <span class="n">day</span>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c"># Output: CPU usage, disk I/O, network traffic over time</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c"># Get LXC container monitoring data</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nb">Get-PveLxcMonitoring</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">200</span> <span class="n">-Timeframe</span> <span class="n">week</span>
 </code></pre></div>
 <h3 id="task-management_1">Task Management<a class="headerlink" href="#task-management_1" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c"># Execute a long-running task</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="nv">$result</span> <span class="p">=</span> <span class="nb">New-PveNodesQemu</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">110</span> <span class="n">-Memory</span> <span class="n">4096</span> <span class="n">-Name</span> <span class="s2">&quot;new-vm&quot;</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="nv">$taskId</span> <span class="p">=</span> <span class="nv">$result</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">data</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c"># Output: UPID:pve1:00001F40:...</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>
-<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a><span class="c"># Wait for task completion</span>
-<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="nb">Wait-PveTaskIsFinish</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Upid</span> <span class="nv">$taskId</span>
-<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>
-<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="c"># Check if a task is still running</span>
-<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="nv">$isRunning</span> <span class="p">=</span> <span class="nb">Get-PveTaskIsRunning</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Upid</span> <span class="nv">$taskId</span>
-<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a><span class="c"># Output: True/False</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c"># Execute a long-running task</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">$result</span> <span class="p">=</span> <span class="nb">New-PveNodesQemu</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Vmid</span> <span class="n">110</span> <span class="n">-Memory</span> <span class="n">4096</span> <span class="n">-Name</span> <span class="s2">&quot;new-vm&quot;</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">$taskId</span> <span class="p">=</span> <span class="nv">$result</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">data</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c"># Output: UPID:pve1:00001F40:...</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="c"># Wait for task completion</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="nb">Wait-PveTaskIsFinish</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Upid</span> <span class="nv">$taskId</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a><span class="c"># Check if a task is still running</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a><span class="nv">$isRunning</span> <span class="p">=</span> <span class="nb">Get-PveTaskIsRunning</span> <span class="n">-Node</span> <span class="n">pve1</span> <span class="n">-Upid</span> <span class="nv">$taskId</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a><span class="c"># Output: True/False</span>
 </code></pre></div>
 <h2 id="advanced-features_1">Advanced Features<a class="headerlink" href="#advanced-features_1" title="Permanent link">&para;</a></h2>
 <h3 id="pveresponse-class">PveResponse Class<a class="headerlink" href="#pveresponse-class" title="Permanent link">&para;</a></h3>
 <p>All cmdlets return a <code>PveResponse</code> object with rich information:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">class</span> <span class="n">PveResponse</span> <span class="p">{</span>
-<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="no">[PSCustomObject]</span> <span class="nv">$Response</span>           <span class="c"># The actual API response</span>
-<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="no">[int]</span> <span class="nv">$StatusCode</span>                    <span class="c"># HTTP status code</span>
-<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>    <span class="no">[string]</span> <span class="nv">$ReasonPhrase</span>              <span class="c"># HTTP reason phrase</span>
-<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="no">[bool]</span> <span class="nv">$IsSuccessStatusCode</span>         <span class="c"># Success indicator</span>
-<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>    <span class="no">[string]</span> <span class="nv">$RequestResource</span>           <span class="c"># API endpoint called</span>
-<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>    <span class="no">[hashtable]</span> <span class="nv">$Parameters</span>             <span class="c"># Request parameters</span>
-<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>    <span class="no">[string]</span> <span class="nv">$Method</span>                    <span class="c"># HTTP method used</span>
-<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="no">[string]</span> <span class="nv">$ResponseType</span>              <span class="c"># Response format</span>
-<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>
-<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>    <span class="c"># Helper methods</span>
-<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>    <span class="no">[bool]</span> <span class="n">ResponseInError</span><span class="p">()</span>            <span class="c"># Check for errors</span>
-<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>    <span class="no">[PSCustomObject]</span> <span class="n">ToTable</span><span class="p">()</span>          <span class="c"># Format as table</span>
-<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>    <span class="no">[PSCustomObject]</span> <span class="n">ToData</span><span class="p">()</span>           <span class="c"># Extract data only</span>
-<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="no">[void]</span> <span class="n">ToCsv</span><span class="p">(</span><span class="no">[string]</span> <span class="nv">$filename</span><span class="p">)</span>    <span class="c"># Export to CSV</span>
-<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="no">[void]</span> <span class="n">ToGridView</span><span class="p">()</span>                 <span class="c"># Display in grid view</span>
-<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">class</span> <span class="n">PveResponse</span> <span class="p">{</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="no">[PSCustomObject]</span> <span class="nv">$Response</span>           <span class="c"># The actual API response</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="no">[int]</span> <span class="nv">$StatusCode</span>                    <span class="c"># HTTP status code</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="no">[string]</span> <span class="nv">$ReasonPhrase</span>              <span class="c"># HTTP reason phrase</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="no">[bool]</span> <span class="nv">$IsSuccessStatusCode</span>         <span class="c"># Success indicator</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="no">[string]</span> <span class="nv">$RequestResource</span>           <span class="c"># API endpoint called</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="no">[hashtable]</span> <span class="nv">$Parameters</span>             <span class="c"># Request parameters</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="no">[string]</span> <span class="nv">$Method</span>                    <span class="c"># HTTP method used</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    <span class="no">[string]</span> <span class="nv">$ResponseType</span>              <span class="c"># Response format</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>    <span class="c"># Helper methods</span>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>    <span class="no">[bool]</span> <span class="n">ResponseInError</span><span class="p">()</span>            <span class="c"># Check for errors</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="no">[PSCustomObject]</span> <span class="n">ToTable</span><span class="p">()</span>          <span class="c"># Format as table</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>    <span class="no">[PSCustomObject]</span> <span class="n">ToData</span><span class="p">()</span>           <span class="c"># Extract data only</span>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>    <span class="no">[void]</span> <span class="n">ToCsv</span><span class="p">(</span><span class="no">[string]</span> <span class="nv">$filename</span><span class="p">)</span>    <span class="c"># Export to CSV</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>    <span class="no">[void]</span> <span class="n">ToGridView</span><span class="p">()</span>                 <span class="c"># Display in grid view</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="pveticket-class">PveTicket Class<a class="headerlink" href="#pveticket-class" title="Permanent link">&para;</a></h3>
 <p>Connection information is stored in a <code>PveTicket</code> object:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="n">class</span> <span class="n">PveTicket</span> <span class="p">{</span>
-<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    <span class="no">[string]</span> <span class="nv">$HostName</span>
-<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="no">[int]</span> <span class="nv">$Port</span>
-<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="no">[bool]</span> <span class="nv">$SkipCertificateCheck</span>
-<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>    <span class="no">[string]</span> <span class="nv">$Ticket</span>
-<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>    <span class="no">[string]</span> <span class="nv">$CSRFPreventionToken</span>
-<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>    <span class="no">[string]</span> <span class="nv">$ApiToken</span>
-<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="p">}</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">class</span> <span class="n">PveTicket</span> <span class="p">{</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="no">[string]</span> <span class="nv">$HostName</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="no">[int]</span> <span class="nv">$Port</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>    <span class="no">[bool]</span> <span class="nv">$SkipCertificateCheck</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>    <span class="no">[string]</span> <span class="nv">$Ticket</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>    <span class="no">[string]</span> <span class="nv">$CSRFPreventionToken</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>    <span class="no">[string]</span> <span class="nv">$ApiToken</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a><span class="p">}</span>
 </code></pre></div>
 <h3 id="direct-api-access">Direct API Access<a class="headerlink" href="#direct-api-access" title="Permanent link">&para;</a></h3>
 <p>For operations not covered by cmdlets, use <code>Invoke-PveRestApi</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c"># Make a custom API call</span>
-<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="nv">$result</span> <span class="p">=</span> <span class="nb">Invoke-PveRestApi</span> <span class="n">-Method</span> <span class="n">Get</span> <span class="p">`</span>
-<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>                            <span class="n">-Resource</span> <span class="s2">&quot;/api2/json/nodes/pve1/status&quot;</span> <span class="p">`</span>
-<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>                            <span class="n">-PveTicket</span> <span class="nv">$Global:PveTicketLast</span>
-<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
-<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="c"># Display results</span>
-<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="nv">$result</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">data</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c"># Make a custom API call</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nv">$result</span> <span class="p">=</span> <span class="nb">Invoke-PveRestApi</span> <span class="n">-Method</span> <span class="n">Get</span> <span class="p">`</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>                            <span class="n">-Resource</span> <span class="s2">&quot;/api2/json/nodes/pve1/status&quot;</span> <span class="p">`</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>                            <span class="n">-PveTicket</span> <span class="nv">$Global:PveTicketLast</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c"># Display results</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="nv">$result</span><span class="p">.</span><span class="n">Response</span><span class="p">.</span><span class="n">data</span>
 </code></pre></div>
 <h3 id="high-availability-connections">High Availability Connections<a class="headerlink" href="#high-availability-connections" title="Permanent link">&para;</a></h3>
 <p>Connect to multiple hosts for HA failover:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c"># Connect to multiple nodes</span>
-<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="s2">&quot;192.168.1.100:8006,192.168.1.101:8006,192.168.1.102:8006&quot;</span> <span class="p">`</span>
-<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>                   <span class="n">-SkipCertificateCheck</span>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c"># Connect to multiple nodes</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="nb">Connect-PveCluster</span> <span class="n">-HostsAndPorts</span> <span class="s2">&quot;192.168.1.100:8006,192.168.1.101:8006,192.168.1.102:8006&quot;</span> <span class="p">`</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>                   <span class="n">-SkipCertificateCheck</span>
 </code></pre></div>
 <hr />
 <h2 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
