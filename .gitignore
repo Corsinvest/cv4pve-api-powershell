@@ -1,10 +1,3 @@
-doc/PowerSession.exe
-doc/prep-video-commands.ps1
-doc/_site/
-doc/mkdocs/docs/markdown/
-doc/mkdocs/docs/index.md
-doc/mkdocs/docs/LICENSE
-
 # Superpowers scratch (SDD ledger, briefs, reports) and spec/plan docs
 .superpowers/
 docs/superpowers/
