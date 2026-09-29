@@ -9,15 +9,17 @@ hero:
     - text: Get started
       link: /cv4pve-api-powershell/getting-started/
       icon: right-arrow
-    - text: Cmdlet reference
-      link: /cv4pve-api-powershell/reference/
+    - text: Coming from PowerCLI?
+      link: /cv4pve-api-powershell/coming-from-powercli/
       icon: right-arrow
       variant: secondary
-    - text: Examples
-      link: /cv4pve-api-powershell/examples/common-tasks/
+    - text: Cmdlet reference
+      link: /cv4pve-api-powershell/reference/
       variant: minimal
+
 ---
 
+import { LinkCard } from '@astrojs/starlight/components';
 import FeatureGrid from '@corsinvest/cv4pve-docs-theme/components/FeatureGrid.astro';
 import TerminalTable from '@corsinvest/cv4pve-docs-theme/components/TerminalTable.astro';
 import CtaBand from '@corsinvest/cv4pve-docs-theme/components/CtaBand.astro';
@@ -63,6 +65,12 @@ scripts.
 VMware administrators have PowerCLI for this. cv4pve-api-powershell is the same idea for Proxmox VE:
 the whole API as PowerShell cmdlets, so the scripts, scheduled tasks and habits you already have keep
 working — objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
+
+<LinkCard
+  title="Coming from PowerCLI?"
+  description="Connect-VIServer, Get-VM, Move-VM, Invoke-VMScript… each PowerCLI cmdlet mapped to its equivalent here, and what works differently."
+  href="/cv4pve-api-powershell/coming-from-powercli/"
+/>
 
 ## On your machine, API only
 
