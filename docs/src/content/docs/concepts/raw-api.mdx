@@ -1,0 +1,63 @@
+---
+title: Raw API
+description: How the generated cmdlets map to the endpoints of the Proxmox VE API, and how to call any endpoint directly with Invoke-PveRestApi.
+---
+
+## From endpoint to cmdlet
+
+The generated cmdlets are built from the Proxmox VE API, one per endpoint and HTTP method. Knowing the
+rule, you can go from what you see in the [API viewer](https://pve.proxmox.com/pve-docs/api-viewer/) to
+the cmdlet name without searching:
+
+1. **Verb** from the HTTP method: `GET` → `Get`, `PUT` → `Set`, `POST` → `New`, `DELETE` → `Remove`.
+2. **Noun**: `Pve` followed by the segments of the path, each capitalized, leaving out the
+   `{parameters}` and dropping `-` and `_`.
+3. When two endpoints would get the same name — a list and one of its items — the second gets `Idx`,
+   and a number if needed.
+
+| Endpoint | Cmdlet |
+|---|---|
+| `GET /nodes/{node}/qemu` | `Get-PveNodesQemu` |
+| `GET /nodes/{node}/qemu/{vmid}/config` | `Get-PveNodesQemuConfig` |
+| `PUT /nodes/{node}/qemu/{vmid}/config` | `Set-PveNodesQemuConfig` |
+| `POST /nodes/{node}/qemu/{vmid}/status/start` | `New-PveNodesQemuStatusStart` |
+| `DELETE /nodes/{node}/qemu/{vmid}/snapshot/{snapname}` | `Remove-PveNodesQemuSnapshot` |
+| `GET /cluster/replication` | `Get-PveClusterReplication` |
+| `GET /cluster/replication/{id}` | `Get-PveClusterReplicationIdx` |
+
+The path parameters become mandatory parameters of the cmdlet: `-Node`, `-Vmid`, `-Snapname`. Actions
+are `POST`, so they start with `New-` even when nothing is created: `New-PveNodesQemuStatusStart` starts
+a VM. For the most common ones the module has [shorter aliases](/cv4pve-api-powershell/reference/#aliases),
+such as `Start-PveQemu`.
+
+Every page of the [cmdlet reference](/cv4pve-api-powershell/reference/) shows its endpoint, and every
+group page lists them side by side.
+
+## `Invoke-PveRestApi`
+
+All cmdlets end in `Invoke-PveRestApi`, which you can call yourself — for an endpoint added by a newer
+Proxmox VE than your version of the module, or to build a path in a loop:
+
+```powershell
+$r = Invoke-PveRestApi -Method Get -Resource '/nodes/pve01/status'
+$r.Response.data.cpuinfo
+```
+
+| Parameter | |
+|---|---|
+| `-Resource` | The API path, starting with `/`, without `/api2/json`: `/nodes/pve01/status`. |
+| `-Method` | `Get` (default), `Set` (PUT), `Create` (POST), `Delete` (DELETE). |
+| `-Parameters` | A hashtable with the API parameter names: `@{ vmstate = 1; snapname = 'before-update' }`. For `Get` and `Delete` they go in the query string, for `Set` and `Create` in a JSON body. `[bool]` and switch values are sent as `1` and `0`. |
+| `-ResponseType` | `json` (default), `extjs`, `html`, `text`, `png`. |
+| `-PveTicket` | The connection; without it, the last one — see [Connection](/cv4pve-api-powershell/connection/#the-last-connection). |
+
+It returns a `PveResponse`, like the generated cmdlets, and does not throw when the call fails — see
+[Results](/cv4pve-api-powershell/concepts/results/) and [Errors](/cv4pve-api-powershell/concepts/errors/).
+
+```powershell
+# snapshot every VM of a node, building the path yourself
+foreach ($vm in (Get-PveNodesQemu -Node pve01).Response.data) {
+    Invoke-PveRestApi -Method Create -Resource "/nodes/pve01/qemu/$($vm.vmid)/snapshot" `
+        -Parameters @{ snapname = 'before-update' }
+}
+```

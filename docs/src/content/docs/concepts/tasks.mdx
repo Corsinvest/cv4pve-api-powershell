@@ -1,0 +1,66 @@
+---
+title: Tasks
+description: Long operations in Proxmox VE run as tasks — how to get the UPID, wait for the task to finish and check whether it succeeded.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Starting a VM, cloning, migrating, taking a backup or a snapshot: Proxmox VE runs these as **tasks** in
+the background and the API answers at once, with the id of the task — the **UPID**. The same tasks
+appear in the *Tasks* panel of the web interface.
+
+```powershell
+$r = New-PveNodesQemuClone -Node pve01 -Vmid 9000 -Newid 121 -Name web02 -Full $true
+$upid = $r.Response.data
+# UPID:pve01:0012A3F4:05C1B2D3:6720F1A0:qmclone:9000:automation@pve!ps:
+```
+
+The call returned when the task *started*. Before using the new VM the script has to wait for the task.
+
+## Wait for a task
+
+```powershell
+Wait-PveTaskIsFinish -Upid $upid -Timeout 600000      # up to 10 minutes
+```
+
+`Wait-PveTaskIsFinish` checks the task every `-Wait` milliseconds (default 500) until it stops, and
+returns `$true` if it stopped within `-Timeout` milliseconds, `$false` if the time ran out. The default
+timeout is **10 seconds**: enough for a start or a snapshot, not for a clone, a migration or a backup.
+Set `-Timeout` to the longest time the task may take.
+
+`Wait-PveTaskIsFinishedWithProgress` does the same and shows a PowerShell progress bar while it waits,
+with the elapsed and the total time:
+
+```powershell
+Wait-PveTaskIsFinishedWithProgress -Upid $upid -Timeout 600000 -ProgressActivityText 'Cloning web02'
+```
+
+To check without waiting, `Get-PveTaskIsRunning -Upid $upid` returns `$true` while the task runs.
+
+The node of the task is read from the UPID, so none of these needs `-Node`.
+
+## Did it succeed?
+
+A finished task is not necessarily a successful one. `Wait-PveTaskIsFinish` only says the task stopped;
+read its exit status:
+
+```powershell
+if (-not (Wait-PveTaskIsFinish -Upid $upid -Timeout 600000)) {
+    throw "Task still running after 10 minutes: $upid"
+}
+
+$node   = $upid.Split(':')[1]
+$status = (Get-PveNodesTasksStatus -Node $node -Upid $upid).Response.data
+if ($status.exitstatus -ne 'OK') {
+    throw "Task failed: $($status.exitstatus)"
+}
+```
+
+The log of the task, the same text the web interface shows, is in `Get-PveNodesTasksLog -Node $node -Upid $upid`.
+
+<Aside>
+Not every call returns a UPID. Calls that finish immediately — reading, most configuration changes —
+return their result directly. The API viewer, linked from each page of the
+[cmdlet reference](/cv4pve-api-powershell/reference/), shows what an endpoint returns: a UPID is a
+`string` described as the task id.
+</Aside>

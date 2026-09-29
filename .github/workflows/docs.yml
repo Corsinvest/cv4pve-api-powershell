@@ -1,0 +1,21 @@
+name: Docs
+
+on:
+  push:
+    branches: [ "master" ]
+    # The module too: the cmdlet reference is generated from it at build time (npm prebuild).
+    paths: [ "docs/**", "Corsinvest.ProxmoxVE.Api/**", ".github/workflows/docs.yml" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  docs:
+    uses: Corsinvest/.github/.github/workflows/cv4pve-tools-docs.yml@main

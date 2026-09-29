@@ -1,405 +1,114 @@
-# cv4pve-api-powershell
+# <img src="icon.png" alt="" height="36" align="top"> cv4pve-api-powershell
 
-[![PowerShell for Proxmox VE](https://img.shields.io/badge/PowerShell-Proxmox%20VE-blue?style=for-the-badge)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
-[![PowerShell Gallery Version](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api?style=for-the-badge)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
-[![Downloads](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api?style=for-the-badge)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
-[![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell?style=for-the-badge)](LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/Corsinvest/cv4pve-api-powershell?style=for-the-badge)](https://github.com/Corsinvest/cv4pve-api-powershell/stargazers)
+```
+     ______                _                      __
+    / ____/___  __________(_)___ _   _____  _____/ /_
+   / /   / __ \/ ___/ ___/ / __ \ | / / _ \/ ___/ __/
+  / /___/ /_/ / /  (__  ) / / / / |/ /  __(__  ) /_
+  \____/\____/_/  /____/_/_/ /_/|___/\___/____/\__/
 
-```text
-    ______                _                      __
-   / ____/___  __________(_)___ _   _____  _____/ /_
-  / /   / __ \/ ___/ ___/ / __ \ | / / _ \/ ___/ __/
- / /___/ /_/ / /  (__  ) / / / / |/ /  __(__  ) /_
- \____/\____/_/  /____/_/_/ /_/|___/\___/____/\__/
-
-         Corsinvest - Proxmox VE API PowerShell
+PowerShell for Proxmox VE (Made in Italy)
 ```
 
-A comprehensive PowerShell module that provides everything you need to build powerful automation scripts that manage [Proxmox VE](https://www.proxmox.com/en/proxmox-ve) infrastructure programmatically.
+[![License](https://img.shields.io/github/license/Corsinvest/cv4pve-api-powershell.svg?style=flat-square)](LICENSE)
+[![PowerShell Gallery](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api?style=flat-square&logo=powershell)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
+[![Downloads](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api?style=flat-square)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
 
-Part of the [cv4pve](https://www.corsinvest.it/cv4pve) suite of tools.
+> **The PowerCLI for Proxmox VE** — a PowerShell module with a cmdlet for every endpoint of the Proxmox VE API, running on your machine and talking only to the API.
+>
+> **[Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)**
 
-**Quick Links:** [PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/) | [Documentation](https://corsinvest.github.io/cv4pve-api-powershell/) | [Proxmox VE API](https://pve.proxmox.com/pve-docs/api-viewer/)
+---
 
-## Overview
+## Why
 
-The **cv4pve-api-powershell** module enables system administrators and developers to manage and automate Proxmox VE environments using PowerShell.
+The Proxmox VE web interface is made for one action at a time. Snapshot forty VMs before an update, list every VM with its disks for an audit, clone a template ten times, shut down a lab every evening: by hand it is slow and error-prone.
 
-It provides a comprehensive set of cmdlets that wrap the Proxmox REST API, allowing operations such as VM and container management, node monitoring, backup handling, and storage inspection—all from PowerShell.
+VMware administrators have PowerCLI for this. cv4pve-api-powershell is the same idea for Proxmox VE: the whole API as PowerShell cmdlets, so your scripts, scheduled tasks and habits keep working — objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
 
-This module serves as the **PowerCLI equivalent for Proxmox VE**:
-- While PowerCLI facilitates VMware vSphere automation via PowerShell
-- **cv4pve-api-powershell** offers similar capabilities for Proxmox VE environments
+It **runs on your machine and uses only the Proxmox VE API**: nothing to install on the nodes, no SSH.
 
-![PowerShell for Proxmox VE](https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/images/powershell.png)
+---
 
-## Key Features
+## Features
 
-### Core Capabilities
-* **Easy to Learn** - Intuitive PowerShell cmdlet interface
-* **Complete API Coverage** - Automatically generated from official Proxmox VE API documentation
-* **Multiple Response Types** - Support for JSON, PNG, ExtJS, HTML, and text formats
-* **Rich Response Objects** - PveResponse class with detailed request/response information
-* **Cross-Platform** - Works on Windows, Linux, and macOS (PowerShell 6.0+)
-* **No Remote Installation Required** - Execute from any machine outside Proxmox VE
+- **The whole API** — one cmdlet per endpoint and method, generated from the Proxmox VE API, with its parameters, types and allowed values.
+- **VMs by id or name** — `Get-PveVm` finds VMs and containers by id, name, range, pool, tag or node, and pipes them into the other cmdlets.
+- **API token or password** — list several nodes and the first that answers is used.
+- **Objects, not text** — the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it.
+- **Tasks** — start a backup, clone or migration and wait for it to finish, with a progress bar if you like.
+- **Anything else** — `Invoke-PveRestApi` calls any path of the API with the same connection.
+- **Cross-platform** — PowerShell 7 on Windows, Linux and macOS.
 
-### Authentication & Security
-* **API Token Support** - Proxmox VE 6.2+ API token authentication
-* **Two-Factor Authentication** - One-time password (OTP) support
-* **Secure Connections** - TLS/SSL support with certificate validation options
-* **High Availability** - Multi-host cluster connection for HA environments
+---
 
-### Virtual Machine & Container Management
-* **VM Operations** - Start, stop, suspend, resume, reset, unlock
-* **Container Support** - Full LXC container lifecycle management
-* **Snapshot Management** - Create, list, rollback, and delete snapshots
-* **Clone Operations** - Clone VMs and containers
-* **Resource Monitoring** - RRD data collection from nodes, QEMU VMs, and LXC containers
+## Quick start
 
-### Advanced Features
-* **Direct API Access** - Use `Invoke-PveRestApi` for custom API calls
-* **Indexed Parameters** - Support for indexed parameters (e.g., -NetN, -ScsiN, -IdeN)
-* **Task Management** - Wait for task completion, check task status
-* **Utility Functions** - Unix time conversion, VM lookup by ID or name, and more
-* **SPICE Integration** - Connect to VM consoles via `Invoke-PveSpice`
-* **Documentation Generation** - Built-in help documentation builder
+```powershell
+Install-Module -Name Corsinvest.ProxmoxVE.Api -Scope CurrentUser
 
-### Developer-Friendly
-* **PowerShell Gallery** - Simple installation via `Install-Module`
-* **Comprehensive Documentation** - HTML and Markdown documentation included
-* **Interactive Tutorials** - VSCode notebook tutorials available
-* **Open Source** - Full source code available on GitHub
+# connect to any node of the cluster, with an API token
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken 'automation@pve!ps=<secret>'
 
-## Utility Functions
+# every VM and container of the cluster
+Get-PveVm | Format-Table vmid, name, node, type, status
 
-The module includes a rich set of utility cmdlets to simplify common operations:
+# the generated cmdlets return the data in .Response.data
+(Get-PveNodesQemuConfig -Node pve01 -Vmid 100).Response.data
+```
 
-### Time Conversion
-* `ConvertFrom-PveUnixTime` - Convert Unix timestamp to DateTime
-* `ConvertTo-PveUnixTime` - Convert DateTime to Unix timestamp
+Requires PowerShell 7. With a self-signed certificate add `-SkipCertificateCheck`. What the token needs: [Permissions](https://corsinvest.github.io/cv4pve-api-powershell/permissions/).
 
-### Task Management
-* `Wait-PveTaskIsFinish` - Wait for a task to complete
-* `Get-PveTaskIsRunning` - Check if a task is still running
+---
 
-### VM Operations (by ID or Name)
-* `Get-PveVm` - Find VM by ID or name
-* `Start-PveVm` - Start a VM
-* `Stop-PveVm` - Stop a VM
-* `Suspend-PveVm` - Suspend a VM
-* `Resume-PveVm` - Resume a VM
-* `Reset-PveVm` - Reset a VM
-* `Unlock-PveVm` - Unlock a VM
+## What it looks like
 
-### Monitoring & Statistics
-* `Get-PveNodeMonitoring` - Get RRD monitoring data from nodes
-* `Get-PveQemuMonitoring` - Get RRD monitoring data from QEMU VMs
-* `Get-PveLxcMonitoring` - Get RRD monitoring data from LXC containers
+```powershell
+PS> Get-PveVm | Format-Table vmid, name, node, type, status
 
-### Snapshot Management
-* `Get-PveVmSnapshot` - Get snapshots for a VM
-* `New-PveVmSnapshot` - Create a new snapshot
-* `Undo-PveVmSnapshot` - Rollback to a snapshot
-* `Remove-PveVmSnapshot` - Delete a snapshot
+vmid name        node  type status
+---- ----        ----  ---- ------
+ 100 backup01    pve02 lxc  running
+ 102 firewall02  pve02 qemu running
+ 105 test        pve01 lxc  stopped
+1006 dc01        pve01 qemu running
+1012 mailstore   pve02 qemu running
 
-And many more! Explore the full cmdlet list with `Get-Command -Module Corsinvest.ProxmoxVE.Api`
+PS> Get-PveNode | Select-Object node, status, @{ n = 'cpu%'; e = { [math]::Round($_.cpu * 100, 1) } }
+
+node  status cpu%
+----  ------ ----
+pve02 online 1.50
+pve01 online 4.20
+```
+
+`Get-PveVm` returns the guests themselves; the generated cmdlets return a `PveResponse` with the data in `.Response.data`. More recipes, each with its output: [Common tasks](https://corsinvest.github.io/cv4pve-api-powershell/examples/common-tasks/).
+
+---
 
 ## Documentation
 
-Comprehensive documentation is available in multiple formats:
-
-* **[HTML Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)** - Full API reference in HTML format
-* **[Markdown Documentation](https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/doc/markdown/about_cv4pve-api-powershell.md)** - Documentation in Markdown format
-
-## Tutorial & Learning Resources
-
-* **[Interactive VSCode Notebook Tutorial](https://tinyurl.com/cv4pve-api-pwsh-learn)** - Learn by doing with interactive examples
-* **[Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html)** - Practical solutions to common problems and advanced examples
-* **[Video Demo](https://asciinema.org/a/656606)** - Watch a quick demonstration of the module in action
-
-<a href="https://asciinema.org/a/656606" target="_blank"><img src="https://asciinema.org/a/656606.svg" /></a>
-
-## Requirements
-
-* **PowerShell 6.0 or higher** (PowerShell Core)
-* **Network access** to your Proxmox VE cluster
-* **Valid credentials** or API token for Proxmox VE
-
-## Installation
-
-### Prerequisites
-
-First, ensure you have [PowerShell](https://docs.microsoft.com/en-us/powershell/scripting/install/installing-powershell) installed on your system (version 6.0 or later).
-
-### From PowerShell Gallery (Recommended)
-
-The easiest way to install is directly from the [PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/):
-
-```powershell
-Install-Module -Name Corsinvest.ProxmoxVE.Api
-```
-
-### Manual Installation
-
-1. Download the `Corsinvest.ProxmoxVE.Api` folder from the repository
-2. Copy it to one of your PowerShell module paths
-
-To view your module paths:
-```powershell
-# Display module paths
-$env:PSModulePath -split [IO.Path]::PathSeparator
-```
-
-## Documentation
-
-**Need help getting started or troubleshooting issues?**
-
-- **[Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html)** - Practical examples and solutions to common problems:
-  - Hashtable parameters (NetN, SataN, ScsiN)
-  - Boolean vs Switch parameters
-  - Working with result objects
-  - Creating VMs with disks and network
-  - Guest agent commands
-  - And more!
-
-- **[Full Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)** - Complete reference with all cmdlets
-- **[Proxmox VE API Viewer](https://pve.proxmox.com/pve-docs/api-viewer/)** - Official Proxmox VE API documentation
-
-## Quick Start
-
-### Importing the Module
-
-This module defines PowerShell classes (such as `PveResponse` and `PveTicket`). `Import-Module` does **not** load class and enum definitions into the caller's scope, so importing the module with `Import-Module` can lead to errors like `Unable to find type [PveResponse]`.
-
-To make the classes available, use the `using module` statement instead:
-
-```powershell
-using module Corsinvest.ProxmoxVE.Api
-```
-
-> **Note:** `using module` must be the first statement in a script (only comments and `#Requires` may precede it). For this reason it works reliably inside a `.ps1` script file, but cannot be typed line-by-line in an interactive session. In an interactive session use `Import-Module Corsinvest.ProxmoxVE.Api` — the cmdlets still work; only direct use of the class types (e.g. `[PveResponse]`) requires `using module`.
-
-### Connecting to Your Cluster
-
-Use `Connect-PveCluster` to establish a connection. This cmdlet supports both username/password and API token authentication.
-
-#### Using Username and Password
-
-```powershell
-# Connect with username and password
-Connect-PveCluster -HostsAndPorts 192.168.1.100:8006 -SkipCertificateCheck
-
-# PowerShell will prompt for credentials
-# Username format: user@pam, user@pve, or user@yourdomain
-```
-
-#### Using API Token (Proxmox VE 6.2+)
-
-From Proxmox VE 6.2+, you can use [API tokens](https://pve.proxmox.com/pve-docs/pveum-plain.html) for authentication without username/password.
-
-```powershell
-# Connect using API token
-Connect-PveCluster -HostsAndPorts 192.168.1.100:8006 `
-                   -SkipCertificateCheck `
-                   -ApiToken "root@pam!mytoken=xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-```
-
-**Note:** API token format is `USER@REALM!TOKENID=UUID`. If using **Privilege Separation**, ensure proper permissions are configured.
-
-### Connection Management
-
-The `Connect-PveCluster` function creates a `PveTicket` object and stores it in `$Global:PveTicketLast`. All cmdlets use this ticket by default, or you can specify a different ticket with the `-PveTicket` parameter.
-
-## 💡 Usage Examples
-
-### Basic Operations
-
-```powershell
-# Connect to cluster
-Connect-PveCluster -HostsAndPorts 192.168.1.100:8006 -SkipCertificateCheck
-
-# Get Proxmox VE version
-Get-PveVersion | Select-Object -ExpandProperty Response | Select-Object -ExpandProperty data
-# Output: version : 8.2.0, release : 1, repoid : abc123...
-
-# List all VMs in the cluster
-Get-PveClusterResources -Type vm | Select-Object -ExpandProperty Response | Select-Object -ExpandProperty data
-# Output: vmid, name, status, node, uptime, etc.
-```
-
-### VM Management
-
-```powershell
-# Start a VM (by ID or name)
-Start-PveVm -VmIdOrName 100
-# Output: UPID:pve1:00001234:...
-
-# Stop a VM gracefully
-Stop-PveVm -VmIdOrName "my-vm"
-
-# Suspend/Resume a VM
-Suspend-PveVm -VmIdOrName 100
-Resume-PveVm -VmIdOrName 100
-
-# Reset a VM
-Reset-PveVm -VmIdOrName 100
-
-# Unlock a VM
-Unlock-PveVm -VmIdOrName 100
-```
-
-### Snapshot Management
-
-```powershell
-# List snapshots for a VM
-Get-PveNodesQemuSnapshot -Node pve1 -Vmid 100 | Select -Expand Response | Select -Expand data
-# Output: name, snaptime, description, vmstate...
-
-# Using Get-PveVm helper
-Get-PveVm -VmIdOrName 100 | Get-PveNodesQemuSnapshot
-
-# Create a snapshot
-New-PveNodesQemuSnapshot -Node pve1 -Vmid 100 -Snapname "backup-2024-01-15"
-# Output: snapshot created successfully
-
-# Rollback to a snapshot
-New-PveNodesQemuSnapshotRollback -Node pve1 -Vmid 100 -Snapname "backup-2024-01-15"
-
-# Delete a snapshot
-Remove-PveNodesQemuSnapshot -Node pve1 -Vmid 100 -Snapname "backup-2024-01-15"
-```
-
-### Working with Indexed Parameters
-
-When working with indexed parameters (e.g., `-ScsiN`, `-IdeN`, `-NetN`), use hashtables:
-
-```powershell
-# Define configurations using hashtables
-$networkConfig = @{
-    1 = [uri]::EscapeDataString("model=virtio,bridge=vmbr0")
-}
-$storageConfig = @{
-    1 = 'ssdpool:32'
-}
-$bootableIso = @{
-    1 = 'local:iso/ubuntu-22.04.iso'
-}
-
-# Create a new VM with indexed parameters
-New-PveNodesQemu -Node pve1 `
-                 -Vmid 105 `
-                 -Memory 2048 `
-                 -ScsiN $storageConfig `
-                 -IdeN $bootableIso `
-                 -NetN $networkConfig
-```
-
-**Note:** Use `[uri]::EscapeDataString` to properly escape parameter values containing special characters.
-
-For more detailed examples and common issues, see the [Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html) documentation.
-
-### Monitoring Resources
-
-```powershell
-# Get node monitoring data (RRD data)
-Get-PveNodeMonitoring -Node pve1 -Timeframe hour
-# Output: cpu, memory, network, disk usage statistics
-
-# Get QEMU VM monitoring data
-Get-PveQemuMonitoring -Node pve1 -Vmid 100 -Timeframe day
-# Output: CPU usage, disk I/O, network traffic over time
-
-# Get LXC container monitoring data
-Get-PveLxcMonitoring -Node pve1 -Vmid 200 -Timeframe week
-```
-
-### Task Management
-
-```powershell
-# Execute a long-running task
-$result = New-PveNodesQemu -Node pve1 -Vmid 110 -Memory 4096 -Name "new-vm"
-$taskId = $result.Response.data
-# Output: UPID:pve1:00001F40:...
-
-# Wait for task completion
-Wait-PveTaskIsFinish -Node pve1 -Upid $taskId
-
-# Check if a task is still running
-$isRunning = Get-PveTaskIsRunning -Node pve1 -Upid $taskId
-# Output: True/False
-```
-
-## Advanced Features
-
-### PveResponse Class
-
-All cmdlets return a `PveResponse` object with rich information:
-
-```powershell
-class PveResponse {
-    [PSCustomObject] $Response           # The actual API response
-    [int] $StatusCode                    # HTTP status code
-    [string] $ReasonPhrase              # HTTP reason phrase
-    [bool] $IsSuccessStatusCode         # Success indicator
-    [string] $RequestResource           # API endpoint called
-    [hashtable] $Parameters             # Request parameters
-    [string] $Method                    # HTTP method used
-    [string] $ResponseType              # Response format
-
-    # Helper methods
-    [bool] ResponseInError()            # Check for errors
-    [PSCustomObject] ToTable()          # Format as table
-    [PSCustomObject] ToData()           # Extract data only
-    [void] ToCsv([string] $filename)    # Export to CSV
-    [void] ToGridView()                 # Display in grid view
-}
-```
-
-### PveTicket Class
-
-Connection information is stored in a `PveTicket` object:
-
-```powershell
-class PveTicket {
-    [string] $HostName
-    [int] $Port
-    [bool] $SkipCertificateCheck
-    [string] $Ticket
-    [string] $CSRFPreventionToken
-    [string] $ApiToken
-}
-```
-
-### Direct API Access
-
-For operations not covered by cmdlets, use `Invoke-PveRestApi`:
-
-```powershell
-# Make a custom API call
-$result = Invoke-PveRestApi -Method Get `
-                            -Resource "/api2/json/nodes/pve1/status" `
-                            -PveTicket $Global:PveTicketLast
-
-# Display results
-$result.Response.data
-```
-
-### High Availability Connections
-
-Connect to multiple hosts for HA failover:
-
-```powershell
-# Connect to multiple nodes
-Connect-PveCluster -HostsAndPorts "192.168.1.100:8006,192.168.1.101:8006,192.168.1.102:8006" `
-                   -SkipCertificateCheck
-```
+| | |
+|---|---|
+| [Getting started](https://corsinvest.github.io/cv4pve-api-powershell/getting-started/) | Install, connect, first cmdlets |
+| [Connection](https://corsinvest.github.io/cv4pve-api-powershell/connection/) | API token or password, several nodes, certificates, permissions |
+| [Concepts](https://corsinvest.github.io/cv4pve-api-powershell/concepts/results/) | Results, parameters, tasks, errors, raw API calls |
+| [Guides](https://corsinvest.github.io/cv4pve-api-powershell/guides/finding-vms/) | VMs by id or name, power, snapshots, SPICE |
+| [Examples](https://corsinvest.github.io/cv4pve-api-powershell/examples/common-tasks/) | Common tasks with their output, inventory to CSV, creating VMs, guest agent, backups |
+| [Cmdlet reference](https://corsinvest.github.io/cv4pve-api-powershell/reference/) | Every cmdlet with its endpoint and parameters |
+| [Troubleshooting](https://corsinvest.github.io/cv4pve-api-powershell/troubleshooting/) | `-Debug` and the common errors |
+
+---
+
+## Related tools
+
+Prefer the command line in any shell? [cv4pve-cli](https://github.com/Corsinvest/cv4pve-cli) calls the same API. From .NET: [cv4pve-api-dotnet](https://github.com/Corsinvest/cv4pve-api-dotnet). The whole suite: [corsinvest.it/cv4pve](https://www.corsinvest.it/en/cv4pve/).
 
 ---
 
 ## Support
 
-For professional consulting and enterprise support, visit [www.corsinvest.it](https://www.corsinvest.it)
+Professional support and consulting available through [Corsinvest](https://www.corsinvest.it/en/cv4pve/).
 
 ---
 

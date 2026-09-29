@@ -1,0 +1,90 @@
+---
+title: Finding VMs and nodes
+description: Get-PveVm finds VMs and containers across the cluster by id, name, range, pool, tag or node; Get-PveNode lists the nodes. Their output pipes into the other cmdlets.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The generated cmdlets need to know **where** a VM is: `-Node pve01 -Vmid 100`. In a cluster you
+usually know the name or the id, not the node, and the VM may have migrated since yesterday.
+`Get-PveVm` looks the VMs up in the whole cluster and returns them with their node.
+
+## `Get-PveVm`
+
+Without parameters it returns every VM and container of the cluster:
+
+```powershell
+Get-PveVm | Format-Table vmid, name, node, type, status
+```
+
+The objects are the entries of type `vm` of `/cluster/resources`: `vmid`, `name`, `node`, `type`
+(`qemu` for VMs, `lxc` for containers), `status`, `pool`, `tags`, `template`, and the live usage
+(`cpu`, `mem`, `maxmem`, `disk`, `maxdisk`, `uptime`).
+
+`-VmIdOrName` selects them. It takes a comma-separated list; each item is one of:
+
+| Item | Selects |
+|---|---|
+| `100` | The VM or container with that id. |
+| `100:120` | Ids from 100 to 120, both included. |
+| `web01` | By name. Wildcards work: `web*`, `db-??`. |
+| `@node-pve01` | Everything on node `pve01`. `@all-pve01` and `all-pve01` do the same. |
+| `@pool-web` | Everything in pool `web`. |
+| `@tag-production` | Everything with tag `production` — only guests with a single tag, see below. |
+| `all` | Everything — the same as no parameter. Only on its own, not inside a list. |
+
+```powershell
+Get-PveVm -VmIdOrName 100
+Get-PveVm -VmIdOrName 'web*'
+Get-PveVm -VmIdOrName '100:120,200,db01'
+Get-PveVm -VmIdOrName '@pool-web,@node-pve01'
+```
+
+A VM matching more than one item is returned once.
+
+<Aside type="caution">
+Limits of the current version:
+
+- `@tag-` finds only guests with **one** tag. Proxmox VE separates tags with `;` and the module splits
+  them on `,`, so a VM tagged `web;production` is not found by `@tag-web`. Filter on the property
+  instead: `Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'web' }`.
+- The help of `-VmIdOrName` also mentions `@all` and exclusions such as `-100`: they are not
+  implemented. `@all` matches nothing; use `all` or no parameter.
+</Aside>
+
+## Into the other cmdlets
+
+The objects have `node` and `vmid` properties, which the generated cmdlets bind by name. Filter on
+`type` first, because VMs and containers have different endpoints:
+
+```powershell
+# configuration of every VM tagged "production"
+Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'production' } |
+    Where-Object type -eq 'qemu' |
+    Get-PveNodesQemuConfig |
+    ForEach-Object { $_.Response.data | Select-Object name, memory, cores }
+
+# containers of pool "web" that are stopped
+Get-PveVm -VmIdOrName '@pool-web' |
+    Where-Object { $_.type -eq 'lxc' -and $_.status -eq 'stopped' }
+```
+
+Templates are included: filter them out with `Where-Object template -ne 1` when a script must not
+touch them.
+
+## `Get-PveNode`
+
+`Get-PveNode` returns the nodes of the cluster, from the same `/cluster/resources`, with `node`,
+`status` (`online` or `offline`) and the usage of CPU, memory and disk. `-Node` filters by name, with
+wildcards:
+
+```powershell
+Get-PveNode | Format-Table node, status, cpu, maxcpu, mem, maxmem
+Get-PveNode -Node 'pve0*'
+```
+
+## Permissions
+
+Both read `/cluster/resources`, which returns only what the token or user may see: a token limited to
+pool `web` gets the VMs of that pool and nothing else. An empty result may mean missing privileges, not
+an empty cluster.

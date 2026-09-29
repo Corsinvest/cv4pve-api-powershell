@@ -1,0 +1,91 @@
+---
+title: cv4pve-api-powershell
+description: PowerShell module for the Proxmox VE API — automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE.
+template: splash
+hero:
+  title: Automate <span class="accent-mark">Proxmox VE</span> from PowerShell
+  tagline: The PowerCLI for Proxmox VE. A PowerShell module with a cmdlet for every endpoint of the Proxmox VE API — VMs, containers, storage, backups, cluster, access — that runs on your machine and talks only to the API.
+  actions:
+    - text: Get started
+      link: /cv4pve-api-powershell/getting-started/
+      icon: right-arrow
+    - text: Cmdlet reference
+      link: /cv4pve-api-powershell/reference/
+      icon: right-arrow
+      variant: secondary
+    - text: Examples
+      link: /cv4pve-api-powershell/examples/common-tasks/
+      variant: minimal
+---
+
+import FeatureGrid from '@corsinvest/cv4pve-docs-theme/components/FeatureGrid.astro';
+import TerminalTable from '@corsinvest/cv4pve-docs-theme/components/TerminalTable.astro';
+import CtaBand from '@corsinvest/cv4pve-docs-theme/components/CtaBand.astro';
+import proxmoxLogo from '../../assets/proxmox-logo.svg';
+
+export const features = [
+  { title: 'The whole API', text: 'One cmdlet per endpoint and method, generated from the Proxmox VE API: its parameters, their types and allowed values come from the API itself.', href: 'reference/' },
+  { title: 'VMs by id or name', text: 'Get-PveVm finds VMs and containers by id, name, range, pool, tag or node, and its output pipes straight into the other cmdlets.', href: 'guides/finding-vms/' },
+  { title: 'API token or password', text: 'Connect with an API token or a user and password, list several nodes and the first one that answers is used.', href: 'connection/' },
+  { title: 'Objects, not text', text: 'Every call returns the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it: filter, sort, export to CSV.', href: 'concepts/results/' },
+  { title: 'Tasks', text: 'Start a backup, a clone or a migration and wait for its task to finish, with a progress bar if you like.', href: 'concepts/tasks/' },
+  { title: 'Anything the cmdlets miss', text: 'Invoke-PveRestApi calls any path of the API directly, with the same connection.', href: 'concepts/raw-api/' },
+];
+
+<TerminalTable
+  command="Get-PveVm | Format-Table vmid, name, node, type, status"
+  columns={[
+    { label: 'vmid', style: 'code' },
+    { label: 'name' },
+    { label: 'node', style: 'muted' },
+    { label: 'type' },
+    { label: 'status' },
+  ]}
+  rows={[
+    ['100', 'backup01', 'pve02', 'lxc', 'running'],
+    ['102', 'firewall02', 'pve02', 'qemu', 'running'],
+    ['105', 'test', 'pve01', 'lxc', 'stopped'],
+    ['203', 'test-debian', 'pve02', 'qemu', 'stopped'],
+    ['1000', 'firewall01', 'pve01', 'qemu', 'running'],
+    ['1006', 'dc01', 'pve01', 'qemu', 'running'],
+    ['1012', 'mailstore', 'pve02', 'qemu', 'running'],
+  ]}
+  note="A few rows of a two-node test cluster, names changed."
+/>
+
+## Why
+
+The Proxmox VE web interface is made for one action at a time. Snapshot forty VMs before an update,
+list every VM with its disks for an audit, clone a template ten times, shut down a lab every evening:
+by hand it is slow and error-prone, and the shell of a node is not where you want to run your company's
+scripts.
+
+VMware administrators have PowerCLI for this. cv4pve-api-powershell is the same idea for Proxmox VE:
+the whole API as PowerShell cmdlets, so the scripts, scheduled tasks and habits you already have keep
+working — objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
+
+## On your machine, API only
+
+The module runs where PowerShell 7 runs — Windows, Linux, macOS, a management VM, a CI runner — and
+talks only to the Proxmox VE REST API on port 8006. Nothing is installed on the nodes and no SSH is
+needed. What a script can do is what its API token or user is allowed to do: give it a token with just
+the privileges it needs, see [Permissions](/cv4pve-api-powershell/permissions/).
+
+## Where it fits
+
+The cv4pve suite follows the Unix philosophy: each tool does one thing and does it well.
+cv4pve-api-powershell is the one for your own PowerShell scripts: any API call, with objects. Prefer a
+command line that works in any shell? [cv4pve-cli](https://corsinvest.github.io/cv4pve-cli/) calls the
+same API with text output. For an inventory or a health check of the cluster, ready to run, see
+[cv4pve-report](https://corsinvest.github.io/cv4pve-report/) and
+[cv4pve-diag](https://corsinvest.github.io/cv4pve-diag/).
+
+## What it does for you
+
+<FeatureGrid items={features} />
+
+<CtaBand
+  title="Write your first script"
+  text="Install the module from the PowerShell Gallery, connect to any node, list your VMs."
+  proxmoxLogo={proxmoxLogo}
+/>

@@ -1,0 +1,293 @@
+---
+title: Common tasks
+description: Short recipes for everyday Proxmox VE work from PowerShell — guests, nodes, storage, snapshots, backups, tasks, updates, users — each with its output.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Short recipes to copy and adapt. Each one assumes a connection — see
+[Connection](/cv4pve-api-powershell/connection/):
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN
+```
+
+The outputs come from a two-node test cluster, with names and addresses changed.
+
+<Aside>
+The reading recipes were run as shown. The ones that change something — under
+[Act on guests](#act-on-guests) — are shown, not run: try them on a test VM first.
+</Aside>
+
+## Guests
+
+### Running guests per node
+
+```powershell
+Get-PveVm | Where-Object status -eq 'running' | Group-Object node | Select-Object Name, Count
+```
+
+```text
+Name  Count
+----  -----
+pve01     9
+pve02     6
+```
+
+### Guests using the most memory
+
+```powershell
+Get-PveVm | Where-Object status -eq 'running' | Sort-Object mem -Descending |
+    Select-Object -First 3 vmid, name, node,
+        @{ n = 'memGB'; e = { [math]::Round($_.mem / 1GB, 1) } },
+        @{ n = 'maxmemGB'; e = { [math]::Round($_.maxmem / 1GB, 1) } }
+```
+
+```text
+vmid name   node  memGB maxmemGB
+---- ----   ----  ----- --------
+1107 erp01  pve01 12.20    16.00
+1104 gitlab pve01  9.50    10.00
+1106 app02  pve01  5.90     8.00
+```
+
+`mem` and `maxmem` are in bytes: `1GB` is a PowerShell constant for 1073741824.
+
+### Find a VM by its IP address
+
+The IP addresses of a VM are known to the [guest agent](/cv4pve-api-powershell/examples/guest-agent/),
+not to Proxmox VE: ask every running VM that has one.
+
+```powershell
+$ip = '192.0.2.21'
+Get-PveVm | Where-Object { $_.type -eq 'qemu' -and $_.status -eq 'running' } | Where-Object {
+    $r = Get-PveNodesQemuAgentNetworkGetInterfaces -Node $_.node -Vmid $_.vmid
+    $r.IsSuccessStatusCode -and ($r.Response.data.result.'ip-addresses'.'ip-address' -contains $ip)
+} | Select-Object vmid, name, node
+```
+
+```text
+vmid name node
+---- ---- ----
+1006 dc01 pve01
+```
+
+VMs without a running agent answer with an error and are skipped.
+
+### Guests with a tag
+
+```powershell
+Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'production' } | Select-Object vmid, name, tags
+```
+
+Proxmox VE separates tags with `;`. `Get-PveVm -VmIdOrName '@tag-…'` finds only guests with a single tag,
+see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/).
+
+## Nodes
+
+### CPU, memory and uptime
+
+```powershell
+Get-PveNode | Select-Object node, status,
+    @{ n = 'cpu%'; e = { [math]::Round($_.cpu * 100, 1) } },
+    @{ n = 'memGB'; e = { [math]::Round($_.mem / 1GB, 1) } },
+    @{ n = 'maxmemGB'; e = { [math]::Round($_.maxmem / 1GB, 1) } },
+    @{ n = 'uptime'; e = { [timespan]::FromSeconds($_.uptime).ToString('d\d\ hh\h') } }
+```
+
+```text
+node  status cpu%  memGB maxmemGB uptime
+----  ------ ----  ----- -------- ------
+pve02 online 1.50  78.40   125.50 90d 15h
+pve01 online 4.20 188.40   251.50 90d 15h
+```
+
+`cpu` is a fraction of all the cores of the node, `0.042` is 4.2%.
+
+### Pending updates
+
+```powershell
+foreach ($node in Get-PveNode) {
+    $updates = (Get-PveNodesAptUpdate -Node $node.node).Response.data
+    "$($node.node): $(@($updates).Count) updates"
+}
+
+(Get-PveNodesAptUpdate -Node pve01).Response.data | Select-Object Package, OldVersion, Version
+```
+
+```text
+pve02: 8 updates
+pve01: 8 updates
+
+Package  OldVersion      Version
+-------  ----------      -------
+tzdata   2026b-0+deb12u1 2026c-0+deb12u1
+liblzma5 5.4.1-1+deb12u1 5.4.1-1+deb12u2
+xz-utils 5.4.1-1+deb12u1 5.4.1-1+deb12u2
+```
+
+The list is the one of the last `apt update` on the node, the same shown in *Node → Updates*. It needs
+`Sys.Modify` on the node — see [Permissions](/cv4pve-api-powershell/permissions/).
+
+### Cluster and quorum
+
+```powershell
+(Get-PveClusterStatus).Response.data | Select-Object type, name, online, quorate, nodes
+```
+
+```text
+type    name      online quorate nodes
+----    ----      ------ ------- -----
+cluster cluster01              1     2
+node    pve02          1
+node    pve01          1
+```
+
+## Storage
+
+### Space used
+
+```powershell
+(Get-PveClusterResources -Type storage).Response.data | Where-Object maxdisk -gt 0 |
+    Sort-Object storage, node |
+    Select-Object node, storage,
+        @{ n = 'usedGB'; e = { [math]::Round($_.disk / 1GB) } },
+        @{ n = 'sizeGB'; e = { [math]::Round($_.maxdisk / 1GB) } },
+        @{ n = 'used%'; e = { [math]::Round($_.disk / $_.maxdisk * 100, 1) } }
+```
+
+```text
+node  storage   usedGB   sizeGB used%
+----  -------   ------   ------ -----
+pve01 datapool 1016.00  5068.00 20.00
+pve02 datapool 8172.00 31690.00 25.80
+pve01 archive     0.00  4053.00  0.00
+pve02 archive     1.00 23518.00  0.00
+```
+
+A shared storage appears once per node, with the same values.
+
+## Snapshots and backups
+
+### Snapshots older than 30 days
+
+```powershell
+$limit = ConvertTo-PveUnixTime (Get-Date).AddDays(-30)
+foreach ($vm in Get-PveVm) {
+    (Get-PveVmSnapshot -VmIdOrName $vm.vmid).Response.data |
+        Where-Object { $_.name -ne 'current' -and $_.snaptime -lt $limit } |
+        Select-Object @{ n = 'vmid'; e = { $vm.vmid } }, name,
+            @{ n = 'taken'; e = { (ConvertFrom-PveUnixTime $_.snaptime).ToLocalTime() } }
+}
+```
+
+```text
+vmid name          taken
+---- ----          -----
+ 105 before-update 30/05/2025 11:03:10
+```
+
+`current` is not a snapshot: it is the running state of the guest, and has no `snaptime`.
+
+### Guests not in any backup job
+
+```powershell
+(Get-PveClusterBackupInfoNotBackedUp).Response.data
+```
+
+```text
+vmid type name
+---- ---- ----
+ 203 qemu test-debian
+ 204 qemu test-debian2
+9999 qemu vdi-test
+```
+
+These are the guests that no backup job of the datacenter includes — the same list as
+*Datacenter → Backup → Guests without backup job*.
+
+## Tasks
+
+### Failed tasks of the last week
+
+```powershell
+$since = ConvertTo-PveUnixTime (Get-Date).AddDays(-7)
+foreach ($node in Get-PveNode) {
+    (Get-PveNodesTasks -Node $node.node -Errors $true -Since $since -Limit 50).Response.data |
+        Select-Object node, type, id, user, status,
+            @{ n = 'start'; e = { (ConvertFrom-PveUnixTime $_.starttime).ToLocalTime() } }
+}
+```
+
+```text
+node  type       id   user     status                                     start
+----  ----       --   ----     ------                                     -----
+pve01 qmsnapshot 9999 root@pam snapshot name 'before-update' already used 29/09/2026 17:12:32
+pve01 vncproxy   1007 root@pam connection timed out                       28/09/2026 18:25:26
+```
+
+`-Errors $true` keeps only the tasks that failed; `status` is their error. A token sees only its own
+tasks unless it has `Sys.Audit` on the node.
+
+## Users and tokens
+
+### Tokens and when they expire
+
+```powershell
+(Get-PveAccessUsers -Full $true).Response.data | ForEach-Object {
+    $user = $_
+    $_.tokens | Select-Object @{ n = 'user'; e = { $user.userid } }, tokenid, privsep,
+        @{ n = 'expires'; e = { if ($_.expire) { (ConvertFrom-PveUnixTime $_.expire).ToLocalTime() } else { 'never' } } }
+}
+```
+
+```text
+user           tokenid privsep expires
+----           ------- ------- -------
+automation@pve scripts       0 never
+root@pam       admin         0 never
+```
+
+Without `-Full $true` the users come without their tokens.
+
+## Act on guests
+
+These change the cluster: they are shown, not run for this page.
+
+### Start every guest with a tag
+
+```powershell
+Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'lab' -and $_.status -eq 'stopped' } |
+    ForEach-Object { Start-PveVm -VmIdOrName $_.vmid }
+```
+
+One call per guest: [Start-PveVm](/cv4pve-api-powershell/guides/power/) handles one VM at a time.
+
+### Migrate a VM to another node
+
+```powershell
+$vm = Get-PveVm -VmIdOrName web01
+$r = New-PveNodesQemuMigrate -Node $vm.node -Vmid $vm.vmid -Target pve02 -Online $true
+Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 1800000     # up to 30 minutes
+```
+
+`-Online $true` migrates a running VM without stopping it; its disks must be on shared storage, or add
+`-WithLocalDisks $true`. Containers use `New-PveNodesLxcMigrate`, and are restarted instead.
+
+### Delete snapshots older than 30 days
+
+```powershell
+$limit = ConvertTo-PveUnixTime (Get-Date).AddDays(-30)
+foreach ($vm in Get-PveVm) {
+    (Get-PveVmSnapshot -VmIdOrName $vm.vmid).Response.data |
+        Where-Object { $_.name -ne 'current' -and $_.snaptime -lt $limit } |
+        ForEach-Object {
+            $r = Remove-PveVmSnapshot -VmIdOrName $vm.vmid -Snapname $_.name
+            Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 300000 | Out-Null
+        }
+}
+```
+
+Deleting one snapshot at a time, waiting for each, keeps the storage from queueing many deletions at
+once. For snapshots on a schedule with automatic retention, see
+[cv4pve-autosnap](https://corsinvest.github.io/cv4pve-autosnap/).

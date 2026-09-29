@@ -1,0 +1,64 @@
+---
+title: Power and lock
+description: Start, stop, suspend, resume, reset and unlock a VM or container by id or name, without knowing its node or type.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`Start-PveVm`, `Stop-PveVm`, `Suspend-PveVm`, `Resume-PveVm`, `Reset-PveVm` and `Unlock-PveVm` take a
+VM or container by id or name, find its node and type with [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/),
+and call the right endpoint — `qemu` or `lxc`. You do not need to know where it runs.
+
+```powershell
+Start-PveVm -VmIdOrName web01
+Stop-PveVm  -VmIdOrName 100
+```
+
+They return the `PveResponse` of the call, with the [UPID of the task](/cv4pve-api-powershell/concepts/tasks/)
+in `.Response.data`:
+
+```powershell
+$r = Start-PveVm -VmIdOrName web01
+Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 60000
+```
+
+| Function | Does |
+|---|---|
+| `Start-PveVm` | Starts the guest (`status/start`). |
+| `Stop-PveVm` | Stops it at once, like pulling the plug (`status/stop`). |
+| `Suspend-PveVm` | Pauses it (`status/suspend`). |
+| `Resume-PveVm` | Resumes it after a suspend (`status/resume`). |
+| `Reset-PveVm` | Resets a VM (`status/reset`); on a container it throws. |
+| `Unlock-PveVm` | Removes the lock left by an interrupted backup, snapshot or migration (`config`, `delete=lock`). |
+
+## Shut down cleanly
+
+`Stop-PveVm` does not ask the guest to shut down: it stops it at once, and unsaved data in the guest is
+lost. For a clean shutdown use the shutdown endpoint, through its alias:
+
+```powershell
+$vm = Get-PveVm -VmIdOrName web01
+Shutdown-PveQemu -Node $vm.node -Vmid $vm.vmid -Timeout 180 -Forcestop $true
+```
+
+`-Timeout` is how many seconds the guest has to shut down; with `-Forcestop $true` it is stopped if it
+has not finished by then. Containers have `Shutdown-PveLxc`.
+
+## Unlock
+
+A VM stays locked if an operation that locks it — backup, snapshot, migration, clone — is interrupted,
+and Proxmox VE refuses further operations with `VM is locked`. `Unlock-PveVm` removes the lock, like
+`qm unlock` on a node. Do it only when you are sure the operation is no longer running.
+
+On a VM it works only for `root@pam`: it sends `skiplock`, which Proxmox VE reserves to that account.
+On a container `VM.Config.*` privileges are enough — see [Permissions](/cv4pve-api-powershell/permissions/).
+
+<Aside type="caution">
+Pass one VM at a time. When `-VmIdOrName` matches several VMs — a wildcard, a range, a tag — the current
+version does not handle them one by one and may call the wrong endpoint. To act on many VMs, loop:
+
+```powershell
+Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'lab' -and $_.status -eq 'running' } |
+    ForEach-Object { Stop-PveVm -VmIdOrName $_.vmid }
+```
+</Aside>

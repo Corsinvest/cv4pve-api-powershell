@@ -8,7 +8,7 @@ body:
         Thanks for taking the time to fill out this bug report.
 
         **Before submitting**, please check:
-        - [Common Issues & Examples](https://corsinvest.github.io/cv4pve-api-powershell/common-issues.html) - Your issue might already be solved!
+        - [Troubleshooting](https://corsinvest.github.io/cv4pve-api-powershell/troubleshooting/) - Your issue might already be solved!
         - [Existing Issues](https://github.com/Corsinvest/cv4pve-api-powershell/issues) - Search for similar problems
 
         Note that this template is only for bug reports.

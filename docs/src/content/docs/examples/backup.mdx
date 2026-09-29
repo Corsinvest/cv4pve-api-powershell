@@ -1,0 +1,61 @@
+---
+title: Backup and wait
+description: Back up VMs with vzdump from PowerShell, wait for the task, check its result and list the backups on a storage.
+---
+
+A backup is a `vzdump` task on the node that runs the guest. `New-PveNodesVzdump` starts it and returns
+the [UPID](/cv4pve-api-powershell/concepts/tasks/); the script waits and checks the exit status.
+
+```powershell
+# backup.ps1 — back up the guests of a tag, one node at a time, to a storage
+param(
+    [string]$Tag = 'backup-nightly',
+    [string]$Storage = 'pbs01'
+)
+
+Connect-PveCluster -HostsAndPorts pve01, pve02 -ApiToken $env:PVE_API_TOKEN | Out-Null
+
+# vzdump runs on the node of the guest: one call per node, with its guests
+$byNode = Get-PveVm |
+    Where-Object { ($_.tags -split ';') -contains $Tag -and $_.template -ne 1 } |
+    Group-Object node
+
+foreach ($group in $byNode) {
+    $ids = ($group.Group.vmid | Sort-Object) -join ','
+    $r = New-PveNodesVzdump -Node $group.Name -Vmid $ids -Storage $Storage -Mode snapshot -Compress zstd
+    if (-not $r.IsSuccessStatusCode) {
+        Write-Warning "$($group.Name): $($r.ReasonPhrase)"
+        continue
+    }
+
+    $upid = $r.Response.data
+    if (-not (Wait-PveTaskIsFinishedWithProgress -Upid $upid -Timeout (4 * 3600 * 1000) -ProgressActivityText "Backup on $($group.Name)")) {
+        Write-Warning "$($group.Name): backup still running after 4 hours ($upid)"
+        continue
+    }
+
+    $status = (Get-PveNodesTasksStatus -Node $group.Name -Upid $upid).Response.data
+    "$($group.Name): guests $ids — $($status.exitstatus)"
+}
+```
+
+- `-Vmid` takes a comma-separated list: one task backs up all the guests of that node, one after the
+  other.
+- `-Mode snapshot` backs up running guests without stopping them; `suspend` and `stop` are the other
+  modes.
+- A backup of many guests takes long: `-Timeout` is in milliseconds and must cover the whole task.
+- The exit status is `OK` when every guest was backed up; otherwise it holds the error, and the log of
+  the task (`Get-PveNodesTasksLog`) says which guest failed.
+
+## List the backups
+
+```powershell
+(Get-PveNodesStorageContent -Node pve01 -Storage pbs01 -Content backup).Response.data |
+    Sort-Object ctime -Descending |
+    Select-Object vmid, volid, @{ n = 'date'; e = { (ConvertFrom-PveUnixTime $_.ctime).ToLocalTime() } },
+        @{ n = 'sizeGB'; e = { [math]::Round($_.size / 1GB, 1) } }
+```
+
+For backups on a schedule, a backup job of the datacenter (*Datacenter → Backup*, or
+`New-PveClusterBackup`) is usually a better fit than a script: Proxmox VE runs it without a machine
+running PowerShell.

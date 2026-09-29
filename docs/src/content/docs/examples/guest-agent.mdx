@@ -1,0 +1,71 @@
+---
+title: Guest agent
+description: Read IP addresses and OS information from inside a VM and run commands in it through the QEMU guest agent.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+The QEMU guest agent is a service inside the VM that answers Proxmox VE: IP addresses, operating
+system, file systems, commands to run. Through the API you reach it without network access to the VM
+and without its credentials.
+
+It needs the agent installed in the guest (`qemu-guest-agent` on Linux, the VirtIO guest tools on
+Windows) and enabled in the VM options — `Set-PveNodesQemuConfig -Node pve01 -Vmid 100 -Agent 'enabled=1'`,
+then a full stop and start of the VM.
+
+## Read from the guest
+
+```powershell
+$vm = Get-PveVm -VmIdOrName web01
+
+# is the agent answering?
+(New-PveNodesQemuAgentPing -Node $vm.node -Vmid $vm.vmid).IsSuccessStatusCode
+
+# operating system
+(Get-PveNodesQemuAgentGetOsinfo -Node $vm.node -Vmid $vm.vmid).Response.data.result
+
+# IP addresses of every interface
+(Get-PveNodesQemuAgentNetworkGetInterfaces -Node $vm.node -Vmid $vm.vmid).Response.data.result |
+    ForEach-Object {
+        [pscustomobject]@{
+            Interface = $_.name
+            Addresses = ($_.'ip-addresses' | ForEach-Object { "$($_.'ip-address')/$($_.prefix)" }) -join ', '
+        }
+    }
+```
+
+The data of the agent is in `.Response.data.result`, as the agent returns it.
+
+## Run a command
+
+Running a command is two calls: `New-PveNodesQemuAgentExec` starts it and returns its process id,
+`Get-PveNodesQemuAgentExecStatus` reports whether it ended, with its exit code and output.
+
+```powershell
+$vm = Get-PveVm -VmIdOrName web01
+
+$exec = New-PveNodesQemuAgentExec -Node $vm.node -Vmid $vm.vmid -Command @('/usr/bin/df', '-h', '/')
+$processId = $exec.Response.data.pid
+
+do {
+    Start-Sleep -Seconds 1
+    $status = (Get-PveNodesQemuAgentExecStatus -Node $vm.node -Vmid $vm.vmid -Pid_ $processId).Response.data
+} until ($status.exited)
+
+"exit code: $($status.exitcode)"
+$status.'out-data'
+```
+
+`-Command` is the program and its arguments as an array, not a command line: nothing is interpreted
+by a shell. For pipes or redirection, run the shell itself — `@('/bin/sh', '-c', 'df -h | grep sda')`,
+or on Windows `@('powershell.exe', '-NoProfile', '-Command', 'Get-Service | Where Status -eq Running')`.
+
+The parameter is `-Pid_`, not `-Pid`: `$PID` is a PowerShell automatic variable — see
+[Parameters](/cv4pve-api-powershell/concepts/parameters/#renamed-parameters). For the same reason the
+script calls its variable `$processId`.
+
+<Aside type="caution">
+Commands run in the guest as the user of the agent — `root` on Linux, `SYSTEM` on Windows. Whoever may
+call these endpoints (`VM.GuestAgent.Unrestricted` on Proxmox VE 9, `VM.Monitor` on older versions) has
+full control of the guest: give that privilege only to tokens that need it.
+</Aside>

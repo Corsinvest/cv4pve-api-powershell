@@ -1,0 +1,104 @@
+---
+title: Getting started
+description: Install Corsinvest.ProxmoxVE.Api from the PowerShell Gallery, connect to a Proxmox VE cluster and run your first cmdlets.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It runs on your machine —
+a workstation, a management VM, a scheduled job — and talks only to the Proxmox VE REST API on port
+8006. Nothing is installed on the nodes.
+
+## Requirements
+
+- **PowerShell 7** on Windows, Linux or macOS. Windows PowerShell 5.1, the one built into Windows, is
+  not supported: the module uses language features that only exist in PowerShell 7. Install
+  PowerShell 7 from [Microsoft's instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
+  and run it as `pwsh`.
+- Network access to port 8006 of at least one node.
+- A Proxmox VE API token, or a user and password, with the privileges your script needs — see
+  [Permissions](/cv4pve-api-powershell/permissions/).
+
+## Install
+
+<Steps>
+
+1. Install the module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/):
+
+   ```powershell
+   Install-Module -Name Corsinvest.ProxmoxVE.Api -Scope CurrentUser
+   ```
+
+   `-Scope CurrentUser` needs no administrator rights. Update later with `Update-Module Corsinvest.ProxmoxVE.Api`.
+
+2. Load it:
+
+   ```powershell
+   Import-Module Corsinvest.ProxmoxVE.Api
+   ```
+
+   PowerShell also loads it by itself the first time you call one of its cmdlets.
+
+3. Connect to any node of the cluster:
+
+   ```powershell
+   Connect-PveCluster -HostsAndPorts pve01 -ApiToken 'automation@pve!ps=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
+   ```
+
+   With a self-signed certificate, the default of a new Proxmox VE installation, add
+   `-SkipCertificateCheck`. All the ways to connect are in [Connection](/cv4pve-api-powershell/connection/).
+
+4. Run your first cmdlets:
+
+   ```powershell
+   Get-PveVm | Format-Table vmid, name, node, type, status
+
+   (Get-PveVersion).Response.data
+   ```
+
+</Steps>
+
+`Get-PveVm` is one of the functions written for convenience: it returns the VMs and containers
+themselves. The generated cmdlets, like `Get-PveVersion`, return a `PveResponse` with the data in
+`.Response.data` — [Results](/cv4pve-api-powershell/concepts/results/) explains why.
+
+## In a script: `using module`
+
+The module defines two classes, `PveTicket` and `PveResponse`. `Import-Module` loads the cmdlets but
+not the classes, so a script that names a type directly — `[PveResponse]$r = …` — fails with
+`Unable to find type [PveResponse]`. Put `using module` at the top of the script instead:
+
+```powershell
+using module Corsinvest.ProxmoxVE.Api
+
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN
+[PveResponse]$version = Get-PveVersion
+```
+
+`using module` must be the first statement of the script (only comments and `#Requires` may come
+before it), so it does not work typed line by line at the prompt. Scripts that only call cmdlets need
+neither: `Import-Module`, or nothing at all, is enough.
+
+## Find the cmdlet you need
+
+The generated cmdlets follow the paths of the Proxmox VE API: `GET /nodes/{node}/qemu/{vmid}/config`
+is `Get-PveNodesQemuConfig`, `POST /nodes/{node}/qemu/{vmid}/snapshot` is `New-PveNodesQemuSnapshot`.
+The rule is in [Raw API](/cv4pve-api-powershell/concepts/raw-api/#from-endpoint-to-cmdlet). From the prompt:
+
+```powershell
+# every cmdlet about QEMU snapshots
+Get-Command -Module Corsinvest.ProxmoxVE.Api -Name *Qemu*Snapshot*
+
+# its description and parameters
+Get-Help New-PveNodesQemuSnapshot -Full
+```
+
+The [cmdlet reference](/cv4pve-api-powershell/reference/) has the same information, grouped like the
+API, with the endpoint of every cmdlet.
+
+## Next
+
+- [Permissions](/cv4pve-api-powershell/permissions/): the user, the token and the privileges a script needs.
+- [Connection](/cv4pve-api-powershell/connection/): API token or password, several nodes, certificates, several clusters.
+- [Concepts](/cv4pve-api-powershell/concepts/results/): results, parameters, tasks, errors.
+- [Common tasks](/cv4pve-api-powershell/examples/common-tasks/): short recipes with their output, and complete scripts in [Examples](/cv4pve-api-powershell/examples/inventory/).
