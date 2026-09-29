@@ -1,0 +1,18 @@
+{
+  "name": "cv4pve-api-powershell-docs",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "reference": "pwsh -NoProfile -File scripts/Update-CmdletReference.ps1",
+    "predev": "npm run reference",
+    "dev": "astro dev",
+    "prebuild": "npm run reference",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "devDependencies": {
+    "@astrojs/starlight": "^0.42.4",
+    "@corsinvest/cv4pve-docs-theme": "github:Corsinvest/cv4pve-docs-theme#semver:^2.0.0",
+    "astro": "^7.3.5"
+  }
+}

@@ -1,0 +1,29 @@
+---
+title: SPICE console
+description: Open the SPICE console of a VM from PowerShell with Invoke-PveSpice and virt-viewer.
+---
+
+`Invoke-PveSpice` opens the SPICE console of a VM in `remote-viewer`, the SPICE client of
+[virt-viewer](https://virt-manager.org/), without going through the web interface:
+
+```powershell
+# Windows
+Invoke-PveSpice -VmIdOrName web01 -Viewer 'C:\Program Files\VirtViewer v11.0-256\bin\remote-viewer.exe'
+
+# Linux
+Invoke-PveSpice -VmIdOrName web01 -Viewer /usr/bin/remote-viewer
+```
+
+It finds the VM with [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/), asks Proxmox VE for a
+SPICE connection file (`POST /nodes/{node}/qemu/{vmid}/spiceproxy`), saves it to a temporary file and
+starts the viewer on it. `Show-PveSpice` is an alias.
+
+Requirements:
+
+- A VM, not a container, with a SPICE display: *Display* set to *SPICE* (`qxl`) in its hardware.
+- `remote-viewer` installed on your machine; `-Viewer` is its full path.
+- The node you connected to is used as SPICE proxy, so your machine must reach it on port 3128.
+- The privilege `VM.Console` on the VM.
+
+The ticket in the connection file is valid only for a short time: run `Invoke-PveSpice` again for each
+session.

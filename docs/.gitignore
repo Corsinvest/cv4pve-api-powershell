@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+
+# Cmdlet reference: generated from the module source by scripts/Update-CmdletReference.ps1 (npm run reference)
+src/content/docs/reference/
+src/data/cmdlets.json

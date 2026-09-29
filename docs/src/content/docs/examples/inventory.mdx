@@ -1,0 +1,72 @@
+---
+title: Inventory to CSV
+description: A read-only script that exports every VM and container with its node, resources and disks to a CSV file, and the nodes and storage beside it.
+---
+
+A script that only reads: it lists every VM and container of the cluster with CPU, memory, disks and
+network, and writes them to CSV files you can open in Excel. It needs only the `PVEAuditor` role — see
+[Permissions](/cv4pve-api-powershell/permissions/).
+
+```powershell
+# inventory.ps1 — every guest of the cluster, with its resources, in guests.csv
+param(
+    [string[]]$HostsAndPorts = @('pve01'),
+    [string]$OutputFolder = '.'
+)
+
+Connect-PveCluster -HostsAndPorts $HostsAndPorts -ApiToken $env:PVE_API_TOKEN | Out-Null
+
+$guests = foreach ($vm in Get-PveVm | Sort-Object vmid) {
+    # the configuration endpoint differs for VMs (qemu) and containers (lxc)
+    $r = $vm.type -eq 'qemu' ? ($vm | Get-PveNodesQemuConfig) : ($vm | Get-PveNodesLxcConfig)
+    $config = $r.Response.data
+
+    # disks: scsi0, virtio0, sata0, ide0 for VMs; rootfs, mp0 for containers
+    $disks = $config.PSObject.Properties |
+        Where-Object { $_.Name -match '^(scsi|virtio|sata|ide|efidisk|tpmstate|mp)\d+$|^rootfs$' -and $_.Value -notmatch 'media=cdrom' } |
+        ForEach-Object { "$($_.Name)=$($_.Value)" }
+
+    [pscustomobject]@{
+        VmId     = $vm.vmid
+        Name     = $vm.name
+        Type     = $vm.type
+        Node     = $vm.node
+        Status   = $vm.status
+        Pool     = $vm.pool
+        Tags     = $vm.tags
+        Template = $vm.template -eq 1
+        Cores    = $config.cores
+        MemoryMB = $config.memory
+        Disks    = $disks -join '; '
+        Networks = ($config.PSObject.Properties | Where-Object Name -match '^net\d+$' | ForEach-Object Value) -join '; '
+    }
+}
+
+$guests | Export-Csv (Join-Path $OutputFolder 'guests.csv') -NoTypeInformation
+
+Get-PveNode | Select-Object node, status, maxcpu, @{ n = 'maxmemGB'; e = { [math]::Round($_.maxmem / 1GB, 1) } } |
+    Export-Csv (Join-Path $OutputFolder 'nodes.csv') -NoTypeInformation
+
+(Get-PveClusterResources -Type storage).Response.data |
+    Select-Object node, storage, plugintype, shared, status,
+        @{ n = 'sizeGB'; e = { [math]::Round($_.maxdisk / 1GB, 1) } },
+        @{ n = 'usedGB'; e = { [math]::Round($_.disk / 1GB, 1) } } |
+    Export-Csv (Join-Path $OutputFolder 'storage.csv') -NoTypeInformation
+```
+
+```powershell
+$env:PVE_API_TOKEN = 'automation@pve!ps=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
+./inventory.ps1 -HostsAndPorts pve01, pve02 -OutputFolder C:\Reports
+```
+
+What the script relies on:
+
+- [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/) returns every guest with its node, so the
+  configuration cmdlets get `-Node` and `-Vmid` from the pipeline.
+- VMs and containers have different endpoints: the script picks one by `type`.
+- The configuration is one object with a property per key of the configuration file, so disks and
+  network interfaces are the properties whose name matches `scsi0`, `net0`…
+- A guest the token may not read has no configuration: its `Cores`, `MemoryMB` and `Disks` stay empty.
+
+For a complete inventory — hardware, snapshots, backups, firewall, users — in Excel or HTML, without
+writing a script, see [cv4pve-report](https://corsinvest.github.io/cv4pve-report/).

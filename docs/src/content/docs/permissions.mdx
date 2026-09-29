@@ -1,0 +1,72 @@
+---
+title: Permissions
+description: The Proxmox VE user, API token and privileges a PowerShell script needs — per function, and why a read-only token sees fewer backups than expected.
+---
+
+The module works through the API, so a script can do exactly what its account is allowed to do, no
+more. Use a dedicated user with an API token rather than `root@pam`, and give it only the privileges
+the script needs.
+
+## User and token
+
+Create a [user](https://pve.proxmox.com/pve-docs/chapter-pveum.html#pveum_users) or an [API token](https://pve.proxmox.com/pve-docs/chapter-pveum.html#pveum_tokens) and [assign it](https://pve.proxmox.com/pve-docs/chapter-pveum.html#pveum_permission_management) a role with the privileges below, on `/` or on the smallest path that covers what the script touches (`/vms/100`, `/pool/web`, `/storage/local`).
+
+:::caution[Tokens with privilege separation]
+A token with privilege separation (the default in the web UI) does **not** inherit the user's
+permissions: grant the role to the token too, or the script sees an empty cluster.
+:::
+
+## Privileges
+
+The built-in `PVEAuditor` role covers the `*.Audit` privileges: enough for scripts that only read. For
+anything else, create a role with just the privileges the script needs from the table.
+
+| Privilege | On | Used for |
+|---|---|---|
+| `VM.Audit` | `/vms` | Reading VMs and containers: `Get-PveVm`, configuration, snapshots |
+| `Sys.Audit` | `/nodes` | Reading nodes, and tasks started by other users |
+| `Datastore.Audit` | `/storage` | Reading storage and its content |
+| `VM.PowerMgmt` | `/vms` | Start, stop, shut down, suspend, resume, reset |
+| `VM.Snapshot` | `/vms` | Taking, deleting and rolling back snapshots |
+| `VM.Snapshot.Rollback` | `/vms` | Rolling back only, without taking snapshots |
+| `VM.Config.*` | `/vms` | Changing the configuration; `Unlock-PveVm` on containers |
+| `VM.Console` | `/vms` | `Invoke-PveSpice` |
+| `VM.GuestAgent.Audit` | `/vms` | Reading from the guest agent: OS, IP addresses |
+| `VM.GuestAgent.Unrestricted` | `/vms` | Running commands in the guest |
+| `VM.Backup` | `/vms` | Backups, with `Datastore.AllocateSpace` on the storage |
+| `VM.Allocate` | `/vms` or `/pool` | Creating VMs and containers, with `Datastore.AllocateSpace` and `SDN.Use` on the bridge |
+| `VM.Clone` | `/vms` | Cloning, with `VM.Allocate` on the new id |
+
+Without a privilege a call that reads a list returns the list without what you may not see; any other
+call returns a response with status code 403 — see [below](#how-missing-privileges-are-reported).
+`Get-PveVersion`, `Get-PveClusterNextid` and `/cluster/resources` (behind `Get-PveVm` and `Get-PveNode`)
+need no privilege: they answer every authenticated account, with only what it may see.
+
+On Proxmox VE 8 the `VM.GuestAgent.*` privileges do not exist: the guest agent endpoints need
+`VM.Monitor`. The exact privilege of every endpoint is in the
+[Proxmox VE API viewer](https://pve.proxmox.com/pve-docs/api-viewer/), linked from each page of the
+[cmdlet reference](/cv4pve-api-powershell/reference/).
+
+:::caution[Only root@pam: `Unlock-PveVm` on VMs]
+On a VM, `Unlock-PveVm` sends `skiplock`, which Proxmox VE allows only to `root@pam`: with any other
+account or token it fails. On containers `VM.Config.*` is enough. A few other parameters are also
+reserved to `root@pam`, among them `-Skiplock` of the power endpoints and `-Dumpdir`, `-Script` and
+`-JobId` of `New-PveNodesVzdump`: the API viewer says so in their description.
+:::
+
+:::caution[PVEAuditor alone cannot list backups]
+Proxmox VE lists a backup volume only to a caller that has **both** `Datastore.AllocateSpace` on the
+storage and `VM.Backup` on the guest (see [`check_volume_access`](https://github.com/proxmox/pve-storage/blob/master/src/PVE/Storage.pm)).
+It does not return an error: `Get-PveNodesStorageContent -Content backup` returns the list without those
+volumes, so a read-only token sees no backups.
+:::
+
+## How missing privileges are reported
+
+Proxmox VE answers a request the caller is only partly entitled to by *filtering the response*, not
+by failing it. `/cluster/resources` drops the guests, storages and pools you cannot audit, a node's VM
+list drops the VMs without `VM.Audit`, a storage listing drops the volumes you cannot access. All return
+`200 OK`: `Get-PveVm` returning nothing may mean a token without privileges, not an empty cluster.
+
+A request that is refused outright returns a `PveResponse` with `StatusCode` `403` and the reason in
+`ReasonPhrase`, without throwing — see [Errors](/cv4pve-api-powershell/concepts/errors/).

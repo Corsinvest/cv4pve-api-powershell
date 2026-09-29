@@ -1,0 +1,78 @@
+---
+title: Results
+description: What the cmdlets return — PveResponse and its data, the objects of Get-PveVm, dates in Unix time — and how to use them in the pipeline.
+---
+
+## `PveResponse`
+
+Every generated cmdlet returns a `PveResponse`. It holds the reply of Proxmox VE and, beside it, how
+the call went:
+
+| Property | Content |
+|---|---|
+| `Response` | The reply of Proxmox VE, converted from JSON. The data is in `Response.data`. |
+| `IsSuccessStatusCode` | `$true` if the call succeeded. |
+| `StatusCode` | HTTP status code: `200`, `400`, `401`, `403`, `500`… `-1` if the server could not be reached. |
+| `ReasonPhrase` | The reason given by the server, or the error of the connection. |
+| `RequestResource` | The API path that was called, e.g. `/nodes/pve01/qemu/100/config`. |
+| `Method` | HTTP method: `Get`, `Put`, `Post`, `Delete`. |
+| `Parameters` | The parameters sent. |
+| `ResponseType` | Format requested, `json` unless you ask [Invoke-PveRestApi](/cv4pve-api-powershell/concepts/raw-api/) for another. |
+
+The cmdlets return this wrapper instead of the bare data so that a failed call does not throw: the
+script decides what a failure means — see [Errors](/cv4pve-api-powershell/concepts/errors/).
+
+## Getting the data
+
+```powershell
+$r = Get-PveNodesQemuConfig -Node pve01 -Vmid 100
+
+$r.Response.data            # the configuration of VM 100
+$r.ToData()                 # the same
+$r.Response.data.memory     # one value
+```
+
+A list — nodes, VMs, snapshots, tasks — is an array in `Response.data`: pipe it on.
+
+```powershell
+(Get-PveNodesQemu -Node pve01).Response.data |
+    Where-Object status -eq 'running' |
+    Sort-Object name |
+    Format-Table vmid, name, cpus, maxmem
+```
+
+`PveResponse` also has a few shortcuts on its data:
+
+| Method | Does |
+|---|---|
+| `ToData()` | Returns `Response.data`. |
+| `ToTable()` | Formats `Response.data` as a table with every property. |
+| `ToCsv('file.csv')` | Writes `Response.data` to a CSV file with `Export-Csv`. |
+| `ToGridView()` | Shows `Response.data` in `Out-GridView`, which PowerShell 7 has on Windows only. |
+| `ResponseInError()` | `$true` if the reply contains an `error` property. |
+
+## Functions that return the objects
+
+The functions written for convenience return the objects themselves, not a `PveResponse`:
+[Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/) and `Get-PveNode` return the VMs, containers
+and nodes, `Get-PveTaskIsRunning` and the `Wait-` functions return `$true` or `$false`. The page of
+each function in the [reference](/cv4pve-api-powershell/reference/module/) shows its output.
+
+The objects of `Get-PveVm` have `node` and `vmid` properties, which the generated cmdlets bind by
+name — so they pipe straight in:
+
+```powershell
+Get-PveVm -VmIdOrName 100 | Get-PveNodesQemuConfig
+```
+
+## Dates
+
+Proxmox VE gives times as Unix time, seconds since 1970-01-01 UTC: `uptime` is in seconds, `snaptime`,
+`starttime` and `ctime` are Unix times. Two functions convert them:
+
+```powershell
+ConvertFrom-PveUnixTime 1767225600          # [DateTime], in UTC
+ConvertTo-PveUnixTime (Get-Date).AddDays(-7) # seconds, for parameters such as -Since
+```
+
+`ConvertFrom-PveUnixTime` returns the time in UTC; add `.ToLocalTime()` for your time zone.

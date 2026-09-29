@@ -1,0 +1,66 @@
+---
+title: Snapshots
+description: List, take, roll back and delete snapshots of a VM or container by id or name.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+`Get-PveVmSnapshot`, `New-PveVmSnapshot`, `Undo-PveVmSnapshot` and `Remove-PveVmSnapshot` work on a VM
+or container by id or name, like the [power functions](/cv4pve-api-powershell/guides/power/): they find
+its node and type and call the `qemu` or `lxc` snapshot endpoint.
+
+```powershell
+# list
+(Get-PveVmSnapshot -VmIdOrName web01).Response.data |
+    Format-Table name, description, @{ n = 'taken'; e = { if ($_.snaptime) { ConvertFrom-PveUnixTime $_.snaptime } } }
+
+# take
+New-PveVmSnapshot -VmIdOrName web01 -Snapname before-update -Description 'Before the monthly update'
+
+# roll back
+Undo-PveVmSnapshot -VmIdOrName web01 -Snapname before-update
+
+# delete
+Remove-PveVmSnapshot -VmIdOrName web01 -Snapname before-update
+```
+
+The list includes an entry named `current`, the running state of the VM, without `snaptime`.
+
+Taking, rolling back and deleting are [tasks](/cv4pve-api-powershell/concepts/tasks/): the functions
+return the UPID in `.Response.data`, and the next step of the script should wait for it.
+
+## Memory state
+
+For a VM, `-Vmstate` also saves the memory, so a rollback resumes the VM where it was instead of
+booting it:
+
+```powershell
+New-PveVmSnapshot -VmIdOrName web01 -Snapname before-update -Vmstate
+```
+
+Here `-Vmstate` is a switch. Containers have no memory state: the switch is ignored for them.
+
+## Snapshot before an update
+
+```powershell
+$vms = Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'update-tonight' -and $_.template -ne 1 }
+
+foreach ($vm in $vms) {
+    $r = New-PveVmSnapshot -VmIdOrName $vm.vmid -Snapname "pre-$(Get-Date -Format yyyyMMdd)" `
+        -Description 'Before the monthly update'
+    if (-not $r.IsSuccessStatusCode) {
+        Write-Warning "$($vm.name): $($r.ReasonPhrase)"
+        continue
+    }
+    Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 300000 | Out-Null
+}
+```
+
+A snapshot name must start with a letter and may contain letters, digits, `-` and `_`: the date goes
+after a prefix, as above.
+
+<Aside>
+Snapshots depend on the storage: a VM with a disk on storage that does not support snapshots cannot
+have one, and the call returns an error. For snapshots on a schedule, with retention, see
+[cv4pve-autosnap](https://corsinvest.github.io/cv4pve-autosnap/).
+</Aside>

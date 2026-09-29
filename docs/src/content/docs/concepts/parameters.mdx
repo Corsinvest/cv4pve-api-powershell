@@ -1,0 +1,93 @@
+---
+title: Parameters
+description: How the parameters of the generated cmdlets map to the Proxmox VE API — booleans, indexed devices such as net0 and scsi0, passwords, allowed values, renamed parameters and the pipeline.
+---
+
+The generated cmdlets have one parameter per API parameter, with the API name in PascalCase and without
+`-` or `_`: `max-workers` is `-MaxWorkers`, `remove_job` is `-RemoveJob`. The type comes from the API.
+Only the parameters you pass are sent, so everything you leave out keeps the Proxmox VE default.
+
+## Booleans
+
+API booleans are `[bool]` parameters, not switches, so they take a value. The module sends `1` or `0`.
+
+```powershell
+New-PveNodesQemuSnapshot -Node pve01 -Vmid 100 -Snapname before-update -Vmstate $true
+Set-PveNodesQemuConfig   -Node pve01 -Vmid 100 -Onboot $false
+```
+
+`-Vmstate` alone fails with `Missing an argument for parameter 'Vmstate'`. A switch could not say
+*set it to false*, which the API often needs — to turn off `onboot`, for one.
+
+## Indexed devices: `net0`, `scsi0`, `ide2`…
+
+The API numbers devices of the same kind: `net0`, `net1`, `scsi0`, `ide2`, `hostpci0`, `mp0`… The
+cmdlets have one parameter per kind, ending in `N`, that takes a hashtable **number → value**:
+
+```powershell
+$net  = @{ 0 = 'virtio,bridge=vmbr0,firewall=1'; 1 = 'virtio,bridge=vmbr1' }
+$scsi = @{ 0 = 'local-lvm:32,discard=on,iothread=1' }
+$ide  = @{ 2 = 'local:iso/debian-13.1.0-amd64-netinst.iso,media=cdrom' }
+
+New-PveNodesQemu -Node pve01 -Vmid 120 -Name web01 -Memory 4096 -Cores 2 `
+    -Scsihw virtio-scsi-single -ScsiN $scsi -IdeN $ide -NetN $net
+```
+
+`-NetN $net` sends `net0` and `net1`. The value is the string the API expects for that device — the
+same you would write in the VM configuration file; the reference page of the cmdlet links to the API
+viewer, which describes its format. Pass the value as it is: the module encodes it.
+
+## Passwords
+
+API parameters with *password* in the name are `[SecureString]`, so the password does not travel as
+plain text through your script and its history:
+
+```powershell
+New-PveAccessUsers -Userid 'alice@pve' -Password (Read-Host -AsSecureString 'Password')
+```
+
+## Allowed values
+
+When the API lists the allowed values of a parameter, the cmdlet validates them before the call and
+Tab completes them:
+
+```powershell
+Get-PveClusterResources -Type <Tab>      # vm, storage, node, sdn
+```
+
+## Renamed parameters
+
+Some API names clash with PowerShell and get a suffix:
+
+- `args`, `pid`, `verbose` and `debug` are reserved in PowerShell and get `_`: `-Args_`, `-Pid_`,
+  `-Verbose_`, `-Debug_`.
+- Two API names that differ only by `-` or `_`, like `max-workers` and the older `maxworkers`, would
+  give the same PowerShell name: the second gets a number, `-Maxworkers2`.
+
+```powershell
+Get-PveNodesQemuAgentExecStatus -Node pve01 -Vmid 100 -Pid_ 4242
+```
+
+The reference page of each cmdlet shows its real parameter names.
+
+## Required parameters
+
+Parameters required by the API are mandatory: PowerShell asks for them if you leave them out. Path
+parameters — `{node}`, `{vmid}`, `{storage}` in the endpoint — are always required.
+
+## The pipeline
+
+Every parameter of the generated cmdlets binds **by property name** from the pipeline. An object with a
+`node` and a `vmid` property fills `-Node` and `-Vmid`; `-PveTicket` is filled the same way. That is
+what makes `Get-PveVm` useful in front of them:
+
+```powershell
+# the configuration of every running VM of pool "web"
+Get-PveVm -VmIdOrName '@pool-web' |
+    Where-Object { $_.type -eq 'qemu' -and $_.status -eq 'running' } |
+    Get-PveNodesQemuConfig |
+    ForEach-Object { $_.Response.data }
+```
+
+Mind the type: a container piped into a `Qemu` cmdlet calls the QEMU endpoint with its id and fails.
+Filter on `type` (`qemu` or `lxc`) first, as above.

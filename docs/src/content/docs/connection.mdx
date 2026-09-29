@@ -1,0 +1,117 @@
+---
+title: Connection
+description: Connect-PveCluster with an API token or a user and password, several nodes, certificates, two-factor authentication, several clusters, and the privileges a script needs.
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Every script starts with `Connect-PveCluster`. It picks a reachable node, logs in and keeps the
+connection for the cmdlets that follow.
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken 'automation@pve!ps=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
+```
+
+## API token or user and password
+
+### API token — for scripts
+
+An [API token](https://pve.proxmox.com/pve-docs/chapter-pveum.html#pveum_tokens) belongs to a user and
+is written `USER@REALM!TOKENID=SECRET`. Pass it with `-ApiToken`:
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN
+```
+
+A token is the right choice for anything that runs unattended: it needs no password, it is not asked
+for a second factor, you can give it fewer privileges than its user, and you can revoke it without
+touching the user. Keep it out of the script — an environment variable, a secret store, the
+[SecretManagement](https://learn.microsoft.com/powershell/utility-modules/secretmanagement/overview) module.
+
+With a token `Connect-PveCluster` does not contact the server: it stores the token, which is sent with
+every call. A wrong token shows up at the first cmdlet, as a response with status code 401 — see
+[Errors](/cv4pve-api-powershell/concepts/errors/).
+
+### User and password — interactive work
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -Credentials (Get-Credential -UserName 'root@pam')
+```
+
+Without `-Credentials` and without `-ApiToken`, `Connect-PveCluster` asks for them with
+`Get-Credential`. A user name without a realm gets `@pam`: `root` is `root@pam`. For a Proxmox VE user
+write the realm, `alice@pve`.
+
+The module logs in right away (`POST /access/ticket`) and keeps the ticket Proxmox VE returns. A wrong
+password makes `Connect-PveCluster` throw an exception with the reason given by the server.
+
+Proxmox VE tickets last two hours and the module does not renew them: a script that runs longer must
+call `Connect-PveCluster` again, or use a token.
+
+### Two-factor authentication
+
+If the user has a second factor, pass the one-time code with `-Otp`:
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -Credentials (Get-Credential -UserName 'alice@pve') -Otp 123456
+```
+
+When Proxmox VE asks for a second factor that was not given, `Connect-PveCluster` throws
+`Couldn't authenticate user: missing Two Factor Authentication (TFA)`. For scripts use an API token:
+tokens are not subject to two-factor authentication.
+
+## Several nodes
+
+`-HostsAndPorts` takes a list. The module tries the nodes in order and uses the first one whose port
+answers within 2 seconds, so a script keeps working while a node is down:
+
+```powershell
+Connect-PveCluster -HostsAndPorts 'pve01', 'pve02:8006', '10.0.0.13' -ApiToken $env:PVE_API_TOKEN
+```
+
+Write each node as a separate item, as above, with `:port` only when it is not 8006. If no node answers,
+`Connect-PveCluster` throws `Host not valid`. Any node gives access to the whole cluster.
+
+<Aside type="caution">
+The check only opens a TCP connection: a node that accepts connections but whose API does not answer
+is still chosen.
+</Aside>
+
+## Certificates
+
+The certificate of the node is verified. A new Proxmox VE installation uses a self-signed certificate,
+which fails that check: install a trusted certificate on the nodes (ACME/Let's Encrypt is built into
+Proxmox VE), or turn the check off with `-SkipCertificateCheck`:
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN -SkipCertificateCheck
+```
+
+Without the check the connection is still encrypted, but nothing proves you are talking to your node.
+Use it on networks you trust.
+
+## The last connection
+
+`Connect-PveCluster` returns the connection, a `PveTicket` object, and also stores it in the global
+variable `$PveTicketLast`. Every cmdlet has a `-PveTicket` parameter; when you leave it out, the cmdlet
+uses `$PveTicketLast`. That is why the examples in this site never pass it.
+
+Without any connection a cmdlet fails with `No PveTicket - Cluster Connect missing?`.
+
+## Several clusters
+
+Keep each connection in a variable and pass it with `-PveTicket`:
+
+```powershell
+$prod = Connect-PveCluster -HostsAndPorts prod-pve01 -ApiToken $env:PVE_PROD_TOKEN
+$lab  = Connect-PveCluster -HostsAndPorts lab-pve01  -ApiToken $env:PVE_LAB_TOKEN -SkipRefreshPveTicketLast
+
+Get-PveVm -PveTicket $prod | Measure-Object
+Get-PveVm -PveTicket $lab  | Measure-Object
+```
+
+`-SkipRefreshPveTicketLast` leaves `$PveTicketLast` as it is, so cmdlets without `-PveTicket` keep
+using the first cluster. The first connection of a session always fills `$PveTicketLast`, with or
+without the switch.
+
+What the token or user may do — and what a script needs — is in [Permissions](/cv4pve-api-powershell/permissions/).
