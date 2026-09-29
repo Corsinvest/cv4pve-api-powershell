@@ -272,7 +272,7 @@ Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 1800000     # up to 30 minu
 ```
 
 `-Online $true` migrates a running VM without stopping it; its disks must be on shared storage, or add
-`-WithLocalDisks $true`. Containers use `New-PveNodesLxcMigrate`, and are restarted instead.
+`-WithLocalDisks $true`. Containers use `New-PveNodesLxcMigrate -Target pve02 -Restart $true`: a running container is stopped, moved and started again on the target.
 
 ### Delete snapshots older than 30 days
 

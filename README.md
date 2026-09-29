@@ -92,6 +92,7 @@ pve01 online 4.20
 |---|---|
 | [Getting started](https://corsinvest.github.io/cv4pve-api-powershell/getting-started/) | Install, connect, first cmdlets |
 | [Connection](https://corsinvest.github.io/cv4pve-api-powershell/connection/) | API token or password, several nodes, certificates, permissions |
+| [Coming from PowerCLI](https://corsinvest.github.io/cv4pve-api-powershell/coming-from-powercli/) | Each PowerCLI cmdlet mapped to its equivalent, and what works differently |
 | [Concepts](https://corsinvest.github.io/cv4pve-api-powershell/concepts/results/) | Results, parameters, tasks, errors, raw API calls |
 | [Guides](https://corsinvest.github.io/cv4pve-api-powershell/guides/finding-vms/) | VMs by id or name, power, snapshots, SPICE |
 | [Examples](https://corsinvest.github.io/cv4pve-api-powershell/examples/common-tasks/) | Common tasks with their output, inventory to CSV, creating VMs, guest agent, backups |
