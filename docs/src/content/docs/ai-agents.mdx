@@ -1,0 +1,31 @@
+---
+title: AI assistants
+description: Let an AI assistant such as Claude Code or Codex read and operate a Proxmox VE cluster from PowerShell with this module, with the cv4pve-api-powershell skill and a token of its own.
+---
+
+import AiSkill from '@corsinvest/cv4pve-docs-theme/components/AiSkill.astro';
+
+An AI assistant that can run PowerShell 7 can use this module to answer questions about a Proxmox VE
+cluster and to write or run scripts for it: it finds the cmdlet it needs with `Get-Command` and
+`Get-Help`, reads the data from `.Response.data`, and checks every response. Every change goes to the
+cluster at once, so the skill makes the assistant show you what it would do first.
+
+## The cv4pve-api-powershell skill
+
+<AiSkill tool="cv4pve-api-powershell">
+
+- connect in every command with the token in `$env:PVE_API_TOKEN`, and never print it;
+- check `IsSuccessStatusCode` of every response: a failed call does not throw;
+- before any change, run the same command with [`-WhatIf`](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm),
+  show you the `What if:` lines, and run it only after you agree.
+
+</AiSkill>
+
+## Give it a token of its own
+
+The skill tells the assistant what to do; the token decides what it can do. The assistant can call any
+endpoint, including `Invoke-PveRestApi`, which has no `-WhatIf`, and the skill cannot prevent that.
+Give it a token of its own: `PVEAuditor` if it only reads, otherwise only the privileges and the paths the
+task needs (`/vms/100`, `/pool/web`) — see [Permissions](/cv4pve-api-powershell/permissions/#privileges).
+Set it in `$env:PVE_API_TOKEN` before starting the assistant, as for any [script](/cv4pve-api-powershell/connection/),
+so the token stays out of the conversation.
