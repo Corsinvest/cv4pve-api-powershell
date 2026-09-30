@@ -78,11 +78,10 @@ function Write-Utf8File([string]$Path, [string[]]$Lines) {
     [IO.File]::WriteAllText($Path, (($Lines -join "`n").TrimEnd() + "`n"), [Text.UTF8Encoding]::new($false))
 }
 
-# The generator writes ':' as "':'" and '[' as '\[' in the comment-based help; undo it.
+# Help text as one line; the generator writes '--' for an empty description.
 function Get-CleanText([string]$Text) {
     if ([string]::IsNullOrWhiteSpace($Text)) { return '' }
-    $t = $Text.Replace("':'", ':').Replace('\[', '[')
-    $t = ($t -split "`r?`n" | ForEach-Object { $_.Trim() }) -join ' '
+    $t = ($Text -split "`r?`n" | ForEach-Object { $_.Trim() }) -join ' '
     $t = $t -replace ' {2,}', ' '
     if ($t.Trim() -eq '--') { return '' }
     return $t.Trim()
@@ -149,19 +148,16 @@ function Get-CommentHelp([string]$FunctionText) {
 function Format-CodeList([string[]]$Items) { return ($Items | ForEach-Object { '`' + $_ + '`' }) -join ', ' }
 
 # '$FabricId' -> '{fabric_id}': the generator title-cases the API name and drops '_' and '-', so an
-# inner capital marks a separator: '_' for every path parameter of the current module (checked
-# against the Proxmox VE apidoc.js).
-# The generator leaves API names with '-' unreplaced, as literal placeholders with '_'
-# ("/cluster/sdn/route-maps/entries/{route_map_id}"): shown here with the API's own name.
-$literalPlaceholders = @{ '{route_map_id}' = '{route-map-id}'; '{pci_id_or_mapping}' = '{pci-id-or-mapping}' }
+# inner capital marks a separator. It is '_' except for the names below (checked against the
+# Proxmox VE apidoc.js: add a name here when a new path parameter uses '-').
+$dashedPathParameters = @{ PciIdOrMapping = 'pci-id-or-mapping'; RouteMapId = 'route-map-id' }
 function ConvertTo-ApiPath([string]$Resource) {
-    $path = [regex]::Replace($Resource, '\$([A-Za-z0-9_]+)', {
+    return [regex]::Replace($Resource, '\$([A-Za-z0-9_]+)', {
             param($m)
             $n = $m.Groups[1].Value.TrimEnd('_')
+            if ($dashedPathParameters.ContainsKey($n)) { return '{' + $dashedPathParameters[$n] + '}' }
             '{' + ([regex]::Replace($n, '(?<=[a-z0-9])([A-Z])', '_$1')).ToLowerInvariant() + '}'
         })
-    foreach ($k in $literalPlaceholders.Keys) { $path = $path.Replace($k, $literalPlaceholders[$k]) }
-    return $path
 }
 #endregion
 

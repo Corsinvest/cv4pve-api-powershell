@@ -872,7 +872,7 @@ VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...)
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -884,8 +884,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { Set-PveNodesQemuConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' -Skiplock:$true }
-            ElseIf ($vm.type -eq 'lxc') { Set-PveNodesLxcConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Unlock")) { continue }
+            if ($vm.type -eq 'qemu') { Set-PveNodesQemuConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' -Skiplock:$true -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { Set-PveNodesLxcConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' -Confirm:$false }
         }
     }
 }
@@ -903,7 +904,7 @@ VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...)
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -915,8 +916,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
-            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Start")) { continue }
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket -Confirm:$false }
         }
     }
 }
@@ -941,7 +943,7 @@ Stop-PveGuest -VmIdOrName web01 -Shutdown -Timeout 60 -ForceStop
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding(DefaultParameterSetName = 'Stop')]
+    [CmdletBinding(DefaultParameterSetName = 'Stop', SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -966,13 +968,14 @@ PveResponse. Return response, one per VM/CT.
         if ($ForceStop) { $options['Forcestop'] = $true }
 
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "$($Shutdown ? 'Shutdown' : 'Stop')")) { continue }
             if ($Shutdown) {
-                if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusShutdown -PveTicket $PveTicket @options }
-                ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusShutdown -PveTicket $PveTicket @options }
+                if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusShutdown -PveTicket $PveTicket @options -Confirm:$false }
+                ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusShutdown -PveTicket $PveTicket @options -Confirm:$false }
             }
             else {
-                if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket }
-                ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
+                if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket -Confirm:$false }
+                ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket -Confirm:$false }
             }
         }
     }
@@ -990,7 +993,7 @@ VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...)
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1002,8 +1005,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket }
-            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Suspend")) { continue }
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket -Confirm:$false }
         }
     }
 }
@@ -1020,7 +1024,7 @@ VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...)
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1032,8 +1036,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket }
-            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Resume")) { continue }
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket -Confirm:$false }
         }
     }
 }
@@ -1050,7 +1055,7 @@ VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...)
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1062,7 +1067,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket }
+            if ($vm.type -eq 'qemu') {
+                if ($PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", 'Reset')) { $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket -Confirm:$false }
+            }
             ElseIf ($vm.type -eq 'lxc') { Write-Error "Lxc not implement reset! $($vm.vmid) $($vm.name)" }
         }
     }
@@ -1082,7 +1089,7 @@ Seconds to wait for the shutdown before the guest is started again.
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1100,8 +1107,9 @@ PveResponse. Return response, one per VM/CT.
         if ($PSBoundParameters.ContainsKey('Timeout')) { $options['Timeout'] = $Timeout }
 
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusReboot -PveTicket $PveTicket @options }
-            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusReboot -PveTicket $PveTicket @options }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Restart")) { continue }
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusReboot -PveTicket $PveTicket @options -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusReboot -PveTicket $PveTicket @options -Confirm:$false }
         }
     }
 }
@@ -1156,7 +1164,7 @@ Save the vmstate (VM only, ignored for containers).
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1183,14 +1191,15 @@ PveResponse. Return response, one per VM/CT.
         if ($PSBoundParameters.ContainsKey('Description')) { $options['Description'] = $Description }
 
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Take snapshot $Snapname")) { continue }
             if ($vm.type -eq 'qemu')
             {
                 # Vmstate of the generated cmdlet is [bool]: it needs a value
-                $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket @options -Vmstate ([bool]$Vmstate)
+                $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket @options -Vmstate ([bool]$Vmstate) -Confirm:$false
             }
             ElseIf ($vm.type -eq 'lxc')
             {
-                $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket @options
+                $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket @options -Confirm:$false
             }
         }
     }
@@ -1210,7 +1219,7 @@ The name of the snapshot.
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1226,8 +1235,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname }
-            ElseIf ($vm.type -eq 'lxc') { $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Remove snapshot $Snapname")) { continue }
+            if ($vm.type -eq 'qemu') { $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname -Confirm:$false }
         }
     }
 }
@@ -1246,7 +1256,7 @@ The name of the snapshot.
 PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1262,8 +1272,9 @@ PveResponse. Return response, one per VM/CT.
 
     process {
         foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
-            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
-            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
+            if (-not $PSCmdlet.ShouldProcess("$($vm.type)/$($vm.vmid) ($($vm.name)) on $($vm.node)", "Roll back to snapshot $Snapname")) { continue }
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname -Confirm:$false }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname -Confirm:$false }
         }
     }
 }
@@ -1355,6 +1366,7 @@ Set-Alias -Name Backup-PveVzdump -Value New-PveNodesVzdump -PassThru
 ## API AUTOGENERATED ##
 #######################
 
+
 function Get-PveCluster
 {
 <#
@@ -1428,7 +1440,7 @@ Section type. Enum: local
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1475,7 +1487,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/replication" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/replication", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/replication" -Parameters $parameters }
     }
 }
 
@@ -1496,7 +1508,7 @@ Keep replicated data at target (do not remove).
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1516,7 +1528,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
         if($PSBoundParameters.ContainsKey('Keep')) { $parameters['keep'] = $Keep }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/replication/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/replication/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/replication/$Id" -Parameters $parameters }
     }
 }
 
@@ -1576,7 +1588,7 @@ For internal use, to detect if the guest was stolen.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1621,7 +1633,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
         if($PSBoundParameters.ContainsKey('Source')) { $parameters['source'] = $Source }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/replication/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/replication/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/replication/$Id" -Parameters $parameters }
     }
 }
 
@@ -1682,7 +1694,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1692,7 +1704,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/metrics/server/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/metrics/server/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/metrics/server/$Id" }
     }
 }
 
@@ -1731,7 +1743,7 @@ Create a new external metric server config
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER ApiPathPrefix
-An API path prefix inserted between '<host>':'<port>/' and '/api2/'. Can be useful if the InfluxDB service runs behind a reverse proxy.
+An API path prefix inserted between '<host>:<port>/' and '/api2/'. Can be useful if the InfluxDB service runs behind a reverse proxy.
 .PARAMETER Bucket
 The InfluxDB bucket/db. Only necessary when using the http v2 api.
 .PARAMETER Disable
@@ -1763,7 +1775,7 @@ HTTP request timeout in seconds
 .PARAMETER OtelVerifySsl
 Verify SSL certificates
 .PARAMETER Path
-root graphite path (ex':' proxmox.mycluster.mykey)
+root graphite path (ex: proxmox.mycluster.mykey)
 .PARAMETER Port
 server network port
 .PARAMETER Proto
@@ -1773,7 +1785,7 @@ server dns name or IP address
 .PARAMETER Timeout
 graphite TCP socket timeout (default=1)
 .PARAMETER Token
-The InfluxDB access token. Only necessary when using the http v2 api. If the v2 compatibility api is used, use 'user':'password' instead.
+The InfluxDB access token. Only necessary when using the http v2 api. If the v2 compatibility api is used, use 'user:password' instead.
 .PARAMETER Type
 Plugin type. Enum: graphite,influxdb,opentelemetry
 .PARAMETER VerifyCertificate
@@ -1782,7 +1794,7 @@ Set to 0 to disable certificate verification for https endpoints.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -1891,7 +1903,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('VerifyCertificate')) { $parameters['verify-certificate'] = $VerifyCertificate }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/metrics/server/$Id", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/metrics/server/$Id" -Parameters $parameters }
     }
 }
 
@@ -1903,7 +1915,7 @@ Update metric server configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER ApiPathPrefix
-An API path prefix inserted between '<host>':'<port>/' and '/api2/'. Can be useful if the InfluxDB service runs behind a reverse proxy.
+An API path prefix inserted between '<host>:<port>/' and '/api2/'. Can be useful if the InfluxDB service runs behind a reverse proxy.
 .PARAMETER Bucket
 The InfluxDB bucket/db. Only necessary when using the http v2 api.
 .PARAMETER Delete
@@ -1939,7 +1951,7 @@ HTTP request timeout in seconds
 .PARAMETER OtelVerifySsl
 Verify SSL certificates
 .PARAMETER Path
-root graphite path (ex':' proxmox.mycluster.mykey)
+root graphite path (ex: proxmox.mycluster.mykey)
 .PARAMETER Port
 server network port
 .PARAMETER Proto
@@ -1949,14 +1961,14 @@ server dns name or IP address
 .PARAMETER Timeout
 graphite TCP socket timeout (default=1)
 .PARAMETER Token
-The InfluxDB access token. Only necessary when using the http v2 api. If the v2 compatibility api is used, use 'user':'password' instead.
+The InfluxDB access token. Only necessary when using the http v2 api. If the v2 compatibility api is used, use 'user:password' instead.
 .PARAMETER VerifyCertificate
 Set to 0 to disable certificate verification for https endpoints.
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2068,7 +2080,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
         if($PSBoundParameters.ContainsKey('VerifyCertificate')) { $parameters['verify-certificate'] = $VerifyCertificate }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/metrics/server/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/metrics/server/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/metrics/server/$Id" -Parameters $parameters }
     }
 }
 
@@ -2255,7 +2267,7 @@ The name of the endpoint.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2292,7 +2304,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('MailtoUser')) { $parameters['mailto-user'] = $MailtoUser }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/sendmail" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/sendmail", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/sendmail" -Parameters $parameters }
     }
 }
 
@@ -2309,7 +2321,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2319,7 +2331,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/sendmail/$Name"
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/sendmail/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/sendmail/$Name" }
     }
 }
 
@@ -2379,7 +2391,7 @@ The name of the endpoint.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2423,7 +2435,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Mailto')) { $parameters['mailto'] = $Mailto }
         if($PSBoundParameters.ContainsKey('MailtoUser')) { $parameters['mailto-user'] = $MailtoUser }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/sendmail/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/sendmail/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/sendmail/$Name" -Parameters $parameters }
     }
 }
 
@@ -2470,7 +2482,7 @@ Secret token
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2499,7 +2511,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
         if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/gotify" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/gotify", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/gotify" -Parameters $parameters }
     }
 }
 
@@ -2516,7 +2528,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2526,7 +2538,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/gotify/$Name"
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/gotify/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/gotify/$Name" }
     }
 }
 
@@ -2582,7 +2594,7 @@ Secret token
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2618,7 +2630,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
         if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/gotify/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/gotify/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/gotify/$Name" -Parameters $parameters }
     }
 }
 
@@ -2679,7 +2691,7 @@ Username for SMTP authentication
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2737,7 +2749,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
         if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/smtp" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/smtp", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/smtp" -Parameters $parameters }
     }
 }
 
@@ -2754,7 +2766,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2764,7 +2776,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/smtp/$Name"
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/smtp/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/smtp/$Name" }
     }
 }
 
@@ -2834,7 +2846,7 @@ Username for SMTP authentication
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2899,7 +2911,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Server')) { $parameters['server'] = $Server }
         if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/smtp/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/smtp/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/smtp/$Name" -Parameters $parameters }
     }
 }
 
@@ -2952,7 +2964,7 @@ Server URL
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -2994,7 +3006,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Secret')) { $parameters['secret'] = $Secret }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/webhook" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/webhook", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/endpoints/webhook" -Parameters $parameters }
     }
 }
 
@@ -3011,7 +3023,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3021,7 +3033,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/webhook/$Name"
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/webhook/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/endpoints/webhook/$Name" }
     }
 }
 
@@ -3083,7 +3095,7 @@ Server URL
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3132,7 +3144,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Secret')) { $parameters['secret'] = $Secret }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/webhook/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/endpoints/webhook/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/endpoints/webhook/$Name" -Parameters $parameters }
     }
 }
 
@@ -3155,6 +3167,33 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/notifications/targets"
+    }
+}
+
+function New-PveClusterNotificationsTargetsTest
+{
+<#
+.DESCRIPTION
+Send a test notification to a provided target.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Name
+Name of the target.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Name
+    )
+
+    process {
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/targets/$Name/test", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/targets/$Name/test" }
     }
 }
 
@@ -3196,7 +3235,7 @@ Invert match of the whole matcher
 .PARAMETER MatchCalendar
 Match notification timestamp
 .PARAMETER MatchField
-Metadata fields to match (regex or exact match). Must be in the form (regex|exact)':'<field>=<value>
+Metadata fields to match (regex or exact match). Must be in the form (regex|exact):<field>=<value>
 .PARAMETER MatchSeverity
 Notification severities to match
 .PARAMETER Mode
@@ -3209,7 +3248,7 @@ Targets to notify on match
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3255,7 +3294,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
         if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/matchers" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/matchers", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/notifications/matchers" -Parameters $parameters }
     }
 }
 
@@ -3272,7 +3311,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3282,7 +3321,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/matchers/$Name"
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/matchers/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/notifications/matchers/$Name" }
     }
 }
 
@@ -3333,7 +3372,7 @@ Invert match of the whole matcher
 .PARAMETER MatchCalendar
 Match notification timestamp
 .PARAMETER MatchField
-Metadata fields to match (regex or exact match). Must be in the form (regex|exact)':'<field>=<value>
+Metadata fields to match (regex or exact match). Must be in the form (regex|exact):<field>=<value>
 .PARAMETER MatchSeverity
 Notification severities to match
 .PARAMETER Mode
@@ -3346,7 +3385,7 @@ Targets to notify on match
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3399,7 +3438,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Mode')) { $parameters['mode'] = $Mode }
         if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/matchers/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/notifications/matchers/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/notifications/matchers/$Name" -Parameters $parameters }
     }
 }
 
@@ -3495,7 +3534,7 @@ Ticket data connection.
 .PARAMETER Cputype
 Name for the custom CPU model. The 'custom-' prefix is optional.
 .PARAMETER Flags
-List of additional CPU flags separated by ';'. Use '+FLAG' to enable, '-FLAG' to disable a flag. There is a special 'nested-virt' shorthand which controls nested virtualization for the current CPU ('svm' for AMD and 'vmx' for Intel). Custom CPU models can specify any flag supported by QEMU/KVM, VM-specific flags must be from the following set for security reasons':' aes, amd-no-ssb, amd-ssbd, hv-evmcs, hv-tlbflush, ibpb, md-clear, nested-virt, pcid, pdpe1gb, spec-ctrl, ssbd, virt-ssbd
+List of additional CPU flags separated by ';'. Use '+FLAG' to enable, '-FLAG' to disable a flag. There is a special 'nested-virt' shorthand which controls nested virtualization for the current CPU ('svm' for AMD and 'vmx' for Intel). Custom CPU models can specify any flag supported by QEMU/KVM, VM-specific flags must be from the following set for security reasons: aes, amd-no-ssb, amd-ssbd, hv-evmcs, hv-tlbflush, ibpb, md-clear, nested-virt, pcid, pdpe1gb, spec-ctrl, ssbd, virt-ssbd
 .PARAMETER GuestPhysBits
 Number of physical address bits available to the guest.
 .PARAMETER Hidden
@@ -3512,7 +3551,7 @@ CPU model and vendor to report to the guest. Must be a QEMU/KVM supported model.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3533,7 +3572,7 @@ PveResponse. Return response.
         [string]$HvVendorId,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Level,
+        [long]$Level,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PhysBits,
@@ -3554,7 +3593,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PhysBits')) { $parameters['phys-bits'] = $PhysBits }
         if($PSBoundParameters.ContainsKey('ReportedModel')) { $parameters['reported-model'] = $ReportedModel }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/qemu/custom-cpu-models" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/qemu/custom-cpu-models", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/qemu/custom-cpu-models" -Parameters $parameters }
     }
 }
 
@@ -3571,7 +3610,7 @@ The custom model to delete. The 'custom-' prefix is optional.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3581,7 +3620,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/qemu/custom-cpu-models/$Cputype"
+        if ($PSCmdlet.ShouldProcess("/cluster/qemu/custom-cpu-models/$Cputype", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/qemu/custom-cpu-models/$Cputype" }
     }
 }
 
@@ -3626,7 +3665,7 @@ A list of properties to delete.
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Flags
-List of additional CPU flags separated by ';'. Use '+FLAG' to enable, '-FLAG' to disable a flag. There is a special 'nested-virt' shorthand which controls nested virtualization for the current CPU ('svm' for AMD and 'vmx' for Intel). Custom CPU models can specify any flag supported by QEMU/KVM, VM-specific flags must be from the following set for security reasons':' aes, amd-no-ssb, amd-ssbd, hv-evmcs, hv-tlbflush, ibpb, md-clear, nested-virt, pcid, pdpe1gb, spec-ctrl, ssbd, virt-ssbd
+List of additional CPU flags separated by ';'. Use '+FLAG' to enable, '-FLAG' to disable a flag. There is a special 'nested-virt' shorthand which controls nested virtualization for the current CPU ('svm' for AMD and 'vmx' for Intel). Custom CPU models can specify any flag supported by QEMU/KVM, VM-specific flags must be from the following set for security reasons: aes, amd-no-ssb, amd-ssbd, hv-evmcs, hv-tlbflush, ibpb, md-clear, nested-virt, pcid, pdpe1gb, spec-ctrl, ssbd, virt-ssbd
 .PARAMETER GuestPhysBits
 Number of physical address bits available to the guest.
 .PARAMETER Hidden
@@ -3643,7 +3682,7 @@ CPU model and vendor to report to the guest. Must be a QEMU/KVM supported model.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3670,7 +3709,7 @@ PveResponse. Return response.
         [string]$HvVendorId,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Level,
+        [long]$Level,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$PhysBits,
@@ -3692,7 +3731,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PhysBits')) { $parameters['phys-bits'] = $PhysBits }
         if($PSBoundParameters.ContainsKey('ReportedModel')) { $parameters['reported-model'] = $ReportedModel }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/qemu/custom-cpu-models/$Cputype" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/qemu/custom-cpu-models/$Cputype", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/qemu/custom-cpu-models/$Cputype" -Parameters $parameters }
     }
 }
 
@@ -3739,7 +3778,7 @@ Number of votes for this node.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3769,7 +3808,7 @@ PveResponse. Return response.
 
         if($PSBoundParameters.ContainsKey('LinkN')) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/config", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config" -Parameters $parameters }
     }
 }
 
@@ -3830,7 +3869,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3840,7 +3879,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/config/nodes/$Node"
+        if ($PSCmdlet.ShouldProcess("/cluster/config/nodes/$Node", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/config/nodes/$Node" }
     }
 }
 
@@ -3869,7 +3908,7 @@ Number of votes for this node
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -3906,7 +3945,7 @@ PveResponse. Return response.
 
         if($PSBoundParameters.ContainsKey('LinkN')) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config/nodes/$Node" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/config/nodes/$Node", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config/nodes/$Node" -Parameters $parameters }
     }
 }
 
@@ -3965,7 +4004,7 @@ Number of votes for this node
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4003,7 +4042,7 @@ PveResponse. Return response.
 
         if($PSBoundParameters.ContainsKey('LinkN')) { $LinkN.keys | ForEach-Object { $parameters['link' + $_] = $LinkN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config/join" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/config/join", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/config/join" -Parameters $parameters }
     }
 }
 
@@ -4114,7 +4153,7 @@ Rename/update an existing security group. You can set 'rename' to the same value
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4139,7 +4178,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Group')) { $parameters['group'] = $Group }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/groups" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/groups", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/groups" -Parameters $parameters }
     }
 }
 
@@ -4156,7 +4195,7 @@ Security Group name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4166,7 +4205,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/groups/$Group"
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/groups/$Group", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/groups/$Group" }
     }
 }
 
@@ -4213,7 +4252,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER Group
@@ -4233,14 +4272,14 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4314,7 +4353,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/groups/$Group" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/groups/$Group", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/groups/$Group" -Parameters $parameters }
     }
 }
 
@@ -4335,7 +4374,7 @@ Update rule at position <pos>.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4354,7 +4393,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/groups/$Group/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/groups/$Group/$Pos", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/groups/$Group/$Pos" -Parameters $parameters }
     }
 }
 
@@ -4408,7 +4447,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER Group
@@ -4430,14 +4469,14 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4518,7 +4557,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/groups/$Group/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/groups/$Group/$Pos", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/groups/$Group/$Pos" -Parameters $parameters }
     }
 }
 
@@ -4560,7 +4599,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -4578,14 +4617,14 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4656,7 +4695,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/rules" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/rules", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/rules" -Parameters $parameters }
     }
 }
 
@@ -4675,7 +4714,7 @@ Update rule at position <pos>.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4691,7 +4730,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/rules/$Pos", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -4740,7 +4779,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -4760,14 +4799,14 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4845,7 +4884,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/rules/$Pos", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -4890,7 +4929,7 @@ Rename an existing IPSet. You can set 'rename' to the same value as 'name' to up
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4915,7 +4954,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/ipset" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/ipset", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/ipset" -Parameters $parameters }
     }
 }
 
@@ -4934,7 +4973,7 @@ IP set name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -4950,7 +4989,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/ipset/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters }
     }
 }
 
@@ -5000,7 +5039,7 @@ IP set name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5024,7 +5063,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/ipset/$Name", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/ipset/$Name" -Parameters $parameters }
     }
 }
 
@@ -5045,7 +5084,7 @@ IP set name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5064,7 +5103,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name/$Cidr" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/ipset/$Name/$Cidr", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/ipset/$Name/$Cidr" -Parameters $parameters }
     }
 }
 
@@ -5121,7 +5160,7 @@ IP set name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5148,7 +5187,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/ipset/$Name/$Cidr" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/ipset/$Name/$Cidr", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/ipset/$Name/$Cidr" -Parameters $parameters }
     }
 }
 
@@ -5191,7 +5230,7 @@ Alias name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5212,7 +5251,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/aliases" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/aliases", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/firewall/aliases" -Parameters $parameters }
     }
 }
 
@@ -5231,7 +5270,7 @@ Alias name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5247,7 +5286,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/aliases/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/aliases/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/firewall/aliases/$Name" -Parameters $parameters }
     }
 }
 
@@ -5299,7 +5338,7 @@ Rename an existing alias.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5327,7 +5366,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/aliases/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/aliases/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/aliases/$Name" -Parameters $parameters }
     }
 }
 
@@ -5380,7 +5419,7 @@ Output policy. Enum: ACCEPT,REJECT,DROP
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5424,7 +5463,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PolicyIn')) { $parameters['policy_in'] = $PolicyIn }
         if($PSBoundParameters.ContainsKey('PolicyOut')) { $parameters['policy_out'] = $PolicyOut }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/options" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/firewall/options", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/firewall/options" -Parameters $parameters }
     }
 }
 
@@ -5519,7 +5558,7 @@ Description for the Job.
 .PARAMETER Compress
 Compress dump file. Enum: 0,1,gzip,lzo,zstd
 .PARAMETER Dow
-Deprecated':' Use 'schedule' instead. Day of week selection. 'starttime' and 'dow' will be converted into 'schedule' if used.
+Deprecated: Use 'schedule' instead. Day of week selection. 'starttime' and 'dow' will be converted into 'schedule' if used.
 .PARAMETER Dumpdir
 Store resulting files to specified directory.
 .PARAMETER Enabled
@@ -5537,9 +5576,9 @@ Set IO priority when using the BFQ scheduler. For snapshot and suspend mode back
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Deprecated':' use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure
+Deprecated: use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure
 .PARAMETER Mailto
-Deprecated':' Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.
+Deprecated: Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.
 .PARAMETER Mode
 Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
@@ -5571,7 +5610,7 @@ Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Script
 Use specified hook script.
 .PARAMETER Starttime
-Deprecated':' Use 'schedule' instead. Job Start time. 'starttime' and 'dow' will be converted into 'schedule' if used.
+Deprecated: Use 'schedule' instead. Job Start time. 'starttime' and 'dow' will be converted into 'schedule' if used.
 .PARAMETER Stdexcludes
 Exclude temporary files and logs.
 .PARAMETER Stop
@@ -5590,7 +5629,7 @@ Zstd threads. N=0 uses half of the available cores, if N is set to a value bigge
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5756,7 +5795,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
         if($PSBoundParameters.ContainsKey('Zstd')) { $parameters['zstd'] = $Zstd }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/backup" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/backup", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/backup" -Parameters $parameters }
     }
 }
 
@@ -5773,7 +5812,7 @@ The job ID.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -5783,7 +5822,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/backup/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/backup/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/backup/$Id" }
     }
 }
 
@@ -5832,7 +5871,7 @@ Compress dump file. Enum: 0,1,gzip,lzo,zstd
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Dow
-Deprecated':' Use 'schedule' instead. Day of week selection. 'starttime' and 'dow' will be converted into 'schedule' if used.
+Deprecated: Use 'schedule' instead. Day of week selection. 'starttime' and 'dow' will be converted into 'schedule' if used.
 .PARAMETER Dumpdir
 Store resulting files to specified directory.
 .PARAMETER Enabled
@@ -5850,9 +5889,9 @@ Set IO priority when using the BFQ scheduler. For snapshot and suspend mode back
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Deprecated':' use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure
+Deprecated: use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure
 .PARAMETER Mailto
-Deprecated':' Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.
+Deprecated: Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.
 .PARAMETER Mode
 Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
@@ -5884,7 +5923,7 @@ Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Script
 Use specified hook script.
 .PARAMETER Starttime
-Deprecated':' Use 'schedule' instead. Job Start time. 'starttime' and 'dow' will be converted into 'schedule' if used.
+Deprecated: Use 'schedule' instead. Job Start time. 'starttime' and 'dow' will be converted into 'schedule' if used.
 .PARAMETER Stdexcludes
 Exclude temporary files and logs.
 .PARAMETER Stop
@@ -5903,7 +5942,7 @@ Zstd threads. N=0 uses half of the available cores, if N is set to a value bigge
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6072,7 +6111,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
         if($PSBoundParameters.ContainsKey('Zstd')) { $parameters['zstd'] = $Zstd }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/backup/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/backup/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/backup/$Id" -Parameters $parameters }
     }
 }
 
@@ -6220,7 +6259,7 @@ Maximal number of resource relocate tries when a resource fails to start.
 .PARAMETER MaxRestart
 Maximal number of tries to restart the resource on a node after its start failed. When reached, the HA manager will try to relocate the resource to an eligible node.
 .PARAMETER Sid
-HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
+HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example: vm:100 / ct:100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example: 100).
 .PARAMETER State
 Requested resource state. Enum: started,stopped,enabled,disabled,ignored
 .PARAMETER Type
@@ -6229,7 +6268,7 @@ Resource type. Enum: ct,vm
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6276,7 +6315,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('State')) { $parameters['state'] = $State }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/resources", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources" -Parameters $parameters }
     }
 }
 
@@ -6290,12 +6329,12 @@ Ticket data connection.
 .PARAMETER Purge
 Remove this resource from rules that reference it, deleting the rule if this resource is the only resource in the rule
 .PARAMETER Sid
-HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
+HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example: vm:100 / ct:100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example: 100).
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6311,7 +6350,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Purge')) { $parameters['purge'] = $Purge }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/ha/resources/$Sid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/resources/$Sid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/ha/resources/$Sid" -Parameters $parameters }
     }
 }
 
@@ -6323,7 +6362,7 @@ Read resource configuration.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Sid
-HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
+HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example: vm:100 / ct:100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example: 100).
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -6366,14 +6405,14 @@ Maximal number of resource relocate tries when a resource fails to start.
 .PARAMETER MaxRestart
 Maximal number of tries to restart the resource on a node after its start failed. When reached, the HA manager will try to relocate the resource to an eligible node.
 .PARAMETER Sid
-HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
+HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example: vm:100 / ct:100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example: 100).
 .PARAMETER State
 Requested resource state. Enum: started,stopped,enabled,disabled,ignored
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6422,7 +6461,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('MaxRestart')) { $parameters['max_restart'] = $MaxRestart }
         if($PSBoundParameters.ContainsKey('State')) { $parameters['state'] = $State }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/resources/$Sid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/resources/$Sid", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/resources/$Sid" -Parameters $parameters }
     }
 }
 
@@ -6436,12 +6475,12 @@ Ticket data connection.
 .PARAMETER Node
 Target node.
 .PARAMETER Sid
-HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
+HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example: vm:100 / ct:100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example: 100).
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6457,7 +6496,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources/$Sid/migrate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/resources/$Sid/migrate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources/$Sid/migrate" -Parameters $parameters }
     }
 }
 
@@ -6471,12 +6510,12 @@ Ticket data connection.
 .PARAMETER Node
 Target node.
 .PARAMETER Sid
-HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example':' vm':'100 / ct':'100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example':' 100).
+HA resource ID. This consists of a resource type followed by a resource specific name, separated with colon (example: vm:100 / ct:100). For virtual machines and containers, you can simply use the VM or CT id as a shortcut (example: 100).
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6492,7 +6531,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Node')) { $parameters['node'] = $Node }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources/$Sid/relocate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/resources/$Sid/relocate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/resources/$Sid/relocate" -Parameters $parameters }
     }
 }
 
@@ -6541,7 +6580,7 @@ Group type. Enum: group
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6575,7 +6614,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Restricted')) { $parameters['restricted'] = $Restricted }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/groups" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/groups", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/groups" -Parameters $parameters }
     }
 }
 
@@ -6592,7 +6631,7 @@ The HA group identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6602,7 +6641,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/ha/groups/$Group"
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/groups/$Group", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/ha/groups/$Group" }
     }
 }
 
@@ -6658,7 +6697,7 @@ Resources bound to restricted groups may only run on nodes defined by the group.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6694,7 +6733,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Nofailback')) { $parameters['nofailback'] = $Nofailback }
         if($PSBoundParameters.ContainsKey('Restricted')) { $parameters['restricted'] = $Restricted }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/groups/$Group" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/groups/$Group", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/groups/$Group" -Parameters $parameters }
     }
 }
 
@@ -6742,8 +6781,12 @@ function New-PveClusterHaRules
 Create HA rule.
 .PARAMETER PveTicket
 Ticket data connection.
+.PARAMETER Rule
+HA rule identifier.
+.PARAMETER Type
+HA rule type. Enum: node-affinity,resource-affinity
 .PARAMETER Affinity
-Describes whether the HA resources are supposed to be kept on the same node ('positive'), or are supposed to be kept on separate nodes ('negative'). Enum: positive,negative
+Describes whether the HA resources are supposed to be placed on the given nodes ('positive'), or are supposed to be placed on any but the given nodes ('negative'). Enum: positive,negative
 .PARAMETER Comment
 HA rule description.
 .PARAMETER Disable
@@ -6751,21 +6794,24 @@ Whether the HA rule is disabled.
 .PARAMETER Nodes
 List of cluster node names with optional priority.
 .PARAMETER Resources
-List of HA resource IDs. This consists of a list of resource types followed by a resource specific name separated with a colon (example':' vm':'100,ct':'101).
-.PARAMETER Rule
-HA rule identifier.
+List of HA resource IDs. This consists of a list of resource types followed by a resource specific name separated with a colon (example: vm:100,ct:101).
 .PARAMETER Strict
 Describes whether the node affinity rule is strict or non-strict.
-.PARAMETER Type
-HA rule type. Enum: node-affinity,resource-affinity
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Rule,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('node-affinity','resource-affinity')]
+        [string]$Type,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('positive','negative')]
@@ -6783,29 +6829,22 @@ PveResponse. Return response.
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Resources,
 
-        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [string]$Rule,
-
         [Parameter(ValueFromPipelineByPropertyName)]
-        [bool]$Strict,
-
-        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('node-affinity','resource-affinity')]
-        [string]$Type
+        [bool]$Strict
     )
 
     process {
         $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Rule')) { $parameters['rule'] = $Rule }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('Affinity')) { $parameters['affinity'] = $Affinity }
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
         if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
         if($PSBoundParameters.ContainsKey('Resources')) { $parameters['resources'] = $Resources }
-        if($PSBoundParameters.ContainsKey('Rule')) { $parameters['rule'] = $Rule }
         if($PSBoundParameters.ContainsKey('Strict')) { $parameters['strict'] = $Strict }
-        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/rules" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/rules", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/rules" -Parameters $parameters }
     }
 }
 
@@ -6822,7 +6861,7 @@ HA rule identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -6832,7 +6871,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/ha/rules/$Rule"
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/rules/$Rule", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/ha/rules/$Rule" }
     }
 }
 
@@ -6870,34 +6909,47 @@ function Set-PveClusterHaRules
 Update HA rule.
 .PARAMETER PveTicket
 Ticket data connection.
-.PARAMETER Affinity
-Describes whether the HA resources are supposed to be kept on the same node ('positive'), or are supposed to be kept on separate nodes ('negative'). Enum: positive,negative
-.PARAMETER Comment
-HA rule description.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER Rule
+HA rule identifier.
+.PARAMETER Type
+HA rule type. Enum: node-affinity,resource-affinity
+.PARAMETER Affinity
+Describes whether the HA resources are supposed to be placed on the given nodes ('positive'), or are supposed to be placed on any but the given nodes ('negative'). Enum: positive,negative
+.PARAMETER Comment
+HA rule description.
 .PARAMETER Disable
 Whether the HA rule is disabled.
 .PARAMETER Nodes
 List of cluster node names with optional priority.
 .PARAMETER Resources
-List of HA resource IDs. This consists of a list of resource types followed by a resource specific name separated with a colon (example':' vm':'100,ct':'101).
-.PARAMETER Rule
-HA rule identifier.
+List of HA resource IDs. This consists of a list of resource types followed by a resource specific name separated with a colon (example: vm:100,ct:101).
 .PARAMETER Strict
 Describes whether the node affinity rule is strict or non-strict.
-.PARAMETER Type
-HA rule type. Enum: node-affinity,resource-affinity
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Rule,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('node-affinity','resource-affinity')]
+        [string]$Type,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('positive','negative')]
@@ -6905,12 +6957,6 @@ PveResponse. Return response.
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Comment,
-
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [string]$Delete,
-
-        [Parameter(ValueFromPipelineByPropertyName)]
-        [string]$Digest,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [bool]$Disable,
@@ -6921,30 +6967,23 @@ PveResponse. Return response.
         [Parameter(ValueFromPipelineByPropertyName)]
         [string]$Resources,
 
-        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [string]$Rule,
-
         [Parameter(ValueFromPipelineByPropertyName)]
-        [bool]$Strict,
-
-        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()][ValidateSet('node-affinity','resource-affinity')]
-        [string]$Type
+        [bool]$Strict
     )
 
     process {
         $parameters = @{}
-        if($PSBoundParameters.ContainsKey('Affinity')) { $parameters['affinity'] = $Affinity }
-        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
+        if($PSBoundParameters.ContainsKey('Affinity')) { $parameters['affinity'] = $Affinity }
+        if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Disable')) { $parameters['disable'] = $Disable }
         if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
         if($PSBoundParameters.ContainsKey('Resources')) { $parameters['resources'] = $Resources }
         if($PSBoundParameters.ContainsKey('Strict')) { $parameters['strict'] = $Strict }
-        if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/rules/$Rule" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/rules/$Rule", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ha/rules/$Rule" -Parameters $parameters }
     }
 }
 
@@ -7022,12 +7061,12 @@ Request disarming the HA stack, releasing all watchdogs cluster-wide.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER ResourceMode
-Controls how HA managed resources are handled while disarmed. The current state of resources is not affected. 'freeze'':' new commands and state changes are not applied. 'ignore'':' resources are removed from HA tracking and can be managed as if they were not HA managed. Enum: freeze,ignore
+Controls how HA managed resources are handled while disarmed. The current state of resources is not affected. 'freeze': new commands and state changes are not applied. 'ignore': resources are removed from HA tracking and can be managed as if they were not HA managed. Enum: freeze,ignore
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7041,7 +7080,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('ResourceMode')) { $parameters['resource-mode'] = $ResourceMode }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/status/disarm-ha" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/status/disarm-ha", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/status/disarm-ha" -Parameters $parameters }
     }
 }
 
@@ -7056,14 +7095,14 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/status/arm-ha"
+        if ($PSCmdlet.ShouldProcess("/cluster/ha/status/arm-ha", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ha/status/arm-ha" }
     }
 }
 
@@ -7145,7 +7184,7 @@ Extra delay in seconds to wait before requesting validation. Allows to cope with
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7184,7 +7223,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('ValidationDelay')) { $parameters['validation-delay'] = $ValidationDelay }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/acme/plugins" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/acme/plugins", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/acme/plugins" -Parameters $parameters }
     }
 }
 
@@ -7201,7 +7240,7 @@ Unique identifier for ACME plugin instance.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7211,7 +7250,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/acme/plugins/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/acme/plugins/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/acme/plugins/$Id" }
     }
 }
 
@@ -7269,7 +7308,7 @@ Extra delay in seconds to wait before requesting validation. Allows to cope with
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7310,7 +7349,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Nodes')) { $parameters['nodes'] = $Nodes }
         if($PSBoundParameters.ContainsKey('ValidationDelay')) { $parameters['validation-delay'] = $ValidationDelay }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/acme/plugins/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/acme/plugins/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/acme/plugins/$Id" -Parameters $parameters }
     }
 }
 
@@ -7359,7 +7398,7 @@ URL of CA TermsOfService - setting this indicates agreement.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7392,7 +7431,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
         if($PSBoundParameters.ContainsKey('TosUrl')) { $parameters['tos_url'] = $TosUrl }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/acme/account" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/acme/account", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/acme/account" -Parameters $parameters }
     }
 }
 
@@ -7409,7 +7448,7 @@ ACME account config file name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7419,7 +7458,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/acme/account/$Name"
+        if ($PSCmdlet.ShouldProcess("/cluster/acme/account/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/acme/account/$Name" }
     }
 }
 
@@ -7454,7 +7493,7 @@ function Set-PveClusterAcmeAccount
 {
 <#
 .DESCRIPTION
-Update existing ACME account information with CA. Note':' not specifying any new account information triggers a refresh.
+Update existing ACME account information with CA. Note: not specifying any new account information triggers a refresh.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Contact
@@ -7465,7 +7504,7 @@ ACME account config file name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7481,7 +7520,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Contact')) { $parameters['contact'] = $Contact }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/acme/account/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/acme/account/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/acme/account/$Name" -Parameters $parameters }
     }
 }
 
@@ -7619,7 +7658,7 @@ Get ceph metadata.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Scope
-Which metadata facet to return':' 'all' enriches the per-daemon metadata with the PVE-side service state (presence of unit, data directory), 'versions' collects only per-node Ceph binary version data. Enum: all,versions
+Which metadata facet to return: 'all' enriches the per-daemon metadata with the PVE-side service state (presence of unit, data directory), 'versions' collects only per-node Ceph binary version data. Enum: all,versions
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -7664,6 +7703,61 @@ PveResponse. Return response.
     }
 }
 
+function New-PveClusterCephRestartBulk
+{
+<#
+.DESCRIPTION
+Cluster-wide rolling restart of all Ceph daemons of the given type. For MON/MGR/MDS each daemon is restarted only after Ceph reports the previous one is back up and the next one is safe to stop. For OSDs the cluster path orchestrates the per-node endpoint at /nodes/{node}/ceph/restart-bulk on each node in turn, inheriting that endpoint's per-OSD 'noout' handling and resume support. The 'noout' flag itself is not exposed by this endpoint as it is OSD-specific (and for OSDs handled by the per-node sub-tasks).
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER DryRun
+Log the plan (which daemons would be restarted, in what order) without actually doing anything.
+.PARAMETER Force
+Proceed past a HEALTH_WARN with non-benign checks like PG_DEGRADED, SLOW_OPS, or MON_DOWN. A blocking HEALTH_ERR is fatal regardless of this flag. Checks that ceph reports as muted, and checks known to be harmless for a rolling restart, never block and are named in the task log. The cluster-wide OSD map flags are only ever evaluated for an OSD restart, since they govern nothing a mon, mgr or mds restart touches. The operator is responsible for confirming the cluster is stable enough to absorb a rolling restart.
+.PARAMETER OnlyOutdated
+OSDs only: restart only OSDs whose running version differs from the locally-installed ceph-osd binary on their host. Forwarded to each per-node sub-task so the per-host installed version is used (a partial upgrade where one host is on a newer build is handled correctly).
+.PARAMETER ServiceType
+Ceph daemon type to restart cluster-wide. Enum: mon,mgr,mds,osd
+.PARAMETER Timeout
+Per-daemon timeout (in seconds) for the up-wait phase. Note: for daemons on remote nodes the same timeout also bounds the remote restart task, so the per-daemon budget can be up to 2x this value. Default sized for slow MDS journal replay or MON paxos settle on busy clusters; bump higher if the cluster routinely takes longer to stabilize after a daemon restart.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$DryRun,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Force,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$OnlyOutdated,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('mon','mgr','mds','osd')]
+        [string]$ServiceType,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Timeout
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('DryRun')) { $parameters['dry-run'] = $DryRun }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('OnlyOutdated')) { $parameters['only-outdated'] = $OnlyOutdated }
+        if($PSBoundParameters.ContainsKey('ServiceType')) { $parameters['service-type'] = $ServiceType }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
+
+        if ($PSCmdlet.ShouldProcess("/cluster/ceph/restart-bulk", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/ceph/restart-bulk" -Parameters $parameters }
+    }
+}
+
 function Get-PveClusterCephFlags
 {
 <#
@@ -7690,7 +7784,7 @@ function Set-PveClusterCephFlags
 {
 <#
 .DESCRIPTION
-Set/Unset multiple Ceph flags at once. Each flag is a top-level optional boolean':' passing true sets the flag, false unsets it, omitting it leaves the current state untouched. Runs as a worker task; returns a UPID to follow.
+Set/Unset multiple Ceph flags at once. Each flag is a top-level optional boolean: passing true sets the flag, false unsets it, omitting it leaves the current state untouched. Runs as a worker task; returns a UPID to follow.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Nobackfill
@@ -7719,7 +7813,7 @@ Pauses read and writes.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7772,7 +7866,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Noup')) { $parameters['noup'] = $Noup }
         if($PSBoundParameters.ContainsKey('Pause')) { $parameters['pause'] = $Pause }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/flags" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ceph/flags", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/flags" -Parameters $parameters }
     }
 }
 
@@ -7819,7 +7913,7 @@ The new value of the flag
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7836,7 +7930,76 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Value')) { $parameters['value'] = $Value }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/flags/$Flag" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/ceph/flags/$Flag", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/flags/$Flag" -Parameters $parameters }
+    }
+}
+
+function Get-PveClusterCephHealthMute
+{
+<#
+.DESCRIPTION
+Get the currently muted Ceph health checks.
+.PARAMETER PveTicket
+Ticket data connection.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/ceph/health-mute"
+    }
+}
+
+function Set-PveClusterCephHealthMute
+{
+<#
+.DESCRIPTION
+Mute or unmute a Ceph health check. A muted check no longer counts towards the cluster status, but stays visible and keeps being evaluated.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Code
+The health check to mute, as reported by 'ceph health', for example 'AUTH_INSECURE_CLIENT_KEY_TYPE'.
+.PARAMETER Sticky
+Keep the mute even when the check gets worse. Without this a mute clears itself as soon as the number of affected items grows, which brings the check back to attention. Only used when muting.
+.PARAMETER Ttl
+How long the mute lasts, for example '2h', '3d' or '1w'. Without it the mute has no expiry. Only used when muting.
+.PARAMETER Value
+Whether to mute (true) or unmute (false) the check.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Code,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Sticky,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Ttl,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [bool]$Value
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Sticky')) { $parameters['sticky'] = $Sticky }
+        if($PSBoundParameters.ContainsKey('Ttl')) { $parameters['ttl'] = $Ttl }
+        if($PSBoundParameters.ContainsKey('Value')) { $parameters['value'] = $Value }
+
+        if ($PSCmdlet.ShouldProcess("/cluster/ceph/health-mute/$Code", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/ceph/health-mute/$Code" -Parameters $parameters }
     }
 }
 
@@ -7897,7 +8060,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -7907,7 +8070,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/jobs/realm-sync/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/jobs/realm-sync/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/jobs/realm-sync/$Id" }
     }
 }
 
@@ -7956,7 +8119,7 @@ The ID of the job.
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER RemoveVanished
-A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
+A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible: 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Schedule
 Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Scope
@@ -7965,7 +8128,7 @@ Select what to sync. Enum: users,groups,both
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8006,7 +8169,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
         if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/jobs/realm-sync/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/jobs/realm-sync/$Id", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/jobs/realm-sync/$Id" -Parameters $parameters }
     }
 }
 
@@ -8028,7 +8191,7 @@ Determines if the job is enabled.
 .PARAMETER Id
 The ID of the job.
 .PARAMETER RemoveVanished
-A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
+A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible: 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Schedule
 Backup schedule. The format is a subset of `systemd` calendar events.
 .PARAMETER Scope
@@ -8037,7 +8200,7 @@ Select what to sync. Enum: users,groups,both
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8078,7 +8241,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Schedule')) { $parameters['schedule'] = $Schedule }
         if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/jobs/realm-sync/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/jobs/realm-sync/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/jobs/realm-sync/$Id" -Parameters $parameters }
     }
 }
 
@@ -8193,7 +8356,7 @@ A list of maps for the cluster nodes.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8214,7 +8377,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/dir" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/dir", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/dir" -Parameters $parameters }
     }
 }
 
@@ -8231,7 +8394,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8241,7 +8404,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/dir/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/dir/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/dir/$Id" }
     }
 }
 
@@ -8293,7 +8456,7 @@ A list of maps for the cluster nodes.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8321,7 +8484,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/dir/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/dir/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/dir/$Id" -Parameters $parameters }
     }
 }
 
@@ -8376,7 +8539,7 @@ Marks the device(s) as being capable of providing mediated devices.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8405,7 +8568,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
         if($PSBoundParameters.ContainsKey('Mdev')) { $parameters['mdev'] = $Mdev }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/pci" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/pci", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/pci" -Parameters $parameters }
     }
 }
 
@@ -8422,7 +8585,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8432,7 +8595,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/pci/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/pci/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/pci/$Id" }
     }
 }
 
@@ -8488,7 +8651,7 @@ Marks the device(s) as being capable of providing mediated devices.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8524,7 +8687,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
         if($PSBoundParameters.ContainsKey('Mdev')) { $parameters['mdev'] = $Mdev }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/pci/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/pci/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/pci/$Id" -Parameters $parameters }
     }
 }
 
@@ -8575,7 +8738,7 @@ A list of maps for the cluster nodes.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8596,7 +8759,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/usb" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/usb", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/mapping/usb" -Parameters $parameters }
     }
 }
 
@@ -8613,7 +8776,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8623,7 +8786,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/usb/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/usb/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/mapping/usb/$Id" }
     }
 }
 
@@ -8675,7 +8838,7 @@ A list of maps for the cluster nodes.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8703,7 +8866,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Map')) { $parameters['map'] = $Map }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/usb/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/mapping/usb/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/mapping/usb/$Id" -Parameters $parameters }
     }
 }
 
@@ -8770,7 +8933,7 @@ Only consider guests from this list of VMIDs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8795,7 +8958,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/start" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/bulk-action/guest/start", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/start" -Parameters $parameters }
     }
 }
 
@@ -8820,7 +8983,7 @@ Only consider guests from this list of VMIDs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8849,7 +9012,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/shutdown" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/bulk-action/guest/shutdown", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/shutdown" -Parameters $parameters }
     }
 }
 
@@ -8874,7 +9037,7 @@ Only consider guests from this list of VMIDs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8903,7 +9066,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('ToDisk')) { $parameters['to-disk'] = $ToDisk }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/suspend" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/bulk-action/guest/suspend", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/suspend" -Parameters $parameters }
     }
 }
 
@@ -8930,7 +9093,7 @@ Enable live storage migration for local disk
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -8963,7 +9126,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
         if($PSBoundParameters.ContainsKey('WithLocalDisks')) { $parameters['with-local-disks'] = $WithLocalDisks }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/migrate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/bulk-action/guest/migrate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/bulk-action/guest/migrate" -Parameters $parameters }
     }
 }
 
@@ -9004,7 +9167,7 @@ When lock-token has been provided and configuration successfully committed, rele
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9021,7 +9184,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
         if($PSBoundParameters.ContainsKey('ReleaseLock')) { $parameters['release-lock'] = $ReleaseLock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn" -Parameters $parameters }
     }
 }
 
@@ -9088,7 +9251,7 @@ Name of the zone this VNet belongs to.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9130,7 +9293,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vnet')) { $parameters['vnet'] = $Vnet }
         if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets" -Parameters $parameters }
     }
 }
 
@@ -9149,7 +9312,7 @@ The SDN vnet object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9165,7 +9328,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters }
     }
 }
 
@@ -9239,7 +9402,7 @@ Name of the zone this VNet belongs to.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9283,7 +9446,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vlanaware')) { $parameters['vlanaware'] = $Vlanaware }
         if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet" -Parameters $parameters }
     }
 }
 
@@ -9357,7 +9520,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -9375,7 +9538,7 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .PARAMETER Vnet
@@ -9384,7 +9547,7 @@ The SDN vnet object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9458,7 +9621,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/firewall/rules", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules" -Parameters $parameters }
     }
 }
 
@@ -9479,7 +9642,7 @@ The SDN vnet object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9498,7 +9661,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -9552,7 +9715,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -9572,7 +9735,7 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .PARAMETER Vnet
@@ -9581,7 +9744,7 @@ The SDN vnet object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9662,7 +9825,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -9716,7 +9879,7 @@ The SDN vnet object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9750,7 +9913,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('LogLevelForward')) { $parameters['log_level_forward'] = $LogLevelForward }
         if($PSBoundParameters.ContainsKey('PolicyForward')) { $parameters['policy_forward'] = $PolicyForward }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/options" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/firewall/options", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/firewall/options" -Parameters $parameters }
     }
 }
 
@@ -9807,9 +9970,9 @@ IP address for the DNS server
 .PARAMETER DhcpRange
 A list of DHCP ranges for this subnet
 .PARAMETER Dnszoneprefix
-dns domain zone prefix  ex':' 'adm' -> <hostname>.adm.mydomain.com
+dns domain zone prefix  ex: 'adm' -> <hostname>.adm.mydomain.com
 .PARAMETER Gateway
-Subnet Gateway':' Will be assign on vnet for layer3 zones
+Subnet Gateway: Will be assign on vnet for layer3 zones
 .PARAMETER LockToken
 the token for unlocking the global SDN configuration
 .PARAMETER Snat
@@ -9824,7 +9987,7 @@ associated vnet
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9869,7 +10032,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Subnet')) { $parameters['subnet'] = $Subnet }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/subnets" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/subnets", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/subnets" -Parameters $parameters }
     }
 }
 
@@ -9890,7 +10053,7 @@ The SDN vnet object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -9909,7 +10072,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/subnets/$Subnet", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters }
     }
 }
 
@@ -9975,9 +10138,9 @@ A list of DHCP ranges for this subnet
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dnszoneprefix
-dns domain zone prefix  ex':' 'adm' -> <hostname>.adm.mydomain.com
+dns domain zone prefix  ex: 'adm' -> <hostname>.adm.mydomain.com
 .PARAMETER Gateway
-Subnet Gateway':' Will be assign on vnet for layer3 zones
+Subnet Gateway: Will be assign on vnet for layer3 zones
 .PARAMETER LockToken
 the token for unlocking the global SDN configuration
 .PARAMETER Snat
@@ -9990,7 +10153,7 @@ associated vnet
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10037,7 +10200,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
         if($PSBoundParameters.ContainsKey('Snat')) { $parameters['snat'] = $Snat }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/subnets/$Subnet", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/subnets/$Subnet" -Parameters $parameters }
     }
 }
 
@@ -10060,7 +10223,7 @@ The SDN zone object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10084,7 +10247,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
         if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/ips", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters }
     }
 }
 
@@ -10107,7 +10270,7 @@ The SDN zone object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10131,7 +10294,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Mac')) { $parameters['mac'] = $Mac }
         if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/ips", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters }
     }
 }
 
@@ -10156,7 +10319,7 @@ The SDN zone object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10184,7 +10347,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
         if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/vnets/$Vnet/ips", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/vnets/$Vnet/ips" -Parameters $parameters }
     }
 }
 
@@ -10253,7 +10416,7 @@ Suppress IPv4 ARP && IPv6 Neighbour Discovery messages.
 .PARAMETER Dns
 dns api server
 .PARAMETER Dnszone
-dns domain zone  ex':' mydomain.com
+dns domain zone  ex: mydomain.com
 .PARAMETER DpId
 Faucet dataplane id
 .PARAMETER Exitnodes
@@ -10298,7 +10461,7 @@ The SDN zone object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10422,7 +10585,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VxlanPort')) { $parameters['vxlan-port'] = $VxlanPort }
         if($PSBoundParameters.ContainsKey('Zone')) { $parameters['zone'] = $Zone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/zones" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/zones", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/zones" -Parameters $parameters }
     }
 }
 
@@ -10441,7 +10604,7 @@ The SDN zone object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10457,7 +10620,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/zones/$Zone", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters }
     }
 }
 
@@ -10528,7 +10691,7 @@ Suppress IPv4 ARP && IPv6 Neighbour Discovery messages.
 .PARAMETER Dns
 dns api server
 .PARAMETER Dnszone
-dns domain zone  ex':' mydomain.com
+dns domain zone  ex: mydomain.com
 .PARAMETER DpId
 Faucet dataplane id
 .PARAMETER Exitnodes
@@ -10571,7 +10734,7 @@ The SDN zone object identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10697,7 +10860,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VrfVxlan')) { $parameters['vrf-vxlan'] = $VrfVxlan }
         if($PSBoundParameters.ContainsKey('VxlanPort')) { $parameters['vxlan-port'] = $VxlanPort }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/zones/$Zone", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/zones/$Zone" -Parameters $parameters }
     }
 }
 
@@ -10793,13 +10956,13 @@ Plugin type. Enum: bgp,evpn,faucet,isis
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Asn,
+        [long]$Asn,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('auto','external','internal')]
@@ -10880,7 +11043,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RouteMapOut')) { $parameters['route-map-out'] = $RouteMapOut }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/controllers" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/controllers", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/controllers" -Parameters $parameters }
     }
 }
 
@@ -10899,7 +11062,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -10915,7 +11078,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/controllers/$Controller" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/controllers/$Controller", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/controllers/$Controller" -Parameters $parameters }
     }
 }
 
@@ -11011,13 +11174,13 @@ Route Map that should be applied for outgoing routes
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Asn,
+        [long]$Asn,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [ValidateSet('auto','external','internal')]
@@ -11100,7 +11263,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RouteMapIn')) { $parameters['route-map-in'] = $RouteMapIn }
         if($PSBoundParameters.ContainsKey('RouteMapOut')) { $parameters['route-map-out'] = $RouteMapOut }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/controllers/$Controller" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/controllers/$Controller", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/controllers/$Controller" -Parameters $parameters }
     }
 }
 
@@ -11160,7 +11323,7 @@ Plugin type. Enum: netbox,phpipam,pve
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11198,7 +11361,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/ipams" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/ipams", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/ipams" -Parameters $parameters }
     }
 }
 
@@ -11217,7 +11380,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11233,7 +11396,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/ipams/$Ipam" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/ipams/$Ipam", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/ipams/$Ipam" -Parameters $parameters }
     }
 }
 
@@ -11291,7 +11454,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11331,7 +11494,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Token')) { $parameters['token'] = $Token }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/ipams/$Ipam" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/ipams/$Ipam", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/ipams/$Ipam" -Parameters $parameters }
     }
 }
 
@@ -11422,7 +11585,7 @@ Plugin type. Enum: powerdns
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11468,7 +11631,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/dns" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/dns", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/dns" -Parameters $parameters }
     }
 }
 
@@ -11487,7 +11650,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11503,7 +11666,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/dns/$Dns" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/dns/$Dns", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/dns/$Dns" -Parameters $parameters }
     }
 }
 
@@ -11563,7 +11726,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11607,7 +11770,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Ttl')) { $parameters['ttl'] = $Ttl }
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/dns/$Dns" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/dns/$Dns", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/dns/$Dns" -Parameters $parameters }
     }
 }
 
@@ -11704,7 +11867,7 @@ A prefix list that should be used for filtering routes that are to be installed 
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11762,7 +11925,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Redistribute')) { $parameters['redistribute'] = $Redistribute }
         if($PSBoundParameters.ContainsKey('RouteFilter')) { $parameters['route_filter'] = $RouteFilter }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/fabrics/fabric" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/fabrics/fabric", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/fabrics/fabric" -Parameters $parameters }
     }
 }
 
@@ -11779,7 +11942,7 @@ Identifier for SDN fabrics
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11789,7 +11952,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/fabrics/fabric/$Id"
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/fabrics/fabric/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/fabrics/fabric/$Id" }
     }
 }
 
@@ -11857,7 +12020,7 @@ A prefix list that should be used for filtering routes that are to be installed 
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -11918,7 +12081,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Redistribute')) { $parameters['redistribute'] = $Redistribute }
         if($PSBoundParameters.ContainsKey('RouteFilter')) { $parameters['route_filter'] = $RouteFilter }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/fabrics/fabric/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/fabrics/fabric/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/fabrics/fabric/$Id" -Parameters $parameters }
     }
 }
 
@@ -12036,7 +12199,7 @@ The role of this node in the WireGuard fabric. Enum: internal,external
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12098,7 +12261,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PublicKey')) { $parameters['public_key'] = $PublicKey }
         if($PSBoundParameters.ContainsKey('Role')) { $parameters['role'] = $Role }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/fabrics/node/$FabricId" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/fabrics/node/$FabricId", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/fabrics/node/$FabricId" -Parameters $parameters }
     }
 }
 
@@ -12117,7 +12280,7 @@ Identifier for nodes in an SDN fabric
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12130,7 +12293,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/fabrics/node/$FabricId/$NodeId"
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/fabrics/node/$FabricId/$NodeId", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/fabrics/node/$FabricId/$NodeId" }
     }
 }
 
@@ -12205,7 +12368,7 @@ The role of this node in the WireGuard fabric. Enum: internal,external
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12270,7 +12433,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PublicKey')) { $parameters['public_key'] = $PublicKey }
         if($PSBoundParameters.ContainsKey('Role')) { $parameters['role'] = $Role }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/fabrics/node/$FabricId/$NodeId" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/fabrics/node/$FabricId/$NodeId", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/fabrics/node/$FabricId/$NodeId" -Parameters $parameters }
     }
 }
 
@@ -12371,7 +12534,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12396,7 +12559,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Id')) { $parameters['id'] = $Id }
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/prefix-lists" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/prefix-lists", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/prefix-lists" -Parameters $parameters }
     }
 }
 
@@ -12415,7 +12578,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12431,7 +12594,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/prefix-lists/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/prefix-lists/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/prefix-lists/$Id" -Parameters $parameters }
     }
 }
 
@@ -12483,7 +12646,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12511,7 +12674,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Entries')) { $parameters['entries'] = $Entries }
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/prefix-lists/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/prefix-lists/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/prefix-lists/$Id" -Parameters $parameters }
     }
 }
 
@@ -12567,7 +12730,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12592,7 +12755,7 @@ PveResponse. Return response.
         [string]$Prefix,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Seq
+        [long]$Seq
     )
 
     process {
@@ -12604,7 +12767,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Prefix')) { $parameters['prefix'] = $Prefix }
         if($PSBoundParameters.ContainsKey('Seq')) { $parameters['seq'] = $Seq }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/prefix-lists/$Id/entries" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/prefix-lists/$Id/entries", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/prefix-lists/$Id/entries" -Parameters $parameters }
     }
 }
 
@@ -12619,11 +12782,13 @@ Ticket data connection.
 The SDN prefix list identifier
 .PARAMETER LockToken
 the token for unlocking the global SDN configuration
+.PARAMETER UrlSeq
+The '{url_seq}' part of the path.
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12632,14 +12797,17 @@ PveResponse. Return response.
         [string]$Id,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [string]$LockToken
+        [string]$LockToken,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$UrlSeq
     )
 
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/prefix-lists/$Id/entries/{url_seq}" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/prefix-lists/$Id/entries/$UrlSeq", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/prefix-lists/$Id/entries/$UrlSeq" -Parameters $parameters }
     }
 }
 
@@ -12652,6 +12820,8 @@ Get Prefix List Entry
 Ticket data connection.
 .PARAMETER Id
 The SDN prefix list identifier
+.PARAMETER UrlSeq
+The '{url_seq}' part of the path.
 .OUTPUTS
 PveResponse. Return response.
 #>
@@ -12662,11 +12832,14 @@ PveResponse. Return response.
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
-        [string]$Id
+        [string]$Id,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$UrlSeq
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/prefix-lists/$Id/entries/{url_seq}"
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/prefix-lists/$Id/entries/$UrlSeq"
     }
 }
 
@@ -12693,11 +12866,15 @@ the token for unlocking the global SDN configuration
 --
 .PARAMETER Seq
 --
+.PARAMETER Id
+The '{id}' part of the path.
+.PARAMETER UrlSeq
+The '{url_seq}' part of the path.
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12725,7 +12902,13 @@ PveResponse. Return response.
         [string]$Prefix,
 
         [Parameter(ValueFromPipelineByPropertyName)]
-        [int]$Seq
+        [long]$Seq,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Id,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$UrlSeq
     )
 
     process {
@@ -12739,7 +12922,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Prefix')) { $parameters['prefix'] = $Prefix }
         if($PSBoundParameters.ContainsKey('Seq')) { $parameters['seq'] = $Seq }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/prefix-lists/{id}/entries/{url_seq}" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/prefix-lists/$Id/entries/$UrlSeq", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/prefix-lists/$Id/entries/$UrlSeq" -Parameters $parameters }
     }
 }
 
@@ -12838,7 +13021,7 @@ The SDN route map identifier
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12884,7 +13067,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RouteMapId')) { $parameters['route-map-id'] = $RouteMapId }
         if($PSBoundParameters.ContainsKey('Set')) { $parameters['set'] = $Set }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/route-maps/entries" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/route-maps/entries", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/route-maps/entries" -Parameters $parameters }
     }
 }
 
@@ -12923,10 +13106,164 @@ PveResponse. Return response.
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Pending')) { $parameters['pending'] = $Pending }
-        if($PSBoundParameters.ContainsKey('RouteMapId')) { $parameters['route-map-id'] = $RouteMapId }
         if($PSBoundParameters.ContainsKey('Running')) { $parameters['running'] = $Running }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/route-maps/entries/{route_map_id}" -Parameters $parameters
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/route-maps/entries/$RouteMapId" -Parameters $parameters
+    }
+}
+
+function Remove-PveClusterSdnRouteMapsEntriesEntry
+{
+<#
+.DESCRIPTION
+Delete Route Map Entry
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER LockToken
+the token for unlocking the global SDN configuration
+.PARAMETER Order
+The index of this route map entry
+.PARAMETER RouteMapId
+The SDN route map identifier
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$LockToken,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [int]$Order,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$RouteMapId
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
+
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/route-maps/entries/$RouteMapId/entry/$Order", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/route-maps/entries/$RouteMapId/entry/$Order" -Parameters $parameters }
+    }
+}
+
+function Get-PveClusterSdnRouteMapsEntriesEntry
+{
+<#
+.DESCRIPTION
+Get Route Map Entry
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Order
+The index of this route map entry
+.PARAMETER RouteMapId
+The SDN route map identifier
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [int]$Order,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$RouteMapId
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/cluster/sdn/route-maps/entries/$RouteMapId/entry/$Order"
+    }
+}
+
+function Set-PveClusterSdnRouteMapsEntriesEntry
+{
+<#
+.DESCRIPTION
+Update Route Map Entry
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Action
+Matching policy of a route map entry. Enum: permit,deny
+.PARAMETER Call
+The SDN route map identifier
+.PARAMETER Delete
+--
+.PARAMETER Digest
+Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
+.PARAMETER ExitAction
+--
+.PARAMETER LockToken
+the token for unlocking the global SDN configuration
+.PARAMETER Match
+--
+.PARAMETER Order
+The index of this route map entry
+.PARAMETER RouteMapId
+The SDN route map identifier
+.PARAMETER Set
+--
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [ValidateSet('permit','deny')]
+        [string]$Action,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Call,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Delete,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Digest,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$ExitAction,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$LockToken,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Match,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [int]$Order,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$RouteMapId,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [array]$Set
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
+        if($PSBoundParameters.ContainsKey('Call')) { $parameters['call'] = $Call }
+        if($PSBoundParameters.ContainsKey('Delete')) { $parameters['delete'] = $Delete }
+        if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
+        if($PSBoundParameters.ContainsKey('ExitAction')) { $parameters['exit-action'] = $ExitAction }
+        if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
+        if($PSBoundParameters.ContainsKey('Match')) { $parameters['match'] = $Match }
+        if($PSBoundParameters.ContainsKey('Set')) { $parameters['set'] = $Set }
+
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/route-maps/entries/$RouteMapId/entry/$Order", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/sdn/route-maps/entries/$RouteMapId/entry/$Order" -Parameters $parameters }
     }
 }
 
@@ -12945,7 +13282,7 @@ the token for unlocking the global SDN configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12962,7 +13299,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/lock" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/lock", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/cluster/sdn/lock" -Parameters $parameters }
     }
 }
 
@@ -12979,7 +13316,7 @@ if true, allow acquiring lock even though there are pending changes
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -12992,7 +13329,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('AllowPending')) { $parameters['allow-pending'] = $AllowPending }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/lock" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/lock", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/lock" -Parameters $parameters }
     }
 }
 
@@ -13011,7 +13348,7 @@ When lock-token has been provided and configuration successfully rollbacked, rel
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -13028,7 +13365,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('LockToken')) { $parameters['lock-token'] = $LockToken }
         if($PSBoundParameters.ContainsKey('ReleaseLock')) { $parameters['release-lock'] = $ReleaseLock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/rollback" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/sdn/rollback", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/cluster/sdn/rollback" -Parameters $parameters }
     }
 }
 
@@ -13189,11 +13526,11 @@ Datacenter description. Shown in the web-interface datacenter notes panel. This 
 .PARAMETER EmailFrom
 Specify email address to send notification from (default is root@$hostname)
 .PARAMETER Fencing
-Set the fencing mode of the HA cluster. Hardware mode needs a valid configuration of fence devices in /etc/pve/ha/fence.cfg. With both all two modes are used.WARNING':' 'hardware' and 'both' are EXPERIMENTAL & WIP Enum: watchdog,hardware,both
+Set the fencing mode of the HA cluster. Hardware mode needs a valid configuration of fence devices in /etc/pve/ha/fence.cfg. With both all two modes are used. WARNING: 'hardware' and 'both' are EXPERIMENTAL & WIP Enum: watchdog,hardware,both
 .PARAMETER Ha
 Cluster wide HA settings.
 .PARAMETER HttpProxy
-Specify external http proxy which is used for downloads (example':' 'http':'//username':'password@host':'port/')
+Specify external http proxy which is used for downloads (example: 'http://username:password@host:port/')
 .PARAMETER Keyboard
 Default keybord layout for vnc server. Enum: de,de-ch,da,en-gb,en-us,es,fi,fr,fr-be,fr-ca,fr-ch,hu,is,it,ja,lt,mk,nl,no,pl,pt,pt-br,sv,sl,tr
 .PARAMETER Language
@@ -13201,7 +13538,7 @@ Default GUI language. Enum: ar,ca,da,de,en,es,eu,fa,fr,hr,he,it,ja,ka,kr,nb,nl,n
 .PARAMETER Location
 The location of the cluster.
 .PARAMETER MacPrefix
-Prefix for the auto-generated MAC addresses of virtual guests. The default 'BC':'24':'11' is the OUI assigned by the IEEE to Proxmox Server Solutions GmbH for a 24-bit large MAC block. You're allowed to use this in local networks, i.e., those not directly reachable by the public (e.g., in a LAN or behind NAT).
+Prefix for the auto-generated MAC addresses of virtual guests. The default 'BC:24:11' is the OUI assigned by the IEEE to Proxmox Server Solutions GmbH for a 24-bit large MAC block. You're allowed to use this in local networks, i.e., those not directly reachable by the public (e.g., in a LAN or behind NAT).
 .PARAMETER MaxWorkers
 Defines how many workers (per node) are maximal started  on actions like 'stopall VMs' or task from the ha-manager.
 .PARAMETER Migration
@@ -13228,7 +13565,7 @@ webauthn configuration
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -13341,7 +13678,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('UserTagAccess')) { $parameters['user-tag-access'] = $UserTagAccess }
         if($PSBoundParameters.ContainsKey('Webauthn')) { $parameters['webauthn'] = $Webauthn }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/options" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/cluster/options", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/cluster/options" -Parameters $parameters }
     }
 }
 
@@ -13491,7 +13828,7 @@ Ticket data connection.
 .PARAMETER Acpi
 Enable/disable ACPI.
 .PARAMETER Affinity
-List of host cores used to execute guest processes, for example':' 0,5,8-11
+List of host cores used to execute guest processes, for example: 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the QEMU Guest Agent and its properties.
 .PARAMETER AllowKsm
@@ -13515,21 +13852,21 @@ Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
 Specify guest boot order. Use the 'order=' sub-property as usage with no key or 'legacy=' is deprecated.
 .PARAMETER Bootdisk
-Enable booting from specified disk. Deprecated':' Use 'boot':' order=foo;bar' instead.
+Enable booting from specified disk. Deprecated: Use 'boot: order=foo;bar' instead.
 .PARAMETER Bwlimit
 Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Cdrom
 This is an alias for option -ide2
 .PARAMETER Cicustom
-cloud-init':' Specify custom files to replace the automatically generated ones at start.
+cloud-init: Specify custom files to replace the automatically generated ones at start.
 .PARAMETER Cipassword
-cloud-init':' Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
+cloud-init: Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
 .PARAMETER Citype
 Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows. Enum: configdrive2,nocloud,opennebula
 .PARAMETER Ciupgrade
-cloud-init':' do an automatic package upgrade after the first boot.
+cloud-init: do an automatic package upgrade after the first boot.
 .PARAMETER Ciuser
-cloud-init':' User name to change ssh keys and password for instead of the image's configured default user.
+cloud-init: User name to change ssh keys and password for instead of the image's configured default user.
 .PARAMETER Cores
 The number of cores per socket.
 .PARAMETER Cpu
@@ -13537,11 +13874,11 @@ Emulated CPU type.
 .PARAMETER Cpulimit
 Limit of CPU usage.
 .PARAMETER Cpuunits
-CPU weight for a VM, will be clamped to \[1, 10000] in cgroup v2.
+CPU weight for a VM, will be clamped to [1, 10000] in cgroup v2.
 .PARAMETER Description
 Description for the VM. Shown in the web-interface VM's summary. This is saved as comment inside the configuration file.
 .PARAMETER Efidisk0
-Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
 Allow to overwrite existing VM.
 .PARAMETER Freeze
@@ -13553,17 +13890,17 @@ Script that will be executed during various steps in the vms lifetime.
 .PARAMETER HostpciN
 Map host PCI devices into guest.
 .PARAMETER Hotplug
-Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
+Selectively enable hotplug features. This is a comma separated list of hotplug features: 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
 .PARAMETER Hugepages
-Enables hugepages memory.Sets the size of hugepages in MiB. If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB. Enum: any,2,1024
+Enables hugepages memory. Sets the size of hugepages in MiB. If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB. Enum: any,2,1024
 .PARAMETER IdeN
-Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ImportWorkingStorage
 A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.
 .PARAMETER IntelTdx
 Trusted Domain Extension (TDX) features by Intel CPUs
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
+cloud-init: Specify IP addresses and gateways for the corresponding interface. IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified. The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided. For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requires cloud-init 19.4 or newer. If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to using dhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keephugepages
@@ -13589,7 +13926,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init: Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -13613,13 +13950,13 @@ Allow reboot. If set to '0' the VM exit on reboot.
 .PARAMETER Rng0
 Configure a VirtIO-based Random Number Generator.
 .PARAMETER SataN
-Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ScsiN
-Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init: Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -13633,11 +13970,11 @@ The number of CPU sockets.
 .PARAMETER SpiceEnhancements
 Configure additional enhancements for SPICE.
 .PARAMETER Sshkeys
-cloud-init':' Setup public SSH keys (one key per line, OpenSSH format).
+cloud-init: Setup public SSH keys (one key per line, OpenSSH format).
 .PARAMETER Start
 Start VM after it was created successfully.
 .PARAMETER Startdate
-Set the initial date of the real time clock. Valid format for date are':''now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
+Set the initial date of the real time clock. Valid format for date are:'now' or '2006-06-17T16:01:21' or '2006-06-17'.
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Storage
@@ -13651,7 +13988,7 @@ Enable/disable time drift fix.
 .PARAMETER Template
 Enable/disable Template.
 .PARAMETER Tpmstate0
-Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Unique
 Assign a unique random ethernet address.
 .PARAMETER UnusedN
@@ -13663,7 +14000,7 @@ Number of hotplugged vcpus.
 .PARAMETER Vga
 Configure the VGA hardware.
 .PARAMETER VirtioN
-Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER VirtiofsN
 Configuration for sharing a directory between host and guest using Virtio-fs.
 .PARAMETER Vmgenid
@@ -13678,7 +14015,7 @@ Create a virtual hardware watchdog device.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14067,7 +14404,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
         if($PSBoundParameters.ContainsKey('VirtiofsN')) { $VirtiofsN.keys | ForEach-Object { $parameters['virtiofs' + $_] = $VirtiofsN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu" -Parameters $parameters }
     }
 }
 
@@ -14092,7 +14429,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14119,7 +14456,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Purge')) { $parameters['purge'] = $Purge }
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid" -Parameters $parameters }
     }
 }
 
@@ -14235,7 +14572,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -14255,7 +14592,7 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
@@ -14264,7 +14601,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14341,7 +14678,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/rules", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules" -Parameters $parameters }
     }
 }
 
@@ -14364,7 +14701,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14386,7 +14723,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -14445,7 +14782,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -14467,7 +14804,7 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
@@ -14476,7 +14813,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14560,7 +14897,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -14617,7 +14954,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14644,7 +14981,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/aliases", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases" -Parameters $parameters }
     }
 }
 
@@ -14667,7 +15004,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14689,7 +15026,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name" -Parameters $parameters }
     }
 }
 
@@ -14755,7 +15092,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14789,7 +15126,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/aliases/$Name" -Parameters $parameters }
     }
 }
 
@@ -14848,7 +15185,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14879,7 +15216,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/ipset", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset" -Parameters $parameters }
     }
 }
 
@@ -14902,7 +15239,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -14924,7 +15261,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters }
     }
 }
 
@@ -14988,7 +15325,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15018,7 +15355,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name" -Parameters $parameters }
     }
 }
 
@@ -15043,7 +15380,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15068,7 +15405,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters }
     }
 }
 
@@ -15139,7 +15476,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15172,7 +15509,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters }
     }
 }
 
@@ -15247,7 +15584,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15314,7 +15651,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PolicyOut')) { $parameters['policy_out'] = $PolicyOut }
         if($PSBoundParameters.ContainsKey('Radv')) { $parameters['radv'] = $Radv }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/options" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/firewall/options", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/firewall/options" -Parameters $parameters }
     }
 }
 
@@ -15466,7 +15803,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15486,7 +15823,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent" -Parameters $parameters }
     }
 }
 
@@ -15505,7 +15842,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15518,7 +15855,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fsfreeze-freeze"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/fsfreeze-freeze", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fsfreeze-freeze" }
     }
 }
 
@@ -15537,7 +15874,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15550,7 +15887,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fsfreeze-status"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/fsfreeze-status", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fsfreeze-status" }
     }
 }
 
@@ -15569,7 +15906,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15582,7 +15919,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fsfreeze-thaw"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/fsfreeze-thaw", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fsfreeze-thaw" }
     }
 }
 
@@ -15601,7 +15938,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15614,7 +15951,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fstrim"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/fstrim", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/fstrim" }
     }
 }
 
@@ -15985,7 +16322,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -15998,7 +16335,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/ping"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/ping", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/ping" }
     }
 }
 
@@ -16017,7 +16354,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16030,7 +16367,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/shutdown"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/shutdown", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/shutdown" }
     }
 }
 
@@ -16049,7 +16386,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16062,7 +16399,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/suspend-disk"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/suspend-disk", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/suspend-disk" }
     }
 }
 
@@ -16081,7 +16418,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16094,7 +16431,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/suspend-hybrid"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/suspend-hybrid", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/suspend-hybrid" }
     }
 }
 
@@ -16113,7 +16450,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16126,7 +16463,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/suspend-ram"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/suspend-ram", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/suspend-ram" }
     }
 }
 
@@ -16151,7 +16488,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16178,7 +16515,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/set-user-password" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/set-user-password", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/set-user-password" -Parameters $parameters }
     }
 }
 
@@ -16201,7 +16538,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16224,7 +16561,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
         if($PSBoundParameters.ContainsKey('InputData')) { $parameters['input-data'] = $InputData }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/exec" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/exec", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/exec" -Parameters $parameters }
     }
 }
 
@@ -16347,7 +16684,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -16374,7 +16711,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Encode')) { $parameters['encode'] = $Encode }
         if($PSBoundParameters.ContainsKey('File')) { $parameters['file'] = $File }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/file-write" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/agent/file-write", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/agent/file-write" -Parameters $parameters }
     }
 }
 
@@ -16536,7 +16873,7 @@ Ticket data connection.
 .PARAMETER Acpi
 Enable/disable ACPI.
 .PARAMETER Affinity
-List of host cores used to execute guest processes, for example':' 0,5,8-11
+List of host cores used to execute guest processes, for example: 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the QEMU Guest Agent and its properties.
 .PARAMETER AllowKsm
@@ -16560,19 +16897,19 @@ Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
 Specify guest boot order. Use the 'order=' sub-property as usage with no key or 'legacy=' is deprecated.
 .PARAMETER Bootdisk
-Enable booting from specified disk. Deprecated':' Use 'boot':' order=foo;bar' instead.
+Enable booting from specified disk. Deprecated: Use 'boot: order=foo;bar' instead.
 .PARAMETER Cdrom
 This is an alias for option -ide2
 .PARAMETER Cicustom
-cloud-init':' Specify custom files to replace the automatically generated ones at start.
+cloud-init: Specify custom files to replace the automatically generated ones at start.
 .PARAMETER Cipassword
-cloud-init':' Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
+cloud-init: Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
 .PARAMETER Citype
 Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows. Enum: configdrive2,nocloud,opennebula
 .PARAMETER Ciupgrade
-cloud-init':' do an automatic package upgrade after the first boot.
+cloud-init: do an automatic package upgrade after the first boot.
 .PARAMETER Ciuser
-cloud-init':' User name to change ssh keys and password for instead of the image's configured default user.
+cloud-init: User name to change ssh keys and password for instead of the image's configured default user.
 .PARAMETER Cores
 The number of cores per socket.
 .PARAMETER Cpu
@@ -16580,7 +16917,7 @@ Emulated CPU type.
 .PARAMETER Cpulimit
 Limit of CPU usage.
 .PARAMETER Cpuunits
-CPU weight for a VM, will be clamped to \[1, 10000] in cgroup v2.
+CPU weight for a VM, will be clamped to [1, 10000] in cgroup v2.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Description
@@ -16588,9 +16925,9 @@ Description for the VM. Shown in the web-interface VM's summary. This is saved a
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Efidisk0
-Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
-Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
+Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused[n]', which contains the volume ID. Unlink of unused[n] always cause physical removal.
 .PARAMETER Freeze
 Freeze CPU at startup (use 'c' monitor command to start execution).
 .PARAMETER Hookscript
@@ -16598,17 +16935,17 @@ Script that will be executed during various steps in the vms lifetime.
 .PARAMETER HostpciN
 Map host PCI devices into guest.
 .PARAMETER Hotplug
-Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
+Selectively enable hotplug features. This is a comma separated list of hotplug features: 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
 .PARAMETER Hugepages
-Enables hugepages memory.Sets the size of hugepages in MiB. If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB. Enum: any,2,1024
+Enables hugepages memory. Sets the size of hugepages in MiB. If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB. Enum: any,2,1024
 .PARAMETER IdeN
-Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ImportWorkingStorage
 A file-based storage with 'images' content-type enabled, which is used as an intermediary extraction storage during import. Defaults to the source storage.
 .PARAMETER IntelTdx
 Trusted Domain Extension (TDX) features by Intel CPUs
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
+cloud-init: Specify IP addresses and gateways for the corresponding interface. IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified. The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided. For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requires cloud-init 19.4 or newer. If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to using dhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keephugepages
@@ -16632,7 +16969,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init: Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -16656,13 +16993,13 @@ Revert a pending change.
 .PARAMETER Rng0
 Configure a VirtIO-based Random Number Generator.
 .PARAMETER SataN
-Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ScsiN
-Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init: Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -16678,9 +17015,9 @@ The number of CPU sockets.
 .PARAMETER SpiceEnhancements
 Configure additional enhancements for SPICE.
 .PARAMETER Sshkeys
-cloud-init':' Setup public SSH keys (one key per line, OpenSSH format).
+cloud-init: Setup public SSH keys (one key per line, OpenSSH format).
 .PARAMETER Startdate
-Set the initial date of the real time clock. Valid format for date are':''now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
+Set the initial date of the real time clock. Valid format for date are:'now' or '2006-06-17T16:01:21' or '2006-06-17'.
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Tablet
@@ -16692,7 +17029,7 @@ Enable/disable time drift fix.
 .PARAMETER Template
 Enable/disable Template.
 .PARAMETER Tpmstate0
-Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
@@ -16702,7 +17039,7 @@ Number of hotplugged vcpus.
 .PARAMETER Vga
 Configure the VGA hardware.
 .PARAMETER VirtioN
-Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER VirtiofsN
 Configuration for sharing a directory between host and guest using Virtio-fs.
 .PARAMETER Vmgenid
@@ -16717,7 +17054,7 @@ Create a virtual hardware watchdog device.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -17093,7 +17430,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
         if($PSBoundParameters.ContainsKey('VirtiofsN')) { $VirtiofsN.keys | ForEach-Object { $parameters['virtiofs' + $_] = $VirtiofsN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/config", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters }
     }
 }
 
@@ -17107,7 +17444,7 @@ Ticket data connection.
 .PARAMETER Acpi
 Enable/disable ACPI.
 .PARAMETER Affinity
-List of host cores used to execute guest processes, for example':' 0,5,8-11
+List of host cores used to execute guest processes, for example: 0,5,8-11
 .PARAMETER Agent
 Enable/disable communication with the QEMU Guest Agent and its properties.
 .PARAMETER AllowKsm
@@ -17129,19 +17466,19 @@ Select BIOS implementation. Enum: seabios,ovmf
 .PARAMETER Boot
 Specify guest boot order. Use the 'order=' sub-property as usage with no key or 'legacy=' is deprecated.
 .PARAMETER Bootdisk
-Enable booting from specified disk. Deprecated':' Use 'boot':' order=foo;bar' instead.
+Enable booting from specified disk. Deprecated: Use 'boot: order=foo;bar' instead.
 .PARAMETER Cdrom
 This is an alias for option -ide2
 .PARAMETER Cicustom
-cloud-init':' Specify custom files to replace the automatically generated ones at start.
+cloud-init: Specify custom files to replace the automatically generated ones at start.
 .PARAMETER Cipassword
-cloud-init':' Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
+cloud-init: Password to assign the user. Using this is generally not recommended. Use ssh keys instead. Also note that older cloud-init versions do not support hashed passwords.
 .PARAMETER Citype
 Specifies the cloud-init configuration format. The default depends on the configured operating system type (`ostype`. We use the `nocloud` format for Linux, and `configdrive2` for windows. Enum: configdrive2,nocloud,opennebula
 .PARAMETER Ciupgrade
-cloud-init':' do an automatic package upgrade after the first boot.
+cloud-init: do an automatic package upgrade after the first boot.
 .PARAMETER Ciuser
-cloud-init':' User name to change ssh keys and password for instead of the image's configured default user.
+cloud-init: User name to change ssh keys and password for instead of the image's configured default user.
 .PARAMETER Cores
 The number of cores per socket.
 .PARAMETER Cpu
@@ -17149,7 +17486,7 @@ Emulated CPU type.
 .PARAMETER Cpulimit
 Limit of CPU usage.
 .PARAMETER Cpuunits
-CPU weight for a VM, will be clamped to \[1, 10000] in cgroup v2.
+CPU weight for a VM, will be clamped to [1, 10000] in cgroup v2.
 .PARAMETER Delete
 A list of settings you want to delete.
 .PARAMETER Description
@@ -17157,9 +17494,9 @@ Description for the VM. Shown in the web-interface VM's summary. This is saved a
 .PARAMETER Digest
 Prevent changes if current configuration file has different SHA1 digest. This can be used to prevent concurrent modifications.
 .PARAMETER Efidisk0
-Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a disk for storing EFI vars. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and that the default EFI vars are copied to the volume instead. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Force
-Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
+Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused[n]', which contains the volume ID. Unlink of unused[n] always cause physical removal.
 .PARAMETER Freeze
 Freeze CPU at startup (use 'c' monitor command to start execution).
 .PARAMETER Hookscript
@@ -17167,15 +17504,15 @@ Script that will be executed during various steps in the vms lifetime.
 .PARAMETER HostpciN
 Map host PCI devices into guest.
 .PARAMETER Hotplug
-Selectively enable hotplug features. This is a comma separated list of hotplug features':' 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
+Selectively enable hotplug features. This is a comma separated list of hotplug features: 'network', 'disk', 'cpu', 'memory', 'usb' and 'cloudinit'. Use '0' to disable hotplug completely. Using '1' as value is an alias for the default `network,disk,usb`. USB hotplugging is possible for guests with machine version >= 7.1 and ostype l26 or windows > 7.
 .PARAMETER Hugepages
-Enables hugepages memory.Sets the size of hugepages in MiB. If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB. Enum: any,2,1024
+Enables hugepages memory. Sets the size of hugepages in MiB. If the value is set to 'any' then 1 GiB hugepages will be used if possible, otherwise the size will fall back to 2 MiB. Enum: any,2,1024
 .PARAMETER IdeN
-Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as IDE hard disk or CD-ROM (n is 0 to 3). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER IntelTdx
 Trusted Domain Extension (TDX) features by Intel CPUs
 .PARAMETER IpconfigN
-cloud-init':' Specify IP addresses and gateways for the corresponding interface.IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified.The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicitgateway should be provided.For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requirescloud-init 19.4 or newer.If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to usingdhcp on IPv4.
+cloud-init: Specify IP addresses and gateways for the corresponding interface. IP addresses use CIDR notation, gateways are optional but need an IP of the same type specified. The special string 'dhcp' can be used for IP addresses to use DHCP, in which case no explicit gateway should be provided. For IPv6 the special string 'auto' can be used to use stateless autoconfiguration. This requires cloud-init 19.4 or newer. If cloud-init is enabled and neither an IPv4 nor an IPv6 address is specified, it defaults to using dhcp on IPv4.
 .PARAMETER Ivshmem
 Inter-VM shared memory. Useful for direct communication between VMs, or to the host.
 .PARAMETER Keephugepages
@@ -17199,7 +17536,7 @@ Set maximum speed (in MB/s) for migrations. Value 0 is no limit.
 .PARAMETER Name
 Set a name for the VM. Only used on the configuration web interface.
 .PARAMETER Nameserver
-cloud-init':' Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init: Sets DNS server IP address for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER NetN
 Specify network devices.
 .PARAMETER Node
@@ -17223,13 +17560,13 @@ Revert a pending change.
 .PARAMETER Rng0
 Configure a VirtIO-based Random Number Generator.
 .PARAMETER SataN
-Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as SATA hard disk or CD-ROM (n is 0 to 5). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER ScsiN
-Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as SCSI hard disk or CD-ROM (n is 0 to 30). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER Scsihw
 SCSI controller model Enum: lsi,lsi53c810,virtio-scsi-pci,virtio-scsi-single,megasas,pvscsi
 .PARAMETER Searchdomain
-cloud-init':' Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
+cloud-init: Sets DNS search domains for a container. Create will automatically use the setting from the host if neither searchdomain nor nameserver are set.
 .PARAMETER SerialN
 Create a serial device inside the VM (n is 0 to 3)
 .PARAMETER Shares
@@ -17245,9 +17582,9 @@ The number of CPU sockets.
 .PARAMETER SpiceEnhancements
 Configure additional enhancements for SPICE.
 .PARAMETER Sshkeys
-cloud-init':' Setup public SSH keys (one key per line, OpenSSH format).
+cloud-init: Setup public SSH keys (one key per line, OpenSSH format).
 .PARAMETER Startdate
-Set the initial date of the real time clock. Valid format for date are':''now' or '2006-06-17T16':'01':'21' or '2006-06-17'.
+Set the initial date of the real time clock. Valid format for date are:'now' or '2006-06-17T16:01:21' or '2006-06-17'.
 .PARAMETER Startup
 Startup and shutdown behavior. Order is a non-negative number defining the general startup order. Shutdown in done with reverse ordering. Additionally you can set the 'up' or 'down' delay in seconds, which specifies a delay to wait before the next VM is started or stopped.
 .PARAMETER Tablet
@@ -17259,7 +17596,7 @@ Enable/disable time drift fix.
 .PARAMETER Template
 Enable/disable Template.
 .PARAMETER Tpmstate0
-Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Configure a Disk for storing TPM state. The format is fixed to 'raw'. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Note that SIZE_IN_GiB is ignored here and 4 MiB will be used instead. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER UnusedN
 Reference to unused volumes. This is used internally, and should not be modified manually.
 .PARAMETER UsbN
@@ -17269,7 +17606,7 @@ Number of hotplugged vcpus.
 .PARAMETER Vga
 Configure the VGA hardware.
 .PARAMETER VirtioN
-Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID':'0 and the 'import-from' parameter to import from an existing volume.
+Use volume as VIRTIO hard disk (n is 0 to 15). Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume. Use STORAGE_ID:0 and the 'import-from' parameter to import from an existing volume.
 .PARAMETER VirtiofsN
 Configuration for sharing a directory between host and guest using Virtio-fs.
 .PARAMETER Vmgenid
@@ -17284,7 +17621,7 @@ Create a virtual hardware watchdog device.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -17652,7 +17989,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VirtioN')) { $VirtioN.keys | ForEach-Object { $parameters['virtio' + $_] = $VirtioN[$_] } }
         if($PSBoundParameters.ContainsKey('VirtiofsN')) { $VirtiofsN.keys | ForEach-Object { $parameters['virtiofs' + $_] = $VirtiofsN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/config", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/config" -Parameters $parameters }
     }
 }
 
@@ -17735,7 +18072,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -17748,7 +18085,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/cloudinit"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/cloudinit", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/cloudinit" }
     }
 }
 
@@ -17801,7 +18138,7 @@ Unlink/delete disk images.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Force
-Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused\[n]', which contains the volume ID. Unlink of unused\[n] always cause physical removal.
+Force physical removal. Without this, we simple remove the disk from the config file and create an additional configuration entry called 'unused[n]', which contains the volume ID. Unlink of unused[n] always cause physical removal.
 .PARAMETER Idlist
 A list of disk IDs you want to delete.
 .PARAMETER Node
@@ -17812,7 +18149,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -17835,7 +18172,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
         if($PSBoundParameters.ContainsKey('Idlist')) { $parameters['idlist'] = $Idlist }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/unlink" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/unlink", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/unlink" -Parameters $parameters }
     }
 }
 
@@ -17858,7 +18195,7 @@ Prepare for websocket upgrade (only required when using serial terminal, otherwi
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -17881,7 +18218,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('GeneratePassword')) { $parameters['generate-password'] = $GeneratePassword }
         if($PSBoundParameters.ContainsKey('Websocket')) { $parameters['websocket'] = $Websocket }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/vncproxy" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/vncproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/vncproxy" -Parameters $parameters }
     }
 }
 
@@ -17902,7 +18239,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -17922,7 +18259,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Serial')) { $parameters['serial'] = $Serial }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/termproxy" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/termproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/termproxy" -Parameters $parameters }
     }
 }
 
@@ -17989,7 +18326,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18008,7 +18345,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Proxy')) { $parameters['proxy'] = $Proxy }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/spiceproxy" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/spiceproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/spiceproxy" -Parameters $parameters }
     }
 }
 
@@ -18113,7 +18450,7 @@ Whether to migrate conntrack entries for running VMs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18173,7 +18510,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
         if($PSBoundParameters.ContainsKey('WithConntrackState')) { $parameters['with-conntrack-state'] = $WithConntrackState }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/start" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/start", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/start" -Parameters $parameters }
     }
 }
 
@@ -18202,7 +18539,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18237,7 +18574,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/stop" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/stop", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/stop" -Parameters $parameters }
     }
 }
 
@@ -18258,7 +18595,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18277,7 +18614,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/reset" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/reset", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/reset" -Parameters $parameters }
     }
 }
 
@@ -18304,7 +18641,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18335,7 +18672,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/shutdown" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/shutdown", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/shutdown" -Parameters $parameters }
     }
 }
 
@@ -18356,7 +18693,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18375,7 +18712,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/reboot" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/reboot", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/reboot" -Parameters $parameters }
     }
 }
 
@@ -18400,7 +18737,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18427,7 +18764,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Statestorage')) { $parameters['statestorage'] = $Statestorage }
         if($PSBoundParameters.ContainsKey('Todisk')) { $parameters['todisk'] = $Todisk }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/suspend" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/suspend", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/suspend" -Parameters $parameters }
     }
 }
 
@@ -18439,7 +18776,7 @@ Resume virtual machine.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Nocheck
---
+Do not check whether the VM is running, used internally during migration. Only root may use this option.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Skiplock
@@ -18450,7 +18787,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18473,7 +18810,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Nocheck')) { $parameters['nocheck'] = $Nocheck }
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/resume" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/status/resume", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/status/resume" -Parameters $parameters }
     }
 }
 
@@ -18496,7 +18833,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18519,7 +18856,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/sendkey" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/sendkey", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/sendkey" -Parameters $parameters }
     }
 }
 
@@ -18582,7 +18919,7 @@ Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Description
 Description for the new VM.
 .PARAMETER Format
-Target format for file storage. Only valid for full clone. Enum: raw,qcow2,vmdk
+Target disk format. Only valid for full clone. If the target storage does not support the format, the storage's default format is used instead. Enum: raw,qcow2,vmdk
 .PARAMETER Full
 Create a full copy of all disks. This is always done when you clone a normal VM. For VM templates, we try to create a linked clone by default.
 .PARAMETER Name
@@ -18605,7 +18942,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18661,7 +18998,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
         if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/clone" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/clone", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/clone" -Parameters $parameters }
     }
 }
 
@@ -18681,7 +19018,7 @@ Prevent changes if current configuration file has different SHA1 digest. This ca
 .PARAMETER Disk
 The disk you want to move. Enum: ide0,ide1,ide2,ide3,scsi0,scsi1,scsi2,scsi3,scsi4,scsi5,scsi6,scsi7,scsi8,scsi9,scsi10,scsi11,scsi12,scsi13,scsi14,scsi15,scsi16,scsi17,scsi18,scsi19,scsi20,scsi21,scsi22,scsi23,scsi24,scsi25,scsi26,scsi27,scsi28,scsi29,scsi30,virtio0,virtio1,virtio2,virtio3,virtio4,virtio5,virtio6,virtio7,virtio8,virtio9,virtio10,virtio11,virtio12,virtio13,virtio14,virtio15,sata0,sata1,sata2,sata3,sata4,sata5,efidisk0,tpmstate0,unused0,unused1,unused2,unused3,unused4,unused5,unused6,unused7,unused8,unused9,unused10,unused11,unused12,unused13,unused14,unused15,unused16,unused17,unused18,unused19,unused20,unused21,unused22,unused23,unused24,unused25,unused26,unused27,unused28,unused29,unused30,unused31,unused32,unused33,unused34,unused35,unused36,unused37,unused38,unused39,unused40,unused41,unused42,unused43,unused44,unused45,unused46,unused47,unused48,unused49,unused50,unused51,unused52,unused53,unused54,unused55,unused56,unused57,unused58,unused59,unused60,unused61,unused62,unused63,unused64,unused65,unused66,unused67,unused68,unused69,unused70,unused71,unused72,unused73,unused74,unused75,unused76,unused77,unused78,unused79,unused80,unused81,unused82,unused83,unused84,unused85,unused86,unused87,unused88,unused89,unused90,unused91,unused92,unused93,unused94,unused95,unused96,unused97,unused98,unused99,unused100,unused101,unused102,unused103,unused104,unused105,unused106,unused107,unused108,unused109,unused110,unused111,unused112,unused113,unused114,unused115,unused116,unused117,unused118,unused119,unused120,unused121,unused122,unused123,unused124,unused125,unused126,unused127,unused128,unused129,unused130,unused131,unused132,unused133,unused134,unused135,unused136,unused137,unused138,unused139,unused140,unused141,unused142,unused143,unused144,unused145,unused146,unused147,unused148,unused149,unused150,unused151,unused152,unused153,unused154,unused155,unused156,unused157,unused158,unused159,unused160,unused161,unused162,unused163,unused164,unused165,unused166,unused167,unused168,unused169,unused170,unused171,unused172,unused173,unused174,unused175,unused176,unused177,unused178,unused179,unused180,unused181,unused182,unused183,unused184,unused185,unused186,unused187,unused188,unused189,unused190,unused191,unused192,unused193,unused194,unused195,unused196,unused197,unused198,unused199,unused200,unused201,unused202,unused203,unused204,unused205,unused206,unused207,unused208,unused209,unused210,unused211,unused212,unused213,unused214,unused215,unused216,unused217,unused218,unused219,unused220,unused221,unused222,unused223,unused224,unused225,unused226,unused227,unused228,unused229,unused230,unused231,unused232,unused233,unused234,unused235,unused236,unused237,unused238,unused239,unused240,unused241,unused242,unused243,unused244,unused245,unused246,unused247,unused248,unused249,unused250,unused251,unused252,unused253,unused254,unused255
 .PARAMETER Format
-Target Format. Enum: raw,qcow2,vmdk
+Target disk format. Only used when moving to a different storage. If the target storage does not support the format, the storage's default format is used instead. Enum: raw,qcow2,vmdk
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Storage
@@ -18698,7 +19035,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18752,7 +19089,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetDisk')) { $parameters['target-disk'] = $TargetDisk }
         if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/move_disk" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/move_disk", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/move_disk" -Parameters $parameters }
     }
 }
 
@@ -18829,7 +19166,7 @@ Enable live storage migration for local disk
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18881,7 +19218,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('WithConntrackState')) { $parameters['with-conntrack-state'] = $WithConntrackState }
         if($PSBoundParameters.ContainsKey('WithLocalDisks')) { $parameters['with-local-disks'] = $WithLocalDisks }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/migrate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/migrate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/migrate" -Parameters $parameters }
     }
 }
 
@@ -18914,7 +19251,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18957,7 +19294,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetStorage')) { $parameters['target-storage'] = $TargetStorage }
         if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/remote_migrate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/remote_migrate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/remote_migrate" -Parameters $parameters }
     }
 }
 
@@ -18978,7 +19315,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -18997,7 +19334,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/monitor" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/monitor", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/monitor" -Parameters $parameters }
     }
 }
 
@@ -19024,7 +19361,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19056,7 +19393,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/resize", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/resize" -Parameters $parameters }
     }
 }
 
@@ -19113,7 +19450,7 @@ Save the vmstate
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19140,7 +19477,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
         if($PSBoundParameters.ContainsKey('Vmstate')) { $parameters['vmstate'] = $Vmstate }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/snapshot", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot" -Parameters $parameters }
     }
 }
 
@@ -19163,7 +19500,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19185,7 +19522,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/snapshot/$Snapname", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname" -Parameters $parameters }
     }
 }
 
@@ -19282,7 +19619,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19304,7 +19641,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/config", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/config" -Parameters $parameters }
     }
 }
 
@@ -19320,14 +19657,14 @@ The cluster node name.
 .PARAMETER Snapname
 The name of the snapshot.
 .PARAMETER Start
-Whether the VM should get started after rolling back successfully. (Note':' VMs will be automatically started if the snapshot includes RAM.)
+Whether the VM should get started after rolling back successfully. (Note: VMs will be automatically started if the snapshot includes RAM.)
 .PARAMETER Vmid
 The (unique) ID of the VM.
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19349,7 +19686,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/rollback", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters }
     }
 }
 
@@ -19370,7 +19707,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19390,7 +19727,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/template" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/template", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/template" -Parameters $parameters }
     }
 }
 
@@ -19413,7 +19750,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19436,7 +19773,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Bridges')) { $parameters['bridges'] = $Bridges }
         if($PSBoundParameters.ContainsKey('Storages')) { $parameters['storages'] = $Storages }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/mtunnel" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/mtunnel", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/mtunnel" -Parameters $parameters }
     }
 }
 
@@ -19503,7 +19840,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19523,7 +19860,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Action')) { $parameters['action'] = $Action }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/dbus-vmstate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/qemu/$Vmid/dbus-vmstate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/qemu/$Vmid/dbus-vmstate" -Parameters $parameters }
     }
 }
 
@@ -19572,9 +19909,9 @@ Attach a console device (/dev/console) to the container.
 .PARAMETER Cores
 The number of cores assigned to the container. A container can use all available cores by default.
 .PARAMETER Cpulimit
-Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
+Limit of CPU usage. NOTE: If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
-CPU weight for a container, will be clamped to \[1, 10000] in cgroup v2.
+CPU weight for a container, will be clamped to [1, 10000] in cgroup v2.
 .PARAMETER Debug_
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Description
@@ -19602,7 +19939,7 @@ Lock/unlock the container. Enum: backup,create,destroyed,disk,fstrim,migrate,mou
 .PARAMETER Memory
 Amount of RAM for the container in MB.
 .PARAMETER MpN
-Use volume as container mount point. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as container mount point. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume.
 .PARAMETER Nameserver
 Sets DNS server IP address for a container. Create will automatically use the setting from the host if you neither set searchdomain nor nameserver.
 .PARAMETER NetN
@@ -19657,7 +19994,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19854,7 +20191,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
         if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc" -Parameters $parameters }
     }
 }
 
@@ -19879,7 +20216,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -19906,7 +20243,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
         if($PSBoundParameters.ContainsKey('Purge')) { $parameters['purge'] = $Purge }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid" -Parameters $parameters }
     }
 }
 
@@ -20004,9 +20341,9 @@ Attach a console device (/dev/console) to the container.
 .PARAMETER Cores
 The number of cores assigned to the container. A container can use all available cores by default.
 .PARAMETER Cpulimit
-Limit of CPU usage.NOTE':' If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
+Limit of CPU usage. NOTE: If the computer has 2 CPUs, it has a total of '2' CPU time. Value '0' indicates no CPU limit.
 .PARAMETER Cpuunits
-CPU weight for a container, will be clamped to \[1, 10000] in cgroup v2.
+CPU weight for a container, will be clamped to [1, 10000] in cgroup v2.
 .PARAMETER Debug_
 Try to be more verbose. For now this only enables debug log-level on start.
 .PARAMETER Delete
@@ -20032,7 +20369,7 @@ Lock/unlock the container. Enum: backup,create,destroyed,disk,fstrim,migrate,mou
 .PARAMETER Memory
 Amount of RAM for the container in MB.
 .PARAMETER MpN
-Use volume as container mount point. Use the special syntax STORAGE_ID':'SIZE_IN_GiB to allocate a new volume.
+Use volume as container mount point. Use the special syntax STORAGE_ID:SIZE_IN_GiB to allocate a new volume.
 .PARAMETER Nameserver
 Sets DNS server IP address for a container. Create will automatically use the setting from the host if you neither set searchdomain nor nameserver.
 .PARAMETER NetN
@@ -20073,7 +20410,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20233,7 +20570,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('NetN')) { $NetN.keys | ForEach-Object { $parameters['net' + $_] = $NetN[$_] } }
         if($PSBoundParameters.ContainsKey('UnusedN')) { $UnusedN.keys | ForEach-Object { $parameters['unused' + $_] = $UnusedN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/config", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/config" -Parameters $parameters }
     }
 }
 
@@ -20320,7 +20657,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20343,7 +20680,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Debug_')) { $parameters['debug'] = $Debug_ }
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/start" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/status/start", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/start" -Parameters $parameters }
     }
 }
 
@@ -20366,7 +20703,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20389,7 +20726,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('OverruleShutdown')) { $parameters['overrule-shutdown'] = $OverruleShutdown }
         if($PSBoundParameters.ContainsKey('Skiplock')) { $parameters['skiplock'] = $Skiplock }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/stop" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/status/stop", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/stop" -Parameters $parameters }
     }
 }
 
@@ -20412,7 +20749,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20435,7 +20772,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Forcestop')) { $parameters['forceStop'] = $Forcestop }
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/shutdown" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/status/shutdown", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/shutdown" -Parameters $parameters }
     }
 }
 
@@ -20454,7 +20791,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20467,7 +20804,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/suspend"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/status/suspend", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/suspend" }
     }
 }
 
@@ -20486,7 +20823,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20499,7 +20836,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/resume"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/status/resume", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/resume" }
     }
 }
 
@@ -20520,7 +20857,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20539,7 +20876,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/reboot" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/status/reboot", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/status/reboot" -Parameters $parameters }
     }
 }
 
@@ -20594,7 +20931,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20617,7 +20954,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
         if($PSBoundParameters.ContainsKey('Snapname')) { $parameters['snapname'] = $Snapname }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/snapshot", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot" -Parameters $parameters }
     }
 }
 
@@ -20640,7 +20977,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20662,7 +20999,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/snapshot/$Snapname", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname" -Parameters $parameters }
     }
 }
 
@@ -20722,7 +21059,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20744,7 +21081,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Start')) { $parameters['start'] = $Start }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/rollback", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/rollback" -Parameters $parameters }
     }
 }
 
@@ -20804,7 +21141,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -20826,7 +21163,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Description')) { $parameters['description'] = $Description }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/config", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/snapshot/$Snapname/config" -Parameters $parameters }
     }
 }
 
@@ -20910,7 +21247,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -20930,7 +21267,7 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
@@ -20939,7 +21276,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21016,7 +21353,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/rules", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules" -Parameters $parameters }
     }
 }
 
@@ -21039,7 +21376,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21061,7 +21398,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -21120,7 +21457,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -21142,7 +21479,7 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .PARAMETER Vmid
@@ -21151,7 +21488,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21235,7 +21572,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -21292,7 +21629,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21319,7 +21656,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/aliases", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases" -Parameters $parameters }
     }
 }
 
@@ -21342,7 +21679,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21364,7 +21701,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name" -Parameters $parameters }
     }
 }
 
@@ -21430,7 +21767,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21464,7 +21801,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/aliases/$Name" -Parameters $parameters }
     }
 }
 
@@ -21523,7 +21860,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21554,7 +21891,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
         if($PSBoundParameters.ContainsKey('Rename')) { $parameters['rename'] = $Rename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/ipset", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset" -Parameters $parameters }
     }
 }
 
@@ -21577,7 +21914,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21599,7 +21936,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters }
     }
 }
 
@@ -21663,7 +22000,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21693,7 +22030,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name" -Parameters $parameters }
     }
 }
 
@@ -21718,7 +22055,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21743,7 +22080,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters }
     }
 }
 
@@ -21814,7 +22151,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21847,7 +22184,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Nomatch')) { $parameters['nomatch'] = $Nomatch }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/ipset/$Name/$Cidr" -Parameters $parameters }
     }
 }
 
@@ -21922,7 +22259,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -21989,7 +22326,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PolicyOut')) { $parameters['policy_out'] = $PolicyOut }
         if($PSBoundParameters.ContainsKey('Radv')) { $parameters['radv'] = $Radv }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/options" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/firewall/options", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/firewall/options" -Parameters $parameters }
     }
 }
 
@@ -22215,7 +22552,7 @@ sets the width of the console in pixels.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22242,7 +22579,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Websocket')) { $parameters['websocket'] = $Websocket }
         if($PSBoundParameters.ContainsKey('Width')) { $parameters['width'] = $Width }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/vncproxy" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/vncproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/vncproxy" -Parameters $parameters }
     }
 }
 
@@ -22261,7 +22598,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22274,7 +22611,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/termproxy"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/termproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/termproxy" }
     }
 }
 
@@ -22341,7 +22678,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22360,7 +22697,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Proxy')) { $parameters['proxy'] = $Proxy }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/spiceproxy" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/spiceproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/spiceproxy" -Parameters $parameters }
     }
 }
 
@@ -22397,7 +22734,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22448,7 +22785,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetVmid')) { $parameters['target-vmid'] = $TargetVmid }
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/remote_migrate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/remote_migrate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/remote_migrate" -Parameters $parameters }
     }
 }
 
@@ -22519,7 +22856,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22558,7 +22895,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetStorage')) { $parameters['target-storage'] = $TargetStorage }
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/migrate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/migrate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/migrate" -Parameters $parameters }
     }
 }
 
@@ -22624,7 +22961,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22637,7 +22974,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/template"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/template", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/template" }
     }
 }
 
@@ -22674,7 +23011,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22725,7 +23062,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
         if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/clone" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/clone", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/clone" -Parameters $parameters }
     }
 }
 
@@ -22750,7 +23087,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22778,7 +23115,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
         if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/resize" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/resize", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/lxc/$Vmid/resize" -Parameters $parameters }
     }
 }
 
@@ -22794,13 +23131,13 @@ Override I/O bandwidth limit (in KiB/s).
 .PARAMETER Delete
 Delete the original volume after successful copy. By default the original is kept as an unused volume entry.
 .PARAMETER Digest
-Prevent changes if current configuration file has different SHA1 " .		    "digest. This can be used to prevent concurrent modifications.
+Prevent changes if current configuration file has different SHA1 " . "digest. This can be used to prevent concurrent modifications.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Storage
 Target Storage.
 .PARAMETER TargetDigest
-Prevent changes if current configuration file of the target " .		    "container has a different SHA1 digest. This can be used to prevent " .		    "concurrent modifications.
+Prevent changes if current configuration file of the target " . "container has a different SHA1 digest. This can be used to prevent " . "concurrent modifications.
 .PARAMETER TargetVmid
 The (unique) ID of the VM.
 .PARAMETER TargetVolume
@@ -22813,7 +23150,7 @@ Volume which will be moved. Enum: rootfs,mp0,mp1,mp2,mp3,mp4,mp5,mp6,mp7,mp8,mp9
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22862,7 +23199,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetVolume')) { $parameters['target-volume'] = $TargetVolume }
         if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/move_volume" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/move_volume", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/move_volume" -Parameters $parameters }
     }
 }
 
@@ -22949,7 +23286,7 @@ The (unique) ID of the VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -22972,7 +23309,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Bridges')) { $parameters['bridges'] = $Bridges }
         if($PSBoundParameters.ContainsKey('Storages')) { $parameters['storages'] = $Storages }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/mtunnel" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/lxc/$Vmid/mtunnel", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/lxc/$Vmid/mtunnel" -Parameters $parameters }
     }
 }
 
@@ -23138,7 +23475,7 @@ Get configured values from either ceph.conf or the mon config DB. Underscores in
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER ConfigKeys
-List of <section>':'<config key> items separated by semicolon, comma or space.
+List of <section>:<config key> items separated by semicolon, comma or space.
 .PARAMETER Node
 The cluster node name.
 .OUTPUTS
@@ -23221,7 +23558,7 @@ Size in GiB for block.wal.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23265,7 +23602,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('WalDev')) { $parameters['wal_dev'] = $WalDev }
         if($PSBoundParameters.ContainsKey('WalDevSize')) { $parameters['wal_dev_size'] = $WalDevSize }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/osd", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd" -Parameters $parameters }
     }
 }
 
@@ -23286,7 +23623,7 @@ OSD ID
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23305,7 +23642,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Cleanup')) { $parameters['cleanup'] = $Cleanup }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/osd/$Osdid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/osd/$Osdid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/osd/$Osdid" -Parameters $parameters }
     }
 }
 
@@ -23429,7 +23766,7 @@ OSD ID
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23442,7 +23779,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/in"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/osd/$Osdid/in", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/in" }
     }
 }
 
@@ -23461,7 +23798,7 @@ OSD ID
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23474,7 +23811,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/out"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/osd/$Osdid/out", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/out" }
     }
 }
 
@@ -23495,7 +23832,7 @@ OSD ID
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23514,7 +23851,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Deep')) { $parameters['deep'] = $Deep }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/scrub" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/osd/$Osdid/scrub", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/osd/$Osdid/scrub" -Parameters $parameters }
     }
 }
 
@@ -23560,7 +23897,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23573,7 +23910,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/mds/$Name"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/mds/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/mds/$Name" }
     }
 }
 
@@ -23585,7 +23922,7 @@ Create Ceph Metadata Server (MDS)
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Hotstandby
-Determines whether a ceph-mds daemon should poll and replay the log of an active MDS. Faster switch on MDS failure, but needs more idle resources.
+Determines whether a ceph-mds daemon should poll and replay the log of an active MDS. Faster switch on MDS failure, but needs more idle resources. Deprecated: the setting was removed in Ceph 14.1.1.
 .PARAMETER Name
 The ID for the mds, when omitted the same as the nodename
 .PARAMETER Node
@@ -23594,7 +23931,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23613,7 +23950,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Hotstandby')) { $parameters['hotstandby'] = $Hotstandby }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mds/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/mds/$Name", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mds/$Name" -Parameters $parameters }
     }
 }
 
@@ -23659,7 +23996,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23672,7 +24009,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/mgr/$Id"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/mgr/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/mgr/$Id" }
     }
 }
 
@@ -23691,7 +24028,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23704,7 +24041,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mgr/$Id"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/mgr/$Id", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mgr/$Id" }
     }
 }
 
@@ -23750,7 +24087,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23763,7 +24100,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/mon/$Monid"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/mon/$Monid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/mon/$Monid" }
     }
 }
 
@@ -23784,7 +24121,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23803,7 +24140,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('MonAddress')) { $parameters['mon-address'] = $MonAddress }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mon/$Monid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/mon/$Monid", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/mon/$Monid" -Parameters $parameters }
     }
 }
 
@@ -23853,7 +24190,7 @@ Remove pveceph-managed storages configured for this filesystem.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23876,7 +24213,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RemovePools')) { $parameters['remove-pools'] = $RemovePools }
         if($PSBoundParameters.ContainsKey('RemoveStorages')) { $parameters['remove-storages'] = $RemoveStorages }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/fs/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/fs/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/fs/$Name" -Parameters $parameters }
     }
 }
 
@@ -23899,7 +24236,7 @@ Number of placement groups for the backing data pool. The metadata pool will use
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -23922,7 +24259,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('AddStorage')) { $parameters['add-storage'] = $AddStorage }
         if($PSBoundParameters.ContainsKey('PgNum')) { $parameters['pg_num'] = $PgNum }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/fs/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/fs/$Name", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/fs/$Name" -Parameters $parameters }
     }
 }
 
@@ -23990,7 +24327,7 @@ The estimated target ratio of the pool for the PG autoscaler.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24052,7 +24389,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetSize')) { $parameters['target_size'] = $TargetSize }
         if($PSBoundParameters.ContainsKey('TargetSizeRatio')) { $parameters['target_size_ratio'] = $TargetSizeRatio }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/pool" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/pool", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/pool" -Parameters $parameters }
     }
 }
 
@@ -24077,7 +24414,7 @@ Remove all pveceph-managed storages configured for this pool
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24104,7 +24441,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RemoveEcprofile')) { $parameters['remove_ecprofile'] = $RemoveEcprofile }
         if($PSBoundParameters.ContainsKey('RemoveStorages')) { $parameters['remove_storages'] = $RemoveStorages }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/pool/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters }
     }
 }
 
@@ -24173,7 +24510,7 @@ The estimated target ratio of the pool for the PG autoscaler.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24226,7 +24563,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TargetSize')) { $parameters['target_size'] = $TargetSize }
         if($PSBoundParameters.ContainsKey('TargetSizeRatio')) { $parameters['target_size_ratio'] = $TargetSizeRatio }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/pool/$Name", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/ceph/pool/$Name" -Parameters $parameters }
     }
 }
 
@@ -24270,17 +24607,44 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesCephReleases
+{
+<#
+.DESCRIPTION
+List all known Ceph releases, marking which ones can be installed on this node.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/ceph/releases"
+    }
+}
+
 function New-PveNodesCephInit
 {
 <#
 .DESCRIPTION
-Create the initial Ceph default configuration and set up symlinks. Idempotent on re-call':' if a \[global] section already exists in ceph.conf, the existing fsid / auth / pool defaults are preserved and most parameters are silently ignored.
+Create the initial Ceph default configuration and set up symlinks. Idempotent on re-call: if a [global] section already exists in ceph.conf, the existing fsid / auth / pool defaults are preserved and most parameters are silently ignored.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER ClusterNetwork
 Declare a separate cluster network, OSDs will route heartbeat, object replication and recovery traffic over it
 .PARAMETER DisableCephx
-Disable cephx authentication.WARNING':' cephx is a security feature protecting against man-in-the-middle attacks. Only consider disabling cephx if your network is private!
+Disable cephx authentication. WARNING: cephx is a security feature protecting against man-in-the-middle attacks. Only consider disabling cephx if your network is private!
 .PARAMETER MinSize
 Minimum number of available replicas per object to allow I/O
 .PARAMETER Network
@@ -24288,14 +24652,14 @@ Use specific network for all ceph related traffic
 .PARAMETER Node
 The cluster node name.
 .PARAMETER PgBits
-Placement group bits, used to specify the default number of placement groups.Depreacted. This setting was deprecated in recent Ceph versions.
+Placement group bits, used to specify the default number of placement groups. Depreacted. This setting was deprecated in recent Ceph versions.
 .PARAMETER Size
 Targeted number of replicas per object
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24331,7 +24695,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('PgBits')) { $parameters['pg_bits'] = $PgBits }
         if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/init" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/init", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/init" -Parameters $parameters }
     }
 }
 
@@ -24350,7 +24714,7 @@ Ceph service name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24366,7 +24730,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/stop" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/stop", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/stop" -Parameters $parameters }
     }
 }
 
@@ -24385,7 +24749,7 @@ Ceph service name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24401,7 +24765,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/start" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/start", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/start" -Parameters $parameters }
     }
 }
 
@@ -24420,7 +24784,7 @@ Ceph service name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24436,7 +24800,79 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/restart" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/restart", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/restart" -Parameters $parameters }
+    }
+}
+
+function New-PveNodesCephRestartBulk
+{
+<#
+.DESCRIPTION
+Rolling restart of all Ceph OSDs on this node. Each OSD is restarted only after Ceph reports the previous one is back up and the next one is safe to stop. For non-OSD Ceph daemons, use the cluster-wide endpoint at /cluster/ceph/restart-bulk. The 'noout' flag is applied only to the OSDs targeted by this run, so unrelated OSDs on other nodes that fail during the restart window still get out-marked normally. Aborting the resulting task (for example via 'pvesh task stop') triggers a SIGTERM handler that unsets the per-OSD 'noout' if this endpoint set it. Per-daemon progress is checkpointed in Ceph's config-key store ('pve/ceph-bulk-restart/node/<node>'), so an aborted run can be resumed by re-issuing this endpoint with 'resume=1'.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER DryRun
+Log the plan (which OSDs would be restarted, in what order) without actually doing anything.
+.PARAMETER Force
+Proceed past a HEALTH_WARN with non-benign checks like PG_DEGRADED, SLOW_OPS, or MON_DOWN. A blocking HEALTH_ERR is fatal regardless of this flag. Checks that ceph reports as muted, and checks known to be harmless for a rolling restart, never block and are named in the task log. The cluster-wide OSD map flags are only ever evaluated for an OSD restart, since they govern nothing a mon, mgr or mds restart touches. The operator is responsible for confirming the cluster is stable enough to absorb a rolling restart.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER OnlyOutdated
+Restart only OSDs whose running version differs from the locally-installed ceph-osd binary. Useful for post-upgrade rolling restarts that should touch only daemons that need it. Refuses if the local binary version cannot be determined. Ignored on resume (the saved plan is used as-is).
+.PARAMETER Resume
+Resume an aborted bulk-restart from the checkpoint stored in Ceph's config-key store. The plan and noout decision from the prior run are honored; 'set-noout' is ignored. When false (default), the endpoint refuses to start if a checkpoint exists for this node, to avoid silently overwriting in-progress work.
+.PARAMETER ServiceType
+Ceph daemon type to restart. Only OSDs can be rolling-restarted on a per-node basis. Enum: osd
+.PARAMETER SetNoout
+Set the 'noout' flag on each OSD targeted by this run for the duration of the rolling restart, and unset it on completion. Per-OSD rather than cluster-wide so that unrelated OSDs failing on other nodes still trigger backfill normally.
+.PARAMETER Timeout
+Per-OSD timeout (in seconds). Bounds both the wait for a restarted OSD to come back up and the wait for recovery to quiesce enough that Ceph reports the next OSD safe to stop. Default sized for busy clusters where multi-TB OSDs with many PGs can need several minutes to clear peering after a restart; bump higher for very large or heavily-loaded OSDs.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding(SupportsShouldProcess)]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$DryRun,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Force,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$OnlyOutdated,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Resume,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()][ValidateSet('osd')]
+        [string]$ServiceType,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$SetNoout,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Timeout
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('DryRun')) { $parameters['dry-run'] = $DryRun }
+        if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
+        if($PSBoundParameters.ContainsKey('OnlyOutdated')) { $parameters['only-outdated'] = $OnlyOutdated }
+        if($PSBoundParameters.ContainsKey('Resume')) { $parameters['resume'] = $Resume }
+        if($PSBoundParameters.ContainsKey('ServiceType')) { $parameters['service-type'] = $ServiceType }
+        if($PSBoundParameters.ContainsKey('SetNoout')) { $parameters['set-noout'] = $SetNoout }
+        if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
+
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/ceph/restart-bulk", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/ceph/restart-bulk" -Parameters $parameters }
     }
 }
 
@@ -24639,9 +25075,9 @@ The ID of the backup job. If set, the 'backup-job' metadata field of the backup 
 .PARAMETER Lockwait
 Maximal time to wait for the global lock (minutes).
 .PARAMETER Mailnotification
-Deprecated':' use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure
+Deprecated: use notification targets/matchers instead. Specify when to send a notification mail Enum: always,failure
 .PARAMETER Mailto
-Deprecated':' Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.
+Deprecated: Use notification targets/matchers instead. Comma-separated list of email addresses or users that should receive email notifications.
 .PARAMETER Mode
 Backup mode. Enum: snapshot,suspend,stop
 .PARAMETER Node
@@ -24688,7 +25124,7 @@ Zstd threads. N=0 uses half of the available cores, if N is set to a value bigge
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -24833,7 +25269,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
         if($PSBoundParameters.ContainsKey('Zstd')) { $parameters['zstd'] = $Zstd }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/vzdump" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/vzdump", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/vzdump" -Parameters $parameters }
     }
 }
 
@@ -25015,7 +25451,7 @@ Service ID Enum: chrony,corosync,cron,ksmtuned,lxcfs,postfix,proxmox-firewall,pv
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25029,7 +25465,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/start"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/services/$Service/start", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/start" }
     }
 }
 
@@ -25048,7 +25484,7 @@ Service ID Enum: chrony,corosync,cron,ksmtuned,lxcfs,postfix,proxmox-firewall,pv
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25062,7 +25498,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/stop"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/services/$Service/stop", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/stop" }
     }
 }
 
@@ -25081,7 +25517,7 @@ Service ID Enum: chrony,corosync,cron,ksmtuned,lxcfs,postfix,proxmox-firewall,pv
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25095,7 +25531,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/restart"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/services/$Service/restart", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/restart" }
     }
 }
 
@@ -25114,7 +25550,7 @@ Service ID Enum: chrony,corosync,cron,ksmtuned,lxcfs,postfix,proxmox-firewall,pv
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25128,7 +25564,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/reload"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/services/$Service/reload", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/services/$Service/reload" }
     }
 }
 
@@ -25145,7 +25581,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25155,7 +25591,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/subscription"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/subscription", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/subscription" }
     }
 }
 
@@ -25201,7 +25637,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25217,7 +25653,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/subscription" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/subscription", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/subscription" -Parameters $parameters }
     }
 }
 
@@ -25236,7 +25672,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25252,7 +25688,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/subscription" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/subscription", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/subscription" -Parameters $parameters }
     }
 }
 
@@ -25269,7 +25705,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25279,7 +25715,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/network"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/network", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/network" }
     }
 }
 
@@ -25341,7 +25777,7 @@ Selects the transmit hash policy to use for slave selection in balance-xor and 8
 .PARAMETER BridgePorts
 Specify the interfaces you want to add to your bridge.
 .PARAMETER BridgeVids
-Specify the allowed VLANs. For example':' '2 4 100-200'. Only used if the bridge is VLAN aware.
+Specify the allowed VLANs. For example: '2 4 100-200'. Only used if the bridge is VLAN aware.
 .PARAMETER BridgeVlanAware
 Enable bridge vlan support.
 .PARAMETER Cidr
@@ -25388,7 +25824,7 @@ Specify the raw interface for the vlan interface.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25515,7 +25951,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VlanId')) { $parameters['vlan-id'] = $VlanId }
         if($PSBoundParameters.ContainsKey('VlanRawDevice')) { $parameters['vlan-raw-device'] = $VlanRawDevice }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/network" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/network", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/network" -Parameters $parameters }
     }
 }
 
@@ -25534,7 +25970,7 @@ Whether FRR config generation should get skipped or not.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25550,7 +25986,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('RegenerateFrr')) { $parameters['regenerate-frr'] = $RegenerateFrr }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/network" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/network", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/network" -Parameters $parameters }
     }
 }
 
@@ -25569,7 +26005,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25582,7 +26018,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/network/$Iface"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/network/$Iface", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/network/$Iface" }
     }
 }
 
@@ -25640,7 +26076,7 @@ Selects the transmit hash policy to use for slave selection in balance-xor and 8
 .PARAMETER BridgePorts
 Specify the interfaces you want to add to your bridge.
 .PARAMETER BridgeVids
-Specify the allowed VLANs. For example':' '2 4 100-200'. Only used if the bridge is VLAN aware.
+Specify the allowed VLANs. For example: '2 4 100-200'. Only used if the bridge is VLAN aware.
 .PARAMETER BridgeVlanAware
 Enable bridge vlan support.
 .PARAMETER Cidr
@@ -25689,7 +26125,7 @@ Specify the raw interface for the vlan interface.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25819,7 +26255,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('VlanId')) { $parameters['vlan-id'] = $VlanId }
         if($PSBoundParameters.ContainsKey('VlanRawDevice')) { $parameters['vlan-raw-device'] = $VlanRawDevice }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/network/$Iface" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/network/$Iface", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/network/$Iface" -Parameters $parameters }
     }
 }
 
@@ -25928,7 +26364,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -25941,7 +26377,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/tasks/$Upid"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/tasks/$Upid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/tasks/$Upid" }
     }
 }
 
@@ -26396,7 +26832,7 @@ Ticket data connection.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER PciClassBlacklist
-A list of blacklisted PCI classes, which will not be returned. Following are filtered by default':' Memory Controller (05), Bridge (06) and Processor (0b).
+A list of blacklisted PCI classes, which will not be returned. Following are filtered by default: Memory Controller (05), Bridge (06) and Processor (0b).
 .PARAMETER Verbose_
 If disabled, does only print the PCI IDs. Otherwise, additional information like vendor and device will be returned.
 .OUTPUTS
@@ -26455,10 +26891,7 @@ PveResponse. Return response.
     )
 
     process {
-        $parameters = @{}
-        if($PSBoundParameters.ContainsKey('PciIdOrMapping')) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
-
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/{pci_id_or_mapping}" -Parameters $parameters
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/$PciIdOrMapping"
     }
 }
 
@@ -26490,10 +26923,7 @@ PveResponse. Return response.
     )
 
     process {
-        $parameters = @{}
-        if($PSBoundParameters.ContainsKey('PciIdOrMapping')) { $parameters['pci-id-or-mapping'] = $PciIdOrMapping }
-
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/{pci_id_or_mapping}/mdev" -Parameters $parameters
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/hardware/pci/$PciIdOrMapping/mdev"
     }
 }
 
@@ -26832,7 +27262,7 @@ Only prune backups for this VM.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -26860,7 +27290,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/prunebackups" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/prunebackups", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/prunebackups" -Parameters $parameters }
     }
 }
 
@@ -26868,7 +27298,7 @@ function Get-PveNodesStoragePrunebackups
 {
 <#
 .DESCRIPTION
-Get prune information for backups. NOTE':' this is only a preview and might not be what a subsequent prune call does if backups are removed/added in the meantime.
+Get prune information for backups. NOTE: this is only a preview and might not be what a subsequent prune call does if backups are removed/added in the meantime.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -26986,7 +27416,7 @@ Specify owner VM
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27018,7 +27448,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Size')) { $parameters['size'] = $Size }
         if($PSBoundParameters.ContainsKey('Vmid')) { $parameters['vmid'] = $Vmid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/content", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content" -Parameters $parameters }
     }
 }
 
@@ -27041,7 +27471,7 @@ Volume identifier
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27063,7 +27493,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Delay')) { $parameters['delay'] = $Delay }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/content/$Volume", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters }
     }
 }
 
@@ -27125,7 +27555,7 @@ Source volume identifier
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27151,7 +27581,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Target')) { $parameters['target'] = $Target }
         if($PSBoundParameters.ContainsKey('TargetNode')) { $parameters['target_node'] = $TargetNode }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/content/$Volume", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters }
     }
 }
 
@@ -27176,7 +27606,7 @@ Volume identifier
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27202,7 +27632,105 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Notes')) { $parameters['notes'] = $Notes }
         if($PSBoundParameters.ContainsKey('Protected')) { $parameters['protected'] = $Protected }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/content/$Volume", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/storage/$Storage/content/$Volume" -Parameters $parameters }
+    }
+}
+
+function Get-PveNodesStorageFileRestoreList
+{
+<#
+.DESCRIPTION
+List files and directories for single file restore under the given path.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Filepath
+base64-path to the directory or file being listed, or "/".
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Storage
+The storage identifier.
+.PARAMETER Volume
+Backup volume ID or name. Currently only PBS snapshots are supported.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Filepath,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Storage,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Volume
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Filepath')) { $parameters['filepath'] = $Filepath }
+        if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/file-restore/list" -Parameters $parameters
+    }
+}
+
+function Get-PveNodesStorageFileRestoreDownload
+{
+<#
+.DESCRIPTION
+Extract a file or directory (as zip archive) from a PBS backup.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Filepath
+base64-path to the directory or file to download.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Storage
+The storage identifier.
+.PARAMETER Tar
+Download dirs as 'tar.zst' instead of 'zip'.
+.PARAMETER Volume
+Backup volume ID or name. Currently only PBS snapshots are supported.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Filepath,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Storage,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Tar,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Volume
+    )
+
+    process {
+        $parameters = @{}
+        if($PSBoundParameters.ContainsKey('Filepath')) { $parameters['filepath'] = $Filepath }
+        if($PSBoundParameters.ContainsKey('Tar')) { $parameters['tar'] = $Tar }
+        if($PSBoundParameters.ContainsKey('Volume')) { $parameters['volume'] = $Volume }
+
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/storage/$Storage/file-restore/download" -Parameters $parameters
     }
 }
 
@@ -27354,7 +27882,7 @@ The algorithm to calculate the checksum of the file. Enum: md5,sha1,sha224,sha25
 .PARAMETER Content
 Content type. Enum: iso,vztmpl,import
 .PARAMETER Filename
-The name of the file to create. Caution':' This will be normalized!
+The name of the file to create. Caution: This will be normalized!
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Storage
@@ -27365,7 +27893,7 @@ The source file name. This parameter is usually set by the REST handler. You can
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27402,7 +27930,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Filename')) { $parameters['filename'] = $Filename }
         if($PSBoundParameters.ContainsKey('Tmpfilename')) { $parameters['tmpfilename'] = $Tmpfilename }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/upload" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/upload", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/upload" -Parameters $parameters }
     }
 }
 
@@ -27422,7 +27950,7 @@ Decompress the downloaded file using the specified compression algorithm.
 .PARAMETER Content
 Content type. Enum: iso,vztmpl,import
 .PARAMETER Filename
-The name of the file to create. Caution':' This will be normalized!
+The name of the file to create. Caution: This will be normalized!
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Storage
@@ -27435,7 +27963,7 @@ If false, no SSL/TLS certificates will be verified.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27480,7 +28008,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Url')) { $parameters['url'] = $Url }
         if($PSBoundParameters.ContainsKey('VerifyCertificates')) { $parameters['verify-certificates'] = $VerifyCertificates }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/download-url" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/download-url", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/download-url" -Parameters $parameters }
     }
 }
 
@@ -27492,7 +28020,7 @@ Pull an OCI image from a registry.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Filename
-Custom destination file name of the OCI image. Caution':' This will be normalized!
+Custom destination file name of the OCI image. Caution: This will be normalized!
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Reference
@@ -27503,7 +28031,7 @@ The storage identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27526,7 +28054,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Filename')) { $parameters['filename'] = $Filename }
         if($PSBoundParameters.ContainsKey('Reference')) { $parameters['reference'] = $Reference }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/oci-registry-pull" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/storage/$Storage/oci-registry-pull", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/storage/$Storage/oci-registry-pull" -Parameters $parameters }
     }
 }
 
@@ -27675,7 +28203,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27699,7 +28227,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Device')) { $parameters['device'] = $Device }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/lvm" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/lvm", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/lvm" -Parameters $parameters }
     }
 }
 
@@ -27722,7 +28250,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27745,7 +28273,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
         if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/lvm/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/lvm/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/lvm/$Name" -Parameters $parameters }
     }
 }
 
@@ -27795,7 +28323,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27819,7 +28347,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Device')) { $parameters['device'] = $Device }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/lvmthin" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/lvmthin", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/lvmthin" -Parameters $parameters }
     }
 }
 
@@ -27844,7 +28372,7 @@ The storage identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27871,7 +28399,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
         if($PSBoundParameters.ContainsKey('VolumeGroup')) { $parameters['volume-group'] = $VolumeGroup }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/lvmthin/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/lvmthin/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/lvmthin/$Name" -Parameters $parameters }
     }
 }
 
@@ -27923,7 +28451,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27952,7 +28480,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Filesystem')) { $parameters['filesystem'] = $Filesystem }
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/directory" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/directory", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/directory" -Parameters $parameters }
     }
 }
 
@@ -27975,7 +28503,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -27998,7 +28526,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
         if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/directory/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/directory/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/directory/$Name" -Parameters $parameters }
     }
 }
 
@@ -28056,7 +28584,7 @@ The RAID level to use. Enum: single,mirror,raid10,raidz,raidz2,raidz3,draid,drai
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28098,7 +28626,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Name')) { $parameters['name'] = $Name }
         if($PSBoundParameters.ContainsKey('Raidlevel')) { $parameters['raidlevel'] = $Raidlevel }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/zfs" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/zfs", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/zfs" -Parameters $parameters }
     }
 }
 
@@ -28121,7 +28649,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28144,7 +28672,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('CleanupConfig')) { $parameters['cleanup-config'] = $CleanupConfig }
         if($PSBoundParameters.ContainsKey('CleanupDisks')) { $parameters['cleanup-disks'] = $CleanupDisks }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/zfs/$Name" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/zfs/$Name", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/disks/zfs/$Name" -Parameters $parameters }
     }
 }
 
@@ -28286,7 +28814,7 @@ UUID for the GPT table
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28306,7 +28834,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
         if($PSBoundParameters.ContainsKey('Uuid')) { $parameters['uuid'] = $Uuid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/initgpt" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/initgpt", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/disks/initgpt" -Parameters $parameters }
     }
 }
 
@@ -28325,7 +28853,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28341,7 +28869,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Disk')) { $parameters['disk'] = $Disk }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/disks/wipedisk" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/disks/wipedisk", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/disks/wipedisk" -Parameters $parameters }
     }
 }
 
@@ -28416,7 +28944,7 @@ Only produces output suitable for logging, omitting progress indicators.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28436,7 +28964,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Notify')) { $parameters['notify'] = $Notify }
         if($PSBoundParameters.ContainsKey('Quiet')) { $parameters['quiet'] = $Quiet }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/apt/update" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/apt/update", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/apt/update" -Parameters $parameters }
     }
 }
 
@@ -28529,7 +29057,7 @@ Path to the containing file.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28557,7 +29085,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Index')) { $parameters['index'] = $Index }
         if($PSBoundParameters.ContainsKey('Path')) { $parameters['path'] = $Path }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/apt/repositories" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/apt/repositories", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/apt/repositories" -Parameters $parameters }
     }
 }
 
@@ -28578,7 +29106,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28598,7 +29126,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
         if($PSBoundParameters.ContainsKey('Handle')) { $parameters['handle'] = $Handle }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/apt/repositories" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/apt/repositories", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/apt/repositories" -Parameters $parameters }
     }
 }
 
@@ -28699,7 +29227,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -28719,14 +29247,14 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28800,7 +29328,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/firewall/rules" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/firewall/rules", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/firewall/rules" -Parameters $parameters }
     }
 }
 
@@ -28821,7 +29349,7 @@ Update rule at position <pos>.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -28840,7 +29368,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/firewall/rules/$Pos", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -28894,7 +29422,7 @@ Restrict packet destination address. This can refer to a single IP address, an I
 .PARAMETER Digest
 Prevent changes if current configuration file has a different digest. This can be used to prevent concurrent modifications.
 .PARAMETER Dport
-Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP destination port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Enable
 Flag to enable/disable a rule.
 .PARAMETER IcmpType
@@ -28916,14 +29444,14 @@ IP protocol. You can use protocol names ('tcp'/'udp') or simple numbers, as defi
 .PARAMETER Source
 Restrict packet source address. This can refer to a single IP address, an IP set ('+ipsetname') or an IP alias definition. You can also specify an address range like '20.34.101.207-201.3.9.99', or a list of IP addresses and networks (entries are separated by comma). Please do not mix IPv4 and IPv6 addresses inside such lists.
 .PARAMETER Sport
-Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+':'\d+', for example '80':'85', and you can use comma separated list to match several ports or ranges.
+Restrict TCP/UDP source port. You can use service names or simple numbers (0-65535), as defined in '/etc/services'. Port ranges can be specified with '\d+:\d+', for example '80:85', and you can use comma separated list to match several ports or ranges.
 .PARAMETER Type
 Rule type. Enum: in,out,forward,group
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29004,7 +29532,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Sport')) { $parameters['sport'] = $Sport }
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/firewall/rules/$Pos" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/firewall/rules/$Pos", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/firewall/rules/$Pos" -Parameters $parameters }
     }
 }
 
@@ -29061,7 +29589,7 @@ Enable NDP (Neighbor Discovery Protocol).
 .PARAMETER NfConntrackAllowInvalid
 Allow invalid packets on connection tracking.
 .PARAMETER NfConntrackHelpers
-Enable conntrack helpers for specific protocols. Supported protocols':' amanda, ftp, irc, netbios-ns, pptp, sane, sip, snmp, tftp
+Enable conntrack helpers for specific protocols. Supported protocols: amanda, ftp, irc, netbios-ns, pptp, sane, sip, snmp, tftp
 .PARAMETER NfConntrackMax
 Maximum number of tracked connections.
 .PARAMETER NfConntrackTcpTimeoutEstablished
@@ -29090,7 +29618,7 @@ Filter illegal combinations of TCP flags.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29191,7 +29719,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TcpFlagsLogLevel')) { $parameters['tcp_flags_log_level'] = $TcpFlagsLogLevel }
         if($PSBoundParameters.ContainsKey('Tcpflags')) { $parameters['tcpflags'] = $Tcpflags }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/firewall/options" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/firewall/options", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/firewall/options" -Parameters $parameters }
     }
 }
 
@@ -29408,7 +29936,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29421,7 +29949,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/replication/$Id/schedule_now"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/replication/$Id/schedule_now", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/replication/$Id/schedule_now" }
     }
 }
 
@@ -29492,7 +30020,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29502,7 +30030,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/certificates/acme/certificate"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/certificates/acme/certificate", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/certificates/acme/certificate" }
     }
 }
 
@@ -29521,7 +30049,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29537,7 +30065,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/certificates/acme/certificate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/certificates/acme/certificate", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/certificates/acme/certificate" -Parameters $parameters }
     }
 }
 
@@ -29556,7 +30084,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29572,7 +30100,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Force')) { $parameters['force'] = $Force }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/certificates/acme/certificate" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/certificates/acme/certificate", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/certificates/acme/certificate" -Parameters $parameters }
     }
 }
 
@@ -29618,7 +30146,7 @@ Restart pveproxy.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29634,7 +30162,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Restart')) { $parameters['restart'] = $Restart }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/certificates/custom" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/certificates/custom", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/nodes/$Node/certificates/custom" -Parameters $parameters }
     }
 }
 
@@ -29659,7 +30187,7 @@ Restart pveproxy.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29687,7 +30215,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Key')) { $parameters['key'] = $Key }
         if($PSBoundParameters.ContainsKey('Restart')) { $parameters['restart'] = $Restart }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/certificates/custom" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/certificates/custom", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/certificates/custom" -Parameters $parameters }
     }
 }
 
@@ -29758,7 +30286,7 @@ Node specific wake on LAN settings.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -29807,7 +30335,7 @@ PveResponse. Return response.
 
         if($PSBoundParameters.ContainsKey('AcmedomainN')) { $AcmedomainN.keys | ForEach-Object { $parameters['acmedomain' + $_] = $AcmedomainN[$_] } }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/config" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/config", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/config" -Parameters $parameters }
     }
 }
 
@@ -29835,6 +30363,134 @@ PveResponse. Return response.
 
     process {
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn"
+    }
+}
+
+function Get-PveNodesSdnFabrics
+{
+<#
+.DESCRIPTION
+Directory index for SDN fabric status.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Fabric
+Identifier for SDN fabrics
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Fabric,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn/fabrics/$Fabric"
+    }
+}
+
+function Get-PveNodesSdnFabricsRoutes
+{
+<#
+.DESCRIPTION
+Get all routes for a fabric.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Fabric
+Identifier for SDN fabrics
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Fabric,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn/fabrics/$Fabric/routes"
+    }
+}
+
+function Get-PveNodesSdnFabricsNeighbors
+{
+<#
+.DESCRIPTION
+Get all neighbors for a fabric.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Fabric
+Identifier for SDN fabrics
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Fabric,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn/fabrics/$Fabric/neighbors"
+    }
+}
+
+function Get-PveNodesSdnFabricsInterfaces
+{
+<#
+.DESCRIPTION
+Get all interfaces for a fabric.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Fabric
+Identifier for SDN fabrics
+.PARAMETER Node
+The cluster node name.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Fabric,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn/fabrics/$Fabric/interfaces"
     }
 }
 
@@ -29993,6 +30649,70 @@ PveResponse. Return response.
     }
 }
 
+function Get-PveNodesSdnVnets
+{
+<#
+.DESCRIPTION
+--
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn/vnets/$Vnet"
+    }
+}
+
+function Get-PveNodesSdnVnetsMacVrf
+{
+<#
+.DESCRIPTION
+Get the MAC VRF for a VNet in an EVPN zone.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Node
+The cluster node name.
+.PARAMETER Vnet
+The SDN vnet object identifier.
+.OUTPUTS
+PveResponse. Return response.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Node,
+
+        [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
+        [string]$Vnet
+    )
+
+    process {
+        return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/sdn/vnets/$Vnet/mac-vrf"
+    }
+}
+
 function Get-PveNodesVersion
 {
 <#
@@ -30062,7 +30782,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30079,7 +30799,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Command')) { $parameters['command'] = $Command }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/status" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/status", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/status" -Parameters $parameters }
     }
 }
 
@@ -30125,7 +30845,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30141,7 +30861,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Commands')) { $parameters['commands'] = $Commands }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/execute" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/execute", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/execute" -Parameters $parameters }
     }
 }
 
@@ -30158,7 +30878,7 @@ target node for wake on LAN packet
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30168,7 +30888,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/wakeonlan"
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/wakeonlan", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/wakeonlan" }
     }
 }
 
@@ -30332,14 +31052,28 @@ Read Journal
 Ticket data connection.
 .PARAMETER Endcursor
 End before the given Cursor. Conflicts with 'until'
+.PARAMETER Identifiers
+Also return a record listing the distinct syslog identifiers present, for filter completion. Only honored together with 'structured'.
+.PARAMETER Kernel
+Only print kernel messages.
 .PARAMETER Lastentries
 Limit to the last X lines. Conflicts with a range.
 .PARAMETER Node
 The cluster node name.
+.PARAMETER Priority
+Only print messages of this syslog priority: a single level from 0 (emerg) to 7 (debug), selecting that level and everything more severe, or a 'LOW..HIGH' range. Empty means no priority filter.
+.PARAMETER Service
+Only print messages whose syslog identifier matches this glob, for example 'pve*' or 'postfix/*'.
 .PARAMETER Since
 Display all log since this UNIX epoch. Conflicts with 'startcursor'.
 .PARAMETER Startcursor
 Start after the given Cursor. Conflicts with 'since'
+.PARAMETER Structured
+Return one JSON object per entry with separate fields (timestamp, identifier, message, priority, ...) instead of pre-rendered text lines.
+.PARAMETER Unit
+Only print messages of this systemd unit (the .service suffix is implied).
+.PARAMETER Units
+Also return a record listing the distinct systemd units present, for filter completion. Only honored together with 'structured'.
 .PARAMETER Until
 Display all log until this UNIX epoch. Conflicts with 'endcursor'.
 .OUTPUTS
@@ -30355,10 +31089,22 @@ PveResponse. Return response.
         [string]$Endcursor,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Identifiers,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Kernel,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Lastentries,
 
         [Parameter(Mandatory,ValueFromPipelineByPropertyName)]
         [string]$Node,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Priority,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Service,
 
         [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Since,
@@ -30367,15 +31113,31 @@ PveResponse. Return response.
         [string]$Startcursor,
 
         [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Structured,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [string]$Unit,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [bool]$Units,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Until
     )
 
     process {
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Endcursor')) { $parameters['endcursor'] = $Endcursor }
+        if($PSBoundParameters.ContainsKey('Identifiers')) { $parameters['identifiers'] = $Identifiers }
+        if($PSBoundParameters.ContainsKey('Kernel')) { $parameters['kernel'] = $Kernel }
         if($PSBoundParameters.ContainsKey('Lastentries')) { $parameters['lastentries'] = $Lastentries }
+        if($PSBoundParameters.ContainsKey('Priority')) { $parameters['priority'] = $Priority }
+        if($PSBoundParameters.ContainsKey('Service')) { $parameters['service'] = $Service }
         if($PSBoundParameters.ContainsKey('Since')) { $parameters['since'] = $Since }
         if($PSBoundParameters.ContainsKey('Startcursor')) { $parameters['startcursor'] = $Startcursor }
+        if($PSBoundParameters.ContainsKey('Structured')) { $parameters['structured'] = $Structured }
+        if($PSBoundParameters.ContainsKey('Unit')) { $parameters['unit'] = $Unit }
+        if($PSBoundParameters.ContainsKey('Units')) { $parameters['units'] = $Units }
         if($PSBoundParameters.ContainsKey('Until')) { $parameters['until'] = $Until }
 
         return Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource "/nodes/$Node/journal" -Parameters $parameters
@@ -30405,7 +31167,7 @@ sets the width of the console in pixels.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30438,7 +31200,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Websocket')) { $parameters['websocket'] = $Websocket }
         if($PSBoundParameters.ContainsKey('Width')) { $parameters['width'] = $Width }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/vncshell" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/vncshell", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/vncshell" -Parameters $parameters }
     }
 }
 
@@ -30459,7 +31221,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30480,7 +31242,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Cmd')) { $parameters['cmd'] = $Cmd }
         if($PSBoundParameters.ContainsKey('CmdOpts')) { $parameters['cmd-opts'] = $CmdOpts }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/termproxy" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/termproxy", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/termproxy" -Parameters $parameters }
     }
 }
 
@@ -30544,7 +31306,7 @@ SPICE proxy server. This can be used by the client to specify the proxy server. 
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30569,7 +31331,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('CmdOpts')) { $parameters['cmd-opts'] = $CmdOpts }
         if($PSBoundParameters.ContainsKey('Proxy')) { $parameters['proxy'] = $Proxy }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/spiceshell" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/spiceshell", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/spiceshell" -Parameters $parameters }
     }
 }
 
@@ -30621,7 +31383,7 @@ Search domain for host-name lookup.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30649,7 +31411,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Dns3')) { $parameters['dns3'] = $Dns3 }
         if($PSBoundParameters.ContainsKey('Search')) { $parameters['search'] = $Search }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/dns" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/dns", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/dns" -Parameters $parameters }
     }
 }
 
@@ -30695,7 +31457,7 @@ Time zone. The file '/usr/share/zoneinfo/zone.tab' contains the list of valid na
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30711,7 +31473,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Timezone')) { $parameters['timezone'] = $Timezone }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/time" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/time", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/nodes/$Node/time" -Parameters $parameters }
     }
 }
 
@@ -30759,7 +31521,7 @@ The template which will downloaded
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30779,7 +31541,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
         if($PSBoundParameters.ContainsKey('Template')) { $parameters['template'] = $Template }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/aplinfo" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/aplinfo", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/aplinfo" -Parameters $parameters }
     }
 }
 
@@ -30822,7 +31584,7 @@ function Get-PveNodesQueryUrlMetadata
 {
 <#
 .DESCRIPTION
-Query metadata of an URL':' file size, file name and mime type.
+Query metadata of an URL: file size, file name and mime type.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Node
@@ -30905,7 +31667,7 @@ Only consider guests from this comma separated list of VMIDs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30929,7 +31691,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('MaxWorkers')) { $parameters['max-workers'] = $MaxWorkers }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/startall" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/startall", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/startall" -Parameters $parameters }
     }
 }
 
@@ -30954,7 +31716,7 @@ Only consider Guests with these IDs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -30982,7 +31744,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Timeout')) { $parameters['timeout'] = $Timeout }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/stopall" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/stopall", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/stopall" -Parameters $parameters }
     }
 }
 
@@ -30994,7 +31756,7 @@ Suspend all VMs.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER MaxWorkers
-Maximal number of parallel migration job. If not set, uses'max_workers' from datacenter.cfg, and if that's not set the available'                    .' CPU threads, clamped to a maximum of 8, are used.
+Maximal number of parallel migration job. If not set, uses'max_workers' from datacenter.cfg, and if that's not set the available' .' CPU threads, clamped to a maximum of 8, are used.
 .PARAMETER Node
 The cluster node name.
 .PARAMETER Vms
@@ -31003,7 +31765,7 @@ Only consider Guests with these IDs.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -31023,7 +31785,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('MaxWorkers')) { $parameters['max-workers'] = $MaxWorkers }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/suspendall" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/suspendall", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/suspendall" -Parameters $parameters }
     }
 }
 
@@ -31050,7 +31812,7 @@ Enable live storage migration for local disk
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -31082,7 +31844,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
         if($PSBoundParameters.ContainsKey('WithLocalDisks')) { $parameters['with-local-disks'] = $WithLocalDisks }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/migrateall" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/migrateall", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/migrateall" -Parameters $parameters }
     }
 }
 
@@ -31130,7 +31892,7 @@ The cluster node name.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -31150,7 +31912,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Data')) { $parameters['data'] = $Data }
         if($PSBoundParameters.ContainsKey('Digest')) { $parameters['digest'] = $Digest }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/hosts" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/nodes/$Node/hosts", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/nodes/$Node/hosts" -Parameters $parameters }
     }
 }
 
@@ -31205,7 +31967,7 @@ host group for comstar views
 .PARAMETER ComstarTg
 target group for comstar views
 .PARAMETER Content
-Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
+Allowed content types. NOTE: the value 'rootdir' is used for Containers, and value 'images' for VMs.
 .PARAMETER ContentDirs
 Overrides for default content type directories.
 .PARAMETER CreateBasePath
@@ -31247,7 +32009,7 @@ Base64-encoded, PEM-formatted public RSA key. Used to encrypt a copy of the encr
 .PARAMETER MaxProtectedBackups
 Maximal number of protected backups per guest. Use '-1' for unlimited.
 .PARAMETER Mkdir
-Create the directory if it doesn't exist and populate it with default sub-dirs. NOTE':' Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.
+Create the directory if it doesn't exist and populate it with default sub-dirs. NOTE: Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.
 .PARAMETER Monhost
 IP addresses of monitors (for external clusters).
 .PARAMETER Mountpoint
@@ -31318,7 +32080,7 @@ Base path where to look for the created ZFS block devices. Set automatically dur
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -31576,7 +32338,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Vgname')) { $parameters['vgname'] = $Vgname }
         if($PSBoundParameters.ContainsKey('ZfsBasePath')) { $parameters['zfs-base-path'] = $ZfsBasePath }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/storage" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/storage", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/storage" -Parameters $parameters }
     }
 }
 
@@ -31593,7 +32355,7 @@ The storage identifier.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -31603,7 +32365,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/storage/$Storage"
+        if ($PSCmdlet.ShouldProcess("/storage/$Storage", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/storage/$Storage" }
     }
 }
 
@@ -31650,7 +32412,7 @@ host group for comstar views
 .PARAMETER ComstarTg
 target group for comstar views
 .PARAMETER Content
-Allowed content types.NOTE':' the value 'rootdir' is used for Containers, and value 'images' for VMs.
+Allowed content types. NOTE: the value 'rootdir' is used for Containers, and value 'images' for VMs.
 .PARAMETER ContentDirs
 Overrides for default content type directories.
 .PARAMETER CreateBasePath
@@ -31690,7 +32452,7 @@ Base64-encoded, PEM-formatted public RSA key. Used to encrypt a copy of the encr
 .PARAMETER MaxProtectedBackups
 Maximal number of protected backups per guest. Use '-1' for unlimited.
 .PARAMETER Mkdir
-Create the directory if it doesn't exist and populate it with default sub-dirs. NOTE':' Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.
+Create the directory if it doesn't exist and populate it with default sub-dirs. NOTE: Deprecated, use the 'create-base-path' and 'create-subdirs' options instead.
 .PARAMETER Monhost
 IP addresses of monitors (for external clusters).
 .PARAMETER Mountpoint
@@ -31747,7 +32509,7 @@ Base path where to look for the created ZFS block devices. Set automatically dur
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -31963,7 +32725,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
         if($PSBoundParameters.ContainsKey('ZfsBasePath')) { $parameters['zfs-base-path'] = $ZfsBasePath }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/storage/$Storage" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/storage/$Storage", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/storage/$Storage" -Parameters $parameters }
     }
 }
 
@@ -32056,7 +32818,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32105,7 +32867,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters.ContainsKey('Userid')) { $parameters['userid'] = $Userid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/users" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/users", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/users" -Parameters $parameters }
     }
 }
 
@@ -32122,7 +32884,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32132,7 +32894,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/users/$Userid"
+        if ($PSCmdlet.ShouldProcess("/access/users/$Userid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/users/$Userid" }
     }
 }
 
@@ -32194,7 +32956,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32242,7 +33004,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Keys')) { $parameters['keys'] = $Keys }
         if($PSBoundParameters.ContainsKey('Lastname')) { $parameters['lastname'] = $Lastname }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/users/$Userid", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid" -Parameters $parameters }
     }
 }
 
@@ -32294,7 +33056,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32304,7 +33066,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid/unlock-tfa"
+        if ($PSCmdlet.ShouldProcess("/access/users/$Userid/unlock-tfa", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid/unlock-tfa" }
     }
 }
 
@@ -32350,7 +33112,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32363,7 +33125,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/users/$Userid/token/$Tokenid"
+        if ($PSCmdlet.ShouldProcess("/access/users/$Userid/token/$Tokenid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/users/$Userid/token/$Tokenid" }
     }
 }
 
@@ -32403,7 +33165,7 @@ function New-PveAccessUsersToken
 {
 <#
 .DESCRIPTION
-Generate a new API token for a specific user. NOTE':' returns API token value, which needs to be stored as it cannot be retrieved afterwards!
+Generate a new API token for a specific user. NOTE: returns API token value, which needs to be stored as it cannot be retrieved afterwards!
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Comment
@@ -32420,7 +33182,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32447,7 +33209,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Expire')) { $parameters['expire'] = $Expire }
         if($PSBoundParameters.ContainsKey('Privsep')) { $parameters['privsep'] = $Privsep }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/users/$Userid/token/$Tokenid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/users/$Userid/token/$Tokenid", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/users/$Userid/token/$Tokenid" -Parameters $parameters }
     }
 }
 
@@ -32455,7 +33217,7 @@ function Set-PveAccessUsersToken
 {
 <#
 .DESCRIPTION
-Update API token for a specific user. NOTE':' when 'regenerate' is set, the returned token value needs to be stored as it cannot be retrieved afterwards!
+Update API token for a specific user. NOTE: when 'regenerate' is set, the returned token value needs to be stored as it cannot be retrieved afterwards!
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Comment
@@ -32476,7 +33238,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32511,7 +33273,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Privsep')) { $parameters['privsep'] = $Privsep }
         if($PSBoundParameters.ContainsKey('Regenerate')) { $parameters['regenerate'] = $Regenerate }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid/token/$Tokenid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/users/$Userid/token/$Tokenid", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/users/$Userid/token/$Tokenid" -Parameters $parameters }
     }
 }
 
@@ -32552,7 +33314,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32569,7 +33331,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Groupid')) { $parameters['groupid'] = $Groupid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/groups" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/groups", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/groups" -Parameters $parameters }
     }
 }
 
@@ -32586,7 +33348,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32596,7 +33358,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/groups/$Groupid"
+        if ($PSCmdlet.ShouldProcess("/access/groups/$Groupid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/groups/$Groupid" }
     }
 }
 
@@ -32642,7 +33404,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32658,7 +33420,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/groups/$Groupid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/groups/$Groupid", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/groups/$Groupid" -Parameters $parameters }
     }
 }
 
@@ -32699,7 +33461,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32716,7 +33478,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Privs')) { $parameters['privs'] = $Privs }
         if($PSBoundParameters.ContainsKey('Roleid')) { $parameters['roleid'] = $Roleid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/roles" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/roles", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/roles" -Parameters $parameters }
     }
 }
 
@@ -32733,7 +33495,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32743,7 +33505,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/roles/$Roleid"
+        if ($PSCmdlet.ShouldProcess("/access/roles/$Roleid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/roles/$Roleid" }
     }
 }
 
@@ -32791,7 +33553,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32811,7 +33573,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Append')) { $parameters['append'] = $Append }
         if($PSBoundParameters.ContainsKey('Privs')) { $parameters['privs'] = $Privs }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/roles/$Roleid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/roles/$Roleid", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/roles/$Roleid" -Parameters $parameters }
     }
 }
 
@@ -32862,7 +33624,7 @@ List of users.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -32899,7 +33661,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Tokens')) { $parameters['tokens'] = $Tokens }
         if($PSBoundParameters.ContainsKey('Users')) { $parameters['users'] = $Users }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/acl" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/acl", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/acl" -Parameters $parameters }
     }
 }
 
@@ -32995,7 +33757,7 @@ Authentication domain ID
 .PARAMETER Scopes
 Specifies the scopes (user details) that should be authorized and returned, for example 'email' or 'profile'.
 .PARAMETER Secure
-Use secure LDAPS protocol. DEPRECATED':' use 'mode' instead.
+Use secure LDAPS protocol. DEPRECATED: use 'mode' instead.
 .PARAMETER Server1
 Server IP address (or DNS name)
 .PARAMETER Server2
@@ -33022,7 +33784,7 @@ Verify the server's SSL certificate
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33206,7 +33968,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('UsernameClaim')) { $parameters['username-claim'] = $UsernameClaim }
         if($PSBoundParameters.ContainsKey('Verify')) { $parameters['verify'] = $Verify }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/domains", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains" -Parameters $parameters }
     }
 }
 
@@ -33223,7 +33985,7 @@ Authentication domain ID
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33233,7 +33995,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/domains/$Realm"
+        if ($PSCmdlet.ShouldProcess("/access/domains/$Realm", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/domains/$Realm" }
     }
 }
 
@@ -33338,7 +34100,7 @@ Authentication domain ID
 .PARAMETER Scopes
 Specifies the scopes (user details) that should be authorized and returned, for example 'email' or 'profile'.
 .PARAMETER Secure
-Use secure LDAPS protocol. DEPRECATED':' use 'mode' instead.
+Use secure LDAPS protocol. DEPRECATED: use 'mode' instead.
 .PARAMETER Server1
 Server IP address (or DNS name)
 .PARAMETER Server2
@@ -33361,7 +34123,7 @@ Verify the server's SSL certificate
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33543,7 +34305,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('UserClasses')) { $parameters['user_classes'] = $UserClasses }
         if($PSBoundParameters.ContainsKey('Verify')) { $parameters['verify'] = $Verify }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/domains/$Realm" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/domains/$Realm", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/domains/$Realm" -Parameters $parameters }
     }
 }
 
@@ -33551,7 +34313,7 @@ function New-PveAccessDomainsSync
 {
 <#
 .DESCRIPTION
-Syncs users and/or groups from the configured LDAP to user.cfg. NOTE':' Synced groups will have the name 'name-$realm', so make sure those groups do not exist to prevent overwriting.
+Syncs users and/or groups from the configured LDAP to user.cfg. NOTE: Synced groups will have the name 'name-$realm', so make sure those groups do not exist to prevent overwriting.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER DryRun
@@ -33559,20 +34321,20 @@ If set, does not write anything.
 .PARAMETER EnableNew
 Enable newly synced users immediately.
 .PARAMETER Full
-DEPRECATED':' use 'remove-vanished' instead. If set, uses the LDAP Directory as source of truth, deleting users or groups not returned from the sync and removing all locally modified properties of synced users. If not set, only syncs information which is present in the synced data, and does not delete or modify anything else.
+DEPRECATED: use 'remove-vanished' instead. If set, uses the LDAP Directory as source of truth, deleting users or groups not returned from the sync and removing all locally modified properties of synced users. If not set, only syncs information which is present in the synced data, and does not delete or modify anything else.
 .PARAMETER Purge
-DEPRECATED':' use 'remove-vanished' instead. Remove ACLs for users or groups which were removed from the config during a sync.
+DEPRECATED: use 'remove-vanished' instead. Remove ACLs for users or groups which were removed from the config during a sync.
 .PARAMETER Realm
 Authentication domain ID
 .PARAMETER RemoveVanished
-A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible':' 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
+A semicolon-separated list of things to remove when they or the user vanishes during a sync. The following values are possible: 'entry' removes the user/group when not returned from the sync. 'properties' removes the set properties on existing user/group that do not appear in the source (even custom ones). 'acl' removes acls when the user/group is not returned from the sync. Instead of a list it also can be 'none' (the default).
 .PARAMETER Scope
 Select what to sync. Enum: users,groups,both
 .OUTPUTS
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33609,7 +34371,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RemoveVanished')) { $parameters['remove-vanished'] = $RemoveVanished }
         if($PSBoundParameters.ContainsKey('Scope')) { $parameters['scope'] = $Scope }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains/$Realm/sync" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/domains/$Realm/sync", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/domains/$Realm/sync" -Parameters $parameters }
     }
 }
 
@@ -33650,7 +34412,7 @@ Redirection Url. The client should set this to the used server url (location.ori
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33667,7 +34429,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Realm')) { $parameters['realm'] = $Realm }
         if($PSBoundParameters.ContainsKey('RedirectUrl')) { $parameters['redirect-url'] = $RedirectUrl }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/openid/auth-url" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/openid/auth-url", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/openid/auth-url" -Parameters $parameters }
     }
 }
 
@@ -33688,7 +34450,7 @@ OpenId state.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33709,7 +34471,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('RedirectUrl')) { $parameters['redirect-url'] = $RedirectUrl }
         if($PSBoundParameters.ContainsKey('State')) { $parameters['state'] = $State }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/openid/login" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/openid/login", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/openid/login" -Parameters $parameters }
     }
 }
 
@@ -33770,7 +34532,7 @@ Add a TFA entry for a user.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER Challenge
-When responding to a u2f challenge':' the original challenge string
+When responding to a u2f challenge: the original challenge string
 .PARAMETER Description
 A description to distinguish multiple entries from one another
 .PARAMETER Password
@@ -33787,7 +34549,7 @@ The current value for the provided totp URI, or a Webauthn/U2F challenge respons
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33824,7 +34586,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Type')) { $parameters['type'] = $Type }
         if($PSBoundParameters.ContainsKey('Value')) { $parameters['value'] = $Value }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/tfa/$Userid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/tfa/$Userid", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/tfa/$Userid" -Parameters $parameters }
     }
 }
 
@@ -33845,7 +34607,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33864,7 +34626,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/tfa/$Userid/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/tfa/$Userid/$Id", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/access/tfa/$Userid/$Id" -Parameters $parameters }
     }
 }
 
@@ -33921,7 +34683,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -33948,7 +34710,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Enable')) { $parameters['enable'] = $Enable }
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/tfa/$Userid/$Id" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/tfa/$Userid/$Id", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/tfa/$Userid/$Id" -Parameters $parameters }
     }
 }
 
@@ -34001,7 +34763,7 @@ User name
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34042,7 +34804,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('TfaChallenge')) { $parameters['tfa-challenge'] = $TfaChallenge }
         if($PSBoundParameters.ContainsKey('Username')) { $parameters['username'] = $Username }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/ticket" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/ticket", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/ticket" -Parameters $parameters }
     }
 }
 
@@ -34067,7 +34829,7 @@ The VNC ticket.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34096,7 +34858,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Privs')) { $parameters['privs'] = $Privs }
         if($PSBoundParameters.ContainsKey('Vncticket')) { $parameters['vncticket'] = $Vncticket }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/vncticket" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/vncticket", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/access/vncticket" -Parameters $parameters }
     }
 }
 
@@ -34117,7 +34879,7 @@ Full User ID, in the `name@realm` format.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34138,7 +34900,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Password')) { $parameters['password'] = (ConvertFrom-SecureString -SecureString $Password -AsPlainText) }
         if($PSBoundParameters.ContainsKey('Userid')) { $parameters['userid'] = $Userid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/password" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/access/password", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/access/password" -Parameters $parameters }
     }
 }
 
@@ -34191,7 +34953,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34204,7 +34966,7 @@ PveResponse. Return response.
         $parameters = @{}
         if($PSBoundParameters.ContainsKey('Poolid')) { $parameters['poolid'] = $Poolid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/pools" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/pools", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/pools" -Parameters $parameters }
     }
 }
 
@@ -34260,7 +35022,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34277,7 +35039,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Comment')) { $parameters['comment'] = $Comment }
         if($PSBoundParameters.ContainsKey('Poolid')) { $parameters['poolid'] = $Poolid }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/pools" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/pools", 'POST')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Create -Resource "/pools" -Parameters $parameters }
     }
 }
 
@@ -34304,7 +35066,7 @@ List of guest VMIDs to add or remove from this pool.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34337,7 +35099,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/pools", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools" -Parameters $parameters }
     }
 }
 
@@ -34354,7 +35116,7 @@ Ticket data connection.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34364,7 +35126,7 @@ PveResponse. Return response.
     )
 
     process {
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/pools/$Poolid"
+        if ($PSCmdlet.ShouldProcess("/pools/$Poolid", 'DELETE')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Delete -Resource "/pools/$Poolid" }
     }
 }
 
@@ -34427,7 +35189,7 @@ List of guest VMIDs to add or remove from this pool.
 PveResponse. Return response.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess)]
     Param(
         [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
@@ -34459,7 +35221,7 @@ PveResponse. Return response.
         if($PSBoundParameters.ContainsKey('Storage')) { $parameters['storage'] = $Storage }
         if($PSBoundParameters.ContainsKey('Vms')) { $parameters['vms'] = $Vms }
 
-        return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools/$Poolid" -Parameters $parameters
+        if ($PSCmdlet.ShouldProcess("/pools/$Poolid", 'PUT')) { return Invoke-PveRestApi -PveTicket $PveTicket -Method Set -Resource "/pools/$Poolid" -Parameters $parameters }
     }
 }
 
