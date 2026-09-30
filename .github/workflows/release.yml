@@ -67,9 +67,16 @@ jobs:
             exit 0
           fi
 
+          # where to get it, as cv4vs-agents does: the release page carries no file to install
+          GALLERY="https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/$VERSION"
+
           echo "✅ Changelog section found for $VERSION"
           echo "notes<<EOF" >> $GITHUB_OUTPUT
           echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "Install from the [PowerShell Gallery]($GALLERY): \`Install-Module -Name Corsinvest.ProxmoxVE.Api -RequiredVersion $VERSION\`" >> $GITHUB_OUTPUT
+          echo "" >> $GITHUB_OUTPUT
+          echo "[PowerShell Gallery]($GALLERY) | [Documentation](https://corsinvest.github.io/cv4pve-api-powershell/) | [Website](https://www.corsinvest.it/cv4pve)" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Publish module to PowerShell Gallery
