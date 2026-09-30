@@ -72,13 +72,13 @@ For a static address write `ip=192.0.2.10/24,gw=192.0.2.1` in the network value.
 Most environments create VMs from a template rather than from an ISO:
 
 ```powershell
-$template = Get-PveVm -VmIdOrName 'debian13-template'
+$template = Get-PveGuest -VmIdOrName 'debian13-template'
 
 foreach ($name in 'web01', 'web02', 'web03') {
     $newid = (Get-PveClusterNextid).Response.data
     $r = New-PveNodesQemuClone -Node $template.node -Vmid $template.vmid -Newid $newid -Name $name -Full $true
     if (-not (Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 900000)) { throw "Clone of $name timed out" }
-    Start-PveVm -VmIdOrName $newid | Out-Null
+    Start-PveGuest -VmIdOrName $newid | Out-Null
 }
 ```
 

@@ -1,64 +1,75 @@
 ---
 title: Power and lock
-description: Start, stop, suspend, resume, reset and unlock a VM or container by id or name, without knowing its node or type.
+description: Start, stop, shut down, restart, suspend, resume, reset and unlock VMs and containers by id, name, node, pool or tag, without knowing their node or type.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-`Start-PveVm`, `Stop-PveVm`, `Suspend-PveVm`, `Resume-PveVm`, `Reset-PveVm` and `Unlock-PveVm` take a
-VM or container by id or name, find its node and type with [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/),
-and call the right endpoint — `qemu` or `lxc`. You do not need to know where it runs.
+`Start-PveGuest`, `Stop-PveGuest`, `Restart-PveGuest`, `Suspend-PveGuest`, `Resume-PveGuest`,
+`Reset-PveGuest` and `Unlock-PveGuest` take the guests with the
+[selection of Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests) — an id, a name,
+a range, `@node-`, `@pool-`, `@tag-`, with exclusions — find the node and the type of each one, and call
+the right endpoint, `qemu` or `lxc`. You do not need to know where they run.
 
 ```powershell
-Start-PveVm -VmIdOrName web01
-Stop-PveVm  -VmIdOrName 100
+Start-PveGuest -VmIdOrName web01
+Stop-PveGuest  -VmIdOrName 100
+Start-PveGuest -VmIdOrName '@tag-lab,-@node-pve03'     # every lab guest, except those on pve03
 ```
 
-They return the `PveResponse` of the call, with the [UPID of the task](/cv4pve-api-powershell/concepts/tasks/)
-in `.Response.data`:
+They return one `PveResponse` per guest, with the [UPID of the task](/cv4pve-api-powershell/concepts/tasks/)
+in `.Response.data`. Pipe them into `Wait-PveTaskIsFinish` to wait:
 
 ```powershell
-$r = Start-PveVm -VmIdOrName web01
-Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 60000
+Start-PveGuest -VmIdOrName web01 | Wait-PveTaskIsFinish -Timeout 60000
 ```
+
+When nothing matches the selection they write the error `VM/CT '…' not found!`.
 
 | Function | Does |
 |---|---|
-| `Start-PveVm` | Starts the guest (`status/start`). |
-| `Stop-PveVm` | Stops it at once, like pulling the plug (`status/stop`). |
-| `Suspend-PveVm` | Pauses it (`status/suspend`). |
-| `Resume-PveVm` | Resumes it after a suspend (`status/resume`). |
-| `Reset-PveVm` | Resets a VM (`status/reset`); on a container it throws. |
-| `Unlock-PveVm` | Removes the lock left by an interrupted backup, snapshot or migration (`config`, `delete=lock`). |
+| `Start-PveGuest` | Starts the guest (`status/start`). |
+| `Stop-PveGuest` | Stops it at once, like pulling the plug (`status/stop`). |
+| `Stop-PveGuest -Shutdown` | Shuts it down cleanly, through the guest operating system (`status/shutdown`). |
+| `Restart-PveGuest` | Reboots it cleanly, through the guest operating system (`status/reboot`). |
+| `Suspend-PveGuest` | Pauses it (`status/suspend`). |
+| `Resume-PveGuest` | Resumes it after a suspend (`status/resume`). |
+| `Reset-PveGuest` | Resets a VM (`status/reset`). Containers cannot be reset: they get an error and are skipped. |
+| `Unlock-PveGuest` | Removes the lock left by an interrupted backup, snapshot or migration (`config`, `delete=lock`). |
+
+The former names `Start-PveVm`, `Stop-PveVm`, … still work as aliases.
 
 ## Shut down cleanly
 
-`Stop-PveVm` does not ask the guest to shut down: it stops it at once, and unsaved data in the guest is
-lost. For a clean shutdown use the shutdown endpoint, through its alias:
+`Stop-PveGuest` does not ask the guest to shut down: it stops it at once, and unsaved data in the guest is
+lost. With `-Shutdown` it asks the guest operating system to shut down — through ACPI or the guest agent
+for a VM:
 
 ```powershell
-$vm = Get-PveVm -VmIdOrName web01
-Shutdown-PveQemu -Node $vm.node -Vmid $vm.vmid -Timeout 180 -Forcestop $true
+Stop-PveGuest -VmIdOrName '@tag-lab' -Shutdown -Timeout 120 -ForceStop
 ```
 
-`-Timeout` is how many seconds the guest has to shut down; with `-Forcestop $true` it is stopped if it
-has not finished by then. Containers have `Shutdown-PveLxc`.
+`-Timeout` is how many seconds each guest has to shut down; with `-ForceStop` a guest that has not
+finished by then is stopped. A VM without an operating system that answers ACPI never shuts down by
+itself: only `-ForceStop` stops it. `-Timeout` and `-ForceStop` exist only with `-Shutdown`.
+
+`Restart-PveGuest` reboots the same way, through the guest; its `-Timeout` is how long to wait for the
+shutdown before the guest starts again. `Reset-PveGuest` is the hard reset of a VM.
 
 ## Unlock
 
 A VM stays locked if an operation that locks it — backup, snapshot, migration, clone — is interrupted,
-and Proxmox VE refuses further operations with `VM is locked`. `Unlock-PveVm` removes the lock, like
+and Proxmox VE refuses further operations with `VM is locked`. `Unlock-PveGuest` removes the lock, like
 `qm unlock` on a node. Do it only when you are sure the operation is no longer running.
 
 On a VM it works only for `root@pam`: it sends `skiplock`, which Proxmox VE reserves to that account.
 On a container `VM.Config.*` privileges are enough — see [Permissions](/cv4pve-api-powershell/permissions/).
 
 <Aside type="caution">
-Pass one VM at a time. When `-VmIdOrName` matches several VMs — a wildcard, a range, a tag — the current
-version does not handle them one by one and may call the wrong endpoint. To act on many VMs, loop:
+A wide selection acts on every guest it matches: check it first with `Get-PveGuest` and the same
+`-VmIdOrName`.
 
 ```powershell
-Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'lab' -and $_.status -eq 'running' } |
-    ForEach-Object { Stop-PveVm -VmIdOrName $_.vmid }
+Get-PveGuest -VmIdOrName '@tag-lab,-@node-pve03' | Format-Table vmid, name, node, status
 ```
 </Aside>

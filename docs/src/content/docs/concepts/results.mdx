@@ -1,6 +1,6 @@
 ---
 title: Results
-description: What the cmdlets return — PveResponse and its data, the objects of Get-PveVm, dates in Unix time — and how to use them in the pipeline.
+description: What the cmdlets return — PveResponse and its data, the objects of Get-PveGuest, dates in Unix time — and how to use them in the pipeline.
 ---
 
 ## `PveResponse`
@@ -54,15 +54,15 @@ A list — nodes, VMs, snapshots, tasks — is an array in `Response.data`: pipe
 ## Functions that return the objects
 
 The functions written for convenience return the objects themselves, not a `PveResponse`:
-[Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/) and `Get-PveNode` return the VMs, containers
+[Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/) and `Get-PveNode` return the VMs, containers
 and nodes, `Get-PveTaskIsRunning` and the `Wait-` functions return `$true` or `$false`. The page of
 each function in the [reference](/cv4pve-api-powershell/reference/module/) shows its output.
 
-The objects of `Get-PveVm` have `node` and `vmid` properties, which the generated cmdlets bind by
+The objects of `Get-PveGuest` have `node` and `vmid` properties, which the generated cmdlets bind by
 name — so they pipe straight in:
 
 ```powershell
-Get-PveVm -VmIdOrName 100 | Get-PveNodesQemuConfig
+Get-PveGuest -VmIdOrName 100 | Get-PveNodesQemuConfig
 ```
 
 ## Dates

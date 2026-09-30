@@ -106,8 +106,8 @@ Keep each connection in a variable and pass it with `-PveTicket`:
 $prod = Connect-PveCluster -HostsAndPorts prod-pve01 -ApiToken $env:PVE_PROD_TOKEN
 $lab  = Connect-PveCluster -HostsAndPorts lab-pve01  -ApiToken $env:PVE_LAB_TOKEN -SkipRefreshPveTicketLast
 
-Get-PveVm -PveTicket $prod | Measure-Object
-Get-PveVm -PveTicket $lab  | Measure-Object
+Get-PveGuest -PveTicket $prod | Measure-Object
+Get-PveGuest -PveTicket $lab  | Measure-Object
 ```
 
 `-SkipRefreshPveTicketLast` leaves `$PveTicketLast` as it is, so cmdlets without `-PveTicket` keep

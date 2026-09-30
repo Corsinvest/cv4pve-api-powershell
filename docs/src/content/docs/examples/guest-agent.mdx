@@ -16,7 +16,7 @@ then a full stop and start of the VM.
 ## Read from the guest
 
 ```powershell
-$vm = Get-PveVm -VmIdOrName web01
+$vm = Get-PveGuest -VmIdOrName web01
 
 # is the agent answering?
 (New-PveNodesQemuAgentPing -Node $vm.node -Vmid $vm.vmid).IsSuccessStatusCode
@@ -42,7 +42,7 @@ Running a command is two calls: `New-PveNodesQemuAgentExec` starts it and return
 `Get-PveNodesQemuAgentExecStatus` reports whether it ended, with its exit code and output.
 
 ```powershell
-$vm = Get-PveVm -VmIdOrName web01
+$vm = Get-PveGuest -VmIdOrName web01
 
 $exec = New-PveNodesQemuAgentExec -Node $vm.node -Vmid $vm.vmid -Command @('/usr/bin/df', '-h', '/')
 $processId = $exec.Response.data.pid

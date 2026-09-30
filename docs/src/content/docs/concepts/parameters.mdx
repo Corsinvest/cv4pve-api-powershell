@@ -79,11 +79,11 @@ parameters — `{node}`, `{vmid}`, `{storage}` in the endpoint — are always re
 
 Every parameter of the generated cmdlets binds **by property name** from the pipeline. An object with a
 `node` and a `vmid` property fills `-Node` and `-Vmid`; `-PveTicket` is filled the same way. That is
-what makes `Get-PveVm` useful in front of them:
+what makes `Get-PveGuest` useful in front of them:
 
 ```powershell
 # the configuration of every running VM of pool "web"
-Get-PveVm -VmIdOrName '@pool-web' |
+Get-PveGuest -VmIdOrName '@pool-web' |
     Where-Object { $_.type -eq 'qemu' -and $_.status -eq 'running' } |
     Get-PveNodesQemuConfig |
     ForEach-Object { $_.Response.data }

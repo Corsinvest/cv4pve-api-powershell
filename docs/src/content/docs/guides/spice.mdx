@@ -14,7 +14,7 @@ Invoke-PveSpice -VmIdOrName web01 -Viewer 'C:\Program Files\VirtViewer v11.0-256
 Invoke-PveSpice -VmIdOrName web01 -Viewer /usr/bin/remote-viewer
 ```
 
-It finds the VM with [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/), asks Proxmox VE for a
+It finds the VM with [Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/), asks Proxmox VE for a
 SPICE connection file (`POST /nodes/{node}/qemu/{vmid}/spiceproxy`), saves it to a temporary file and
 starts the viewer on it. `Show-PveSpice` is an alias.
 

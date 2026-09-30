@@ -27,7 +27,7 @@ import proxmoxLogo from '../../assets/proxmox-logo.svg';
 
 export const features = [
   { title: 'The whole API', text: 'One cmdlet per endpoint and method, generated from the Proxmox VE API: its parameters, their types and allowed values come from the API itself.', href: 'reference/' },
-  { title: 'VMs by id or name', text: 'Get-PveVm finds VMs and containers by id, name, range, pool, tag or node, and its output pipes straight into the other cmdlets.', href: 'guides/finding-vms/' },
+  { title: 'VMs by id or name', text: 'Get-PveGuest finds VMs and containers by id, name, range, node, pool or tag, with exclusions; the same selection starts, stops or snapshots them all in one call.', href: 'guides/finding-vms/' },
   { title: 'API token or password', text: 'Connect with an API token or a user and password, list several nodes and the first one that answers is used.', href: 'connection/' },
   { title: 'Objects, not text', text: 'Every call returns the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it: filter, sort, export to CSV.', href: 'concepts/results/' },
   { title: 'Tasks', text: 'Start a backup, a clone or a migration and wait for its task to finish, with a progress bar if you like.', href: 'concepts/tasks/' },
@@ -35,7 +35,7 @@ export const features = [
 ];
 
 <TerminalTable
-  command="Get-PveVm | Format-Table vmid, name, node, type, status"
+  command="Get-PveGuest | Format-Table vmid, name, node, type, status"
   columns={[
     { label: 'vmid', style: 'code' },
     { label: 'name' },
@@ -44,12 +44,12 @@ export const features = [
     { label: 'status' },
   ]}
   rows={[
-    ['100', 'backup01', 'pve02', 'lxc', 'running'],
-    ['102', 'firewall02', 'pve02', 'qemu', 'running'],
     ['105', 'test', 'pve01', 'lxc', 'stopped'],
-    ['203', 'test-debian', 'pve02', 'qemu', 'stopped'],
     ['1000', 'firewall01', 'pve01', 'qemu', 'running'],
     ['1006', 'dc01', 'pve01', 'qemu', 'running'],
+    ['100', 'backup01', 'pve02', 'lxc', 'running'],
+    ['102', 'firewall02', 'pve02', 'qemu', 'running'],
+    ['203', 'test-debian', 'pve02', 'qemu', 'stopped'],
     ['1012', 'mailstore', 'pve02', 'qemu', 'running'],
   ]}
   note="A few rows of a two-node test cluster, names changed."

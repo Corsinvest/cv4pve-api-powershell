@@ -24,7 +24,7 @@ The reading recipes were run as shown. The ones that change something — under
 ### Running guests per node
 
 ```powershell
-Get-PveVm | Where-Object status -eq 'running' | Group-Object node | Select-Object Name, Count
+Get-PveGuest | Where-Object status -eq 'running' | Group-Object node | Select-Object Name, Count
 ```
 
 ```text
@@ -37,7 +37,7 @@ pve02     6
 ### Guests using the most memory
 
 ```powershell
-Get-PveVm | Where-Object status -eq 'running' | Sort-Object mem -Descending |
+Get-PveGuest | Where-Object status -eq 'running' | Sort-Object mem -Descending |
     Select-Object -First 3 vmid, name, node,
         @{ n = 'memGB'; e = { [math]::Round($_.mem / 1GB, 1) } },
         @{ n = 'maxmemGB'; e = { [math]::Round($_.maxmem / 1GB, 1) } }
@@ -60,7 +60,7 @@ not to Proxmox VE: ask every running VM that has one.
 
 ```powershell
 $ip = '192.0.2.21'
-Get-PveVm | Where-Object { $_.type -eq 'qemu' -and $_.status -eq 'running' } | Where-Object {
+Get-PveGuest | Where-Object { $_.type -eq 'qemu' -and $_.status -eq 'running' } | Where-Object {
     $r = Get-PveNodesQemuAgentNetworkGetInterfaces -Node $_.node -Vmid $_.vmid
     $r.IsSuccessStatusCode -and ($r.Response.data.result.'ip-addresses'.'ip-address' -contains $ip)
 } | Select-Object vmid, name, node
@@ -77,12 +77,11 @@ VMs without a running agent answer with an error and are skipped.
 ### Guests with a tag
 
 ```powershell
-Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'production' } | Select-Object vmid, name, tags
+Get-PveGuest -VmIdOrName '@tag-production' | Select-Object vmid, name, tags
 ```
 
-Proxmox VE separates tags with `;`. `Get-PveVm -VmIdOrName '@tag-…'` finds only guests with a single tag,
-see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/).
-
+`@tag-` finds the guests that have the tag among their others. The same selection takes exclusions:
+`'@tag-production,-@node-pve03'` — see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests).
 ## Nodes
 
 ### CPU, memory and uptime
@@ -173,8 +172,8 @@ A shared storage appears once per node, with the same values.
 
 ```powershell
 $limit = ConvertTo-PveUnixTime (Get-Date).AddDays(-30)
-foreach ($vm in Get-PveVm) {
-    (Get-PveVmSnapshot -VmIdOrName $vm.vmid).Response.data |
+foreach ($vm in Get-PveGuest) {
+    (Get-PveGuestSnapshot -VmIdOrName $vm.vmid).Response.data |
         Where-Object { $_.name -ne 'current' -and $_.snaptime -lt $limit } |
         Select-Object @{ n = 'vmid'; e = { $vm.vmid } }, name,
             @{ n = 'taken'; e = { (ConvertFrom-PveUnixTime $_.snaptime).ToLocalTime() } }
@@ -257,16 +256,16 @@ These change the cluster: they are shown, not run for this page.
 ### Start every guest with a tag
 
 ```powershell
-Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'lab' -and $_.status -eq 'stopped' } |
-    ForEach-Object { Start-PveVm -VmIdOrName $_.vmid }
+$stopped = (Get-PveGuest -VmIdOrName '@tag-lab' | Where-Object status -eq 'stopped').vmid -join ','
+if ($stopped) { Start-PveGuest -VmIdOrName $stopped | Wait-PveTaskIsFinish -Timeout 120000 }
 ```
 
-One call per guest: [Start-PveVm](/cv4pve-api-powershell/guides/power/) handles one VM at a time.
-
+[Start-PveGuest](/cv4pve-api-powershell/guides/power/) starts every guest of the selection, VMs and
+containers, and returns one response per guest; `Wait-PveTaskIsFinish` waits for each task in turn.
 ### Migrate a VM to another node
 
 ```powershell
-$vm = Get-PveVm -VmIdOrName web01
+$vm = Get-PveGuest -VmIdOrName web01
 $r = New-PveNodesQemuMigrate -Node $vm.node -Vmid $vm.vmid -Target pve02 -Online $true
 Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 1800000     # up to 30 minutes
 ```
@@ -278,11 +277,11 @@ Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 1800000     # up to 30 minu
 
 ```powershell
 $limit = ConvertTo-PveUnixTime (Get-Date).AddDays(-30)
-foreach ($vm in Get-PveVm) {
-    (Get-PveVmSnapshot -VmIdOrName $vm.vmid).Response.data |
+foreach ($vm in Get-PveGuest) {
+    (Get-PveGuestSnapshot -VmIdOrName $vm.vmid).Response.data |
         Where-Object { $_.name -ne 'current' -and $_.snaptime -lt $limit } |
         ForEach-Object {
-            $r = Remove-PveVmSnapshot -VmIdOrName $vm.vmid -Snapname $_.name
+            $r = Remove-PveGuestSnapshot -VmIdOrName $vm.vmid -Snapname $_.name
             Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 300000 | Out-Null
         }
 }

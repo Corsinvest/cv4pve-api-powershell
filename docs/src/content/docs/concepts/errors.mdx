@@ -60,9 +60,14 @@ A few things do throw a PowerShell exception, because the script cannot go on wi
 - `Connect-PveCluster`: no reachable host (`Host not valid`), wrong user or password, missing second
   factor — see [Connection](/cv4pve-api-powershell/connection/).
 - Any cmdlet called before `Connect-PveCluster`: `No PveTicket - Cluster Connect missing?`.
-- `Reset-PveVm` on a container: `Lxc not implement reset!` (containers cannot be reset).
+- `Get-PveTaskIsRunning`, `Get-PveTaskExitStatus` and the `Wait-` functions when the status of the task
+  cannot be read — see [Tasks](/cv4pve-api-powershell/concepts/tasks/#when-the-status-cannot-be-read).
 - Parameter errors caught by PowerShell before the call: a missing mandatory parameter, a value outside
   the allowed ones, a `[bool]` without a value.
+
+The functions that act on a selection of guests (`Start-PveGuest`, `New-PveGuestSnapshot`…) write a
+non-terminating error when nothing matches (`VM/CT '…' not found!`), and `Reset-PveGuest` writes one for
+each container it skips. `-ErrorAction Stop` turns them into exceptions.
 
 <Aside>
 A task that fails is a third case: the call that starts it succeeds and returns the UPID, and the

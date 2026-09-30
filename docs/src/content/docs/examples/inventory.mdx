@@ -16,7 +16,7 @@ param(
 
 Connect-PveCluster -HostsAndPorts $HostsAndPorts -ApiToken $env:PVE_API_TOKEN | Out-Null
 
-$guests = foreach ($vm in Get-PveVm | Sort-Object vmid) {
+$guests = foreach ($vm in Get-PveGuest | Sort-Object vmid) {
     # the configuration endpoint differs for VMs (qemu) and containers (lxc)
     $r = $vm.type -eq 'qemu' ? ($vm | Get-PveNodesQemuConfig) : ($vm | Get-PveNodesLxcConfig)
     $config = $r.Response.data
@@ -61,7 +61,7 @@ $env:PVE_API_TOKEN = 'automation@pve!ps=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
 
 What the script relies on:
 
-- [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/) returns every guest with its node, so the
+- [Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/) returns every guest with its node, so the
   configuration cmdlets get `-Node` and `-Vmid` from the pipeline.
 - VMs and containers have different endpoints: the script picks one by `type`.
 - The configuration is one object with a property per key of the configuration file, so disks and
