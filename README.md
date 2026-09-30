@@ -98,6 +98,7 @@ pve01 online 4.20
 | [Guides](https://corsinvest.github.io/cv4pve-api-powershell/guides/finding-vms/) | VMs by id or name, power, snapshots, SPICE |
 | [Examples](https://corsinvest.github.io/cv4pve-api-powershell/examples/common-tasks/) | Common tasks with their output, inventory to CSV, creating VMs, guest agent, backups |
 | [Cmdlet reference](https://corsinvest.github.io/cv4pve-api-powershell/reference/) | Every cmdlet with its endpoint and parameters |
+| [AI assistants](https://corsinvest.github.io/cv4pve-api-powershell/ai-agents/) | Claude Code, Codex, the `cv4pve-api-powershell` skill |
 | [Troubleshooting](https://corsinvest.github.io/cv4pve-api-powershell/troubleshooting/) | `-Debug` and the common errors |
 
 ---

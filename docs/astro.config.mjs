@@ -46,7 +46,7 @@ export default defineConfig({
       sidebar: [
         {
           label: 'Start here',
-          items: ['getting-started', 'permissions', 'connection', 'coming-from-powercli', 'troubleshooting'],
+          items: ['getting-started', 'permissions', 'connection', 'coming-from-powercli', 'ai-agents', 'troubleshooting'],
         },
         {
           label: 'Concepts',
