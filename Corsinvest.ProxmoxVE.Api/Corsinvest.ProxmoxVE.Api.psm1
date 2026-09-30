@@ -84,7 +84,7 @@ Username and password, username formatted as user@pam, user@pve, user@yourdomain
 .PARAMETER ApiToken
 Api Token format USER@REALM!TOKENID=UUID
 .PARAMETER Otp
-One-time password for Two-factor authentication.
+Second factor of a user with two-factor authentication: a TOTP code (e.g. 123456) or 'type:value' (e.g. recovery:abcd-1234).
 .PARAMETER SkipRefreshPveTicketLast
 Skip refresh PveTicket Last global variable
 .EXAMPLE
@@ -152,17 +152,25 @@ PveTicket. Return ticket connection.
                 password = $Credentials.GetNetworkCredential().Password
             }
 
-            if($PSBoundParameters['Otp']) { $parameters['otp'] = $Otp }
-
             $response = Invoke-PveRestApi -PveTicket $pveTicket -Method Create -Resource '/access/ticket' -Parameters $parameters
+
+            if ($response.IsSuccessStatusCode -and $response.Response.data.NeedTFA) {
+                if ([string]::IsNullOrWhiteSpace($Otp)) {
+                    throw "Couldn't authenticate user: missing Two Factor Authentication (TFA)"
+                }
+
+                #second step: the response to the challenge of the first one, as 'type:value' (a code without a type is TOTP)
+                $parameters = @{
+                    username        = $userName
+                    password        = $Otp.Contains(':') ? $Otp : "totp:$Otp"
+                    'tfa-challenge' = $response.Response.data.ticket
+                }
+                $response = Invoke-PveRestApi -PveTicket $pveTicket -Method Create -Resource '/access/ticket' -Parameters $parameters
+            }
 
             #erro response
             if (!$response.IsSuccessStatusCode -or $response.StatusCode -le 0) {
                 throw $response.ReasonPhrase
-            }
-
-            if ($response.Response.data.NeedTFA){
-                throw "Couldn't authenticate user: missing Two Factor Authentication (TFA)"
             }
 
             $pveTicket.Ticket = $response.Response.data.ticket
@@ -449,7 +457,7 @@ Millisecond timeout
 .EXAMPLE
 Start-PveGuest -VmIdOrName web01 | Wait-PveTaskIsFinish -Timeout 60000
 .OUTPUTS
-Bool. $True Return task is done within Timeout, $False if not. Throws if the status of the task cannot be read.
+Bool. $True when the task is finished, $False when it is still running at the Timeout. Throws if the status of the task cannot be read.
 #>
     [OutputType([bool])]
     [CmdletBinding(DefaultParameterSetName = 'Response')]
@@ -484,8 +492,8 @@ Bool. $True Return task is done within Timeout, $False if not. Throws if the sta
             $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $taskUpid
         }
 
-        #check timeout
-        return ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout
+        #finished, also when the last check came after the timeout
+        return -not $isRunning
     }
 }
 
@@ -510,7 +518,7 @@ Status-Text for Write-Progress, default is "Waiting...", is shown in front of re
 .PARAMETER ProgressActivityId
 Id for Write-Progress, change when other Write-Progress is already shown
 .OUTPUTS
-Bool. $True Return task is done within Timeout, $False if not. Throws if the status of the task cannot be read.
+Bool. $True when the task is finished, $False when it is still running at the Timeout. Throws if the status of the task cannot be read.
 #>
     [OutputType([bool])]
     [CmdletBinding(DefaultParameterSetName = 'Response')]
@@ -566,8 +574,8 @@ Bool. $True Return task is done within Timeout, $False if not. Throws if the sta
             Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Completed
         }
 
-        #check timeout
-        return ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout
+        #finished, also when the last check came after the timeout
+        return -not $isRunning
     }
 }
 

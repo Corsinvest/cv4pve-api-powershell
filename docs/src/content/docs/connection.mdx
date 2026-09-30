@@ -56,6 +56,8 @@ If the user has a second factor, pass the one-time code with `-Otp`:
 Connect-PveCluster -HostsAndPorts pve01 -Credentials (Get-Credential -UserName 'alice@pve') -Otp 123456
 ```
 
+Instead of the code you can pass a recovery key as `-Otp 'recovery:<key>'`.
+
 When Proxmox VE asks for a second factor that was not given, `Connect-PveCluster` throws
 `Couldn't authenticate user: missing Two Factor Authentication (TFA)`. For scripts use an API token:
 tokens are not subject to two-factor authentication.
