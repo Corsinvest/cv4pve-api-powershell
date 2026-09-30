@@ -70,6 +70,31 @@ Get-PveNodesQemuAgentExecStatus -Node pve01 -Vmid 100 -Pid_ 4242
 
 The reference page of each cmdlet shows its real parameter names.
 
+## -WhatIf and -Confirm
+
+Every cmdlet that changes something — the generated `Set-`, `New-` and `Remove-` cmdlets and the
+[guest functions](/cv4pve-api-powershell/guides/power/) — supports the standard PowerShell parameters
+`-WhatIf` and `-Confirm`:
+
+```powershell
+Remove-PveNodesQemu -Node pve01 -Vmid 100 -Purge $true -WhatIf
+# What if: Performing the operation "DELETE" on target "/nodes/pve01/qemu/100".
+
+Stop-PveGuest -VmIdOrName '@tag-lab' -WhatIf
+# What if: Performing the operation "Stop" on target "qemu/120 (lab-web) on pve01".
+# What if: Performing the operation "Stop" on target "lxc/121 (lab-db) on pve02".
+
+Remove-PveNodesQemu -Node pve01 -Vmid 100 -Purge $true -Confirm   # asks yes or no first
+```
+
+- `-WhatIf` shows what would be called — the method and the path, or the guest for the guest
+  functions — and calls nothing; the cmdlet returns nothing.
+- `-Confirm` asks before each call.
+- Without them the cmdlets run at once, as scripts expect: they never ask by themselves. To be asked
+  for every change in a session, set `$ConfirmPreference = 'Medium'`; `-Confirm:$false` turns the
+  question off again for one command.
+
+`-WhatIf` is the quick way to check a wide selection before acting on it.
 ## Required parameters
 
 Parameters required by the API are mandatory: PowerShell asks for them if you leave them out. Path

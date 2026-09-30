@@ -66,10 +66,10 @@ On a VM it works only for `root@pam`: it sends `skiplock`, which Proxmox VE rese
 On a container `VM.Config.*` privileges are enough — see [Permissions](/cv4pve-api-powershell/permissions/).
 
 <Aside type="caution">
-A wide selection acts on every guest it matches: check it first with `Get-PveGuest` and the same
-`-VmIdOrName`.
+A wide selection acts on every guest it matches: check it first with `-WhatIf`, which lists what would
+be done and does nothing — see [-WhatIf and -Confirm](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm).
 
 ```powershell
-Get-PveGuest -VmIdOrName '@tag-lab,-@node-pve03' | Format-Table vmid, name, node, status
+Stop-PveGuest -VmIdOrName '@tag-lab,-@node-pve03' -Shutdown -WhatIf
 ```
 </Aside>

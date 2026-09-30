@@ -88,14 +88,14 @@ InModule {
     }
     foreach ($endpoint in $endpoints) {
         $body = {
-            [CmdletBinding()]
+            [CmdletBinding(SupportsShouldProcess)]
             param(
                 [Parameter(ValueFromPipelineByPropertyName)] $Node,
                 [Parameter(ValueFromPipelineByPropertyName)] $Vmid,
                 $PveTicket, $Snapname, $Description, $Vmstate, $Timeout, $Forcestop, $Delete, $Skiplock
             )
             process {
-                $args = ($PSBoundParameters.Keys | Where-Object { $_ -notin 'Node', 'Vmid', 'PveTicket' } | Sort-Object |
+                $args = ($PSBoundParameters.Keys | Where-Object { $_ -notin 'Node', 'Vmid', 'PveTicket', 'Confirm', 'WhatIf' } | Sort-Object |
                          ForEach-Object { "$_=$($PSBoundParameters[$_])" }) -join ' '
                 $script:FakeCalls.Add("$($MyInvocation.MyCommand.Name) $Vmid $args".Trim())
                 New-FakeResponse "UPID:$($Node):0000:0000:0000:task:$($Vmid):root@pam:"
@@ -192,6 +192,13 @@ Assert-Equal 'New-PveGuestSnapshot with description and vmstate' @('New-PveNodes
 Assert-Equal 'Get/Undo/Remove-PveGuestSnapshot' @('Get-PveNodesLxcSnapshot 200', 'New-PveNodesLxcSnapshotRollback 200 Snapname=s1', 'Remove-PveNodesLxcSnapshot 200 Snapname=s1') `
     (Get-Calls { Get-PveGuestSnapshot -VmIdOrName 200; Undo-PveGuestSnapshot -VmIdOrName 200 -Snapname s1; Remove-PveGuestSnapshot -VmIdOrName 200 -Snapname s1 })
 Assert-Equal 'old names are aliases' 'Start-PveGuest' (Get-Alias Start-PveVm).Definition
+# -WhatIf: nothing is called; -Confirm:$false: called as usual
+Assert-Equal 'Start-PveGuest -WhatIf calls nothing' @() (Get-Calls { Start-PveGuest -VmIdOrName '@tag-web,200' -WhatIf })
+Assert-Equal 'Stop-PveGuest -Shutdown -WhatIf calls nothing' @() (Get-Calls { Stop-PveGuest -VmIdOrName '100,200' -Shutdown -WhatIf })
+Assert-Equal 'New-PveGuestSnapshot -WhatIf calls nothing' @() (Get-Calls { New-PveGuestSnapshot -VmIdOrName 100 -Snapname s3 -WhatIf })
+Assert-Equal 'Reset-PveGuest -WhatIf calls nothing' @() (Get-Calls { Reset-PveGuest -VmIdOrName '102,200' -WhatIf -ErrorAction SilentlyContinue })
+Assert-Equal 'Unlock-PveGuest -WhatIf calls nothing' @() (Get-Calls { Unlock-PveGuest -VmIdOrName '100,200' -WhatIf })
+Assert-Equal 'Start-PveGuest -Confirm:$false' @('New-PveNodesQemuStatusStart 100') (Get-Calls { Start-PveGuest -VmIdOrName 100 -Confirm:$false })
 $shutdownOnly = try { InModule { Stop-PveGuest -VmIdOrName 102 -Timeout 30 }; 'accepted' } catch { 'refused' }
 Assert-Equal 'Stop-PveGuest -Timeout without -Shutdown is refused' 'refused' $shutdownOnly
 

@@ -119,6 +119,11 @@ Where PowerCLI has switches, the generated cmdlets have `[bool]` parameters, bec
 them to false: `-Online $true`, `-Onboot $false`. See
 [Parameters](/cv4pve-api-powershell/concepts/parameters/#booleans).
 
+### -WhatIf and -Confirm
+
+The cmdlets that change something take the standard PowerShell parameters `-WhatIf` and `-Confirm`:
+`Remove-PveNodesQemu … -WhatIf`, `Stop-PveGuest -VmIdOrName '@tag-lab' -WhatIf`. They never ask by
+themselves — see [-WhatIf and -Confirm](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm).
 ### VMs and containers are separate
 
 vSphere has one kind of guest. Proxmox VE has VMs (`qemu`) and containers (`lxc`), each with its own
