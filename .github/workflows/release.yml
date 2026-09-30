@@ -52,6 +52,26 @@ jobs:
           Write-Host "Version validated: $moduleVersion"
           echo "version=$moduleVersion" >> $env:GITHUB_OUTPUT
 
+      - name: Extract changelog section
+        id: changelog
+        run: |
+          VERSION="${{ steps.version.outputs.version }}"
+
+          if [ ! -f "CHANGELOG.md" ]; then
+            exit 0
+          fi
+
+          NOTES=$(awk "/^## \[$VERSION\]/{found=1; next} /^## \[/{found=0} found{print}" CHANGELOG.md)
+
+          if [ -z "$NOTES" ]; then
+            exit 0
+          fi
+
+          echo "✅ Changelog section found for $VERSION"
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Publish module to PowerShell Gallery
         shell: pwsh
         env:
@@ -65,4 +85,5 @@ jobs:
           tag_name: v${{ steps.version.outputs.version }}
           name: v${{ steps.version.outputs.version }}
           generate_release_notes: true
+          body: ${{ steps.changelog.outputs.notes }}
           prerelease: ${{ contains(steps.version.outputs.version, '-') }}
