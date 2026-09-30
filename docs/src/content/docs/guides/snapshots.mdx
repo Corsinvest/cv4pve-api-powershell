@@ -1,66 +1,76 @@
 ---
 title: Snapshots
-description: List, take, roll back and delete snapshots of a VM or container by id or name.
+description: List, take, roll back and delete snapshots of VMs and containers by id, name, node, pool or tag.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-`Get-PveVmSnapshot`, `New-PveVmSnapshot`, `Undo-PveVmSnapshot` and `Remove-PveVmSnapshot` work on a VM
-or container by id or name, like the [power functions](/cv4pve-api-powershell/guides/power/): they find
-its node and type and call the `qemu` or `lxc` snapshot endpoint.
+`Get-PveGuestSnapshot`, `New-PveGuestSnapshot`, `Undo-PveGuestSnapshot` and `Remove-PveGuestSnapshot`
+take the guests with the [selection of Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests),
+like the [power functions](/cv4pve-api-powershell/guides/power/): for each guest they find its node and
+type and call the `qemu` or `lxc` snapshot endpoint.
 
 ```powershell
 # list
-(Get-PveVmSnapshot -VmIdOrName web01).Response.data |
+(Get-PveGuestSnapshot -VmIdOrName web01).Response.data |
     Format-Table name, description, @{ n = 'taken'; e = { if ($_.snaptime) { ConvertFrom-PveUnixTime $_.snaptime } } }
 
 # take
-New-PveVmSnapshot -VmIdOrName web01 -Snapname before-update -Description 'Before the monthly update'
+New-PveGuestSnapshot -VmIdOrName web01 -Snapname before-update -Description 'Before the monthly update'
 
 # roll back
-Undo-PveVmSnapshot -VmIdOrName web01 -Snapname before-update
+Undo-PveGuestSnapshot -VmIdOrName web01 -Snapname before-update
 
 # delete
-Remove-PveVmSnapshot -VmIdOrName web01 -Snapname before-update
+Remove-PveGuestSnapshot -VmIdOrName web01 -Snapname before-update
 ```
 
-The list includes an entry named `current`, the running state of the VM, without `snaptime`.
+The list includes an entry named `current`, the running state of the guest, without `snaptime`.
 
-Taking, rolling back and deleting are [tasks](/cv4pve-api-powershell/concepts/tasks/): the functions
-return the UPID in `.Response.data`, and the next step of the script should wait for it.
+They return one `PveResponse` per guest. Taking, rolling back and deleting are
+[tasks](/cv4pve-api-powershell/concepts/tasks/): the UPID is in `.Response.data`, and the next step of
+the script should wait for it. `-Description` is optional; when you leave it out the snapshot has none.
+
+The former names `Get-PveVmSnapshot`, `New-PveVmSnapshot`, … still work as aliases.
 
 ## Memory state
 
-For a VM, `-Vmstate` also saves the memory, so a rollback resumes the VM where it was instead of
-booting it:
+For a running VM, `-Vmstate` also saves the memory, so a rollback resumes the VM where it was instead
+of booting it:
 
 ```powershell
-New-PveVmSnapshot -VmIdOrName web01 -Snapname before-update -Vmstate
+New-PveGuestSnapshot -VmIdOrName web01 -Snapname before-update -Vmstate
 ```
 
 Here `-Vmstate` is a switch. Containers have no memory state: the switch is ignored for them.
 
 ## Snapshot before an update
 
-```powershell
-$vms = Get-PveVm | Where-Object { ($_.tags -split ';') -contains 'update-tonight' -and $_.template -ne 1 }
+One call takes a snapshot of every guest of the selection; wait for each task and check how it ended:
 
-foreach ($vm in $vms) {
-    $r = New-PveVmSnapshot -VmIdOrName $vm.vmid -Snapname "pre-$(Get-Date -Format yyyyMMdd)" `
-        -Description 'Before the monthly update'
-    if (-not $r.IsSuccessStatusCode) {
-        Write-Warning "$($vm.name): $($r.ReasonPhrase)"
-        continue
+```powershell
+$name = "pre$(Get-Date -Format yyyyMMdd)"
+
+New-PveGuestSnapshot -VmIdOrName '@tag-update-tonight' -Snapname $name -Description 'Before the monthly update' |
+    ForEach-Object {
+        if (-not $_.IsSuccessStatusCode) { Write-Warning "$($_.RequestResource): $($_.ReasonPhrase)"; return }
+        if ($_ | Wait-PveTaskIsFinish -Timeout 300000) {
+            "$($_.RequestResource): $(Get-PveTaskExitStatus -Upid $_.Response.data)"
+        }
     }
-    Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 300000 | Out-Null
-}
 ```
 
 A snapshot name must start with a letter and may contain letters, digits, `-` and `_`: the date goes
 after a prefix, as above.
 
+## Rolling back on ZFS
+
+On ZFS storage a guest can roll back only to its **most recent** snapshot. To go back further, delete
+the newer snapshots first; otherwise the task fails with
+`can't rollback, '<snapshot>' is not most recent snapshot on '<disk>'`.
+
 <Aside>
-Snapshots depend on the storage: a VM with a disk on storage that does not support snapshots cannot
+Snapshots depend on the storage: a guest with a disk on storage that does not support snapshots cannot
 have one, and the call returns an error. For snapshots on a schedule, with retention, see
 [cv4pve-autosnap](https://corsinvest.github.io/cv4pve-autosnap/).
 </Aside>

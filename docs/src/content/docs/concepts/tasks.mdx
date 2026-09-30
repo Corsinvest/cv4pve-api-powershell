@@ -19,8 +19,11 @@ The call returned when the task *started*. Before using the new VM the script ha
 
 ## Wait for a task
 
+Pipe the response of the call into `Wait-PveTaskIsFinish`, or give it the UPID:
+
 ```powershell
-Wait-PveTaskIsFinish -Upid $upid -Timeout 600000      # up to 10 minutes
+$r | Wait-PveTaskIsFinish -Timeout 600000                 # up to 10 minutes
+Wait-PveTaskIsFinish -Upid $upid -Timeout 600000          # the same
 ```
 
 `Wait-PveTaskIsFinish` checks the task every `-Wait` milliseconds (default 500) until it stops, and
@@ -28,11 +31,15 @@ returns `$true` if it stopped within `-Timeout` milliseconds, `$false` if the ti
 timeout is **10 seconds**: enough for a start or a snapshot, not for a clone, a migration or a backup.
 Set `-Timeout` to the longest time the task may take.
 
+With a response in the pipe, a call that failed or that started no task leaves nothing to wait for:
+`Wait-PveTaskIsFinish` returns `$true` at once. Check `IsSuccessStatusCode` of the call to tell the
+two apart — see [Errors](/cv4pve-api-powershell/concepts/errors/).
+
 `Wait-PveTaskIsFinishedWithProgress` does the same and shows a PowerShell progress bar while it waits,
 with the elapsed and the total time:
 
 ```powershell
-Wait-PveTaskIsFinishedWithProgress -Upid $upid -Timeout 600000 -ProgressActivityText 'Cloning web02'
+$r | Wait-PveTaskIsFinishedWithProgress -Timeout 600000 -ProgressActivityText 'Cloning web02'
 ```
 
 To check without waiting, `Get-PveTaskIsRunning -Upid $upid` returns `$true` while the task runs.
@@ -42,21 +49,30 @@ The node of the task is read from the UPID, so none of these needs `-Node`.
 ## Did it succeed?
 
 A finished task is not necessarily a successful one. `Wait-PveTaskIsFinish` only says the task stopped;
-read its exit status:
+`Get-PveTaskExitStatus` says how: `OK`, or the error of the task.
 
 ```powershell
-if (-not (Wait-PveTaskIsFinish -Upid $upid -Timeout 600000)) {
-    throw "Task still running after 10 minutes: $upid"
+if (-not ($r | Wait-PveTaskIsFinish -Timeout 600000)) {
+    throw "Task still running after 10 minutes: $($r.Response.data)"
 }
 
-$node   = $upid.Split(':')[1]
-$status = (Get-PveNodesTasksStatus -Node $node -Upid $upid).Response.data
-if ($status.exitstatus -ne 'OK') {
-    throw "Task failed: $($status.exitstatus)"
-}
+$exit = Get-PveTaskExitStatus -Upid $r.Response.data
+if ($exit -ne 'OK') { throw "Task failed: $exit" }
 ```
 
-The log of the task, the same text the web interface shows, is in `Get-PveNodesTasksLog -Node $node -Upid $upid`.
+For example a snapshot with a name already in use ends with an exit status such as
+`snapshot name 'before-update' already used`. The log of the task, the same text the web interface
+shows, is in `Get-PveNodesTasksLog -Node <node> -Upid $upid`.
+
+## When the status cannot be read
+
+`Get-PveTaskIsRunning`, `Get-PveTaskExitStatus` and the `Wait-` functions read the status of the task
+from the node. If they cannot — the node is down, or the account has no right to see the task — they
+**throw an exception** with the reason, for example
+`Read status of task 'UPID:…' failed (403 …)`, instead of reporting a finished task.
+
+A token can always read the tasks it started itself; to read the tasks of other users it needs
+`Sys.Audit` on the node — see [Permissions](/cv4pve-api-powershell/permissions/).
 
 <Aside>
 Not every call returns a UPID. Calls that finish immediately — reading, most configuration changes —

@@ -33,7 +33,7 @@ It **runs on your machine and uses only the Proxmox VE API**: nothing to install
 ## Features
 
 - **The whole API** — one cmdlet per endpoint and method, generated from the Proxmox VE API, with its parameters, types and allowed values.
-- **VMs by id or name** — `Get-PveVm` finds VMs and containers by id, name, range, pool, tag or node, and pipes them into the other cmdlets.
+- **VMs by id or name** — `Get-PveGuest` finds VMs and containers by id, name, range, node, pool or tag, with exclusions; the same selection starts, stops or snapshots them all in one call.
 - **API token or password** — list several nodes and the first that answers is used.
 - **Objects, not text** — the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it.
 - **Tasks** — start a backup, clone or migration and wait for it to finish, with a progress bar if you like.
@@ -51,7 +51,7 @@ Install-Module -Name Corsinvest.ProxmoxVE.Api -Scope CurrentUser
 Connect-PveCluster -HostsAndPorts pve01 -ApiToken 'automation@pve!ps=<secret>'
 
 # every VM and container of the cluster
-Get-PveVm | Format-Table vmid, name, node, type, status
+Get-PveGuest | Format-Table vmid, name, node, type, status
 
 # the generated cmdlets return the data in .Response.data
 (Get-PveNodesQemuConfig -Node pve01 -Vmid 100).Response.data
@@ -64,14 +64,14 @@ Requires PowerShell 7. With a self-signed certificate add `-SkipCertificateCheck
 ## What it looks like
 
 ```powershell
-PS> Get-PveVm | Format-Table vmid, name, node, type, status
+PS> Get-PveGuest | Format-Table vmid, name, node, type, status
 
 vmid name        node  type status
 ---- ----        ----  ---- ------
- 100 backup01    pve02 lxc  running
- 102 firewall02  pve02 qemu running
  105 test        pve01 lxc  stopped
 1006 dc01        pve01 qemu running
+ 100 backup01    pve02 lxc  running
+ 102 firewall02  pve02 qemu running
 1012 mailstore   pve02 qemu running
 
 PS> Get-PveNode | Select-Object node, status, @{ n = 'cpu%'; e = { [math]::Round($_.cpu * 100, 1) } }
@@ -82,7 +82,7 @@ pve02 online 1.50
 pve01 online 4.20
 ```
 
-`Get-PveVm` returns the guests themselves; the generated cmdlets return a `PveResponse` with the data in `.Response.data`. More recipes, each with its output: [Common tasks](https://corsinvest.github.io/cv4pve-api-powershell/examples/common-tasks/).
+`Get-PveGuest` returns the guests themselves; the generated cmdlets return a `PveResponse` with the data in `.Response.data`. More recipes, each with its output: [Common tasks](https://corsinvest.github.io/cv4pve-api-powershell/examples/common-tasks/).
 
 ---
 

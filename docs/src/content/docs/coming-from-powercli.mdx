@@ -18,11 +18,11 @@ The PowerCLI cmdlet names come from the official
 |---|---|---|
 | vCenter Server | No separate management server: every node serves the API for the whole cluster | Connect to any node; list several and the first that answers is used — see [Connection](/cv4pve-api-powershell/connection/#several-nodes) |
 | ESXi host | Node | `Get-PveNode` |
-| Virtual machine | VM (QEMU/KVM) or LXC container, with different endpoints | `Get-PveVm` returns both, with `type` `qemu` or `lxc` |
+| Virtual machine | VM (QEMU/KVM) or LXC container, with different endpoints | `Get-PveGuest` returns both, with `type` `qemu` or `lxc` |
 | VMware Tools | QEMU guest agent (VMs only) | `…QemuAgent…` cmdlets — see [Guest agent](/cv4pve-api-powershell/examples/guest-agent/) |
 | Datastore | Storage, defined for the whole cluster, shared or local to a node | `Get-PveClusterResources -Type storage` |
 | Resource pool | Pool: a group of guests and storages used for permissions, without CPU or memory limits | `Get-PvePools` |
-| Tags | Tags on the guest, separated by `;` | the `tags` property of `Get-PveVm` |
+| Tags | Tags on the guest, separated by `;` | the `tags` property of `Get-PveGuest` |
 | `$global:DefaultVIServer` | The last connection | `$PveTicketLast` — see [Connection](/cv4pve-api-powershell/connection/#the-last-connection) |
 
 ## Cmdlet by cmdlet
@@ -32,23 +32,23 @@ The PowerCLI cmdlet names come from the official
 | PowerCLI | cv4pve-api-powershell |
 |---|---|
 | `Connect-VIServer` | `Connect-PveCluster` |
-| `Get-VM` | `Get-PveVm` — by id, name, range, pool or node, see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/) |
+| `Get-VM` | `Get-PveGuest` — by id, name, range, node, pool or tag, with exclusions, see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/) |
 | `Get-VMHost` | `Get-PveNode` |
 | `Get-Datastore` | `Get-PveClusterResources -Type storage` |
 | `Get-ResourcePool` | `Get-PvePools` |
-| `Get-TagAssignment` | `Get-PveVm \| Where-Object { ($_.tags -split ';') -contains 'web' }` |
+| `Get-TagAssignment` | `Get-PveGuest -VmIdOrName '@tag-web'`, or the `tags` property |
 | `Get-VMGuest` | `Get-PveNodesQemuAgentGetOsinfo`, `Get-PveNodesQemuAgentNetworkGetInterfaces` |
 
 ### Power
 
 | PowerCLI | cv4pve-api-powershell |
 |---|---|
-| `Start-VM` | `Start-PveVm` |
-| `Stop-VM` | `Stop-PveVm` — immediate stop, as `Stop-VM` |
-| `Stop-VMGuest` | `Shutdown-PveQemu`, `Shutdown-PveLxc` — clean shutdown through the guest |
-| `Restart-VM` | `Reset-PveVm` — reset of the VM |
-| `Restart-VMGuest` | `Restart-PveQemu`, `Restart-PveLxc` — reboot through the guest |
-| `Suspend-VM` | `Suspend-PveVm`; `Resume-PveVm` to resume |
+| `Start-VM` | `Start-PveGuest` |
+| `Stop-VM` | `Stop-PveGuest` — immediate stop, as `Stop-VM` |
+| `Stop-VMGuest` | `Stop-PveGuest -Shutdown` — clean shutdown through the guest |
+| `Restart-VM` | `Reset-PveGuest` — reset of the VM |
+| `Restart-VMGuest` | `Restart-PveGuest` — reboot through the guest |
+| `Suspend-VM` | `Suspend-PveGuest`; `Resume-PveGuest` to resume |
 
 See [Power and lock](/cv4pve-api-powershell/guides/power/).
 
@@ -56,10 +56,10 @@ See [Power and lock](/cv4pve-api-powershell/guides/power/).
 
 | PowerCLI | cv4pve-api-powershell |
 |---|---|
-| `Get-Snapshot` | `Get-PveVmSnapshot` |
-| `New-Snapshot -Memory` | `New-PveVmSnapshot -Vmstate` |
-| `Set-VM -Snapshot` | `Undo-PveVmSnapshot` |
-| `Remove-Snapshot` | `Remove-PveVmSnapshot` |
+| `Get-Snapshot` | `Get-PveGuestSnapshot` |
+| `New-Snapshot -Memory` | `New-PveGuestSnapshot -Vmstate` |
+| `Set-VM -Snapshot` | `Undo-PveGuestSnapshot` |
+| `Remove-Snapshot` | `Remove-PveGuestSnapshot` |
 
 See [Snapshots](/cv4pve-api-powershell/guides/snapshots/).
 
@@ -87,11 +87,11 @@ grouped like the API.
 
 ### Results are wrapped
 
-PowerCLI returns the objects. Here the functions written for convenience (`Get-PveVm`, `Get-PveNode`)
+PowerCLI returns the objects. Here the functions written for convenience (`Get-PveGuest`, `Get-PveNode`)
 do too, but the generated cmdlets return a `PveResponse`, with the data in `.Response.data`:
 
 ```powershell
-$vm = Get-PveVm -VmIdOrName web01                                                  # the guest itself
+$vm = Get-PveGuest -VmIdOrName web01                                                  # the guest itself
 (Get-PveNodesQemuConfig -Node $vm.node -Vmid $vm.vmid).Response.data.memory       # memory in MiB
 ```
 
@@ -106,11 +106,11 @@ generated cmdlet here returns a `PveResponse` with `IsSuccessStatusCode` `$false
 ### Where the VM runs matters
 
 PowerCLI finds a VM by name anywhere in vCenter. The generated cmdlets follow the API paths, which
-include the node: `-Node pve01 -Vmid 100`. Pipe [Get-PveVm](/cv4pve-api-powershell/guides/finding-vms/)
+include the node: `-Node pve01 -Vmid 100`. Pipe [Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/)
 into them, and it fills `-Node` and `-Vmid` for you:
 
 ```powershell
-Get-PveVm -VmIdOrName web01 | Get-PveNodesQemuConfig
+Get-PveGuest -VmIdOrName web01 | Get-PveNodesQemuConfig
 ```
 
 ### Booleans take a value
@@ -123,5 +123,5 @@ them to false: `-Online $true`, `-Onboot $false`. See
 
 vSphere has one kind of guest. Proxmox VE has VMs (`qemu`) and containers (`lxc`), each with its own
 endpoints: `Get-PveNodesQemuConfig` or `Get-PveNodesLxcConfig`. The functions written for convenience
-(`Start-PveVm`, the snapshot functions) choose for you; with the generated cmdlets, filter on `type`
+(`Start-PveGuest`, the snapshot functions) choose for you; with the generated cmdlets, filter on `type`
 first.

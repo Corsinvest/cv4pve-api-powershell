@@ -51,14 +51,14 @@ a workstation, a management VM, a scheduled job — and talks only to the Proxmo
 4. Run your first cmdlets:
 
    ```powershell
-   Get-PveVm | Format-Table vmid, name, node, type, status
+   Get-PveGuest | Format-Table vmid, name, node, type, status
 
    (Get-PveVersion).Response.data
    ```
 
 </Steps>
 
-`Get-PveVm` is one of the functions written for convenience: it returns the VMs and containers
+`Get-PveGuest` is one of the functions written for convenience: it returns the VMs and containers
 themselves. The generated cmdlets, like `Get-PveVersion`, return a `PveResponse` with the data in
 `.Response.data` — [Results](/cv4pve-api-powershell/concepts/results/) explains why.
 

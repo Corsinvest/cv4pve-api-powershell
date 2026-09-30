@@ -16,9 +16,7 @@ param(
 Connect-PveCluster -HostsAndPorts pve01, pve02 -ApiToken $env:PVE_API_TOKEN | Out-Null
 
 # vzdump runs on the node of the guest: one call per node, with its guests
-$byNode = Get-PveVm |
-    Where-Object { ($_.tags -split ';') -contains $Tag -and $_.template -ne 1 } |
-    Group-Object node
+$byNode = Get-PveGuest -VmIdOrName "@tag-$Tag" | Where-Object template -ne 1 | Group-Object node
 
 foreach ($group in $byNode) {
     $ids = ($group.Group.vmid | Sort-Object) -join ','

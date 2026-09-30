@@ -35,7 +35,7 @@ export default defineConfig({
                   "Connect-PveCluster -HostsAndPorts pve01 `\n    -ApiToken 'automation@pve!ps=…'",
                   '',
                   '# every VM and container of the cluster',
-                  'Get-PveVm | Format-Table vmid, name, node, status',
+                  'Get-PveGuest | Format-Table vmid, name, node, status',
                 ],
               },
             ],

@@ -23,13 +23,13 @@ anything else, create a role with just the privileges the script needs from the 
 
 | Privilege | On | Used for |
 |---|---|---|
-| `VM.Audit` | `/vms` | Reading VMs and containers: `Get-PveVm`, configuration, snapshots |
+| `VM.Audit` | `/vms` | Reading VMs and containers: `Get-PveGuest`, configuration, snapshots |
 | `Sys.Audit` | `/nodes` | Reading nodes, and tasks started by other users |
 | `Datastore.Audit` | `/storage` | Reading storage and its content |
 | `VM.PowerMgmt` | `/vms` | Start, stop, shut down, suspend, resume, reset |
 | `VM.Snapshot` | `/vms` | Taking, deleting and rolling back snapshots |
 | `VM.Snapshot.Rollback` | `/vms` | Rolling back only, without taking snapshots |
-| `VM.Config.*` | `/vms` | Changing the configuration; `Unlock-PveVm` on containers |
+| `VM.Config.*` | `/vms` | Changing the configuration; `Unlock-PveGuest` on containers |
 | `VM.Console` | `/vms` | `Invoke-PveSpice` |
 | `VM.GuestAgent.Audit` | `/vms` | Reading from the guest agent: OS, IP addresses |
 | `VM.GuestAgent.Unrestricted` | `/vms` | Running commands in the guest |
@@ -39,7 +39,7 @@ anything else, create a role with just the privileges the script needs from the 
 
 Without a privilege a call that reads a list returns the list without what you may not see; any other
 call returns a response with status code 403 — see [below](#how-missing-privileges-are-reported).
-`Get-PveVersion`, `Get-PveClusterNextid` and `/cluster/resources` (behind `Get-PveVm` and `Get-PveNode`)
+`Get-PveVersion`, `Get-PveClusterNextid` and `/cluster/resources` (behind `Get-PveGuest` and `Get-PveNode`)
 need no privilege: they answer every authenticated account, with only what it may see.
 
 On Proxmox VE 8 the `VM.GuestAgent.*` privileges do not exist: the guest agent endpoints need
@@ -47,8 +47,8 @@ On Proxmox VE 8 the `VM.GuestAgent.*` privileges do not exist: the guest agent e
 [Proxmox VE API viewer](https://pve.proxmox.com/pve-docs/api-viewer/), linked from each page of the
 [cmdlet reference](/cv4pve-api-powershell/reference/).
 
-:::caution[Only root@pam: `Unlock-PveVm` on VMs]
-On a VM, `Unlock-PveVm` sends `skiplock`, which Proxmox VE allows only to `root@pam`: with any other
+:::caution[Only root@pam: `Unlock-PveGuest` on VMs]
+On a VM, `Unlock-PveGuest` sends `skiplock`, which Proxmox VE allows only to `root@pam`: with any other
 account or token it fails. On containers `VM.Config.*` is enough. A few other parameters are also
 reserved to `root@pam`, among them `-Skiplock` of the power endpoints and `-Dumpdir`, `-Script` and
 `-JobId` of `New-PveNodesVzdump`: the API viewer says so in their description.
@@ -66,7 +66,7 @@ volumes, so a read-only token sees no backups.
 Proxmox VE answers a request the caller is only partly entitled to by *filtering the response*, not
 by failing it. `/cluster/resources` drops the guests, storages and pools you cannot audit, a node's VM
 list drops the VMs without `VM.Audit`, a storage listing drops the volumes you cannot access. All return
-`200 OK`: `Get-PveVm` returning nothing may mean a token without privileges, not an empty cluster.
+`200 OK`: `Get-PveGuest` returning nothing may mean a token without privileges, not an empty cluster.
 
 A request that is refused outright returns a `PveResponse` with `StatusCode` `403` and the reason in
 `ReasonPhrase`, without throwing — see [Errors](/cv4pve-api-powershell/concepts/errors/).

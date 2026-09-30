@@ -3,20 +3,6 @@
 
 #Requires -Version 6.0
 
-class PveValidateVmId : System.Management.Automation.IValidateSetValuesGenerator {
-    [string[]] GetValidValues() { return Get-PveVm | Select-Object -ExpandProperty vmid }
-}
-
-class PveValidateVmName : System.Management.Automation.IValidateSetValuesGenerator {
-    [string[]] GetValidValues() {
-        return Get-PveVm | Where-Object { $_.status -ne 'unknown' } | Select-Object -ExpandProperty name
-    }
-}
-
-class PveValidateNode : System.Management.Automation.IValidateSetValuesGenerator {
-    [string[]] GetValidValues() { return Get-PveNodes | Select-Object -ExpandProperty node }
-}
-
 class PveTicket {
     [string] $HostName = ''
     [int] $Port = 8006
@@ -422,7 +408,7 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName | Select-Object -First 1
+        $vm = Get-PveGuest -PveTicket $PveTicket -VmIdOrName $VmIdOrName | Select-Object -First 1
         if ($vm.type -eq 'qemu') {
             $node = $vm.node
             $vmid = $vm.vmid
@@ -454,38 +440,48 @@ Get task is running.
 Ticket data connection.
 .PARAMETER Upid
 Upid task e.g UPID:pve1:00004A1A:0964214C:5EECEF11:vzdump:134:root@pam:
+.PARAMETER Response
+Response of the call that started the task, e.g. from Start-PveGuest: the UPID is read from its data. When the call failed or returned no task there is nothing to wait for and the result is $true.
 .PARAMETER Wait
 Millisecond wait next check
 .PARAMETER Timeout
 Millisecond timeout
+.EXAMPLE
+Start-PveGuest -VmIdOrName web01 | Wait-PveTaskIsFinish -Timeout 60000
 .OUTPUTS
-Bool. $True Return task is done within Timeout, $False if not
+Bool. $True Return task is done within Timeout, $False if not. Throws if the status of the task cannot be read.
 #>
     [OutputType([bool])]
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Response')]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory, ParameterSetName = 'Upid', ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Upid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory, ParameterSetName = 'Response', ValueFromPipeline)]
+        [PveResponse]$Response,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Wait = 500,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout = 10000
     )
 
     process {
+        $taskUpid = Get-TaskUpid -Upid $Upid -Response $Response
+        if (-not $taskUpid) { return $true }
+
         $isRunning = $true;
         if ($Wait -le 0) { $Wait = 500; }
         if ($Timeout -lt $Wait) { $Timeout = $Wait + 5000; }
         $timeStart = [DateTime]::Now
 
         while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
-            $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
             Start-Sleep -Milliseconds $Wait
+            $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $taskUpid
         }
 
         #check timeout
@@ -501,6 +497,8 @@ Wait for a task to finish, show Powershell Progressbar while waiting
 Ticket data connection.
 .PARAMETER Upid
 Upid task e.g UPID:pve1:00004A1A:0964214C:5EECEF11:vzdump:134:root@pam:
+.PARAMETER Response
+Response of the call that started the task, e.g. from Start-PveGuest: the UPID is read from its data. When the call failed or returned no task there is nothing to wait for and the result is $true.
 .PARAMETER Wait
 Millisecond wait next check
 .PARAMETER Timeout
@@ -512,52 +510,61 @@ Status-Text for Write-Progress, default is "Waiting...", is shown in front of re
 .PARAMETER ProgressActivityId
 Id for Write-Progress, change when other Write-Progress is already shown
 .OUTPUTS
-Bool. $True Return task is done within Timeout, $False if not
+Bool. $True Return task is done within Timeout, $False if not. Throws if the status of the task cannot be read.
 #>
     [OutputType([bool])]
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Response')]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
-        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory, ParameterSetName = 'Upid', ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [string]$Upid,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(Mandatory, ParameterSetName = 'Response', ValueFromPipeline)]
+        [PveResponse]$Response,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Wait = 500,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$Timeout = 10000,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ProgressActivityText,
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [string]$ProgressStatusText = "Waiting...",
 
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [int]$ProgressActivityId = 1
     )
 
     process {
+        $taskUpid = Get-TaskUpid -Upid $Upid -Response $Response
+        if (-not $taskUpid) { return $true }
+
         $isRunning = $true;
         if ($Wait -le 0) { $Wait = 500; }
         if ($Timeout -lt $Wait) { $Timeout = $Wait + 5000; }
-        if ($null -eq $ProgressActivityText -OR $ProgressActivityText -eq "") { $ProgressActivityText = $Upid; }
+        if ($null -eq $ProgressActivityText -OR $ProgressActivityText -eq "") { $ProgressActivityText = $taskUpid; }
         $timeStart = [DateTime]::Now
         $waitTimeMs = $timeStart
         $timePercent = 0
 
-        while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
-            $waitTimeMs = $([DateTime]::Now - $timeStart).TotalMilliseconds
-            $timePercent = $waitTimeMs * (100 / $Timeout)
-            Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Status "$($ProgressStatusText) ($([Math]::Round($waitTimeMs/1000))/$([Math]::Round($Timeout/1000)) Seconds)" -PercentComplete $timePercent
-            $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $Upid
-            Start-Sleep -Milliseconds $Wait
+        try {
+            while ($isRunning -and ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout) {
+                $waitTimeMs = $([DateTime]::Now - $timeStart).TotalMilliseconds
+                $timePercent = $waitTimeMs * (100 / $Timeout)
+                Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Status "$($ProgressStatusText) ($([Math]::Round($waitTimeMs/1000))/$([Math]::Round($Timeout/1000)) Seconds)" -PercentComplete $timePercent
+                Start-Sleep -Milliseconds $Wait
+                $isRunning = Get-PveTaskIsRunning -PveTicket $PveTicket -Upid $taskUpid
+            }
         }
-
-        # end Write-Progress
-        Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Completed
+        finally {
+            # end Write-Progress, also when the status of the task cannot be read
+            Write-Progress -Id $ProgressActivityId -Activity $ProgressActivityText -Completed
+        }
 
         #check timeout
         return ([DateTime]::Now - $timeStart).TotalMilliseconds -lt $Timeout
@@ -573,7 +580,7 @@ Ticket data connection.
 .PARAMETER Upid
 Upid task e.g UPID:pve1:00004A1A:0964214C:5EECEF11:vzdump:134:root@pam:
 .OUTPUTS
-Bool. Return tas is running.
+Bool. Return tas is running. Throws if the status of the task cannot be read (node down, missing privilege).
 #>
     [OutputType([bool])]
     [CmdletBinding()]
@@ -586,8 +593,68 @@ Bool. Return tas is running.
     )
 
     process {
-        return (Get-PveNodesTasksStatus -PveTicket $PveTicket -Node $Upid.Split(':')[1] -Upid $Upid).Response.data.status -eq 'running'
+        $response = Get-PveNodesTasksStatus -PveTicket $PveTicket -Node $Upid.Split(':')[1] -Upid $Upid
+        return (Get-TaskStatusData -Response $response -Upid $Upid).status -eq 'running'
     }
+}
+
+function Get-PveTaskExitStatus {
+    <#
+.DESCRIPTION
+Get the exit status of a finished task: 'OK' when it succeeded, otherwise the error of the task.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER Upid
+Upid task e.g UPID:pve1:00004A1A:0964214C:5EECEF11:vzdump:134:root@pam:
+.EXAMPLE
+$r = Start-PveGuest -VmIdOrName web01
+if (Wait-PveTaskIsFinish -Upid $r.Response.data -Timeout 60000) { Get-PveTaskExitStatus -Upid $r.Response.data }
+.OUTPUTS
+String. Exit status of the task, empty while it is running. Throws if the status of the task cannot be read.
+#>
+    [OutputType([string])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [string]$Upid
+    )
+
+    process {
+        $response = Get-PveNodesTasksStatus -PveTicket $PveTicket -Node $Upid.Split(':')[1] -Upid $Upid
+        return (Get-TaskStatusData -Response $response -Upid $Upid).exitstatus
+    }
+}
+
+function Get-TaskStatusData {
+    # Status of a task from the response of Get-PveNodesTasksStatus. Throws when it cannot be read, so a
+    # failed read (node down, missing privilege) is never taken for a finished task.
+    param($Response, [string]$Upid)
+
+    if ($null -eq $Response) { throw "Read status of task '$Upid' returned no result" }
+
+    if (-not $Response.IsSuccessStatusCode -or $Response.ResponseInError() -or $null -eq $Response.Response.data) {
+        $detail = if ($Response.ResponseInError()) { $Response.Response.error | ConvertTo-Json -Compress -Depth 5 }
+                  elseif (-not $Response.IsSuccessStatusCode) { $Response.ReasonPhrase }
+                  else { "response does not contain 'data'" }
+        throw "Read status of task '$Upid' failed ($($Response.StatusCode) $($Response.ReasonPhrase)): $detail"
+    }
+
+    return $Response.Response.data
+}
+
+function Get-TaskUpid {
+    # UPID to wait for: the one given, or the data of the response of the call that started the task.
+    # $null when there is nothing to wait for: the call failed, or it returned no task.
+    param([string]$Upid, $Response)
+
+    if ($Upid) { return $Upid }
+    if ($null -eq $Response -or -not $Response.IsSuccessStatusCode -or $Response.ResponseInError()) { return $null }
+
+    $data = $Response.Response.data
+    return ($data -is [string] -and $data.StartsWith('UPID:')) ? $data : $null
 }
 #endregion
 
@@ -656,28 +723,31 @@ PSCustomObject. Return Node/s data.
     }
 }
 
-function Get-PveVm {
+function Get-PveGuest {
     <#
 .DESCRIPTION
-Get VMs/CTs from id or name.
+Get VMs/CTs of the cluster from id, name, range, node, pool or tag.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The id or name VM/CT comma separated (eg. 100,101,102,TestDebian)
--vmid or -name exclude (e.g. -200,-TestUbuntu)
-range 100:107,-105,200:204
-'@pool-???' for all VM/CT in specific pool (e.g. @pool-customer1),
-'@tag-???' for all VM/CT in specific tags (e.g. @tag-customerA),
-'@node-???' for all VM/CT in specific node (e.g. @node-pve1, @node-\$(hostname)),
-'@all-???' for all VM/CT in specific host (e.g. @all-pve1, @all-\$(hostname)),
-'@all' for all VM/CT in cluster";
+Comma separated items, the same selection of the cv4pve tools (e.g. 100,101,web01):
+id (100), range (100:110), name (web01),
+name with '%' ('%web%' contains, 'web%' starts with, '%web' ends with) or PowerShell wildcards (web*),
+'@node-pve1' (also '@all-pve1', 'all-pve1') all VM/CT on a node,
+'@pool-customer1' all VM/CT in a pool and its nested pools,
+'@tag-customerA' all VM/CT with a tag,
+'@all' or 'all' all VM/CT of the cluster.
+An item starting with '-' excludes what it selects (e.g. @all,-100,-@tag-template).
+Without it, all VM/CT.
+.EXAMPLE
+Get-PveGuest -VmIdOrName '@tag-production,-@node-pve3'
 .OUTPUTS
-PSCustomObject. Return Vm/s data.
+PSCustomObject. VM/CT resources of the cluster (vmid, name, node, type, status, pool, tags...), each once, sorted by node and id.
 #>
     [OutputType([PSCustomObject])]
     [CmdletBinding()]
     Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [Parameter(ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
@@ -685,95 +755,121 @@ PSCustomObject. Return Vm/s data.
     )
 
     process {
-        $data = (Get-PveClusterResources -PveTicket $PveTicket -Type vm).Response.data
-        if ($PSBoundParameters['VmIdOrName'])
-        {
-            return $data | Where-Object { VmCheckIdOrName -Vm $_ -VmIdOrName $VmIdOrName }
-        }
-        else
-        {
-            return $data
-        }
-    }
-}
+        $vms = (Get-PveClusterResources -PveTicket $PveTicket -Type vm).Response.data | Sort-Object node, vmid
+        if (-not $PSBoundParameters['VmIdOrName']) { return $vms }
 
-function IsNumeric([string]$x) {
-    return $null -ne ($x -as [double])
-}
+        $poolMembers = @{}
+        $select = {
+            param([string]$item)
 
-function VmCheckIdOrName
-{
-    [OutputType([bool])]
-    Param(
-        [PSCustomObject]$Vm,
+            if ($item -eq 'all' -or $item -eq '@all') { return $vms }
 
-        [ValidateNotNullOrEmpty()]
-        [string]$VmIdOrName
-    )
-
-    if($VmIdOrName -eq 'all') { return $true }
-
-    foreach ($item in $VmIdOrName.Split(","))
-    {
-        If($item -like '*:*')
-        {
-            #range number
-            $range = $item.Split(":");
-            if(($range.Length -eq 2) -and (IsNumeric($range[0])) -and (IsNumeric($range[1])))
-            {
-                if (($vm.vmid -ge $range[0]) -and ($vm.vmid -le $range[1])) {
-                    return $true
+            foreach ($prefix in '@all-', 'all-', '@node-') {
+                if ($item.StartsWith($prefix)) {
+                    $node = $item.Substring($prefix.Length)
+                    return $vms | Where-Object { $_.node -eq $node }
                 }
             }
-        }
-        ElseIf((IsNumeric($item)))
-        {
-            if($vm.vmid -eq $item) { return $true }
-        }
-        Elseif($item.IndexOf("all-") -eq 0 -and $item.Substring(4) -eq $vm.node)
-        {
-            #all vm in node
-            return $true
-        }
-        Elseif($item.IndexOf("@all-") -eq 0 -and $item.Substring(5) -eq $vm.node)
-        {
-            #all vm in node
-            return $true
-        }
-        Elseif($item.IndexOf("@node-") -eq 0 -and $item.Substring(6) -eq $vm.node)
-        {
-            #all vm in node
-            return $true
-        }
-        Elseif($item.IndexOf("@pool-") -eq 0 -and $item.Substring(6) -eq $vm.pool)
-        {
-            #all vm in pool
-            return $true
-        }
-        Elseif($item.IndexOf("@tag-") -eq 0 -and ($vm.tags + "").Split(",").Contains($item.Substring(5)))
-        {
-            #all vm in tag
-            return $true
-        }
-        ElseIf($vm.name -like $item) {
-            #name
-            return $true
-        }
-    }
 
-    return $false
+            if ($item.StartsWith('@pool-')) {
+                $pool = $item.Substring(6)
+                if (-not $poolMembers.ContainsKey($pool)) {
+                    $poolMembers[$pool] = @(Get-GuestPoolMemberIds -PveTicket $PveTicket -Pool $pool)
+                }
+                return $vms | Where-Object { $poolMembers[$pool] -contains $_.id }
+            }
+
+            if ($item.StartsWith('@tag-')) {
+                $tag = $item.Substring(5)
+                return $vms | Where-Object { ("$($_.tags)" -split ';') -contains $tag }
+            }
+
+            return $vms | Where-Object { Test-GuestIdOrName -Vm $_ -VmIdOrName $item }
+        }
+
+        $items = $VmIdOrName.Split(',') | ForEach-Object { $_.Trim() } | Where-Object { $_ }
+
+        # add first, then exclude: '-100:110' is an excluded range, not the range -100 to 110
+        $ids = [System.Collections.Generic.HashSet[string]]::new()
+        foreach ($item in ($items | Where-Object { -not $_.StartsWith('-') })) {
+            foreach ($vm in (& $select $item)) { [void]$ids.Add($vm.id) }
+        }
+        foreach ($item in ($items | Where-Object { $_.StartsWith('-') })) {
+            foreach ($vm in (& $select $item.Substring(1))) { [void]$ids.Remove($vm.id) }
+        }
+
+        return $vms | Where-Object { $ids.Contains($_.id) }
+    }
 }
 
-function Unlock-PveVm {
+function Test-GuestIdOrName {
+    # True if the VM/CT matches one item of a selection: range '100:110', id, or name. A name is compared
+    # without case; '%text%' contains, 'text%' starts with, '%text' ends with (as the cv4pve tools);
+    # '*' and '?' are PowerShell wildcards.
+    param([PSCustomObject]$Vm, [string]$VmIdOrName)
+
+    $min = 0L; $max = 0L; $id = 0L
+    if ($VmIdOrName.Contains(':')) {
+        #range number
+        $range = $VmIdOrName.Split(':')
+        return $range.Length -eq 2 `
+               -and [long]::TryParse($range[0], [ref]$min) `
+               -and [long]::TryParse($range[1], [ref]$max) `
+               -and $Vm.vmid -ge $min -and $Vm.vmid -le $max
+    }
+    elseif ([long]::TryParse($VmIdOrName, [ref]$id)) {
+        return $Vm.vmid -eq $id
+    }
+
+    $name = "$($Vm.name)".ToLower()
+    $pattern = $VmIdOrName.ToLower()
+    if ($pattern.Contains('%')) {
+        $text = $pattern.Replace('%', '')
+        if ($pattern.StartsWith('%') -and $pattern.EndsWith('%')) { return $name.Contains($text) }
+        elseif ($pattern.StartsWith('%')) { return $name.EndsWith($text) }
+        elseif ($pattern.EndsWith('%')) { return $name.StartsWith($text) }
+        else { return $false }
+    }
+    elseif ([System.Management.Automation.WildcardPattern]::ContainsWildcardCharacters($pattern)) {
+        return $name -like $pattern
+    }
+
+    return $name -eq $pattern
+}
+
+function Get-GuestPoolMemberIds {
+    # Ids ('qemu/100', 'lxc/101') of the members of a pool and of its nested pools ('parent/child').
+    param([PveTicket]$PveTicket, [string]$Pool)
+
+    $poolIds = (Get-PvePools -PveTicket $PveTicket).Response.data.poolid |
+        Where-Object { $_ -eq $Pool -or $_.StartsWith("$Pool/", [StringComparison]::OrdinalIgnoreCase) }
+
+    foreach ($poolId in $poolIds) {
+        # 'GET /pools?poolid=' returns nested pools too, unlike 'GET /pools/{poolid}'
+        (Get-PvePools -PveTicket $PveTicket -Poolid $poolId).Response.data | Select-Object -First 1 |
+            ForEach-Object { $_.members.id }
+    }
+}
+
+function Get-GuestOrError {
+    # VM/CT selected by the power and snapshot functions; an error when nothing matches.
+    param([PveTicket]$PveTicket, [string]$VmIdOrName)
+
+    $guests = @(Get-PveGuest -PveTicket $PveTicket -VmIdOrName $VmIdOrName)
+    if ($guests.Count -eq 0) { Write-Error "VM/CT '$VmIdOrName' not found!" }
+    return $guests
+}
+
+function Unlock-PveGuest {
     <#
 .DESCRIPTION
-Unlock VM.
+Unlock VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -787,23 +883,24 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return Set-PveNodesQemuConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' -Skiplock:$true }
-        ElseIf ($vm.type -eq 'lxc') { return Set-PveNodesLxcConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { Set-PveNodesQemuConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' -Skiplock:$true }
+            ElseIf ($vm.type -eq 'lxc') { Set-PveNodesLxcConfig -PveTicket $PveTicket -node $vm.node -Vmid $vm.vmid -Delete 'lock' }
+        }
     }
 }
 
 #region VM status
-function Start-PveVm {
+function Start-PveGuest {
     <#
 .DESCRIPTION
-Start VM.
+Start VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -817,51 +914,80 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusStart -PveTicket $PveTicket }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusStart -PveTicket $PveTicket }
+        }
     }
 }
 
-function Stop-PveVm {
+function Stop-PveGuest {
     <#
 .DESCRIPTION
-Stop VM.
+Stop VM/CT immediately; with -Shutdown, shut it down cleanly through the guest operating system (ACPI or guest agent for a VM).
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
+.PARAMETER Shutdown
+Shut down cleanly through the guest operating system instead of stopping immediately.
+.PARAMETER Timeout
+With -Shutdown: seconds the guest has to shut down.
+.PARAMETER ForceStop
+With -Shutdown: stop the guest if it has not shut down within Timeout.
+.EXAMPLE
+Stop-PveGuest -VmIdOrName web01 -Shutdown -Timeout 60 -ForceStop
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Stop')]
     Param(
         [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [PveTicket]$PveTicket,
 
         [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
         [ValidateNotNullOrEmpty()]
-        [string]$VmIdOrName
+        [string]$VmIdOrName,
+
+        [Parameter(Mandatory, ParameterSetName = 'Shutdown')]
+        [switch]$Shutdown,
+
+        [Parameter(ParameterSetName = 'Shutdown')]
+        [int]$Timeout,
+
+        [Parameter(ParameterSetName = 'Shutdown')]
+        [switch]$ForceStop
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
+        $options = @{}
+        if ($PSBoundParameters.ContainsKey('Timeout')) { $options['Timeout'] = $Timeout }
+        if ($ForceStop) { $options['Forcestop'] = $true }
+
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($Shutdown) {
+                if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusShutdown -PveTicket $PveTicket @options }
+                ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusShutdown -PveTicket $PveTicket @options }
+            }
+            else {
+                if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusStop -PveTicket $PveTicket }
+                ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusStop -PveTicket $PveTicket }
+            }
+        }
     }
 }
 
-function Suspend-PveVm {
+function Suspend-PveGuest {
     <#
 .DESCRIPTION
-Suspend VM.
+Suspend VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -875,22 +1001,23 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusSuspend -PveTicket $PveTicket }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusSuspend -PveTicket $PveTicket }
+        }
     }
 }
 
-function Resume-PveVm {
+function Resume-PveGuest {
     <#
 .DESCRIPTION
-Resume VM.
+Resume VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -904,22 +1031,23 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusResume -PveTicket $PveTicket }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusResume -PveTicket $PveTicket }
+        }
     }
 }
 
-function Reset-PveVm {
+function Reset-PveGuest {
     <#
 .DESCRIPTION
-Reset VM.
+Reset VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -933,24 +1061,63 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket }
-        ElseIf ($vm.type -eq 'lxc') { throw "Lxc not implement reset!" }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusReset -PveTicket $PveTicket }
+            ElseIf ($vm.type -eq 'lxc') { Write-Error "Lxc not implement reset! $($vm.vmid) $($vm.name)" }
+        }
+    }
+}
+
+function Restart-PveGuest {
+    <#
+.DESCRIPTION
+Reboot VM/CT cleanly, through the guest operating system. For a hard reset of a VM use Reset-PveGuest.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER VmIdOrName
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
+.PARAMETER Timeout
+Seconds to wait for the shutdown before the guest is started again.
+.OUTPUTS
+PveResponse. Return response, one per VM/CT.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
+        [string]$VmIdOrName,
+
+        [Parameter(ValueFromPipelineByPropertyName)]
+        [int]$Timeout
+    )
+
+    process {
+        $options = @{}
+        if ($PSBoundParameters.ContainsKey('Timeout')) { $options['Timeout'] = $Timeout }
+
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuStatusReboot -PveTicket $PveTicket @options }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcStatusReboot -PveTicket $PveTicket @options }
+        }
     }
 }
 #endregion
 
 #region Snapshot
-function Get-PveVmSnapshot {
+function Get-PveGuestSnapshot {
     <#
 .DESCRIPTION
-Get snapshots VM.
+Get snapshots VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -964,28 +1131,29 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | Get-PveNodesQemuSnapshot -PveTicket $PveTicket }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | Get-PveNodesLxcSnapshot -PveTicket $PveTicket }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | Get-PveNodesQemuSnapshot -PveTicket $PveTicket }
+            ElseIf ($vm.type -eq 'lxc') { $vm | Get-PveNodesLxcSnapshot -PveTicket $PveTicket }
+        }
     }
 }
 
-function New-PveVmSnapshot {
+function New-PveGuestSnapshot {
     <#
 .DESCRIPTION
-Create snapshot VM.
+Create snapshot VM/CT.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .PARAMETER Snapname
 The name of the snapshot.
 .PARAMETER Description
 A textual description or comment.
 .PARAMETER Vmstate
-Save the vmstate
+Save the vmstate (VM only, ignored for containers).
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -1010,36 +1178,72 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu')
-        {
-            if ($Vmstate) {
-                return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description -Vmstate
-            }
-            else
+        # only what was given: an omitted description is not sent
+        $options = @{ Snapname = $Snapname }
+        if ($PSBoundParameters.ContainsKey('Description')) { $options['Description'] = $Description }
+
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu')
             {
-                return $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description
+                # Vmstate of the generated cmdlet is [bool]: it needs a value
+                $vm | New-PveNodesQemuSnapshot -PveTicket $PveTicket @options -Vmstate ([bool]$Vmstate)
+            }
+            ElseIf ($vm.type -eq 'lxc')
+            {
+                $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket @options
             }
         }
-        ElseIf ($vm.type -eq 'lxc')
-        {
-            return $vm | New-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname -Description $Description
+    }
+}
+
+function Remove-PveGuestSnapshot {
+    <#
+.DESCRIPTION
+Delete a VM/CT snapshot.
+.PARAMETER PveTicket
+Ticket data connection.
+.PARAMETER VmIdOrName
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
+.PARAMETER Snapname
+The name of the snapshot.
+.OUTPUTS
+PveResponse. Return response, one per VM/CT.
+#>
+    [OutputType([PveResponse])]
+    [CmdletBinding()]
+    Param(
+        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [PveTicket]$PveTicket,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
+        [string]$VmIdOrName,
+
+        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
+        [ValidateNotNullOrEmpty()]
+        [string]$Snapname
+    )
+
+    process {
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname }
+            ElseIf ($vm.type -eq 'lxc') { $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
         }
     }
 }
 
-function Remove-PveVmSnapshot {
+function Undo-PveGuestSnapshot {
     <#
 .DESCRIPTION
-Delete a VM snapshot.
+Rollback VM/CT state to specified snapshot.
 .PARAMETER PveTicket
 Ticket data connection.
 .PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
+VM/CT, the selection of Get-PveGuest (id, name, range, @node-, @pool-, @tag-...).
 .PARAMETER Snapname
 The name of the snapshot.
 .OUTPUTS
-PveResponse. Return response.
+PveResponse. Return response, one per VM/CT.
 #>
     [OutputType([PveResponse])]
     [CmdletBinding()]
@@ -1057,44 +1261,10 @@ PveResponse. Return response.
     )
 
     process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | Remove-PveNodesQemuSnapshot -PveTicket $PveTicket -Snapname $Snapname }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | Remove-PveNodesLxcSnapshot -PveTicket $PveTicket -Snapname $Snapname }
-    }
-}
-
-function Undo-PveVmSnapshot {
-    <#
-.DESCRIPTION
-Rollback VM state to specified snapshot.
-.PARAMETER PveTicket
-Ticket data connection.
-.PARAMETER VmIdOrName
-The (unique) ID or Name of the VM.
-.PARAMETER Snapname
-The name of the snapshot.
-.OUTPUTS
-PveResponse. Return response.
-#>
-    [OutputType([PveResponse])]
-    [CmdletBinding()]
-    Param(
-        [Parameter(ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [PveTicket]$PveTicket,
-
-        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()]
-        [string]$VmIdOrName,
-
-        [Parameter(Mandatory, ValueFromPipeline, ValueFromPipelineByPropertyName)]
-        [ValidateNotNullOrEmpty()]
-        [string]$Snapname
-    )
-
-    process {
-        $vm = Get-PveVm -PveTicket $PveTicket -VmIdOrName $VmIdOrName
-        if ($vm.type -eq 'qemu') { return $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
-        ElseIf ($vm.type -eq 'lxc') { return $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
+        foreach ($vm in (Get-GuestOrError -PveTicket $PveTicket -VmIdOrName $VmIdOrName)) {
+            if ($vm.type -eq 'qemu') { $vm | New-PveNodesQemuSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
+            ElseIf ($vm.type -eq 'lxc') { $vm | New-PveNodesLxcSnapshotRollback -PveTicket $PveTicket -Snapname $Snapname }
+        }
     }
 }
 #endregion
@@ -1107,8 +1277,20 @@ PveResponse. Return response.
 Set-Alias -Name Show-PveSpice -Value Invoke-PveSpice -PassThru
 Set-Alias -Name Get-PveTasksStatus -Value Get-PveNodesTasksStatus -PassThru
 
+#GUEST (VM and CT): names used before the *-PveGuest functions
+Set-Alias -Name Get-PveVm -Value Get-PveGuest -PassThru
+Set-Alias -Name Unlock-PveVm -Value Unlock-PveGuest -PassThru
+Set-Alias -Name Start-PveVm -Value Start-PveGuest -PassThru
+Set-Alias -Name Stop-PveVm -Value Stop-PveGuest -PassThru
+Set-Alias -Name Suspend-PveVm -Value Suspend-PveGuest -PassThru
+Set-Alias -Name Resume-PveVm -Value Resume-PveGuest -PassThru
+Set-Alias -Name Reset-PveVm -Value Reset-PveGuest -PassThru
+Set-Alias -Name Get-PveVmSnapshot -Value Get-PveGuestSnapshot -PassThru
+Set-Alias -Name New-PveVmSnapshot -Value New-PveGuestSnapshot -PassThru
+Set-Alias -Name Remove-PveVmSnapshot -Value Remove-PveGuestSnapshot -PassThru
+Set-Alias -Name Undo-PveVmSnapshot -Value Undo-PveGuestSnapshot -PassThru
+
 #MONITORING
-Set-Alias -Name Get-PveQemuMonitoring -Value Get-PveNodesQemuRrddata -PassThru
 Set-Alias -Name Get-PveQemuMonitoring -Value Get-PveNodesQemuRrddata -PassThru
 Set-Alias -Name Get-PveLxcMonitoring -Value Get-PveNodesLxcRrddata -PassThru
 
