@@ -38,6 +38,7 @@ It **runs on your machine and uses only the Proxmox VE API**: nothing to install
 - **Objects, not text** — the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it.
 - **Tasks** — start a backup, clone or migration and wait for it to finish, with a progress bar if you like.
 - **Anything else** — `Invoke-PveRestApi` calls any path of the API with the same connection.
+- **`-WhatIf` and `-Confirm`** — on every cmdlet that changes something, to see what would be done before doing it; without them nothing asks, as scripts expect.
 - **Cross-platform** — PowerShell 7 on Windows, Linux and macOS.
 
 ---
