@@ -12,7 +12,7 @@
 RootModule = 'Corsinvest.ProxmoxVE.Api.psm1'
 
 # Version number of this module.
-ModuleVersion = '9.2.2'
+ModuleVersion = '9.2.3'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -499,7 +499,7 @@ PrivateData = @{
         IconUri = 'https://raw.githubusercontent.com/Corsinvest/cv4pve-api-powershell/master/icon.png'
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'https://github.com/Corsinvest/cv4pve-api-powershell/blob/master/CHANGELOG.md'
 
         # Prerelease string of this module
         # Prerelease = ''
