@@ -70,6 +70,9 @@ jobs:
           echo "✅ Changelog section found for $VERSION"
           echo "notes<<EOF" >> $GITHUB_OUTPUT
           echo "$NOTES" >> $GITHUB_OUTPUT
+          # the release page carries no file to install: link to this version on the Gallery
+          echo "" >> $GITHUB_OUTPUT
+          echo "[PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/$VERSION)" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Publish module to PowerShell Gallery
