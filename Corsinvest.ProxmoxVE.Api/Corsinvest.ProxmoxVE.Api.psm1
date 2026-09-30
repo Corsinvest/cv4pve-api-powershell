@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Copyright Corsinvest Srl
 # SPDX-License-Identifier: MIT
 
-#Requires -Version 6.0
+#Requires -Version 7.0
 
 class PveTicket {
     [string] $HostName = ''
@@ -88,7 +88,7 @@ Second factor of a user with two-factor authentication: a TOTP code (e.g. 123456
 .PARAMETER SkipRefreshPveTicketLast
 Skip refresh PveTicket Last global variable
 .EXAMPLE
-$PveTicket = Connect-PveCluster -HostsAndPorts 192.168.128.115 -Credentials (Get-Credential -Username 'root').
+$PveTicket = Connect-PveCluster -HostsAndPorts 192.168.128.115 -Credentials (Get-Credential -Username 'root')
 .OUTPUTS
 PveTicket. Return ticket connection.
 #>
@@ -113,8 +113,8 @@ PveTicket. Return ticket connection.
         $hostName = '';
         $port = 0;
 
-        #find host and port
-        foreach ($hostAndPort in $HostsAndPorts) {
+        #find host and port: a list, or one string with the nodes separated by commas
+        foreach ($hostAndPort in ($HostsAndPorts -split ',' | ForEach-Object { $_.Trim() } | Where-Object { $_ })) {
             $data = $hostAndPort.Split(':');
             $hostTmp = $data[0];
             $portTmp = 8006;
@@ -201,8 +201,8 @@ Type request
 .PARAMETER Parameters
 Parameters request
 .EXAMPLE
-$PveTicket = Connect-PveCluster -HostsAndPorts '192.168.128.115' -Credentials (Get-Credential -Username 'root').
-(Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource '/version').Resonse.data
+$PveTicket = Connect-PveCluster -HostsAndPorts '192.168.128.115' -Credentials (Get-Credential -Username 'root')
+(Invoke-PveRestApi -PveTicket $PveTicket -Method Get -Resource '/version').Response.data
 
 data
 ----
@@ -274,10 +274,9 @@ Return object request
         }
 
         if ($parametersTmp.Count -gt 0 -and $('Get', 'Delete').IndexOf($restMethod) -ge 0) {
-            Write-Debug 'Parameters:'
-            $parametersTmp.keys | ForEach-Object { Write-Debug "$_ => $($parametersTmp[$_])" }
-
-            $query = '?' + (($parametersTmp.Keys | ForEach-Object { "$_=$($parametersTmp[$_])" }) -join '&')
+            $query = '?' + (($parametersTmp.Keys | ForEach-Object {
+                "$([uri]::EscapeDataString($_))=$([uri]::EscapeDataString([string]$parametersTmp[$_]))"
+            }) -join '&')
         }
 
         $response = New-Object PveResponse -Property @{
@@ -302,19 +301,21 @@ Return object request
             Headers              = $headers
         }
 
-        Write-Debug ($params | Format-List | Out-String)
+        #debug: the values of passwords, tickets, tokens and second factors are hidden
+        Write-Debug "PveRestApi Request: $restMethod $url"
+        if ($parametersTmp.Count -gt 0) {
+            Write-Debug "PveRestApi Parameters: $(Hide-PveSensitiveValue -Data $parametersTmp -Resource $Resource | Format-Table -AutoSize | Out-String)"
+        }
 
         #body parameters
         if ($parametersTmp.Count -gt 0 -and $('Post', 'Put').IndexOf($restMethod) -ge 0) {
             $params['ContentType'] = 'application/json'
             $params['body'] = ($parametersTmp | ConvertTo-Json)
-            Write-Debug "Body: $($params.body | Format-Table | Out-String)"
         }
 
         try {
-            Write-Debug "Params: $($params | Format-Table | Out-String)"
-
-            $response.Response = Invoke-RestMethod @params
+            #-Debug:$false: Invoke-RestMethod would write the body of the request and the response (password, ticket)
+            $response.Response = Invoke-RestMethod @params -Debug:$false
         }
         catch {
             $response.StatusCode = $_.Exception.Response.StatusCode
@@ -326,13 +327,39 @@ Return object request
             }
         }
 
-        Write-Debug "PveRestApi Response: $($response.Response | Format-Table | Out-String)"
+        Write-Debug "PveRestApi Response: $(Hide-PveSensitiveValue -Data $response.Response.data -Resource $Resource | Format-Table | Out-String)"
         Write-Debug "PveRestApi IsSuccessStatusCode: $($response.IsSuccessStatusCode)"
         Write-Debug "PveRestApi StatusCode: $($response.StatusCode)"
         Write-Debug "PveRestApi ReasonPhrase: $($response.ReasonPhrase)"
 
         return $response
     }
+}
+
+function Hide-PveSensitiveValue {
+    # Copy of request parameters or response data for Write-Debug, with the values of passwords, tickets, tokens,
+    # second factors and secrets replaced by '****' (also 'value' of an API token just created). Top level only.
+    param($Data, [string]$Resource)
+
+    $names = 'password', 'ticket', 'token', 'otp', 'tfa-challenge', 'secret'
+    if ($Resource -match '/token/') { $names += 'value' }
+    $isSensitive = { param($name) $n = $name.ToLower(); $null -ne ($names | Where-Object { $n.Contains($_) } | Select-Object -First 1) }
+
+    if ($Data -is [System.Collections.IDictionary]) {
+        $ret = [ordered]@{}
+        foreach ($key in $Data.Keys) { $ret[$key] = (& $isSensitive $key) ? '****' : $Data[$key] }
+        return [pscustomobject]$ret
+    }
+
+    if ($Data -is [pscustomobject]) {
+        $ret = [ordered]@{}
+        foreach ($property in $Data.PSObject.Properties) { $ret[$property.Name] = (& $isSensitive $property.Name) ? '****' : $property.Value }
+        return [pscustomobject]$ret
+    }
+
+    if ($Data -is [array]) { return @($Data | ForEach-Object { Hide-PveSensitiveValue -Data $_ -Resource $Resource }) }
+
+    return $Data
 }
 #endregion
 
