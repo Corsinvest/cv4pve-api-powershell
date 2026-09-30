@@ -71,7 +71,8 @@ answers within 2 seconds, so a script keeps working while a node is down:
 Connect-PveCluster -HostsAndPorts 'pve01', 'pve02:8006', '10.0.0.13' -ApiToken $env:PVE_API_TOKEN
 ```
 
-Write each node as a separate item, as above, with `:port` only when it is not 8006. If no node answers,
+Write each node as a separate item, as above, or in one string separated by commas
+(`'pve01,pve02:8006,10.0.0.13'`); add `:port` only when it is not 8006. If no node answers,
 `Connect-PveCluster` throws `Host not valid`. Any node gives access to the whole cluster.
 
 <Aside type="caution">

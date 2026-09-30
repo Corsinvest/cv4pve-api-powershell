@@ -33,7 +33,7 @@ Copyright = '(c) 2020 Corsinvest Srl. All rights reserved.'
 Description = 'PowerShell for Proxmox VE'
 
 # Minimum version of the PowerShell engine required by this module
-PowerShellVersion = '6.0'
+PowerShellVersion = '7.0'
 
 # Name of the PowerShell host required by this module
 # PowerShellHostName = ''

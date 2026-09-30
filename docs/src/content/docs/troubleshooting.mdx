@@ -3,12 +3,10 @@ title: Troubleshooting
 description: See what the module sends to Proxmox VE, and fix the errors met most often — missing types, certificates, boolean parameters, authentication.
 ---
 
-import { Aside } from '@astrojs/starlight/components';
-
 ## See the calls: `-Debug`
 
-Every cmdlet accepts `-Debug`. The module then prints what it sends and receives: URL, method,
-parameters, body, and the status code and reason of the response.
+Every cmdlet accepts `-Debug`. The module then prints what it sends and receives: method, URL,
+parameters, and the data, status code and reason of the response.
 
 ```powershell
 Get-PveNodesQemuConfig -Node pve01 -Vmid 100 -Debug
@@ -18,10 +16,8 @@ Compare the URL and the parameters with the endpoint in the [cmdlet reference](/
 or the [Proxmox VE API viewer](https://pve.proxmox.com/pve-docs/api-viewer/): most problems are a
 parameter with the wrong name, type or value.
 
-<Aside type="caution">
-The debug output includes the request body. For `Connect-PveCluster` with `-Credentials` that body holds
-the password in clear text: do not use `-Debug` on it where the output is logged or shared.
-</Aside>
+Passwords, second factors, tickets and tokens are shown as `****`, so `Connect-PveCluster -Debug` does
+not print the password. Other values are printed as they are: check the output before you share it.
 
 ## `Unable to find type [PveResponse]`
 

@@ -13,7 +13,7 @@ Works from any folder: paths are relative to this script. No task imports the mo
                   PowerShell parser: the public functions (Verb-Pve*) and every Set-Alias. Run it after
                   the generator updates the module or after adding a function.
 - Reference:      pages of the cmdlet reference of the documentation site (docs/), also run by npm.
-- Test:           offline tests of the hand-written functions (tests/Test-GuestSelection.ps1).
+- Test:           offline tests of the hand-written functions (tests/Test-GuestSelection.ps1, tests/Test-RestApi.ps1).
 
 Without -Task: Analyze and Test.
 
@@ -95,8 +95,10 @@ function Invoke-Reference {
 
 function Invoke-Test {
     # in a child process: the tests import the module and replace some of its functions with fakes
-    & (Get-Process -Id $PID).Path -NoProfile -File (Join-Path $PSScriptRoot 'tests/Test-GuestSelection.ps1')
-    if ($LASTEXITCODE -ne 0) { throw "Tests failed (exit code $LASTEXITCODE)" }
+    foreach ($test in 'Test-GuestSelection.ps1', 'Test-RestApi.ps1') {
+        & (Get-Process -Id $PID).Path -NoProfile -File (Join-Path $PSScriptRoot "tests/$test")
+        if ($LASTEXITCODE -ne 0) { throw "Tests failed: $test (exit code $LASTEXITCODE)" }
+    }
 }
 
 foreach ($name in $Task) {
