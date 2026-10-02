@@ -32,6 +32,8 @@ import FeatureGrid from '@corsinvest/cv4pve-docs-theme/components/FeatureGrid.as
 import TerminalTable from '@corsinvest/cv4pve-docs-theme/components/TerminalTable.astro';
 import CtaBand from '@corsinvest/cv4pve-docs-theme/components/CtaBand.astro';
 import proxmoxLogo from '../../assets/proxmox-logo.svg';
+import { Image } from 'astro:assets';
+import powershellProxmox from '../../assets/powershell.png';
 
 export const features = [
   { title: 'The whole API', text: 'One cmdlet per endpoint and method, generated from the Proxmox VE API: its parameters, their types and allowed values come from the API itself.', href: 'reference/' },
@@ -62,6 +64,10 @@ export const features = [
   ]}
   note="A few rows of a two-node test cluster, names changed."
 />
+
+<div style="text-align: center">
+  <Image src={powershellProxmox} alt="PowerShell holding a shield with the Proxmox logo" width={320} />
+</div>
 
 ## Why
 

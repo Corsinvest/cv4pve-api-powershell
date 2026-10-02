@@ -20,6 +20,10 @@ PowerShell for Proxmox VE (Made in Italy)
 
 ---
 
+<p align="center">
+  <img src="images/powershell.png" alt="PowerShell holding a shield with the Proxmox logo" width="320">
+</p>
+
 ## Why
 
 The Proxmox VE web interface is made for one action at a time. Snapshot forty VMs before an update, list every VM with its disks for an audit, clone a template ten times, shut down a lab every evening: by hand it is slow and error-prone.
