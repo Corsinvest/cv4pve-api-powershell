@@ -8,7 +8,7 @@ The version follows Proxmox VE: 9.2.x is built on the API of Proxmox VE 9.2.
 ## [9.2.3] - 2026-09-30
 
 ### Added
-- Documentation site: https://corsinvest.github.io/cv4pve-api-powershell/ — replaces the MkDocs site; a page for every cmdlet with its endpoint, guides, examples with their output, Coming from PowerCLI; old URLs redirect to the new pages ([#68](https://github.com/Corsinvest/cv4pve-api-powershell/pull/68), [#69](https://github.com/Corsinvest/cv4pve-api-powershell/pull/69))
+- Documentation site: https://corsinvest.github.io/cv4pve-api-powershell/, replaces the MkDocs site; a page for every cmdlet with its endpoint, guides, examples with their output, Coming from PowerCLI; old URLs redirect to the new pages ([#68](https://github.com/Corsinvest/cv4pve-api-powershell/pull/68), [#69](https://github.com/Corsinvest/cv4pve-api-powershell/pull/69))
 - `Get-PveGuest` with the selection of the cv4pve tools: id, range, name (exact, `%text%`, `text%`, `%text`, PowerShell wildcards), `@node-`, `@pool-` with nested pools, `@tag-`, `@all`, exclusions with `-` ([#70](https://github.com/Corsinvest/cv4pve-api-powershell/pull/70))
 - `Stop-PveGuest -Shutdown [-Timeout] [-ForceStop]` and `Restart-PveGuest`: clean shutdown and reboot through the guest ([#70](https://github.com/Corsinvest/cv4pve-api-powershell/pull/70))
 - `Get-PveTaskExitStatus`; the response of the call that started a task can be piped into `Wait-PveTaskIsFinish` and `Wait-PveTaskIsFinishedWithProgress` ([#70](https://github.com/Corsinvest/cv4pve-api-powershell/pull/70))

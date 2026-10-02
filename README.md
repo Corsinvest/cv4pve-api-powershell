@@ -14,7 +14,7 @@ PowerShell for Proxmox VE (Made in Italy)
 [![PowerShell Gallery](https://img.shields.io/powershellgallery/v/Corsinvest.ProxmoxVE.Api?style=flat-square&logo=powershell)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
 [![Downloads](https://img.shields.io/powershellgallery/dt/Corsinvest.ProxmoxVE.Api?style=flat-square)](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/)
 
-> **The PowerCLI for Proxmox VE** — a PowerShell module with a cmdlet for every endpoint of the Proxmox VE API, running on your machine and talking only to the API.
+> **The PowerCLI for Proxmox VE**: a PowerShell module with a cmdlet for every endpoint of the Proxmox VE API, running on your machine and talking only to the API.
 >
 > **[Documentation](https://corsinvest.github.io/cv4pve-api-powershell/)**
 
@@ -28,7 +28,7 @@ PowerShell for Proxmox VE (Made in Italy)
 
 The Proxmox VE web interface is made for one action at a time. Snapshot forty VMs before an update, list every VM with its disks for an audit, clone a template ten times, shut down a lab every evening: by hand it is slow and error-prone.
 
-VMware administrators have PowerCLI for this. cv4pve-api-powershell is the same idea for Proxmox VE: the whole API as PowerShell cmdlets, so your scripts, scheduled tasks and habits keep working — objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
+VMware administrators have PowerCLI for this. cv4pve-api-powershell is the same idea for Proxmox VE: the whole API as PowerShell cmdlets, so your scripts, scheduled tasks and habits keep working: objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
 
 It **runs on your machine and uses only the Proxmox VE API**: nothing to install on the nodes, no SSH.
 
@@ -36,14 +36,14 @@ It **runs on your machine and uses only the Proxmox VE API**: nothing to install
 
 ## Features
 
-- **The whole API** — one cmdlet per endpoint and method, generated from the Proxmox VE API, with its parameters, types and allowed values.
-- **VMs by id or name** — `Get-PveGuest` finds VMs and containers by id, name, range, node, pool or tag, with exclusions; the same selection starts, stops or snapshots them all in one call.
-- **API token or password** — list several nodes and the first that answers is used.
-- **Objects, not text** — the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it.
-- **Tasks** — start a backup, clone or migration and wait for it to finish, with a progress bar if you like.
-- **Anything else** — `Invoke-PveRestApi` calls any path of the API with the same connection.
-- **`-WhatIf` and `-Confirm`** — on every cmdlet that changes something, to see what would be done before doing it; without them nothing asks, as scripts expect.
-- **Cross-platform** — PowerShell 7 on Windows, Linux and macOS.
+- **The whole API**: one cmdlet per endpoint and method, generated from the Proxmox VE API, with its parameters, types and allowed values.
+- **VMs by id or name**: `Get-PveGuest` finds VMs and containers by id, name, range, node, pool or tag, with exclusions; the same selection starts, stops or snapshots them all in one call.
+- **API token or password**: list several nodes and the first that answers is used.
+- **Objects, not text**: the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it.
+- **Tasks**: start a backup, clone or migration and wait for it to finish, with a progress bar if you like.
+- **Anything else**: `Invoke-PveRestApi` calls any path of the API with the same connection.
+- **`-WhatIf` and `-Confirm`**: on every cmdlet that changes something, to see what would be done before doing it; without them nothing asks, as scripts expect.
+- **Cross-platform**: PowerShell 7 on Windows, Linux and macOS.
 
 ---
 
