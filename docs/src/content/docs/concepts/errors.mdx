@@ -67,7 +67,9 @@ A few things do throw a PowerShell exception, because the script cannot go on wi
 
 The functions that act on a selection of guests (`Start-PveGuest`, `New-PveGuestSnapshot`…) write a
 non-terminating error when nothing matches (`VM/CT '…' not found!`), and `Reset-PveGuest` writes one for
-each container it skips. `-ErrorAction Stop` turns them into exceptions.
+each container it skips. When the list of the guests itself cannot be read (a missing privilege, a node
+that does not answer) the error is `Cannot read the VM/CT of the cluster (<status>): <reason>`, not
+"not found". `-ErrorAction Stop` turns them into exceptions.
 
 <Aside>
 A task that fails is a third case: the call that starts it succeeds and returns the UPID, and the

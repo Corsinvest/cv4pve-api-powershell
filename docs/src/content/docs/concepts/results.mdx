@@ -49,7 +49,7 @@ A list (nodes, VMs, snapshots, tasks) is an array in `Response.data`: pipe it on
 | `ToTable()` | Formats `Response.data` as a table with every property. |
 | `ToCsv('file.csv')` | Writes `Response.data` to a CSV file with `Export-Csv`. |
 | `ToGridView()` | Shows `Response.data` in `Out-GridView`, which PowerShell 7 has on Windows only. |
-| `ResponseInError()` | `$true` if the reply contains an `error` property. |
+| `ResponseInError()` | `$true` when Proxmox VE refused one or more parameters: they are in `Response.errors`, one property for each. |
 
 ## Functions that return the objects
 

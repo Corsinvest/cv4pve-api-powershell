@@ -68,13 +68,17 @@ A few API parameters have the name of a PowerShell automatic variable or common 
 The generated cmdlets do not throw on these: check `IsSuccessStatusCode`. See
 [Errors](/cv4pve-api-powershell/concepts/errors/).
 
-## Values with special characters in GET and DELETE calls
+## Status code -1
 
-For `GET` and `DELETE` the module appends the parameters to the URL without encoding them. A value
-with `&`, `#`, `+`, `%` or spaces breaks the query string. Until this is fixed, encode such values
-yourself with `[uri]::EscapeDataString($value)`.
+The request got no answer from the node: the name is not resolved, the connection is refused, the
+certificate is refused, or the node did not answer within the timeout (100 seconds unless
+`Connect-PveCluster -TimeoutSec` says otherwise). `ReasonPhrase` has the message of the failure. See
+[Connection](/cv4pve-api-powershell/connection/#timeout).
 
-`POST` and `PUT` send the parameters as a JSON body: do not encode their values.
+## `Couldn't authenticate user: the answer of ... has no ticket`
+
+Something answered the login with a success status, but it is not Proxmox VE: usually a proxy or
+another service on that host and port. Check `-HostsAndPorts`.
 
 ## Reporting a problem
 

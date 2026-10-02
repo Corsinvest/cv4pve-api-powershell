@@ -10,6 +10,8 @@ class PveTicket {
     [string] $Ticket = ''
     [string] $CSRFPreventionToken = ''
     [string] $ApiToken = ''
+    #seconds a request waits for the answer; 0 for no limit
+    [int] $TimeoutSec = 100
 }
 
 class PveResponse {
@@ -24,11 +26,12 @@ class PveResponse {
     [string] $Method
     [string] $ResponseType
 
-    [bool] ResponseInError() { return $null -ne $this.Response.error }
+    #Proxmox VE refused one or more parameters: they are in Response.errors
+    [bool] ResponseInError() { return $null -ne $this.Response -and $null -ne $this.Response.errors }
     [PSCustomObject] ToTable() { return $this.Response.data | Format-Table -Property * }
     [PSCustomObject] ToData() { return $this.Response.data }
-    [void] ToCsv([string] $filename) { $this.Response.data | Export-Csv $filename }
-    [void] ToGridView() { $this.Response.data | Out-GridView -Title "View Result Data" }
+    [void] ToCsv([string] $filename) { if ($null -ne $this.Response.data) { $this.Response.data | Export-Csv $filename } }
+    [void] ToGridView() { if ($null -ne $this.Response.data) { $this.Response.data | Out-GridView -Title "View Result Data" } }
 }
 
 $Global:PveTicketLast = $null
@@ -85,6 +88,8 @@ Username and password, username formatted as user@pam, user@pve, user@yourdomain
 Api Token format USER@REALM!TOKENID=UUID
 .PARAMETER Otp
 Second factor of a user with two-factor authentication: a TOTP code (e.g. 123456) or 'type:value' (e.g. recovery:abcd-1234).
+.PARAMETER TimeoutSec
+Seconds a request waits for the answer of the node, 100 by default; 0 for no limit.
 .PARAMETER SkipRefreshPveTicketLast
 Skip refresh PveTicket Last global variable
 .EXAMPLE
@@ -105,6 +110,9 @@ PveTicket. Return ticket connection.
         [string]$Otp,
 
         [switch]$SkipCertificateCheck,
+
+        [ValidateRange(0, [int]::MaxValue)]
+        [int]$TimeoutSec = 100,
 
         [switch]$SkipRefreshPveTicketLast
     )
@@ -136,6 +144,7 @@ PveTicket. Return ticket connection.
         $pveTicket.Port = $port
         $pveTicket.SkipCertificateCheck = $SkipCertificateCheck
         $pveTicket.ApiToken = $ApiToken
+        $pveTicket.TimeoutSec = $TimeoutSec
 
         if (-not $ApiToken)
         {
@@ -168,13 +177,20 @@ PveTicket. Return ticket connection.
                 $response = Invoke-PveRestApi -PveTicket $pveTicket -Method Create -Resource '/access/ticket' -Parameters $parameters
             }
 
-            #erro response
+            #error response
             if (!$response.IsSuccessStatusCode -or $response.StatusCode -le 0) {
-                throw $response.ReasonPhrase
+                $reason = [string]::IsNullOrWhiteSpace($response.ReasonPhrase) ? 'no reason given' : $response.ReasonPhrase
+                throw "Couldn't authenticate user ($($response.StatusCode)): $reason"
             }
 
-            $pveTicket.Ticket = $response.Response.data.ticket
-            $pveTicket.CSRFPreventionToken = $response.Response.data.CSRFPreventionToken
+            #logged only with a ticket: a success status alone (e.g. the page of a proxy) is not a login
+            $data = $response.Response -is [pscustomobject] ? $response.Response.data : $null
+            if ($data -isnot [pscustomobject] -or [string]::IsNullOrEmpty($data.ticket)) {
+                throw "Couldn't authenticate user: the answer of $($hostName):$port has no ticket. Is it a Proxmox VE node?"
+            }
+
+            $pveTicket.Ticket = $data.ticket
+            $pveTicket.CSRFPreventionToken = $data.CSRFPreventionToken
         }
 
         #last ticket connection
@@ -266,7 +282,8 @@ Return object request
 
         if ($Parameters -and $Parameters.Count -gt 0 )
         {
-             $Parameters.keys | ForEach-Object {
+             #a null parameter is not sent: Proxmox VE applies its own default
+             $Parameters.keys | Where-Object { $null -ne $Parameters[$_] } | ForEach-Object {
                 $parametersTmp[$_] = ($Parameters[$_] -is [switch] -or $Parameters[$_] -is [bool]) `
                                          ? $Parameters[$_] ? 1 : 0 `
                                          : $Parameters[$_]
@@ -279,9 +296,13 @@ Return object request
             }) -join '&')
         }
 
+        #the parameters kept in the response are for the reader: without the values of passwords, tickets and tokens
+        $parametersMasked = @{}
+        (Hide-PveSensitiveValue -Data $parametersTmp -Resource $Resource).PSObject.Properties | ForEach-Object { $parametersMasked[$_.Name] = $_.Value }
+
         $response = New-Object PveResponse -Property @{
             Method          = $restMethod
-            Parameters      = $parametersTmp
+            Parameters      = $parametersMasked
             ResponseType    = $ResponseType
             RequestResource = $Resource
         }
@@ -291,17 +312,21 @@ Return object request
 
         $url = "https://$($PveTicket.HostName):$($PveTicket.Port)/api2"
         if($ResponseType -ne '') { $url += "/$ResponseType" }
-        $url += "$Resource$query"
+        $url += $Resource
 
         $params = @{
-            Uri                  = $url
+            Uri                  = "$url$query"
             Method               = $restMethod
             WebSession           = $session
             SkipCertificateCheck = $PveTicket.SkipCertificateCheck
             Headers              = $headers
         }
 
-        #debug: the values of passwords, tickets, tokens and second factors are hidden
+        #without a timeout a node that accepts the connection and does not answer blocks the call forever
+        if ($PveTicket.TimeoutSec -gt 0) { $params['TimeoutSec'] = $PveTicket.TimeoutSec }
+
+        #debug: the values of passwords, tickets, tokens and second factors are hidden;
+        #the url without the query string, which repeats the parameters as they are
         Write-Debug "PveRestApi Request: $restMethod $url"
         if ($parametersTmp.Count -gt 0) {
             Write-Debug "PveRestApi Parameters: $(Hide-PveSensitiveValue -Data $parametersTmp -Resource $Resource | Format-Table -AutoSize | Out-String)"
@@ -322,8 +347,15 @@ Return object request
             $response.ReasonPhrase = $_.Exception.Response.ReasonPhrase
             $response.IsSuccessStatusCode = $_.Exception.Response.IsSuccessStatusCode
             if ($response.StatusCode -eq 0) {
+                #no answer: name not resolved, connection refused, certificate refused, timeout
                 $response.ReasonPhrase = $_.Exception.Message
                 $response.StatusCode = -1
+                $response.IsSuccessStatusCode = $false
+            }
+            elseif ($_.ErrorDetails.Message) {
+                #body of the error: Proxmox VE lists there the parameters it refused ('errors')
+                try { $response.Response = $_.ErrorDetails.Message | ConvertFrom-Json -ErrorAction Stop } catch { $response.Response = $null }
+                if ($response.Response -isnot [pscustomobject]) { $response.Response = $null }
             }
         }
 
@@ -790,7 +822,14 @@ PSCustomObject. VM/CT resources of the cluster (vmid, name, node, type, status, 
     )
 
     process {
-        $vms = (Get-PveClusterResources -PveTicket $PveTicket -Type vm).Response.data | Sort-Object node, vmid
+        $resources = Get-PveClusterResources -PveTicket $PveTicket -Type vm
+        if (-not $resources.IsSuccessStatusCode) {
+            #not an empty cluster: the listing itself failed
+            Write-Error "Cannot read the VM/CT of the cluster ($($resources.StatusCode)): $($resources.ReasonPhrase)"
+            return
+        }
+
+        $vms = $resources.Response.data | Sort-Object node, vmid
         if (-not $PSBoundParameters['VmIdOrName']) { return $vms }
 
         $poolMembers = @{}
@@ -890,8 +929,10 @@ function Get-GuestOrError {
     # VM/CT selected by the power and snapshot functions; an error when nothing matches.
     param([PveTicket]$PveTicket, [string]$VmIdOrName)
 
-    $guests = @(Get-PveGuest -PveTicket $PveTicket -VmIdOrName $VmIdOrName)
-    if ($guests.Count -eq 0) { Write-Error "VM/CT '$VmIdOrName' not found!" }
+    #a listing that fails has already written its error: do not add "not found" to it
+    $listingErrors = $null
+    $guests = @(Get-PveGuest -PveTicket $PveTicket -VmIdOrName $VmIdOrName -ErrorVariable listingErrors)
+    if ($guests.Count -eq 0 -and -not $listingErrors) { Write-Error "VM/CT '$VmIdOrName' not found!" }
     return $guests
 }
 

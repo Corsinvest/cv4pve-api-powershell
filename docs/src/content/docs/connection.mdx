@@ -95,6 +95,19 @@ Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN -SkipCertif
 Without the check the connection is still encrypted, but nothing proves you are talking to your node.
 Use it on networks you trust.
 
+## Timeout
+
+Every request waits up to 100 seconds for the answer of the node. `-TimeoutSec` changes it for all the
+calls made with that connection; `0` means no limit.
+
+```powershell
+Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN -TimeoutSec 30
+```
+
+A request that runs out of time does not throw: it returns a response with `StatusCode` `-1` and the
+reason in `ReasonPhrase`. This is the time of the HTTP request, not of the operation it starts: a backup
+or a clone answers at once with the id of a [task](/cv4pve-api-powershell/concepts/tasks/).
+
 ## The last connection
 
 `Connect-PveCluster` returns the connection, a `PveTicket` object, and also stores it in the global
