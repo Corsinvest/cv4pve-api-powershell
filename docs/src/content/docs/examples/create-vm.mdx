@@ -1,11 +1,13 @@
 ---
-title: Create a VM or container
-description: Create a Linux VM, a Windows VM with UEFI and TPM, and a container, with disks and network, then clone a template.
+title: Create a Proxmox VE VM with PowerShell
+description: Create a Linux VM, a Windows VM with UEFI and TPM, or a container on Proxmox VE with PowerShell, with disks and network, and clone a template.
+sidebar:
+  label: Create a VM or container
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-These scripts create guests. Every value — node, storage, bridge, ISO, template — must exist on your
+These scripts create guests. Every value (node, storage, bridge, ISO, template) must exist on your
 cluster: change them before running. The token needs a role that can create VMs, for example
 `PVEVMAdmin` on the pool or path, plus `Datastore.AllocateSpace` on the storage.
 

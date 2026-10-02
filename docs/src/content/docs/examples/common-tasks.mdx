@@ -1,11 +1,11 @@
 ---
 title: Common tasks
-description: Short recipes for everyday Proxmox VE work from PowerShell — guests, nodes, storage, snapshots, backups, tasks, updates, users — each with its output.
+description: Short recipes for everyday Proxmox VE work from PowerShell (guests, nodes, storage, snapshots, backups, tasks, updates, users), each with its output.
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
-Short recipes to copy and adapt. Each one assumes a connection — see
+Short recipes to copy and adapt. Each one assumes a connection: see
 [Connection](/cv4pve-api-powershell/connection/):
 
 ```powershell
@@ -15,8 +15,8 @@ Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN
 The outputs come from a two-node test cluster, with names and addresses changed.
 
 <Aside>
-The reading recipes were run as shown. The ones that change something — under
-[Act on guests](#act-on-guests) — are shown, not run: try them on a test VM first.
+The reading recipes were run as shown. The ones that change something (under
+[Act on guests](#act-on-guests)) are shown, not run: try them on a test VM first.
 </Aside>
 
 ## Guests
@@ -81,7 +81,7 @@ Get-PveGuest -VmIdOrName '@tag-production' | Select-Object vmid, name, tags
 ```
 
 `@tag-` finds the guests that have the tag among their others. The same selection takes exclusions:
-`'@tag-production,-@node-pve03'` — see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests).
+`'@tag-production,-@node-pve03'`: see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests).
 ## Nodes
 
 ### CPU, memory and uptime
@@ -126,7 +126,7 @@ xz-utils 5.4.1-1+deb12u1 5.4.1-1+deb12u2
 ```
 
 The list is the one of the last `apt update` on the node, the same shown in *Node → Updates*. It needs
-`Sys.Modify` on the node — see [Permissions](/cv4pve-api-powershell/permissions/).
+`Sys.Modify` on the node: see [Permissions](/cv4pve-api-powershell/permissions/).
 
 ### Cluster and quorum
 
@@ -202,7 +202,7 @@ vmid type name
 9999 qemu vdi-test
 ```
 
-These are the guests that no backup job of the datacenter includes — the same list as
+These are the guests that no backup job of the datacenter includes, the same list as
 *Datacenter → Backup → Guests without backup job*.
 
 ## Tasks

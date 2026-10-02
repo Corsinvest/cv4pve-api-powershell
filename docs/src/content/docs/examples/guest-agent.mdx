@@ -10,7 +10,7 @@ system, file systems, commands to run. Through the API you reach it without netw
 and without its credentials.
 
 It needs the agent installed in the guest (`qemu-guest-agent` on Linux, the VirtIO guest tools on
-Windows) and enabled in the VM options — `Set-PveNodesQemuConfig -Node pve01 -Vmid 100 -Agent 'enabled=1'`,
+Windows) and enabled in the VM options: `Set-PveNodesQemuConfig -Node pve01 -Vmid 100 -Agent 'enabled=1'`,
 then a full stop and start of the VM.
 
 ## Read from the guest
@@ -57,15 +57,15 @@ $status.'out-data'
 ```
 
 `-Command` is the program and its arguments as an array, not a command line: nothing is interpreted
-by a shell. For pipes or redirection, run the shell itself — `@('/bin/sh', '-c', 'df -h | grep sda')`,
+by a shell. For pipes or redirection, run the shell itself: `@('/bin/sh', '-c', 'df -h | grep sda')`,
 or on Windows `@('powershell.exe', '-NoProfile', '-Command', 'Get-Service | Where Status -eq Running')`.
 
-The parameter is `-Pid_`, not `-Pid`: `$PID` is a PowerShell automatic variable — see
+The parameter is `-Pid_`, not `-Pid`: `$PID` is a PowerShell automatic variable. See
 [Parameters](/cv4pve-api-powershell/concepts/parameters/#renamed-parameters). For the same reason the
 script calls its variable `$processId`.
 
 <Aside type="caution">
-Commands run in the guest as the user of the agent — `root` on Linux, `SYSTEM` on Windows. Whoever may
+Commands run in the guest as the user of the agent: `root` on Linux, `SYSTEM` on Windows. Whoever may
 call these endpoints (`VM.GuestAgent.Unrestricted` on Proxmox VE 9, `VM.Monitor` on older versions) has
 full control of the guest: give that privilege only to tokens that need it.
 </Aside>

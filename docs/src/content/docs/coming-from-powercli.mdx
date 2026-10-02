@@ -1,6 +1,8 @@
 ---
-title: Coming from PowerCLI
-description: How the VMware PowerCLI cmdlets map to cv4pve-api-powershell, and what works differently on Proxmox VE.
+title: "PowerCLI for Proxmox VE: the command equivalents"
+description: The Proxmox VE equivalent of each VMware PowerCLI cmdlet (Connect-VIServer, Get-VM, Move-VM, New-Snapshot and the others), and what works differently when you move your scripts.
+sidebar:
+  label: Coming from PowerCLI
 ---
 
 If you automated vSphere with [PowerCLI](https://developer.broadcom.com/powercli/latest/), this module
@@ -16,14 +18,14 @@ The PowerCLI cmdlet names come from the official
 
 | vSphere | Proxmox VE | In the module |
 |---|---|---|
-| vCenter Server | No separate management server: every node serves the API for the whole cluster | Connect to any node; list several and the first that answers is used — see [Connection](/cv4pve-api-powershell/connection/#several-nodes) |
+| vCenter Server | No separate management server: every node serves the API for the whole cluster | Connect to any node; list several and the first that answers is used: see [Connection](/cv4pve-api-powershell/connection/#several-nodes) |
 | ESXi host | Node | `Get-PveNode` |
 | Virtual machine | VM (QEMU/KVM) or LXC container, with different endpoints | `Get-PveGuest` returns both, with `type` `qemu` or `lxc` |
-| VMware Tools | QEMU guest agent (VMs only) | `…QemuAgent…` cmdlets — see [Guest agent](/cv4pve-api-powershell/examples/guest-agent/) |
+| VMware Tools | QEMU guest agent (VMs only) | `…QemuAgent…` cmdlets: see [Guest agent](/cv4pve-api-powershell/examples/guest-agent/) |
 | Datastore | Storage, defined for the whole cluster, shared or local to a node | `Get-PveClusterResources -Type storage` |
 | Resource pool | Pool: a group of guests and storages used for permissions, without CPU or memory limits | `Get-PvePools` |
 | Tags | Tags on the guest, separated by `;` | the `tags` property of `Get-PveGuest` |
-| `$global:DefaultVIServer` | The last connection | `$PveTicketLast` — see [Connection](/cv4pve-api-powershell/connection/#the-last-connection) |
+| `$global:DefaultVIServer` | The last connection | `$PveTicketLast`: see [Connection](/cv4pve-api-powershell/connection/#the-last-connection) |
 
 ## Cmdlet by cmdlet
 
@@ -32,7 +34,7 @@ The PowerCLI cmdlet names come from the official
 | PowerCLI | cv4pve-api-powershell |
 |---|---|
 | `Connect-VIServer` | `Connect-PveCluster` |
-| `Get-VM` | `Get-PveGuest` — by id, name, range, node, pool or tag, with exclusions, see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/) |
+| `Get-VM` | `Get-PveGuest`: by id, name, range, node, pool or tag, with exclusions, see [Finding VMs](/cv4pve-api-powershell/guides/finding-vms/) |
 | `Get-VMHost` | `Get-PveNode` |
 | `Get-Datastore` | `Get-PveClusterResources -Type storage` |
 | `Get-ResourcePool` | `Get-PvePools` |
@@ -44,10 +46,10 @@ The PowerCLI cmdlet names come from the official
 | PowerCLI | cv4pve-api-powershell |
 |---|---|
 | `Start-VM` | `Start-PveGuest` |
-| `Stop-VM` | `Stop-PveGuest` — immediate stop, as `Stop-VM` |
-| `Stop-VMGuest` | `Stop-PveGuest -Shutdown` — clean shutdown through the guest |
-| `Restart-VM` | `Reset-PveGuest` — reset of the VM |
-| `Restart-VMGuest` | `Restart-PveGuest` — reboot through the guest |
+| `Stop-VM` | `Stop-PveGuest`: immediate stop, as `Stop-VM` |
+| `Stop-VMGuest` | `Stop-PveGuest -Shutdown`: clean shutdown through the guest |
+| `Restart-VM` | `Reset-PveGuest`: reset of the VM |
+| `Restart-VMGuest` | `Restart-PveGuest`: reboot through the guest |
 | `Suspend-VM` | `Suspend-PveGuest`; `Resume-PveGuest` to resume |
 
 See [Power and lock](/cv4pve-api-powershell/guides/power/).
@@ -71,12 +73,12 @@ See [Snapshots](/cv4pve-api-powershell/guides/snapshots/).
 | `Move-VM` to another datastore (Storage vMotion) | `New-PveNodesQemuMoveDisk -Disk scsi0 -Storage <storage>`; containers `New-PveNodesLxcMoveVolume` |
 | `Move-HardDisk` | `New-PveNodesQemuMoveDisk` |
 | `Move-VM` with host and datastore | `New-PveNodesQemuMigrate -Target pve02 -WithLocalDisks $true -Targetstorage <storage>` |
-| `New-VM` | `New-PveNodesQemu`, `New-PveNodesLxc` — see [Create a VM](/cv4pve-api-powershell/examples/create-vm/) |
+| `New-VM` | `New-PveNodesQemu`, `New-PveNodesLxc`: see [Create a VM](/cv4pve-api-powershell/examples/create-vm/) |
 | `New-VM -Template` | `New-PveNodesQemuClone` |
-| `Invoke-VMScript` | `New-PveNodesQemuAgentExec` — see [Guest agent](/cv4pve-api-powershell/examples/guest-agent/#run-a-command) |
-| `Get-Task`, `Wait-Task` | `Get-PveNodesTasks`, `Wait-PveTaskIsFinish` — see [Tasks](/cv4pve-api-powershell/concepts/tasks/) |
+| `Invoke-VMScript` | `New-PveNodesQemuAgentExec`: see [Guest agent](/cv4pve-api-powershell/examples/guest-agent/#run-a-command) |
+| `Get-Task`, `Wait-Task` | `Get-PveNodesTasks`, `Wait-PveTaskIsFinish`: see [Tasks](/cv4pve-api-powershell/concepts/tasks/) |
 | `Get-Stat` | `Get-PveNodesQemuRrddata -Timeframe hour` (alias `Get-PveQemuMonitoring`), `Get-PveNodesLxcRrddata` |
-| `Get-View` | `Invoke-PveRestApi` — any path of the API, see [Raw API](/cv4pve-api-powershell/concepts/raw-api/) |
+| `Get-View` | `Invoke-PveRestApi`: any path of the API, see [Raw API](/cv4pve-api-powershell/concepts/raw-api/) |
 
 `New-PveNodesQemuMoveDisk` without `-Delete $true` keeps the original disk on the VM as an unused disk.
 
@@ -101,7 +103,7 @@ See [Results](/cv4pve-api-powershell/concepts/results/).
 
 A PowerCLI cmdlet that fails writes an error that `-ErrorAction Stop` turns into an exception. A
 generated cmdlet here returns a `PveResponse` with `IsSuccessStatusCode` `$false` and the reason in
-`ReasonPhrase`: check it, or wrap the calls — see [Errors](/cv4pve-api-powershell/concepts/errors/).
+`ReasonPhrase`: check it, or wrap the calls. See [Errors](/cv4pve-api-powershell/concepts/errors/).
 
 ### Where the VM runs matters
 
@@ -123,7 +125,7 @@ them to false: `-Online $true`, `-Onboot $false`. See
 
 The cmdlets that change something take the standard PowerShell parameters `-WhatIf` and `-Confirm`:
 `Remove-PveNodesQemu … -WhatIf`, `Stop-PveGuest -VmIdOrName '@tag-lab' -WhatIf`. They never ask by
-themselves — see [-WhatIf and -Confirm](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm).
+themselves: see [-WhatIf and -Confirm](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm).
 ### VMs and containers are separate
 
 vSphere has one kind of guest. Proxmox VE has VMs (`qemu`) and containers (`lxc`), each with its own

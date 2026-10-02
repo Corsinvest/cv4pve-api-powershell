@@ -12,7 +12,7 @@ the cmdlet name without searching:
 1. **Verb** from the HTTP method: `GET` → `Get`, `PUT` → `Set`, `POST` → `New`, `DELETE` → `Remove`.
 2. **Noun**: `Pve` followed by the segments of the path, each capitalized, leaving out the
    `{parameters}` and dropping `-` and `_`.
-3. When two endpoints would get the same name — a list and one of its items — the second gets `Idx`,
+3. When two endpoints would get the same name (a list and one of its items), the second gets `Idx`,
    and a number if needed.
 
 | Endpoint | Cmdlet |
@@ -35,7 +35,7 @@ group page lists them side by side.
 
 ## `Invoke-PveRestApi`
 
-All cmdlets end in `Invoke-PveRestApi`, which you can call yourself — for an endpoint added by a newer
+All cmdlets end in `Invoke-PveRestApi`, which you can call yourself, for an endpoint added by a newer
 Proxmox VE than your version of the module, or to build a path in a loop:
 
 ```powershell
@@ -49,9 +49,9 @@ $r.Response.data.cpuinfo
 | `-Method` | `Get` (default), `Set` (PUT), `Create` (POST), `Delete` (DELETE). |
 | `-Parameters` | A hashtable with the API parameter names: `@{ vmstate = 1; snapname = 'before-update' }`. For `Get` and `Delete` they go in the query string, for `Set` and `Create` in a JSON body. `[bool]` and switch values are sent as `1` and `0`. |
 | `-ResponseType` | `json` (default), `extjs`, `html`, `text`, `png`. |
-| `-PveTicket` | The connection; without it, the last one — see [Connection](/cv4pve-api-powershell/connection/#the-last-connection). |
+| `-PveTicket` | The connection; without it, the last one: see [Connection](/cv4pve-api-powershell/connection/#the-last-connection). |
 
-It returns a `PveResponse`, like the generated cmdlets, and does not throw when the call fails — see
+It returns a `PveResponse`, like the generated cmdlets, and does not throw when the call fails: see
 [Results](/cv4pve-api-powershell/concepts/results/) and [Errors](/cv4pve-api-powershell/concepts/errors/).
 
 ```powershell

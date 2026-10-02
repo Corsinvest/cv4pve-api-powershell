@@ -1,6 +1,6 @@
 ---
 title: Results
-description: What the cmdlets return — PveResponse and its data, the objects of Get-PveGuest, dates in Unix time — and how to use them in the pipeline.
+description: What the cmdlets return (PveResponse and its data, the objects of Get-PveGuest, dates in Unix time) and how to use them in the pipeline.
 ---
 
 ## `PveResponse`
@@ -20,7 +20,7 @@ the call went:
 | `ResponseType` | Format requested, `json` unless you ask [Invoke-PveRestApi](/cv4pve-api-powershell/concepts/raw-api/) for another. |
 
 The cmdlets return this wrapper instead of the bare data so that a failed call does not throw: the
-script decides what a failure means — see [Errors](/cv4pve-api-powershell/concepts/errors/).
+script decides what a failure means: see [Errors](/cv4pve-api-powershell/concepts/errors/).
 
 ## Getting the data
 
@@ -32,7 +32,7 @@ $r.ToData()                 # the same
 $r.Response.data.memory     # one value
 ```
 
-A list — nodes, VMs, snapshots, tasks — is an array in `Response.data`: pipe it on.
+A list (nodes, VMs, snapshots, tasks) is an array in `Response.data`: pipe it on.
 
 ```powershell
 (Get-PveNodesQemu -Node pve01).Response.data |
@@ -59,7 +59,7 @@ and nodes, `Get-PveTaskIsRunning` and the `Wait-` functions return `$true` or `$
 each function in the [reference](/cv4pve-api-powershell/reference/module/) shows its output.
 
 The objects of `Get-PveGuest` have `node` and `vmid` properties, which the generated cmdlets bind by
-name — so they pipe straight in:
+name, so they pipe straight in:
 
 ```powershell
 Get-PveGuest -VmIdOrName 100 | Get-PveNodesQemuConfig

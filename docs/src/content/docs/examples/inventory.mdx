@@ -1,14 +1,16 @@
 ---
-title: Inventory to CSV
-description: A read-only script that exports every VM and container with its node, resources and disks to a CSV file, and the nodes and storage beside it.
+title: Export a Proxmox VE inventory to CSV
+description: A read-only PowerShell script that exports every Proxmox VE VM and container with its node, resources and disks to a CSV file, with the nodes and the storage beside it.
+sidebar:
+  label: Inventory to CSV
 ---
 
 A script that only reads: it lists every VM and container of the cluster with CPU, memory, disks and
-network, and writes them to CSV files you can open in Excel. It needs only the `PVEAuditor` role — see
+network, and writes them to CSV files you can open in Excel. It needs only the `PVEAuditor` role: see
 [Permissions](/cv4pve-api-powershell/permissions/).
 
 ```powershell
-# inventory.ps1 — every guest of the cluster, with its resources, in guests.csv
+# inventory.ps1: every guest of the cluster, with its resources, in guests.csv
 param(
     [string[]]$HostsAndPorts = @('pve01'),
     [string]$OutputFolder = '.'
@@ -68,5 +70,5 @@ What the script relies on:
   network interfaces are the properties whose name matches `scsi0`, `net0`…
 - A guest the token may not read has no configuration: its `Cores`, `MemoryMB` and `Disks` stay empty.
 
-For a complete inventory — hardware, snapshots, backups, firewall, users — in Excel or HTML, without
+For a complete inventory (hardware, snapshots, backups, firewall, users) in Excel or HTML, without
 writing a script, see [cv4pve-report](https://corsinvest.github.io/cv4pve-report/).

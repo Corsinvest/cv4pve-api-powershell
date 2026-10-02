@@ -1,6 +1,8 @@
 ---
-title: Permissions
-description: The Proxmox VE user, API token and privileges a PowerShell script needs — per function, and why a read-only token sees fewer backups than expected.
+title: Proxmox VE API permissions for PowerShell
+description: The Proxmox VE user, API token and privileges a PowerShell script needs, function by function, and why a read-only token sees fewer backups than expected.
+sidebar:
+  label: Permissions
 ---
 
 The module works through the API, so a script can do exactly what its account is allowed to do, no
@@ -38,7 +40,7 @@ anything else, create a role with just the privileges the script needs from the 
 | `VM.Clone` | `/vms` | Cloning, with `VM.Allocate` on the new id |
 
 Without a privilege a call that reads a list returns the list without what you may not see; any other
-call returns a response with status code 403 — see [below](#how-missing-privileges-are-reported).
+call returns a response with status code 403: see [below](#how-missing-privileges-are-reported).
 `Get-PveVersion`, `Get-PveClusterNextid` and `/cluster/resources` (behind `Get-PveGuest` and `Get-PveNode`)
 need no privilege: they answer every authenticated account, with only what it may see.
 
@@ -69,4 +71,4 @@ list drops the VMs without `VM.Audit`, a storage listing drops the volumes you c
 `200 OK`: `Get-PveGuest` returning nothing may mean a token without privileges, not an empty cluster.
 
 A request that is refused outright returns a `PveResponse` with `StatusCode` `403` and the reason in
-`ReasonPhrase`, without throwing — see [Errors](/cv4pve-api-powershell/concepts/errors/).
+`ReasonPhrase`, without throwing: see [Errors](/cv4pve-api-powershell/concepts/errors/).

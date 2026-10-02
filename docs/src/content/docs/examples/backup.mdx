@@ -1,13 +1,15 @@
 ---
-title: Backup and wait
-description: Back up VMs with vzdump from PowerShell, wait for the task, check its result and list the backups on a storage.
+title: Run a Proxmox VE backup from PowerShell
+description: Run a Proxmox VE backup (vzdump) from PowerShell, wait for the task, check its result and list the backups on a storage.
+sidebar:
+  label: Backup and wait
 ---
 
 A backup is a `vzdump` task on the node that runs the guest. `New-PveNodesVzdump` starts it and returns
 the [UPID](/cv4pve-api-powershell/concepts/tasks/); the script waits and checks the exit status.
 
 ```powershell
-# backup.ps1 — back up the guests of a tag, one node at a time, to a storage
+# backup.ps1: back up the guests of a tag, one node at a time, to a storage
 param(
     [string]$Tag = 'backup-nightly',
     [string]$Storage = 'pbs01'
@@ -33,7 +35,7 @@ foreach ($group in $byNode) {
     }
 
     $status = (Get-PveNodesTasksStatus -Node $group.Name -Upid $upid).Response.data
-    "$($group.Name): guests $ids — $($status.exitstatus)"
+    "$($group.Name): guests $ids, $($status.exitstatus)"
 }
 ```
 

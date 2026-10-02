@@ -1,6 +1,6 @@
 ---
 title: cv4pve-api-powershell
-description: PowerShell module for the Proxmox VE API — automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE.
+description: "PowerShell module for the Proxmox VE API: automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE."
 head:
   # Search results and browser tab: the name and what it is, without Starlight's "| site title" suffix
   - tag: title
@@ -12,7 +12,7 @@ head:
 template: splash
 hero:
   title: Automate <span class="accent-mark">Proxmox VE</span> from PowerShell
-  tagline: The PowerCLI for Proxmox VE. A PowerShell module with a cmdlet for every endpoint of the Proxmox VE API — VMs, containers, storage, backups, cluster, access — that runs on your machine and talks only to the API.
+  tagline: The PowerCLI for Proxmox VE. A PowerShell module with a cmdlet for every endpoint of the Proxmox VE API (VMs, containers, storage, backups, cluster, access) that runs on your machine and talks only to the API.
   actions:
     - text: Get started
       link: /cv4pve-api-powershell/getting-started/
@@ -72,7 +72,7 @@ scripts.
 
 VMware administrators have PowerCLI for this. cv4pve-api-powershell is the same idea for Proxmox VE:
 the whole API as PowerShell cmdlets, so the scripts, scheduled tasks and habits you already have keep
-working — objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
+working: objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
 
 <LinkCard
   title="Coming from PowerCLI?"
@@ -82,7 +82,7 @@ working — objects in the pipeline, `Where-Object`, `Export-Csv`, `Get-Help`.
 
 ## On your machine, API only
 
-The module runs where PowerShell 7 runs — Windows, Linux, macOS, a management VM, a CI runner — and
+The module runs where PowerShell 7 runs (Windows, Linux, macOS, a management VM, a CI runner) and
 talks only to the Proxmox VE REST API on port 8006. Nothing is installed on the nodes and no SSH is
 needed. What a script can do is what its API token or user is allowed to do: give it a token with just
 the privileges it needs, see [Permissions](/cv4pve-api-powershell/permissions/).

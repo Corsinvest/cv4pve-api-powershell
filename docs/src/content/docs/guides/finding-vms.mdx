@@ -1,6 +1,8 @@
 ---
-title: Finding VMs and nodes
-description: Get-PveGuest finds VMs and containers across the cluster by id, name, range, node, pool or tag, with exclusions; Get-PveNode lists the nodes. Their output pipes into the other cmdlets.
+title: Find VMs and nodes in a Proxmox VE cluster
+description: Find Proxmox VE VMs and containers from PowerShell by id, name, range, node, pool or tag with Get-PveGuest, list the nodes with Get-PveNode, and pipe the result into the other cmdlets.
+sidebar:
+  label: Finding VMs and nodes
 ---
 
 import { Aside } from '@astrojs/starlight/components';
@@ -68,16 +70,16 @@ Get-PveGuest -VmIdOrName '@pool-web' |
     Where-Object { $_.type -eq 'lxc' -and $_.status -eq 'stopped' }
 ```
 
-The functions written for convenience — [power](/cv4pve-api-powershell/guides/power/) and
-[snapshots](/cv4pve-api-powershell/guides/snapshots/) — take the same `-VmIdOrName` and choose the
+The functions written for convenience ([power](/cv4pve-api-powershell/guides/power/) and
+[snapshots](/cv4pve-api-powershell/guides/snapshots/)) take the same `-VmIdOrName` and choose the
 endpoint for each guest themselves.
 
 Templates are included: filter them out with `Where-Object template -ne 1` when a script must not
 touch them.
 
 <Aside>
-`/cluster/resources` is refreshed by Proxmox VE every few seconds. Right after a task — a start, a
-migration, a new guest — `Get-PveGuest` may still show the previous status or node, and a guest just
+`/cluster/resources` is refreshed by Proxmox VE every few seconds. Right after a task (a start, a
+migration, a new guest), `Get-PveGuest` may still show the previous status or node, and a guest just
 created may appear without its name for a moment. To know the state right after a task, ask the guest
 itself: `Get-PveNodesQemuStatusCurrent` or `Get-PveNodesLxcStatusCurrent`.
 </Aside>
