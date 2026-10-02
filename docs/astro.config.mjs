@@ -1,12 +1,16 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import sitemap from '@astrojs/sitemap';
 import corsinvestTheme from '@corsinvest/cv4pve-docs-theme';
 
 export default defineConfig({
   site: 'https://corsinvest.github.io',
   base: '/cv4pve-api-powershell',
   integrations: [
+    // Our own sitemap in place of the one Starlight adds: without the pages of the cmdlet reference
+    // (hundreds, short and alike), which also carry 'noindex, follow'. The reference home stays.
+    sitemap({ filter: (page) => !/\/reference\/.+/.test(new URL(page).pathname) }),
     starlight({
       title: 'cv4pve-api-powershell',
       description: 'PowerShell module for the Proxmox VE API — automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE.',
