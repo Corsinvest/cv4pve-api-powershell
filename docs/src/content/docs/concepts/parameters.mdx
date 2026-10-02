@@ -1,6 +1,6 @@
 ---
 title: Parameters
-description: How the parameters of the generated cmdlets map to the Proxmox VE API — booleans, indexed devices such as net0 and scsi0, passwords, allowed values, renamed parameters and the pipeline.
+description: "How the parameters of the generated cmdlets map to the Proxmox VE API: booleans, indexed devices such as net0 and scsi0, passwords, allowed values, renamed parameters and the pipeline."
 ---
 
 The generated cmdlets have one parameter per API parameter, with the API name in PascalCase and without
@@ -17,7 +17,7 @@ Set-PveNodesQemuConfig   -Node pve01 -Vmid 100 -Onboot $false
 ```
 
 `-Vmstate` alone fails with `Missing an argument for parameter 'Vmstate'`. A switch could not say
-*set it to false*, which the API often needs — to turn off `onboot`, for one.
+*set it to false*, which the API often needs, to turn off `onboot`, for one.
 
 ## Indexed devices: `net0`, `scsi0`, `ide2`…
 
@@ -33,7 +33,7 @@ New-PveNodesQemu -Node pve01 -Vmid 120 -Name web01 -Memory 4096 -Cores 2 `
     -Scsihw virtio-scsi-single -ScsiN $scsi -IdeN $ide -NetN $net
 ```
 
-`-NetN $net` sends `net0` and `net1`. The value is the string the API expects for that device — the
+`-NetN $net` sends `net0` and `net1`. The value is the string the API expects for that device: the
 same you would write in the VM configuration file; the reference page of the cmdlet links to the API
 viewer, which describes its format. Pass the value as it is: the module encodes it.
 
@@ -72,8 +72,8 @@ The reference page of each cmdlet shows its real parameter names.
 
 ## -WhatIf and -Confirm
 
-Every cmdlet that changes something — the generated `Set-`, `New-` and `Remove-` cmdlets and the
-[guest functions](/cv4pve-api-powershell/guides/power/) — supports the standard PowerShell parameters
+Every cmdlet that changes something (the generated `Set-`, `New-` and `Remove-` cmdlets and the
+[guest functions](/cv4pve-api-powershell/guides/power/)) supports the standard PowerShell parameters
 `-WhatIf` and `-Confirm`:
 
 ```powershell
@@ -87,8 +87,8 @@ Stop-PveGuest -VmIdOrName '@tag-lab' -WhatIf
 Remove-PveNodesQemu -Node pve01 -Vmid 100 -Purge $true -Confirm   # asks yes or no first
 ```
 
-- `-WhatIf` shows what would be called — the method and the path, or the guest for the guest
-  functions — and calls nothing; the cmdlet returns nothing.
+- `-WhatIf` shows what would be called (the method and the path, or the guest for the guest
+  functions) and calls nothing; the cmdlet returns nothing.
 - `-Confirm` asks before each call.
 - Without them the cmdlets run at once, as scripts expect: they never ask by themselves. To be asked
   for every change in a session, set `$ConfirmPreference = 'Medium'`; `-Confirm:$false` turns the
@@ -98,7 +98,7 @@ Remove-PveNodesQemu -Node pve01 -Vmid 100 -Purge $true -Confirm   # asks yes or 
 ## Required parameters
 
 Parameters required by the API are mandatory: PowerShell asks for them if you leave them out. Path
-parameters — `{node}`, `{vmid}`, `{storage}` in the endpoint — are always required.
+parameters (`{node}`, `{vmid}`, `{storage}` in the endpoint) are always required.
 
 ## The pipeline
 

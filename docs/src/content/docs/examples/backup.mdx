@@ -9,7 +9,7 @@ A backup is a `vzdump` task on the node that runs the guest. `New-PveNodesVzdump
 the [UPID](/cv4pve-api-powershell/concepts/tasks/); the script waits and checks the exit status.
 
 ```powershell
-# backup.ps1 — back up the guests of a tag, one node at a time, to a storage
+# backup.ps1: back up the guests of a tag, one node at a time, to a storage
 param(
     [string]$Tag = 'backup-nightly',
     [string]$Storage = 'pbs01'
@@ -35,7 +35,7 @@ foreach ($group in $byNode) {
     }
 
     $status = (Get-PveNodesTasksStatus -Node $group.Name -Upid $upid).Response.data
-    "$($group.Name): guests $ids — $($status.exitstatus)"
+    "$($group.Name): guests $ids, $($status.exitstatus)"
 }
 ```
 

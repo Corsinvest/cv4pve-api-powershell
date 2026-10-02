@@ -1,13 +1,13 @@
 ---
 title: Errors
-description: The generated cmdlets do not throw when Proxmox VE refuses a call — how to detect a failure, read the reason, and stop a script on errors.
+description: "The generated cmdlets do not throw when Proxmox VE refuses a call: how to detect a failure, read the reason, and stop a script on errors."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
 ## A failed call does not throw
 
-When Proxmox VE refuses a call — a wrong parameter, a missing privilege, a VM that does not exist — the
+When Proxmox VE refuses a call (a wrong parameter, a missing privilege, a VM that does not exist), the
 generated cmdlets **do not throw an exception**. They return a `PveResponse` like any other, with the
 outcome in its properties:
 
@@ -28,12 +28,12 @@ $r.ReasonPhrase          # the reason given by Proxmox VE
 | `400` | A parameter is missing or invalid; `ReasonPhrase` usually starts with `Parameter verification failed`. |
 | `401` | Not authenticated: wrong or revoked token, expired ticket. `ReasonPhrase` is `Authentication failed!`. |
 | `403` | Authenticated, but without the privilege the endpoint requires. |
-| `500` | The operation failed on the server — the object does not exist, it is locked… `ReasonPhrase` says why, e.g. `Configuration file 'nodes/pve01/qemu-server/999.conf' does not exist`. |
+| `500` | The operation failed on the server: the object does not exist, it is locked… `ReasonPhrase` says why, e.g. `Configuration file 'nodes/pve01/qemu-server/999.conf' does not exist`. |
 | `-1` | No answer from the server: network, DNS, certificate. `ReasonPhrase` has the error of the connection. |
 
 ## Stop on errors
 
-For scripts that must stop at the first failure, check every call — a small function keeps it short:
+For scripts that must stop at the first failure, check every call. A small function keeps it short:
 
 ```powershell
 function Assert-PveSuccess {
@@ -58,10 +58,10 @@ broke.
 A few things do throw a PowerShell exception, because the script cannot go on without them:
 
 - `Connect-PveCluster`: no reachable host (`Host not valid`), wrong user or password, missing second
-  factor — see [Connection](/cv4pve-api-powershell/connection/).
+  factor: see [Connection](/cv4pve-api-powershell/connection/).
 - Any cmdlet called before `Connect-PveCluster`: `No PveTicket - Cluster Connect missing?`.
 - `Get-PveTaskIsRunning`, `Get-PveTaskExitStatus` and the `Wait-` functions when the status of the task
-  cannot be read — see [Tasks](/cv4pve-api-powershell/concepts/tasks/#when-the-status-cannot-be-read).
+  cannot be read: see [Tasks](/cv4pve-api-powershell/concepts/tasks/#when-the-status-cannot-be-read).
 - Parameter errors caught by PowerShell before the call: a missing mandatory parameter, a value outside
   the allowed ones, a `[bool]` without a value.
 
@@ -71,5 +71,5 @@ each container it skips. `-ErrorAction Stop` turns them into exceptions.
 
 <Aside>
 A task that fails is a third case: the call that starts it succeeds and returns the UPID, and the
-failure shows in the exit status of the task — see [Tasks](/cv4pve-api-powershell/concepts/tasks/#did-it-succeed).
+failure shows in the exit status of the task: see [Tasks](/cv4pve-api-powershell/concepts/tasks/#did-it-succeed).
 </Aside>

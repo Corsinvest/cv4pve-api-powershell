@@ -9,8 +9,8 @@ import { Aside } from '@astrojs/starlight/components';
 
 `Start-PveGuest`, `Stop-PveGuest`, `Restart-PveGuest`, `Suspend-PveGuest`, `Resume-PveGuest`,
 `Reset-PveGuest` and `Unlock-PveGuest` take the guests with the
-[selection of Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests) — an id, a name,
-a range, `@node-`, `@pool-`, `@tag-`, with exclusions — find the node and the type of each one, and call
+[selection of Get-PveGuest](/cv4pve-api-powershell/guides/finding-vms/#selecting-guests) (an id, a name,
+a range, `@node-`, `@pool-`, `@tag-`, with exclusions), find the node and the type of each one, and call
 the right endpoint, `qemu` or `lxc`. You do not need to know where they run.
 
 ```powershell
@@ -44,7 +44,7 @@ The former names `Start-PveVm`, `Stop-PveVm`, … still work as aliases.
 ## Shut down cleanly
 
 `Stop-PveGuest` does not ask the guest to shut down: it stops it at once, and unsaved data in the guest is
-lost. With `-Shutdown` it asks the guest operating system to shut down — through ACPI or the guest agent
+lost. With `-Shutdown` it asks the guest operating system to shut down, through ACPI or the guest agent
 for a VM:
 
 ```powershell
@@ -60,16 +60,16 @@ shutdown before the guest starts again. `Reset-PveGuest` is the hard reset of a 
 
 ## Unlock
 
-A VM stays locked if an operation that locks it — backup, snapshot, migration, clone — is interrupted,
+A VM stays locked if an operation that locks it (backup, snapshot, migration, clone) is interrupted,
 and Proxmox VE refuses further operations with `VM is locked`. `Unlock-PveGuest` removes the lock, like
 `qm unlock` on a node. Do it only when you are sure the operation is no longer running.
 
 On a VM it works only for `root@pam`: it sends `skiplock`, which Proxmox VE reserves to that account.
-On a container `VM.Config.*` privileges are enough — see [Permissions](/cv4pve-api-powershell/permissions/).
+On a container `VM.Config.*` privileges are enough: see [Permissions](/cv4pve-api-powershell/permissions/).
 
 <Aside type="caution">
 A wide selection acts on every guest it matches: check it first with `-WhatIf`, which lists what would
-be done and does nothing — see [-WhatIf and -Confirm](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm).
+be done and does nothing: see [-WhatIf and -Confirm](/cv4pve-api-powershell/concepts/parameters/#-whatif-and--confirm).
 
 ```powershell
 Stop-PveGuest -VmIdOrName '@tag-lab,-@node-pve03' -Shutdown -WhatIf

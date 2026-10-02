@@ -16,7 +16,7 @@ Connect-PveCluster -HostsAndPorts pve01 -ApiToken 'automation@pve!ps=aaaaaaaa-bb
 
 ## API token or user and password
 
-### API token — for scripts
+### API token, for scripts
 
 An [API token](https://pve.proxmox.com/pve-docs/chapter-pveum.html#pveum_tokens) belongs to a user and
 is written `USER@REALM!TOKENID=SECRET`. Pass it with `-ApiToken`:
@@ -27,14 +27,14 @@ Connect-PveCluster -HostsAndPorts pve01 -ApiToken $env:PVE_API_TOKEN
 
 A token is the right choice for anything that runs unattended: it needs no password, it is not asked
 for a second factor, you can give it fewer privileges than its user, and you can revoke it without
-touching the user. Keep it out of the script — an environment variable, a secret store, the
+touching the user. Keep it out of the script: an environment variable, a secret store, the
 [SecretManagement](https://learn.microsoft.com/powershell/utility-modules/secretmanagement/overview) module.
 
 With a token `Connect-PveCluster` does not contact the server: it stores the token, which is sent with
-every call. A wrong token shows up at the first cmdlet, as a response with status code 401 — see
+every call. A wrong token shows up at the first cmdlet, as a response with status code 401: see
 [Errors](/cv4pve-api-powershell/concepts/errors/).
 
-### User and password — interactive work
+### User and password, for interactive work
 
 ```powershell
 Connect-PveCluster -HostsAndPorts pve01 -Credentials (Get-Credential -UserName 'root@pam')
@@ -119,4 +119,4 @@ Get-PveGuest -PveTicket $lab  | Measure-Object
 using the first cluster. The first connection of a session always fills `$PveTicketLast`, with or
 without the switch.
 
-What the token or user may do — and what a script needs — is in [Permissions](/cv4pve-api-powershell/permissions/).
+What the token or user may do (and what a script needs) is in [Permissions](/cv4pve-api-powershell/permissions/).

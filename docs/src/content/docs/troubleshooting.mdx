@@ -1,6 +1,6 @@
 ---
 title: Troubleshooting
-description: See what the module sends to Proxmox VE, and fix the errors met most often — missing types, certificates, boolean parameters, authentication.
+description: "See what the module sends to Proxmox VE, and fix the errors met most often: missing types, certificates, boolean parameters, authentication."
 ---
 
 ## See the calls: `-Debug`
@@ -22,7 +22,7 @@ not print the password. Other values are printed as they are: check the output b
 ## `Unable to find type [PveResponse]`
 
 The script names a class of the module, but loaded it with `Import-Module`, which does not load
-classes. Start the script with `using module Corsinvest.ProxmoxVE.Api` — see
+classes. Start the script with `using module Corsinvest.ProxmoxVE.Api`: see
 [Getting started](/cv4pve-api-powershell/getting-started/#in-a-script-using-module).
 
 ## `Host not valid`
@@ -34,7 +34,7 @@ seconds each. Check the name, the port, and firewalls between you and the nodes.
 
 A response with `StatusCode` `-1` and a `ReasonPhrase` like `The SSL connection could not be
 established` means the certificate of the node was refused, usually because it is self-signed. Install
-a trusted certificate on the nodes or connect with `-SkipCertificateCheck` — see
+a trusted certificate on the nodes or connect with `-SkipCertificateCheck`: see
 [Connection](/cv4pve-api-powershell/connection/#certificates).
 
 ## `Missing an argument for parameter`
@@ -59,13 +59,13 @@ A few API parameters have the name of a PowerShell automatic variable or common 
 
 ## Status code 401 or 403
 
-- **401** — the token or the ticket was refused: a wrong or revoked token, or a ticket older than two
-  hours. Connect again.
-- **403** — authenticated, but without the privilege the endpoint requires on that path. Check the roles
-  of the user and, with privilege separation, of the token — see
+- **401**: the token or the ticket was refused. The token is wrong or revoked, or the ticket is older
+  than two hours. Connect again.
+- **403**: authenticated, but without the privilege the endpoint requires on that path. Check the roles
+  of the user and, with privilege separation, of the token: see
   [Permissions](/cv4pve-api-powershell/permissions/).
 
-The generated cmdlets do not throw on these: check `IsSuccessStatusCode` — see
+The generated cmdlets do not throw on these: check `IsSuccessStatusCode`. See
 [Errors](/cv4pve-api-powershell/concepts/errors/).
 
 ## Values with special characters in GET and DELETE calls
@@ -82,4 +82,4 @@ Open an [issue](https://github.com/Corsinvest/cv4pve-api-powershell/issues) with
 
 - the output of `$PSVersionTable.PSVersion` and `(Get-Module Corsinvest.ProxmoxVE.Api).Version`
 - the Proxmox VE version: `(Get-PveVersion).Response.data.version`
-- the command and the complete error, or the `-Debug` output — without tokens or passwords
+- the command and the complete error, or the `-Debug` output, without tokens or passwords

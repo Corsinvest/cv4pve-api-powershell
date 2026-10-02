@@ -5,8 +5,8 @@ description: Install Corsinvest.ProxmoxVE.Api from the PowerShell Gallery, conne
 
 import { Steps } from '@astrojs/starlight/components';
 
-cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It runs on your machine —
-a workstation, a management VM, a scheduled job — and talks only to the Proxmox VE REST API on port
+cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It runs on your machine
+(a workstation, a management VM, a scheduled job) and talks only to the Proxmox VE REST API on port
 8006. Nothing is installed on the nodes.
 
 ## Requirements
@@ -16,7 +16,7 @@ a workstation, a management VM, a scheduled job — and talks only to the Proxmo
   PowerShell 7 from [Microsoft's instructions](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
   and run it as `pwsh`.
 - Network access to port 8006 of at least one node.
-- A Proxmox VE API token, or a user and password, with the privileges your script needs — see
+- A Proxmox VE API token, or a user and password, with the privileges your script needs: see
   [Permissions](/cv4pve-api-powershell/permissions/).
 
 ## Install
@@ -60,12 +60,12 @@ a workstation, a management VM, a scheduled job — and talks only to the Proxmo
 
 `Get-PveGuest` is one of the functions written for convenience: it returns the VMs and containers
 themselves. The generated cmdlets, like `Get-PveVersion`, return a `PveResponse` with the data in
-`.Response.data` — [Results](/cv4pve-api-powershell/concepts/results/) explains why.
+`.Response.data`: [Results](/cv4pve-api-powershell/concepts/results/) explains why.
 
 ## In a script: `using module`
 
 The module defines two classes, `PveTicket` and `PveResponse`. `Import-Module` loads the cmdlets but
-not the classes, so a script that names a type directly — `[PveResponse]$r = …` — fails with
+not the classes, so a script that names a type directly (`[PveResponse]$r = …`) fails with
 `Unable to find type [PveResponse]`. Put `using module` at the top of the script instead:
 
 ```powershell

@@ -1,12 +1,12 @@
 ---
 title: Tasks
-description: Long operations in Proxmox VE run as tasks — how to get the UPID, wait for the task to finish and check whether it succeeded.
+description: "Long operations in Proxmox VE run as tasks: how to get the UPID, wait for the task to finish and check whether it succeeded."
 ---
 
 import { Aside } from '@astrojs/starlight/components';
 
 Starting a VM, cloning, migrating, taking a backup or a snapshot: Proxmox VE runs these as **tasks** in
-the background and the API answers at once, with the id of the task — the **UPID**. The same tasks
+the background and the API answers at once, with the id of the task, the **UPID**. The same tasks
 appear in the *Tasks* panel of the web interface.
 
 ```powershell
@@ -33,7 +33,7 @@ Set `-Timeout` to the longest time the task may take.
 
 With a response in the pipe, a call that failed or that started no task leaves nothing to wait for:
 `Wait-PveTaskIsFinish` returns `$true` at once. Check `IsSuccessStatusCode` of the call to tell the
-two apart — see [Errors](/cv4pve-api-powershell/concepts/errors/).
+two apart: see [Errors](/cv4pve-api-powershell/concepts/errors/).
 
 `Wait-PveTaskIsFinishedWithProgress` does the same and shows a PowerShell progress bar while it waits,
 with the elapsed and the total time:
@@ -67,15 +67,15 @@ shows, is in `Get-PveNodesTasksLog -Node <node> -Upid $upid`.
 ## When the status cannot be read
 
 `Get-PveTaskIsRunning`, `Get-PveTaskExitStatus` and the `Wait-` functions read the status of the task
-from the node. If they cannot — the node is down, or the account has no right to see the task — they
+from the node. If they cannot (the node is down, or the account has no right to see the task), they
 **throw an exception** with the reason, for example
 `Read status of task 'UPID:…' failed (403 …)`, instead of reporting a finished task.
 
 A token can always read the tasks it started itself; to read the tasks of other users it needs
-`Sys.Audit` on the node — see [Permissions](/cv4pve-api-powershell/permissions/).
+`Sys.Audit` on the node: see [Permissions](/cv4pve-api-powershell/permissions/).
 
 <Aside>
-Not every call returns a UPID. Calls that finish immediately — reading, most configuration changes —
+Not every call returns a UPID. Calls that finish immediately (reading, most configuration changes)
 return their result directly. The API viewer, linked from each page of the
 [cmdlet reference](/cv4pve-api-powershell/reference/), shows what an endpoint returns: a UPID is a
 `string` described as the task id.

@@ -13,7 +13,7 @@ export default defineConfig({
     sitemap({ filter: (page) => !/\/reference\/.+/.test(new URL(page).pathname) }),
     starlight({
       title: 'cv4pve-api-powershell',
-      description: 'PowerShell module for the Proxmox VE API — automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE.',
+      description: 'PowerShell module for the Proxmox VE API: automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE.',
       // Brand, logo, GitHub and "Edit page" links, the Corsinvest sidebar group and
       // external links in a new tab come from the shared cv4pve theme.
       plugins: [
