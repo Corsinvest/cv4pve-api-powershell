@@ -1,6 +1,6 @@
 ---
 name: cv4pve-api-powershell
-description: Read and operate a Proxmox VE cluster from PowerShell 7 with the Corsinvest.ProxmoxVE.Api module — list and find VMs, containers and nodes, read configurations, start, stop, snapshot, and call any API endpoint. Use it when the user works in PowerShell or asks for a PowerShell script for Proxmox VE.
+description: "Read and operate a Proxmox VE cluster from PowerShell 7 with the Corsinvest.ProxmoxVE.Api module: list and find VMs, containers and nodes, read configurations, start, stop, snapshot, and call any API endpoint. Use it when the user works in PowerShell or asks for a PowerShell script for Proxmox VE."
 ---
 
 # cv4pve-api-powershell
