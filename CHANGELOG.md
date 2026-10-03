@@ -5,6 +5,32 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 The version follows Proxmox VE: 9.2.x is built on the API of Proxmox VE 9.2.
 
+## [9.2.4] - 2026-10-03
+
+### Added
+- `Connect-PveCluster -TimeoutSec`: how long every request of the connection waits for an answer, 100 seconds by default, `0` for no limit ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- Skill for AI assistants (`skills/cv4pve-api-powershell/SKILL.md`) and the page [AI assistants](https://corsinvest.github.io/cv4pve-api-powershell/ai-agents/) of the documentation ([#76](https://github.com/Corsinvest/cv4pve-api-powershell/pull/76))
+
+### Changed (behaviour)
+- Requests have a timeout. A node that accepted the connection and did not answer blocked `Connect-PveCluster` and every cmdlet forever; the request now ends after `-TimeoutSec` with `StatusCode` `-1` and the reason ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- `Connect-PveCluster` throws when the answer has no ticket (the page of a proxy, an empty body) instead of saving an empty connection that failed later with 401; the last connection is not replaced ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- When the list of the guests cannot be read (missing privilege, node that does not answer), `Get-PveGuest` and the power and snapshot functions report `Cannot read the VM/CT of the cluster (<status>): <reason>` instead of `VM/CT '...' not found!` ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- `PveResponse.Parameters` holds the masked copy of the parameters: printing a response or converting it to JSON no longer shows passwords and tickets ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- `ResponseInError()` reads `errors`, the property Proxmox VE sends; it looked for `error` and was always false ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- A parameter with a null value passed to `Invoke-PveRestApi` is left out instead of being sent empty ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+
+### Fixed
+- `-Debug` printed the query string of GET and DELETE requests, with the values the list of parameters below it masked (a `vncticket`, for one) ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- The body of an HTTP error was dropped: for a 400 "Parameter verification failed" the refused parameters are now in `Response.errors` ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- A refused login threw an empty message when the node gave no reason: the message now has the status code ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- `ToCsv()` and `ToGridView()` wrote an error on a response without data ([#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+
+### Changed
+- Documentation: the cmdlet reference is out of the search engines index and of the sitemap, page titles say the task, new sections on the timeout, on status code -1 and on `ResponseInError()` ([#79](https://github.com/Corsinvest/cv4pve-api-powershell/pull/79), [#82](https://github.com/Corsinvest/cv4pve-api-powershell/pull/82), [#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- `images/powershell.png` is back, in the README and on the home page of the site ([#81](https://github.com/Corsinvest/cv4pve-api-powershell/pull/81))
+- Offline tests run on every pull request; new `tests/Test-Failures.ps1` ([#77](https://github.com/Corsinvest/cv4pve-api-powershell/pull/77), [#85](https://github.com/Corsinvest/cv4pve-api-powershell/pull/85))
+- The notes of a GitHub release end with the link to that version on the PowerShell Gallery ([#75](https://github.com/Corsinvest/cv4pve-api-powershell/pull/75))
+
 ## [9.2.3] - 2026-09-30
 
 ### Added
