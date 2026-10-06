@@ -14,7 +14,7 @@ export default defineConfig({
     starlight({
       title: 'cv4pve-api-powershell',
       description: 'PowerShell module for the Proxmox VE API: automate clusters, nodes, VMs and containers from PowerShell, the PowerCLI for Proxmox VE.',
-      // Brand, logo, GitHub and "Edit page" links, the Corsinvest sidebar group and
+      // Brand, product icon, GitHub link, the Corsinvest sidebar group and
       // external links in a new tab come from the shared cv4pve theme.
       plugins: [
         corsinvestTheme({
@@ -23,30 +23,18 @@ export default defineConfig({
           icon: { light: '/icon.svg', dark: '/icon-dark.svg' },
           // Visits, without cookies.
           matomo: { url: 'https://matomo.corsinvest.it/', siteId: 13 },
-          // Install-and-run panel in the home hero. A module, not a release binary: one custom
-          // target. The id 'windows' gives the PowerShell prompt (PS>) to the lines.
-          install: {
-            targets: [
-              {
-                id: 'windows',
-                label: 'PowerShell 7',
-                lines: [
-                  '# install from the PowerShell Gallery',
-                  'Install-Module Corsinvest.ProxmoxVE.Api',
-                  'Import-Module Corsinvest.ProxmoxVE.Api',
-                  '',
-                  '# connect to any node',
-                  "Connect-PveCluster -HostsAndPorts pve01 `\n    -ApiToken 'automation@pve!ps=…'",
-                  '',
-                  '# every VM and container of the cluster',
-                  'Get-PveGuest | Format-Table vmid, name, node, status',
-                ],
-              },
+          // Steps panel in the home hero: the same steps, in the same order and words, as Getting started.
+          // A library, not a release binary: the commands to add it are on the home page and in Getting started.
+          steps: {
+            items: [
+              'Install the module',
+              'Load it',
+              'Connect to a node',
+              'Run your first cmdlets',
             ],
           },
         }),
       ],
-      lastUpdated: true,
       sidebar: [
         {
           label: 'Start here',

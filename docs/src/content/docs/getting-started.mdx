@@ -23,7 +23,9 @@ cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It 
 
 <Steps>
 
-1. Install the module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/):
+1. **Install the module**
+
+   Install the module from the [PowerShell Gallery](https://www.powershellgallery.com/packages/Corsinvest.ProxmoxVE.Api/):
 
    ```powershell
    Install-Module -Name Corsinvest.ProxmoxVE.Api -Scope CurrentUser
@@ -31,7 +33,9 @@ cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It 
 
    `-Scope CurrentUser` needs no administrator rights. Update later with `Update-Module Corsinvest.ProxmoxVE.Api`.
 
-2. Load it:
+2. **Load it**
+
+   Load it:
 
    ```powershell
    Import-Module Corsinvest.ProxmoxVE.Api
@@ -39,7 +43,9 @@ cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It 
 
    PowerShell also loads it by itself the first time you call one of its cmdlets.
 
-3. Connect to any node of the cluster:
+3. **Connect to a node**
+
+   Connect to any node of the cluster:
 
    ```powershell
    Connect-PveCluster -HostsAndPorts pve01 -ApiToken 'automation@pve!ps=aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
@@ -48,7 +54,9 @@ cv4pve-api-powershell is the PowerShell module **Corsinvest.ProxmoxVE.Api**. It 
    With a self-signed certificate, the default of a new Proxmox VE installation, add
    `-SkipCertificateCheck`. All the ways to connect are in [Connection](/cv4pve-api-powershell/connection/).
 
-4. Run your first cmdlets:
+4. **Run your first cmdlets**
+
+   Run your first cmdlets:
 
    ```powershell
    Get-PveGuest | Format-Table vmid, name, node, type, status

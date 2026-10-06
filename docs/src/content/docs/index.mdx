@@ -32,18 +32,34 @@ import { LinkCard } from '@astrojs/starlight/components';
 import FeatureGrid from '@corsinvest/cv4pve-docs-theme/components/FeatureGrid.astro';
 import TerminalTable from '@corsinvest/cv4pve-docs-theme/components/TerminalTable.astro';
 import CtaBand from '@corsinvest/cv4pve-docs-theme/components/CtaBand.astro';
+import Motto from '@corsinvest/cv4pve-docs-theme/components/Motto.astro';
 import proxmoxLogo from '../../assets/proxmox-logo.svg';
 import { Image } from 'astro:assets';
 import powershellProxmox from '../../assets/powershell.png';
 
 export const features = [
-  { title: 'The whole API', text: 'One cmdlet per endpoint and method, generated from the Proxmox VE API: its parameters, their types and allowed values come from the API itself.', href: 'reference/' },
-  { title: 'VMs by id or name', text: 'Get-PveGuest finds VMs and containers by id, name, range, node, pool or tag, with exclusions; the same selection starts, stops or snapshots them all in one call.', href: 'guides/finding-vms/' },
-  { title: 'API token or password', text: 'Connect with an API token or a user and password, list several nodes and the first one that answers is used.', href: 'connection/' },
-  { title: 'Objects, not text', text: 'Every call returns the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it: filter, sort, export to CSV.', href: 'concepts/results/' },
-  { title: 'Tasks', text: 'Start a backup, a clone or a migration and wait for its task to finish, with a progress bar if you like.', href: 'concepts/tasks/' },
-  { title: 'Anything the cmdlets miss', text: 'Invoke-PveRestApi calls any path of the API directly, with the same connection.', href: 'concepts/raw-api/' },
+  { icon: 'mdi:api', title: 'The whole API', text: 'One cmdlet per endpoint and method, generated from the Proxmox VE API: its parameters, their types and allowed values come from the API itself.', href: 'reference/' },
+  { icon: 'mdi:card-search-outline', title: 'VMs by id or name', text: 'Get-PveGuest finds VMs and containers by id, name, range, node, pool or tag, with exclusions; the same selection starts, stops or snapshots them all in one call.', href: 'guides/finding-vms/' },
+  { icon: 'mdi:key-outline', title: 'API token or password', text: 'Connect with an API token or a user and password, list several nodes and the first one that answers is used.', href: 'connection/' },
+  { icon: 'mdi:shape-outline', title: 'Objects, not text', text: 'Every call returns the Proxmox VE data as PowerShell objects, with the HTTP outcome beside it: filter, sort, export to CSV.', href: 'concepts/results/' },
+  { icon: 'mdi:timer-sand', title: 'Tasks', text: 'Start a backup, a clone or a migration and wait for its task to finish, with a progress bar if you like.', href: 'concepts/tasks/' },
+  { icon: 'mdi:code-json', title: 'Anything the cmdlets miss', text: 'Invoke-PveRestApi calls any path of the API directly, with the same connection.', href: 'concepts/raw-api/' },
 ];
+
+<Motto />
+
+```powershell
+# install from the PowerShell Gallery
+Install-Module Corsinvest.ProxmoxVE.Api
+Import-Module Corsinvest.ProxmoxVE.Api
+
+# connect to any node
+Connect-PveCluster -HostsAndPorts pve01 `
+    -ApiToken 'automation@pve!ps=…'
+
+# every VM and container of the cluster
+Get-PveGuest | Format-Table vmid, name, node, status
+```
 
 <TerminalTable
   command="Get-PveGuest | Format-Table vmid, name, node, type, status"
