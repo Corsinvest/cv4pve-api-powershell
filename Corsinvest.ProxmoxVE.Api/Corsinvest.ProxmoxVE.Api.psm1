@@ -42,7 +42,7 @@ $Global:PveTicketLast = $null
 #region Core
 
 function Test-PortQuick {
-	param(
+    param(
         [Parameter(Mandatory)]
         [string]$HostName,
 
@@ -50,15 +50,14 @@ function Test-PortQuick {
         [ValidateRange(1,65535)]
         [int]$Port,
 
-		[Alias("TimeoutMs")]
+        [Alias("TimeoutMs")]
         [ValidateRange(1,60000)]
-        [int]$Timeout = 5000 # Timeout in millisecondi
+        [int]$Timeout = 5000 # Timeout in milliseconds
     )
 
     $ret = $false
-	$tcpClient = $null
-	$connection = $null
-	
+    $tcpClient = $null
+    
     try {
         $tcpClient = New-Object System.Net.Sockets.TcpClient
 
@@ -68,14 +67,14 @@ function Test-PortQuick {
             $ret = $true
         }
         else {
-            #Write-Host "Timeout for ${HostName}:${Port}."
+			Write-Debug "TCP connect timed out for ${HostName}:${Port} after ${Timeout} ms"
         }
     }
     catch {
         Write-Debug "TCP connect failed for ${HostName}:${Port} - $($_.Exception.Message)"
     }
     finally {
-        $tcpClient.Close() | Out-Null
+        if ($tcpClient) { $tcpClient.Close() | Out-Null }
     }
 
     return $ret
