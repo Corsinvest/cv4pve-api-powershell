@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 The version follows Proxmox VE: 9.2.x is built on the API of Proxmox VE 9.2.
 
+## [9.2.5] - 2026-11-11
+
+### Fixed
+- `Connect-PveCluster` with `-Debug` says why a node cannot be reached (a host name that does not resolve, a refused connection) or that it did not answer in time, instead of `It is NOT reachable` for every case; the internal port check validates its input and closes the connection only if it was opened ([#90](https://github.com/Corsinvest/cv4pve-api-powershell/issues/90), [#91](https://github.com/Corsinvest/cv4pve-api-powershell/pull/91), thanks @r3st0r3)
+
 ## [9.2.4] - 2026-10-03
 
 ### Added
