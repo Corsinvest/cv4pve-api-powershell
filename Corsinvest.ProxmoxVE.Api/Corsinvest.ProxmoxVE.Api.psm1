@@ -57,7 +57,7 @@ function Test-PortQuick {
 
     $ret = $false
     $tcpClient = $null
-    
+
     try {
         $tcpClient = New-Object System.Net.Sockets.TcpClient
 
@@ -67,7 +67,7 @@ function Test-PortQuick {
             $ret = $true
         }
         else {
-			Write-Debug "TCP connect timed out for ${HostName}:${Port} after ${Timeout} ms"
+            Write-Debug "TCP connect timed out for ${HostName}:${Port} after ${Timeout} ms"
         }
     }
     catch {
